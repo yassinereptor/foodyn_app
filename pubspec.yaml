@@ -1,0 +1,180 @@
+name: foodyn_rest
+description: Foodyn Restaurant Project.
+
+# The following line prevents the package from being accidentally published to
+# pub.dev using `pub publish`. This is preferred for private packages.
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+# The following defines the version and build number for your application.
+# A version number is three numbers separated by dots, like 1.2.43
+# followed by an optional build number separated by a +.
+# Both the version and the builder number may be overridden in flutter
+# build by specifying --build-name and --build-number, respectively.
+# In Android, build-name is used as versionName while build-number used as versionCode.
+# Read more about Android versioning at https://developer.android.com/studio/publish/versioning
+# In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
+# Read more about iOS versioning at
+# https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.12.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  # The following adds the Cupertino Icons font to your application.
+  # Use with the CupertinoIcons class for iOS style icons.
+  cupertino_icons: ^1.0.2
+  # Bloc for state management
+  flutter_bloc: ^7.0.1
+  # Simplify Equality Comparisons
+  equatable: ^2.0.2
+  # This package defines annotations that can be used by the tools that are
+  # shipped with the Dart SDK.
+  meta: ^1.2.4
+  # Functional programming in Dart
+  dartz: ^0.10.0-nullsafety.2
+  # A minimalist Flutter framework for rapidly building custom designs.
+  velocity_x:
+    git:
+      url: https://github.com/iampawan/VelocityX
+      ref: dev#null-safety
+  # Local cache
+  shared_preferences: ^2.0.5
+  # Service Locator
+  get_it: ^7.0.0
+  # A pure Dart utility library that checks for an internet connection
+  internet_connection_checker: ^0.0.1+1
+  # This package provides internationalization and localization facilities.
+  intl: ^0.17.0
+  # A Flutter package for easy navigation management.
+  seafarer: ^0.1.0
+  # Annotations for freezed.
+  freezed_annotation: ^0.14.2
+  # A powerful Http client for Dart, which supports Interceptors, Global
+  # configuration, FormData, Request Cancellation, File downloading,
+  # Timeout etc.
+  dio: ^4.0.0
+  # add injectable to your dependencies
+  injectable: ^1.3.0
+  # Small, easy to use and extensible logger which prints beautiful logs.
+  logger: ^1.0.0
+  # Load configuration at runtime from a .env file which can be used
+  # throughout the applicaiton.
+  flutter_dotenv: ^5.0.0
+  # Pull to Refresh swipe indicator
+  pull_to_refresh: ^1.6.4
+  sprintf: "^5.0.0"
+  geolocator: ^7.0.1
+  # A simple yet powerful Flutter plugin for showing Toast at Android and iOS.
+  fluttertoast: ^8.0.7
+  flutter_spinkit: "^4.1.2"
+  # Animated is a very simple (yet powerful) implicit animation library made
+  # for Flutter.
+  animated: ^1.0.1
+  # intro slider dots
+  dots_indicator: ^2.0.0
+  flutter_slider_drawer: ^2.0.0
+  # flutter_staggered_grid_view: ^0.4.0
+  url_launcher: ^6.0.3
+  external_app_launcher: ^0.0.1
+  photo_view: ^0.11.1
+  card_swiper: ^1.0.2
+  awesome_card: ^1.1.5
+  animations: ^2.0.0
+  direct_select_flutter: ^1.1.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  # package provides general-purpose commands for generating files.
+  build_runner:
+  # Mock library for Dart.
+  mockito: ^5.0.0
+  # code generator for unions/pattern-matching/copy.
+  freezed: ^0.14.1
+  # add the generator to your dev_dependencies
+  injectable_generator:
+  # Provides Dart Build System builders for handling JSON.
+  json_serializable: ^4.1.3
+
+# For information on the generic Dart part of this file, see the
+# following page: https://dart.dev/tools/pub/pubspec
+
+# The following section is specific to Flutter.
+flutter:
+
+  # The following line ensures that the Material Icons font is
+  # included with your application, so that you can use the icons in
+  # the material Icons class.
+  uses-material-design: true
+  generate: false
+  assets:
+      - assets/images/
+      - assets/logos/
+      - assets/icons/
+      - assets/animations/
+      - assets/raw/
+      - assets/pdf/
+      - .env/.env.prod
+      - .env/.env.dev
+      - .env/.env.test
+  fonts:
+      - family: Poppins
+        fonts:
+            - asset: assets/fonts/Poppins-Thin.ttf
+              weight: 100
+            - asset: assets/fonts/Poppins-Thin.ttf
+              weight: 100
+              style: italic
+            - asset: assets/fonts/Poppins-ExtraLight.ttf
+              weight: 200
+            - asset: assets/fonts/Poppins-ExtraLight.ttf
+              weight: 200
+              style: italic
+            - asset: assets/fonts/Poppins-Light.ttf
+              weight: 300
+            - asset: assets/fonts/Poppins-Light.ttf
+              weight: 300
+              style: italic
+            - asset: assets/fonts/Poppins-Regular.ttf
+              weight: 400
+            - asset: assets/fonts/Poppins-Regular.ttf
+              weight: 400
+              style: italic
+            - asset: assets/fonts/Poppins-Medium.ttf
+              weight: 500
+            - asset: assets/fonts/Poppins-Medium.ttf
+              weight: 500
+              style: italic
+            - asset: assets/fonts/Poppins-SemiBold.ttf
+              weight: 600
+            - asset: assets/fonts/Poppins-SemiBold.ttf
+              weight: 600
+              style: italic
+            - asset: assets/fonts/Poppins-Bold.ttf
+              weight: 700
+            - asset: assets/fonts/Poppins-Bold.ttf
+              weight: 700
+              style: italic
+            - asset: assets/fonts/Poppins-ExtraBold.ttf
+              weight: 800
+            - asset: assets/fonts/Poppins-ExtraBold.ttf
+              weight: 800
+              style: italic
+            - asset: assets/fonts/Poppins-Black.ttf
+              weight: 900
+            - asset: assets/fonts/Poppins-Black.ttf
+              weight: 900
+              style: italic
+
+flutter_intl:
+    enabled: true
+    class_name: S # Optional. Sets the name for the generated localization class. Default: S
+    main_locale: en # Optional. Sets the main locale used for generating localization files. Provided value should consist of language code and optional script and country codes separated with underscore (e.g. 'en', 'en_GB', 'zh_Hans', 'zh_Hans_CN'). Default: en
+    arb_dir: assets/l10n # Optional. Sets the directory of your ARB resource files. Provided value should be a valid path on your system. Default: lib/l10n
+    output_dir: lib/core/l10n # Optional. Sets the directory of generated localization files. Provided value should be a valid path on your system. Default: lib/generated
+    # use_deferred_loading: false # Optional. Must be set to true to generate localization code that is loaded with deferred loading. Default: false
