@@ -1,20 +1,23 @@
 import 'package:flutter/material.dart';
 
 class BottomDrawerWidget extends StatelessWidget {
-  const BottomDrawerWidget({
+  BottomDrawerWidget({
     Key? key,
     this.onVerticalDragUpdate,
     this.onVerticalDragEnd,
     this.body,
+    this.scrollController
   }) : super(key: key);
 
   final GestureDragUpdateCallback? onVerticalDragUpdate;
   final GestureDragEndCallback? onVerticalDragEnd;
   final Widget? body;
+  ScrollController? scrollController = new ScrollController();
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    
 
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
@@ -27,10 +30,11 @@ class BottomDrawerWidget extends StatelessWidget {
           topRight: Radius.circular(12),
         ),
         child: ListView(
+          controller: scrollController,
           padding: const EdgeInsets.all(12),
           physics: const NeverScrollableScrollPhysics(),
           children: [
-            body!,
+             body!,
           ],
         ),
       ),

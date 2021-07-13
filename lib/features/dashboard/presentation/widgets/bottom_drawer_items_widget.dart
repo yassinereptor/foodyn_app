@@ -45,7 +45,28 @@ class BottomDrawerItemsWidget extends StatelessWidget {
     }
 
     return Column(
-      children: destinationButtons,
+      children: [
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              margin: EdgeInsets.only(bottom: 10),
+                constraints: BoxConstraints(
+                  maxWidth: 50,
+                  maxHeight: 10
+                ),
+                decoration: BoxDecoration(
+                  color: GlobalTheme.kAccentDarkColor,
+                  borderRadius: BorderRadius.circular(10)
+                ),
+              ),
+          ],
+        ),
+        Column(
+          children: destinationButtons,
+        ),
+      ],
     );
   }
 }

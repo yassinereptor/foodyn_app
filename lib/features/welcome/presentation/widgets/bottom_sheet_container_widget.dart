@@ -2,13 +2,16 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:foodyn_rest/core/config/theme/global_theme.dart';
 import 'package:foodyn_rest/features/dashboard/presentation/widgets/bottom_drawer_items_widget.dart';
 import 'package:foodyn_rest/features/dashboard/presentation/widgets/bottom_drawer_widget.dart';
 import 'dart:math' as math;
 
 class BottomSheetContainerWidget extends StatefulWidget {
-  final Widget Function(AnimationController, AnimationController, bool, double) buildWidget;
-  const BottomSheetContainerWidget({Key? key, required this.buildWidget}) : super(key: key);
+  final Widget Function(AnimationController, AnimationController, bool, double, bool) buildWidget;
+  final Widget body;
+  ScrollController? controller;
+  BottomSheetContainerWidget({Key? key, this.controller, required this.buildWidget, required this.body}) : super(key: key);
 
   @override
   _BottomSheetContainerWidgetState createState() => _BottomSheetContainerWidgetState();
@@ -19,10 +22,7 @@ class _BottomSheetContainerWidgetState extends State<BottomSheetContainerWidget>
   final _bottomDrawerKey = GlobalKey(debugLabel: 'Bottom Drawer');
   late AnimationController _drawerController;
   late AnimationController _dropArrowController;
-  late AnimationController _bottomAppBarController;
   late Animation<double> _drawerCurve;
-  late Animation<double> _dropArrowCurve;
-  late Animation<double> _bottomAppBarCurve;
   static const double _kFlingVelocity = 2.0;
   static const _kAnimationDuration = Duration(milliseconds: 300);
   late bool _menuClicked;
@@ -95,12 +95,6 @@ class _BottomSheetContainerWidgetState extends State<BottomSheetContainerWidget>
       vsync: this,
     );
 
-    _bottomAppBarController = AnimationController(
-      vsync: this,
-      value: 1,
-      duration: const Duration(milliseconds: 250),
-    );
-
     _dropArrowController.addStatusListener((status) {
       if (status == AnimationStatus.completed)
         setState(() {
@@ -114,17 +108,6 @@ class _BottomSheetContainerWidgetState extends State<BottomSheetContainerWidget>
       reverseCurve: standardEasing.flipped,
     );
 
-    _dropArrowCurve = CurvedAnimation(
-      parent: _dropArrowController,
-      curve: standardEasing,
-      reverseCurve: standardEasing.flipped,
-    );
-
-    _bottomAppBarCurve = CurvedAnimation(
-      parent: _bottomAppBarController,
-      curve: standardEasing,
-      reverseCurve: standardEasing.flipped,
-    );
     super.initState();
   }
 
@@ -132,7 +115,6 @@ class _BottomSheetContainerWidgetState extends State<BottomSheetContainerWidget>
   void dispose() {
     _drawerController.dispose();
     _dropArrowController.dispose();
-    _bottomAppBarController.dispose();
     super.dispose();
   }
 
@@ -152,7 +134,7 @@ class _BottomSheetContainerWidgetState extends State<BottomSheetContainerWidget>
           clipBehavior: Clip.none,
           key: _bottomDrawerKey,
           children: [
-            widget.buildWidget(_drawerController, _dropArrowController, _bottomDrawerVisible, _kFlingVelocity),
+            widget.buildWidget(_drawerController, _dropArrowController, _bottomDrawerVisible, _kFlingVelocity, _menuClicked),
             GestureDetector(
               onTap: () {
                 _drawerController.reverse();
@@ -178,16 +160,31 @@ class _BottomSheetContainerWidgetState extends State<BottomSheetContainerWidget>
               child: Visibility(
                 visible: _bottomDrawerVisible,
                 child: BottomDrawerWidget(
+                  scrollController: widget.controller,
                   onVerticalDragUpdate: _handleDragUpdate,
                   onVerticalDragEnd: _handleDragEnd,
-                  body: BottomDrawerItemsWidget(
-                    items: [],
-                    drawerController: _drawerController,
-                    dropArrowController: _dropArrowController,
-                    onItemTapped: (item){
-
-                    },
-                  ),
+                  body: Column(
+                    children: [
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            margin: EdgeInsets.only(bottom: 10),
+                              constraints: BoxConstraints(
+                                maxWidth: 50,
+                                maxHeight: 10
+                              ),
+                              decoration: BoxDecoration(
+                                color: GlobalTheme.kAccentDarkColor,
+                                borderRadius: BorderRadius.circular(10)
+                              ),
+                            ),
+                        ],
+                      ),
+                      widget.body
+                    ],
+                  )
                 ),
               ),
             ),

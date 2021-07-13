@@ -38,6 +38,7 @@ class _CompleteRegisterPageState extends State<CompleteRegisterPage> {
   final _formKey = GlobalKey<FormState>();
   int _defaultDialCodeIndex = 0;
   List<String> _phoneCodes = ['{"name": "Morocco","dial_code": "+212","code": "MA"}'];
+  ScrollController? scrollController = new ScrollController();
 
   @override
   void initState() {
@@ -59,9 +60,7 @@ class _CompleteRegisterPageState extends State<CompleteRegisterPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: SafeArea(
-      child: BottomSheetContainerWidget(
-        buildWidget: (drawerController, dropArrowController, bottomDrawerVisible, kFlingVelocity) {
-          return SingleChildScrollView(
+      child: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.only(left: 20, right: 20),
           child: Container(
@@ -101,24 +100,37 @@ class _CompleteRegisterPageState extends State<CompleteRegisterPage> {
                         children: [
                           Padding(
                           padding: EdgeInsets.only(bottom: 20),
-                          child: BottomSheetWidget(
-                            drawerController: drawerController,
-                            dropArrowController: dropArrowController,
-                            bottomDrawerVisible: bottomDrawerVisible,
-                            kFlingVelocity: kFlingVelocity,
-                            child: DropdownFormWidget(
-                              onSelect: (value) {},
-                              list: _phoneCodes,
-                              defaultIndex: _defaultDialCodeIndex,
-                              modifyListOutput: (text) {
-                                return text;
-                              },
-                              modifySelectedOutput: (text) {
-                                final jsonResult = json.decode(text);
-                                return jsonResult["code"] + " (" + jsonResult["dial_code"] + ")";
-                              },
-                            )
-                          )),
+                          child: GestureDetector(
+                            child: Text("data"),
+                            onTap: (){
+                            showModalBottomSheet(
+                              context: context,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.vertical(top: Radius.circular(25.0)),
+                              ),
+                              builder: (BuildContext context) {
+                                return Container();
+                              });
+                          },)
+                          // BottomSheetWidget(
+                          //   drawerController: drawerController,
+                          //   dropArrowController: dropArrowController,
+                          //   bottomDrawerVisible: bottomDrawerVisible,
+                          //   kFlingVelocity: kFlingVelocity,
+                          //   child: DropdownFormWidget(
+                          //     onSelect: (value) {},
+                          //     list: _phoneCodes,
+                          //     defaultIndex: _defaultDialCodeIndex,
+                          //     modifyListOutput: (text) {
+                          //       return text;
+                          //     },
+                          //     modifySelectedOutput: (text) {
+                          //       final jsonResult = json.decode(text);
+                          //       return jsonResult["code"] + " (" + jsonResult["dial_code"] + ")";
+                          //     },
+                          //   )
+                          // )
+                          ),
                           SizedBox(
                             width: 10,
                           ),
@@ -230,8 +242,6 @@ class _CompleteRegisterPageState extends State<CompleteRegisterPage> {
             ),
           ),
         ),
-      );
-        }
       ),
     ));
   }

@@ -186,16 +186,24 @@ class _DashboardPageState extends State<DashboardPage>
   }
 
   void _toggleBottomDrawerVisibility() {
-    if (_drawerController.value < 0.4) {
-      _drawerController.animateTo(0.4, curve: standardEasing);
-      _dropArrowController.animateTo(0.35, curve: standardEasing);
-      return;
-    }
+    // if (_drawerController.value < 0.4) {
+    //   _drawerController.animateTo(0.4, curve: standardEasing);
+    //   _dropArrowController.animateTo(0.35, curve: standardEasing);
+    //   return;
+    // }
 
-    _dropArrowController.forward();
-    _drawerController.fling(
-      velocity: _bottomDrawerVisible ? -_kFlingVelocity : _kFlingVelocity,
-    );
+    // _dropArrowController.forward();
+    // _drawerController.fling(
+    //   velocity: _bottomDrawerVisible ? -_kFlingVelocity : _kFlingVelocity,
+    // );
+    showModalBottomSheet(
+                              context: context,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.vertical(top: Radius.circular(25.0)),
+                              ),
+                              builder: (BuildContext context) {
+                                return Container();
+                              });
   }
 
   double get _bottomDrawerHeight {
