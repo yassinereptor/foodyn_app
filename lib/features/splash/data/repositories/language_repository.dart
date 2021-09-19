@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
-import '../../../../features/splash/domain/entities/splash_failure.dart';
+import 'package:foodyn_rest/features/auth/domain/entities/auth_failure.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../../core/error/exeptions.dart';
@@ -20,12 +20,12 @@ class LanguageRepository implements ILanguageRepository {
   }
 
   @override
-  Future<Either<SplashFailure, Locale>> setLanguage(String lang) async {
+  Future<Either<AuthFailure, Locale>> setLanguage(String lang) async {
     try {
       final response = await localeDataSource.setLanguage(lang);
       return Right(response);
     } on CacheExeption {
-      return Left(SplashFailure.storage());
+      return Left(AuthFailure.storage());
     }
   }
 }

@@ -6,10 +6,10 @@ import 'package:injectable/injectable.dart';
 abstract class IDioModule {
   @lazySingleton
   Dio dio() => Dio(BaseOptions(
-        baseUrl: DotEnv().env["LOGIN_URL"]!,
-        connectTimeout: 5000,
-        sendTimeout: 5000,
-        receiveTimeout: 3000,
+        baseUrl: dotenv.env["SERVER_LINK"]!,
+        connectTimeout: int.parse(dotenv.env["SERVER_TIMEOUT"]!),
+        sendTimeout: int.parse(dotenv.env["SERVER_TIMEOUT"]!),
+        receiveTimeout: int.parse(dotenv.env["SERVER_TIMEOUT"]!),
         headers: {
           "Content-Type": "application/json",
         },

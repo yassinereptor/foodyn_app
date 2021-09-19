@@ -8,3 +8,7 @@ class ServerExeption implements Exception {
 class CacheExeption implements Exception {}
 
 class NetworkExeption implements Exception {}
+
+class JwtExpiredExeption implements Exception {}
+
+class UnauthorizedExeption implements Exception {}

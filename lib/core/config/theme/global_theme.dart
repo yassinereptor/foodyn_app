@@ -10,6 +10,8 @@ class GlobalTheme {
   static const kAccentColor = Color(0xffF4EFEF);
   static const kAccentDarkColor = Color(0xffE7E5E5);
   static const kOrangeColor = Color(0xffF87A33);
+  static const kRedColor = Color(0xffCC0031);
+  static const kGreenColor = Color(0xff04A330);
 
   // Gradiant Colors
   static const kGradient1Color1 = Color(0xff00DDFF);
@@ -22,7 +24,7 @@ class GlobalTheme {
   static const kGradient4Color2 = Color(0xff600000);
 
   //Payment Colors
-  static const kTransferColor = kGradient4Color1;
+  static const kTransferColor = kOrangeColor;
   static const kPaypalColor = Color(0xff005EA6);
   static const kCardColor = Color(0xffF5B417);
   static const kGooglePayColor = kGradient4Color2;

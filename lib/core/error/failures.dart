@@ -30,3 +30,10 @@ class ExceptionFailure extends Failure {
 
   ExceptionFailure({this.message}) : super([message]);
 }
+
+class GeolocationFailure extends Failure {
+  final int status;
+  final String message;
+
+  GeolocationFailure({required this.status, required this.message}) : super([status, message]);
+}

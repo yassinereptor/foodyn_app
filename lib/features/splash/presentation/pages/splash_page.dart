@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodyn_rest/core/utils/theme_brightness.dart';
 import 'package:foodyn_rest/core/config/theme/global_theme.dart';
-import 'package:foodyn_rest/features/splash/presentation/bloc/splash_bloc/splash_bloc.dart';
+import 'package:foodyn_rest/features/auth/presentation/bloc/auth_bloc/auth_bloc.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class SplashPage extends StatefulWidget {
@@ -17,17 +17,17 @@ class SplashPage extends StatefulWidget {
 }
 
 class _SplashPageState extends State<SplashPage> {
-  late SplashBloc _splashBloc;
+  late AuthBloc _authBloc;
   
   @override
   void initState() {
-    _splashBloc = BlocProvider.of<SplashBloc>(context);
+    _authBloc = BlocProvider.of<AuthBloc>(context);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SplashBloc, SplashState>(
+    return BlocBuilder<AuthBloc, AuthState>(
       builder: (context, state) => Scaffold(
         body: SafeArea(
             child: Center(

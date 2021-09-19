@@ -38,10 +38,7 @@ dependencies:
   # Functional programming in Dart
   dartz: ^0.10.0-nullsafety.2
   # A minimalist Flutter framework for rapidly building custom designs.
-  velocity_x:
-    git:
-      url: https://github.com/iampawan/VelocityX
-      ref: dev#null-safety
+  velocity_x: ^3.3.0
   # Local cache
   shared_preferences: ^2.0.5
   # Service Locator
@@ -77,8 +74,10 @@ dependencies:
   animated: ^1.0.1
   # intro slider dots
   dots_indicator: ^2.0.0
-  flutter_slider_drawer: ^2.0.0
-  # flutter_staggered_grid_view: ^0.4.0
+  flutter_slider_drawer:
+    git:
+      url: https://github.com/yassinereptor/Flutter_slider_drawer
+      ref: master
   url_launcher: ^6.0.3
   external_app_launcher: ^0.0.1
   photo_view: ^0.11.1
@@ -86,6 +85,15 @@ dependencies:
   awesome_card: ^1.1.5
   animations: ^2.0.0
   direct_select_flutter: ^1.1.1
+  google_maps_flutter: ^2.0.6
+  connectivity: ^3.0.6
+  file_picker: ^3.0.3
+  graphql_flutter: ^5.0.0
+  jwt_decoder: ^2.0.1
+  validators: ^3.0.0
+  flare_flutter: ^3.0.2
+  timer_count_down: ^2.2.0
+  mime: ^1.0.0
 
 dev_dependencies:
   flutter_test:
@@ -122,6 +130,7 @@ flutter:
       - .env/.env.prod
       - .env/.env.dev
       - .env/.env.test
+
   fonts:
       - family: Poppins
         fonts:

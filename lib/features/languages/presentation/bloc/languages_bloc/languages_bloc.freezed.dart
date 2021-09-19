@@ -84,6 +84,7 @@ class __$StartedCopyWithImpl<$Res> extends _$LanguagesEventCopyWithImpl<$Res>
 }
 
 /// @nodoc
+
 class _$_Started implements _Started {
   const _$_Started();
 
@@ -242,6 +243,7 @@ class __$InitialCopyWithImpl<$Res> extends _$LanguagesStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
+
 class _$_Initial implements _Initial {
   const _$_Initial();
 
@@ -336,6 +338,7 @@ class __$GetLanguagesInProgressCopyWithImpl<$Res>
 }
 
 /// @nodoc
+
 class _$_GetLanguagesInProgress implements _GetLanguagesInProgress {
   const _$_GetLanguagesInProgress();
 
@@ -430,6 +433,7 @@ class __$GetLanguagesSucceedCopyWithImpl<$Res>
 }
 
 /// @nodoc
+
 class _$_GetLanguagesSucceed implements _GetLanguagesSucceed {
   const _$_GetLanguagesSucceed();
 
@@ -524,6 +528,7 @@ class __$GetLanguagesFailedCopyWithImpl<$Res>
 }
 
 /// @nodoc
+
 class _$_GetLanguagesFailed implements _GetLanguagesFailed {
   const _$_GetLanguagesFailed();
 

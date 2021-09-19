@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:foodyn_rest/features/dashboard/presentation/pages/dashboard_page.dart';
-import 'package:foodyn_rest/features/welcome/data/models/plan_model.dart';
-import 'package:foodyn_rest/features/welcome/presentation/pages/bank_card_page.dart';
-import 'package:foodyn_rest/features/welcome/presentation/pages/bank_transfer_page.dart';
-import 'package:foodyn_rest/features/welcome/presentation/pages/choose_payment_page.dart';
-import 'package:foodyn_rest/features/welcome/presentation/pages/choose_plan_page.dart';
-import 'package:foodyn_rest/features/welcome/presentation/pages/complete_register_page.dart';
-import 'package:foodyn_rest/features/welcome/presentation/pages/learnmore_page.dart';
-import 'package:foodyn_rest/features/welcome/presentation/pages/login_page.dart';
-import 'package:foodyn_rest/features/welcome/presentation/pages/plan_page.dart';
-import 'package:foodyn_rest/features/welcome/presentation/pages/register_page.dart';
+import 'package:foodyn_rest/features/auth/data/models/plan_model.dart';
+import 'package:foodyn_rest/features/auth/presentation/pages/bank_card_page.dart';
+import 'package:foodyn_rest/features/auth/presentation/pages/bank_transfer_page.dart';
+import 'package:foodyn_rest/features/auth/presentation/pages/choose_payment_page.dart';
+import 'package:foodyn_rest/features/auth/presentation/pages/choose_plan_page.dart';
+import 'package:foodyn_rest/features/auth/presentation/pages/complete_register_page.dart';
+import 'package:foodyn_rest/features/auth/presentation/pages/forget_password_page.dart';
+import 'package:foodyn_rest/features/auth/presentation/pages/geolocation_page.dart';
+import 'package:foodyn_rest/features/auth/presentation/pages/learnmore_page.dart';
+import 'package:foodyn_rest/features/auth/presentation/pages/login_page.dart';
+import 'package:foodyn_rest/features/auth/presentation/pages/plan_page.dart';
+import 'package:foodyn_rest/features/auth/presentation/pages/register_image_page.dart';
+import 'package:foodyn_rest/features/auth/presentation/pages/register_page.dart';
 
 import 'package:foodyn_rest/features/intro/presentation/pages/intro_page.dart';
+import 'package:foodyn_rest/features/auth/presentation/pages/verify_otp_page.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../features/languages/presentation/pages/languages_page.dart';
 import '../../../features/splash/presentation/pages/splash_page.dart';
@@ -109,6 +114,42 @@ class Routes {
           plan: params.param("plan"),
         );
       },
+    ));
+
+    seafarer.addRoute(SeafarerRoute(
+      name: GeolocationPage.kRouteName,
+      params: [
+        SeafarerParam<LatLng>(name: "latLng")
+      ],
+      builder: (context, args, params) => GeolocationPage(
+        latLng: params.param("latLng"),
+      ),
+    ));
+
+    seafarer.addRoute(SeafarerRoute(
+      name: ForgetPasswordPage.kRouteName,
+      builder: (context, args, paramMap) => ForgetPasswordPage(),
+    ));
+
+    seafarer.addRoute(SeafarerRoute(
+      name: VerifyOtpPage.kRouteName,
+      params: [
+        SeafarerParam<String>(name: "title"),
+        SeafarerParam<bool>(name: "logout"),
+        SeafarerParam<void Function()>(name: "onSuccess"),
+        SeafarerParam<void Function(String?)>(name: "onError"),
+      ],
+      builder: (context, args, params) => VerifyOtpPage(
+        title: params.param("title"),
+        logout: params.param("logout"),
+        onSuccess: params.param("onSuccess"),
+        onError: params.param("onError"),
+      ),
+    ));
+
+    seafarer.addRoute(SeafarerRoute(
+      name: RegisterImagePage.kRouteName,
+      builder: (context, args, paramMap) => RegisterImagePage(),
     ));
 
     seafarer.addRoute(SeafarerRoute(
