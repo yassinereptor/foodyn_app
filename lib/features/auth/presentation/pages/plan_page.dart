@@ -5,9 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodyn_rest/core/config/router/router.dart';
 import 'package:foodyn_rest/core/config/theme/input_decoration_theme.dart';
+import 'package:foodyn_rest/core/enums/currency.type.dart';
+import 'package:foodyn_rest/core/models/plan_model.dart';
+import 'package:foodyn_rest/core/utils/color_utils.dart';
+import 'package:foodyn_rest/core/utils/currency_utils.dart';
 import 'package:foodyn_rest/core/utils/lang.dart';
 import 'package:foodyn_rest/core/utils/theme_brightness.dart';
-import 'package:foodyn_rest/features/auth/data/models/plan_model.dart';
 import 'package:foodyn_rest/features/auth/presentation/widgets/app_bar_widget.dart';
 import 'package:foodyn_rest/core/config/theme/global_theme.dart';
 import 'package:foodyn_rest/features/auth/presentation/bloc/auth_bloc/auth_bloc.dart';
@@ -49,7 +52,10 @@ class _PlanPageState extends State<PlanPage> {
             gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
-                colors: widget.plan.colors)),
+                colors: [
+                  ColorUtils(widget.plan.primaryColor!).toColor(),
+                  ColorUtils(widget.plan.accentColor!).toColor()
+                ])),
         child: Column(
             children: [
               AppBarWidget(logout: true, color: GlobalTheme.kAccentColor),
@@ -65,11 +71,11 @@ class _PlanPageState extends State<PlanPage> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            widget.plan.title.text.xl4
+                            widget.plan.title!.text.xl4
                                 .color(GlobalTheme.kAccentColor)
                                 .bold
                                 .make(),
-                            (widget.plan.recommended)
+                            (widget.plan.recommended!)
                                 ? Container(
                                     padding: EdgeInsets.symmetric(
                                         vertical: 5, horizontal: 10),
@@ -92,7 +98,7 @@ class _PlanPageState extends State<PlanPage> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            widget.plan.price
+                            widget.plan.monthPrice
                                 .toString()
                                 .text
                                 .size(Vx.dp64)
@@ -101,7 +107,7 @@ class _PlanPageState extends State<PlanPage> {
                             SizedBox(
                               width: 5,
                             ),
-                            (widget.plan.currency + "/" + "Month")
+                            (CurrencyUtils.toStringCurrency(CurrencyType.values[widget.plan.currency!]) + "/" + "Month")
                                 .text
                                 .color(GlobalTheme.kAccentColor)
                                 .make(),
@@ -111,7 +117,7 @@ class _PlanPageState extends State<PlanPage> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            (widget.plan.price * 12).toString()
+                            (widget.plan.yearPrice! * 12).toString()
                                 .toString()
                                 .text
                                 .bold
@@ -120,7 +126,7 @@ class _PlanPageState extends State<PlanPage> {
                             SizedBox(
                               width: 5,
                             ),
-                            (widget.plan.currency + "/" + "Year")
+                            (CurrencyUtils.toStringCurrency(CurrencyType.values[widget.plan.currency!]) + "/" + "Year")
                                 .text
                                 .bold
                                 .color(GlobalTheme.kAccentColor)
@@ -130,7 +136,7 @@ class _PlanPageState extends State<PlanPage> {
                         SizedBox(
                           height: 30,
                         ),
-                        Text(widget.plan.fulltext,
+                        Text(widget.plan.description!,
                             textAlign: isAr() ? TextAlign.right : TextAlign.left,
                             style: TextStyle(color: GlobalTheme.kAccentColor)),
                       ],
@@ -155,7 +161,7 @@ class _PlanPageState extends State<PlanPage> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          "Checkout".text.xl.color(widget.plan.colors[1]).make(),
+                          "Checkout".text.xl.color(ColorUtils(widget.plan.accentColor!).toColor()).make(),
                         ],
                       ),
                     ),
@@ -166,6 +172,7 @@ class _PlanPageState extends State<PlanPage> {
             ],
           ),
       )
-    ));
+    )
+    );
   }
 }

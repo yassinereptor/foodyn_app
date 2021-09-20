@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:foodyn_rest/core/models/plan_model.dart';
 import 'package:foodyn_rest/features/dashboard/presentation/pages/dashboard_page.dart';
-import 'package:foodyn_rest/features/auth/data/models/plan_model.dart';
 import 'package:foodyn_rest/features/auth/presentation/pages/bank_card_page.dart';
 import 'package:foodyn_rest/features/auth/presentation/pages/bank_transfer_page.dart';
 import 'package:foodyn_rest/features/auth/presentation/pages/choose_payment_page.dart';

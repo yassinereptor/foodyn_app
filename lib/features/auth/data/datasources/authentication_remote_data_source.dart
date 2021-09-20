@@ -6,9 +6,11 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:foodyn_rest/core/enums/image.type.dart';
 import 'package:foodyn_rest/core/models/auth_response_model.dart';
 import 'package:foodyn_rest/core/models/image_model.dart';
+import 'package:foodyn_rest/core/models/plan_model.dart';
 import 'package:foodyn_rest/core/models/profile_model.dart';
 import 'package:foodyn_rest/core/models/record_model.dart';
 import 'package:foodyn_rest/core/models/user_model.dart';
+import 'package:foodyn_rest/core/queries/plan_query.dart';
 import 'package:foodyn_rest/core/queries/profile_query.dart';
 import 'package:foodyn_rest/core/queries/record_query.dart';
 import 'package:foodyn_rest/core/queries/user_query.dart';
@@ -34,6 +36,7 @@ abstract class IAuthenticationRemoteDataSource {
   Future<bool?> resendConfirmationEmail(String email);
   Future<ImageModel?> uploadImage(ImageType type, File file);
   Future<ProfileModel?> saveProfile(ProfileModel profile);
+  Future<List<PlanModel>?> getPlans();
 }
 
 @Injectable(as: IAuthenticationRemoteDataSource)
@@ -226,6 +229,20 @@ class AuthenticationRemoteDataSource
       throw ServerExeption(message: result["errors"][0]["message"]);
     ProfileModel profileModel= ProfileModel.fromJson(result["insertOrUpdateProfile"]);
     return profileModel;
+  }
+
+  @override
+  Future<List<PlanModel>?> getPlans() async {
+    final response = await graphQL.query(PlanQuery.getPlansQuery);
+    final result = jsonDecode(response);
+    if (result["errors"] != null)
+      throw ServerExeption(message: result["errors"][0]["message"]);
+    List<PlanModel>? plans = result["plans"].map<PlanModel>((e) {
+      return PlanModel.fromJson(e);
+    }).toList();
+    if (plans == null)
+      plans = [];
+    return plans;
   }
 
 }

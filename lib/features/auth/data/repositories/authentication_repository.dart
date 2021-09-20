@@ -4,6 +4,7 @@ import 'package:dartz/dartz.dart';
 import 'package:foodyn_rest/core/enums/image.type.dart';
 import 'package:foodyn_rest/core/models/auth_response_model.dart';
 import 'package:foodyn_rest/core/models/image_model.dart';
+import 'package:foodyn_rest/core/models/plan_model.dart';
 import 'package:foodyn_rest/core/models/profile_model.dart';
 import 'package:foodyn_rest/core/models/record_model.dart';
 import 'package:foodyn_rest/core/models/user_model.dart';
@@ -257,6 +258,29 @@ class AuthenticationRepository implements IAuthenticationRepository {
       final isConnected = await networkInfo.isConnected;
       if (isConnected == false) return Left(AuthFailure.network());
       final response = await remoteDataSource.saveProfile(profile);
+      return Right(response);
+    } on UnauthorizedExeption {
+      return Left(AuthFailure.unauthorized());
+    } on JwtExpiredExeption {
+      return Left(AuthFailure.expiredJwt());
+    } on ServerExeption catch (e) {
+      return Left(AuthFailure.server(
+        message: e.message,
+      ));
+    } on OperationException catch (error) {
+      return Left(AuthFailure.graphQlserver(
+        linkException: error.linkException,
+        graphqlErrors: error.graphqlErrors,
+      ));
+    }
+  }
+
+   @override
+  Future<Either<AuthFailure, List<PlanModel>?>> getPlans() async {
+    try {
+      final isConnected = await networkInfo.isConnected;
+      if (isConnected == false) return Left(AuthFailure.network());
+      final response = await remoteDataSource.getPlans();
       return Right(response);
     } on UnauthorizedExeption {
       return Left(AuthFailure.unauthorized());

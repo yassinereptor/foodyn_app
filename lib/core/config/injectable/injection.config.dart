@@ -21,15 +21,17 @@ import '../../../features/auth/data/repositories/authentication_repository.dart'
 import '../../../features/auth/domain/repositories/i_authentication_repository.dart'
     as _i19;
 import '../../../features/auth/presentation/bloc/auth_bloc/auth_bloc.dart'
-    as _i24;
+    as _i25;
 import '../../../features/auth/presentation/bloc/geolocation_bloc/geolocation_bloc.dart'
     as _i4;
 import '../../../features/auth/presentation/bloc/mail_bloc/mail_bloc.dart'
     as _i21;
 import '../../../features/auth/presentation/bloc/otp_bloc/otp_bloc.dart'
     as _i22;
-import '../../../features/auth/presentation/bloc/profile_bloc/profile_bloc.dart'
+import '../../../features/auth/presentation/bloc/plan_bloc/plan_bloc.dart'
     as _i23;
+import '../../../features/auth/presentation/bloc/profile_bloc/profile_bloc.dart'
+    as _i24;
 import '../../../features/languages/presentation/bloc/languages_bloc/languages_bloc.dart'
     as _i18;
 import '../../../features/splash/data/datasources/language_local_data_source.dart'
@@ -44,8 +46,8 @@ import '../../../features/splash/domain/repositories/i_language_repository.dart'
     as _i12;
 import '../../../features/splash/domain/repositories/i_settings_repository.dart'
     as _i16;
-import '../../modules/dio_module.dart' as _i25;
-import '../../modules/modules.dart' as _i26;
+import '../../modules/dio_module.dart' as _i26;
+import '../../modules/modules.dart' as _i27;
 import '../../network/network_info.dart' as _i14;
 import '../../services/graphql_service.dart'
     as _i5; // ignore_for_file: unnecessary_lambdas
@@ -101,12 +103,17 @@ Future<_i1.GetIt> $initGetIt(_i1.GetIt get,
       get<_i5.GraphQLService>(),
       get<_i9.IAuthenticationLocalDataSource>(),
       get<_i19.IAuthenticationRepository>()));
-  gh.factory<_i23.ProfileBloc>(() => _i23.ProfileBloc(
+  gh.factory<_i23.PlanBloc>(() => _i23.PlanBloc(
       get<_i7.Logger>(),
       get<_i5.GraphQLService>(),
       get<_i9.IAuthenticationLocalDataSource>(),
       get<_i19.IAuthenticationRepository>()));
-  gh.factory<_i24.AuthBloc>(() => _i24.AuthBloc(
+  gh.factory<_i24.ProfileBloc>(() => _i24.ProfileBloc(
+      get<_i7.Logger>(),
+      get<_i5.GraphQLService>(),
+      get<_i9.IAuthenticationLocalDataSource>(),
+      get<_i19.IAuthenticationRepository>()));
+  gh.factory<_i25.AuthBloc>(() => _i25.AuthBloc(
       get<_i19.IAuthenticationRepository>(),
       get<_i9.IAuthenticationLocalDataSource>(),
       get<_i12.ILanguageRepository>(),
@@ -117,6 +124,6 @@ Future<_i1.GetIt> $initGetIt(_i1.GetIt get,
   return get;
 }
 
-class _$IDioModule extends _i25.IDioModule {}
+class _$IDioModule extends _i26.IDioModule {}
 
-class _$IModules extends _i26.IModules {}
+class _$IModules extends _i27.IModules {}

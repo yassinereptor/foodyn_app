@@ -19,6 +19,7 @@ import 'core/l10n/l10n.dart';
 import 'core/utils/add_post_frame_callback.dart';
 import 'core/widgets/dialogs/jwt_expired_dialog.dart';
 import 'features/auth/domain/entities/auth_failure.dart';
+import 'features/auth/presentation/pages/choose_plan_page.dart';
 import 'features/languages/presentation/pages/languages_page.dart';
 import 'features/auth/presentation/bloc/auth_bloc/auth_bloc.dart';
 import 'features/splash/presentation/pages/splash_page.dart';
@@ -129,7 +130,17 @@ class _ApplicationState extends State<Application> {
                             return false;
                           },
                         );
-                      }else{
+                      }
+                      else if (state.user!.membership == null || state.user!.membership!.id == null) {
+                        Routes.seafarer.navigate(
+                          ChoosePlanPage.kRouteName,
+                          navigationType: NavigationType.pushAndRemoveUntil,
+                          removeUntilPredicate: (route) {
+                            return false;
+                          },
+                        );
+                      }
+                      else{
                         Routes.seafarer.navigate(
                           DashboardPage.kRouteName,
                           navigationType: NavigationType.pushAndRemoveUntil,

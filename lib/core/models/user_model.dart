@@ -4,6 +4,8 @@ import 'package:foodyn_rest/core/models/record_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+import 'membership_model.dart';
+
 part 'user_model.g.dart';
 
 @JsonSerializable()
@@ -14,6 +16,8 @@ class UserModel extends Equatable  {
   int? type;
   @JsonKey(name: "profile")
   ProfileModel? profile;
+  @JsonKey(name: "membership")
+  MembershipModel? membership;
   @JsonKey(name: "email")
   String? email;
   @JsonKey(name: "password")
@@ -30,6 +34,7 @@ class UserModel extends Equatable  {
   UserModel({
     this.id,
     this.profile,
+    this.membership,
     this.type,
     this.email,
     this.password,
@@ -49,6 +54,7 @@ class UserModel extends Equatable  {
     return """UserModel(
     id: $id,
     profile: $profile,
+    membership: $membership,
     type: $type,
     email: $email,
     password: $password,
@@ -63,6 +69,7 @@ class UserModel extends Equatable  {
   List<Object?> get props => [
         id,
         profile,
+        membership,
         type,
         email,
         password,

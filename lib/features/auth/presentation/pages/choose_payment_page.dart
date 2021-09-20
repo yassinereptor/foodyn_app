@@ -7,7 +7,6 @@ import 'package:foodyn_rest/core/config/router/router.dart';
 import 'package:foodyn_rest/core/config/theme/input_decoration_theme.dart';
 import 'package:foodyn_rest/core/utils/theme_brightness.dart';
 import 'package:foodyn_rest/features/auth/data/models/payment_model.dart';
-import 'package:foodyn_rest/features/auth/data/models/plan_model.dart';
 import 'package:foodyn_rest/features/auth/presentation/widgets/sliver_app_bar_widget.dart';
 import 'package:foodyn_rest/features/auth/presentation/widgets/password_text_form_widget.dart';
 import 'package:foodyn_rest/features/auth/presentation/widgets/plan_item_widget.dart';
