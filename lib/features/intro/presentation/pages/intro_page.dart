@@ -1,16 +1,4 @@
-import 'dart:ui';
-
-import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
-import 'package:seafarer/seafarer.dart';
-import 'package:foodyn_rest/core/config/router/router.dart';
-import 'package:foodyn_rest/core/config/theme/global_theme.dart';
-import 'package:foodyn_rest/core/utils/theme_brightness.dart';
-import 'package:velocity_x/velocity_x.dart';
-
-import '../../../../core/l10n/l10n.dart';
-import '../../../../core/services/edge_insets_service.dart';
-import '../../../../core/utils/lang.dart';
 
 class IntroPage extends StatefulWidget {
   static String kRouteName = "/intro";

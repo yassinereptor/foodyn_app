@@ -2,9 +2,8 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flare_flutter/flare_actor.dart';
-import 'package:foodyn_rest/core/config/router/router.dart';
-import 'package:foodyn_rest/core/config/theme/global_theme.dart';
-import 'package:foodyn_rest/core/utils/theme_brightness.dart';
+import '../config/theme/global_theme.dart';
+import '../utils/theme_brightness.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 enum ModalContainerType { LOADING, SUCCESS, FAILURE }

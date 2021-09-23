@@ -1,7 +1,7 @@
 
 
 import '../config/injectable/injection.dart';
-import 'package:foodyn_rest/features/auth/presentation/bloc/auth_bloc/auth_bloc.dart';
+import '../bloc/auth_bloc/auth_bloc.dart';
 
 bool isAr() {
   // ignore: close_sinks

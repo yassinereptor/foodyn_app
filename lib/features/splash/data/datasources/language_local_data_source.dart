@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:foodyn_rest/core/utils/global_utils.dart';
 import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

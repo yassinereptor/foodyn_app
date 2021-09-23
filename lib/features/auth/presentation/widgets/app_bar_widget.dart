@@ -2,16 +2,15 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:foodyn_rest/core/config/router/router.dart';
-import 'package:foodyn_rest/core/config/theme/global_theme.dart';
-import 'package:foodyn_rest/core/utils/theme_brightness.dart';
+import '../../../../core/config/router/router.dart';
+import '../../../../core/config/theme/global_theme.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class AppBarWidget extends StatefulWidget {
   final bool logout;
   final Color? color;
 
-  const AppBarWidget({Key? key, this.logout = false, this.color = null}) : super(key: key);
+  const AppBarWidget({Key? key, this.logout = false, this.color}) : super(key: key);
 
   @override
   _AppBarWidgetState createState() => _AppBarWidgetState();

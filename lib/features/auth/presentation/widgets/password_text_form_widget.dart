@@ -2,13 +2,10 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:foodyn_rest/core/config/router/router.dart';
-import 'package:foodyn_rest/core/config/theme/input_decoration_theme.dart';
-import 'package:foodyn_rest/core/services/validator_service.dart';
-import 'package:foodyn_rest/core/utils/theme_brightness.dart';
-import 'package:foodyn_rest/core/config/theme/global_theme.dart';
-import 'package:foodyn_rest/features/auth/presentation/bloc/auth_bloc/auth_bloc.dart';
+import '../../../../core/config/theme/input_decoration_theme.dart';
+import '../../../../core/services/validator_service.dart';
+import '../../../../core/utils/theme_brightness.dart';
+import '../../../../core/config/theme/global_theme.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class PasswordTextFormWidget extends StatefulWidget {

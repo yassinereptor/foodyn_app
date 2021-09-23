@@ -1,132 +1,170 @@
 import 'dart:ui';
+import 'dart:math' as math;
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:foodyn_rest/core/config/router/router.dart';
-import 'package:foodyn_rest/core/config/theme/global_theme.dart';
-import 'package:foodyn_rest/core/enums/currency.type.dart';
-import 'package:foodyn_rest/core/models/plan_model.dart';
-import 'package:foodyn_rest/core/utils/color_utils.dart';
-import 'package:foodyn_rest/core/utils/currency_utils.dart';
-import 'package:foodyn_rest/core/utils/lang.dart';
-import 'package:foodyn_rest/core/utils/theme_brightness.dart';
-import 'package:foodyn_rest/features/auth/presentation/pages/plan_page.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:foodyn_rest/core/data/models/plan_model.dart';
+import '../../../../core/config/router/router.dart';
+import '../../../../core/utils/color_utils.dart';
+import '../../../../core/utils/currency_utils.dart';
+import '../../../../core/utils/string_utils.dart';
+import '../../../../core/utils/theme_brightness.dart';
+import '../../../../core/bloc/auth_bloc/auth_bloc.dart';
+import '../pages/plan_page.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class PlanItemWidget extends StatefulWidget {
-  final List<PlanModel> list;
-  final int selected;
+  final PlanModel plan;
 
-  const PlanItemWidget({Key? key, required this.list, this.selected = 0})
+  const PlanItemWidget({Key? key, required this.plan})
       : super(key: key);
 
   @override
   _PlanItemWidgetState createState() => _PlanItemWidgetState();
 }
 
-class _PlanItemWidgetState extends State<PlanItemWidget> {
+class _PlanItemWidgetState extends State<PlanItemWidget> with SingleTickerProviderStateMixin {
+  late Animation<double> animation;
+  late AnimationController controller;
+  late AuthBloc _authBloc;
+  late String? _calcYearPrice;
+
   @override
   void initState() {
     super.initState();
+    controller =
+        AnimationController(vsync: this, duration: Duration(seconds: 8));
+    animation = Tween<double>(begin: -10, end: 40).animate(new CurvedAnimation(
+  parent: controller,
+  curve: Curves.easeInOutCubic
+))
+      ..addListener(() {
+        setState(() {});
+      })
+      ..addStatusListener((status) {
+        if (status == AnimationStatus.completed) {
+          controller.reverse();
+        } else if (status == AnimationStatus.dismissed) {
+          controller.forward();
+        }
+      });
+    controller.forward();
+    _authBloc = context.read<AuthBloc>();
+    _calcYearPrice = CurrencyUtils(widget.plan).getCalcYearPrice();
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () => Routes.seafarer.navigate(PlanPage.kRouteName, params: {
-        "plan": widget.list[widget.selected],
-      }),
-      child: Container(
-        margin: EdgeInsets.only(top: 10, bottom: 10),
-        padding: EdgeInsets.all(20),
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  ColorUtils(widget.list[widget.selected].primaryColor!).toColor(),
-                  ColorUtils(widget.list[widget.selected].accentColor!).toColor(),
-                ])),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
+
+    return BlocProvider(
+      create: (context) => _authBloc,
+      child: InkWell(
+          onTap: () => Routes.seafarer.navigate(PlanPage.kRouteName, params: {
+            "plan": widget.plan,
+          }),
+          child: Container(
+            margin: EdgeInsets.only(top: 10, bottom: 10),
+            child: Stack(
               children: [
-                widget.list[widget.selected].title!.text.xl2
-                    .color(GlobalTheme.kAccentColor)
-                    .bold
-                    .make(),
-                (widget.list[widget.selected].recommended!)
-                    ? Container(
-                        padding:
-                            EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                        margin: EdgeInsets.only(top: 10),
-                        decoration: BoxDecoration(
-                          color: Colors.red,
-                          borderRadius: BorderRadius.circular(50),
+                Container(
+                  child: Positioned(
+                    right: 0,
+                    top: animation.value,
+                    child: Transform.rotate(
+                      angle: -math.pi / 10,
+                      child: Image.asset(
+                          isDark(context)? "assets/logos/foodyn_shape_light_logo.png" : "assets/logos/foodyn_shape_dark_logo.png",
+                          fit: BoxFit.contain,
+                          colorBlendMode: BlendMode.multiply,
+                          width: 200,
+                          height: 200,
                         ),
-                        child: "Recommended"
-                            .text
-                            .lg
-                            .uppercase
-                            .color(GlobalTheme.kAccentColor)
-                            .make(),
-                      )
-                    : Container()
-              ],
-            ),
-            SizedBox(
-              height: 5,
-            ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                widget.list[widget.selected].monthPrice
-                    .toString()
-                    .text
-                    .size(Vx.dp64)
-                    .color(GlobalTheme.kAccentColor)
-                    .make(),
-                SizedBox(
-                  width: 5,
+                      ),
+                  ),
                 ),
-                (CurrencyUtils.toStringCurrency(CurrencyType
-                            .values[widget.list[widget.selected].currency!]) +
-                        "/" +
-                        "Month")
-                    .text
-                    .color(GlobalTheme.kAccentColor)
-                    .make(),
-              ],
-            ),
-            SizedBox(
-              height: 5,
-            ),
-            Expanded(
-              child: Text(widget.list[widget.selected].description!,
-                  textAlign: isAr() ? TextAlign.right : TextAlign.left,
-                  style: TextStyle(color: GlobalTheme.kAccentColor)),
-            ),
-            Spacer(),
-            Row(
-              children: [
-                Spacer(),
-                GestureDetector(
-                    onTap: () {},
-                    child: Text(
-                      "Click for more details",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(color: GlobalTheme.kAccentColor),
-                    ))
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                  decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  gradient: LinearGradient(
+                      begin: Alignment.bottomRight,
+                      end: Alignment.topLeft,
+                      colors: [
+                        ColorUtils(widget.plan.primaryColor!).toColor().withOpacity(0.9),
+                        ColorUtils(widget.plan.accentColor!).toColor(),
+                      ])),
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          StringUtils.getTranslatedString(_authBloc.state.locale!, widget.plan.title!).text.bold.capitalize.xl2.color(ColorUtils(widget.plan.textColor!).toColor()).make(),
+                          Spacer(),
+                          IconButton(onPressed: (){},
+                          padding: EdgeInsets.zero,
+    constraints: BoxConstraints(),
+                           icon: Icon(Icons.monetization_on), color: ColorUtils(widget.plan.textColor!).toColor())
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          CurrencyUtils(widget.plan).getMonthPrice().text.light.xl5.color(ColorUtils(widget.plan.textColor!).toColor()).make(),
+                          SizedBox(width: 10,),
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 10),
+                            child: CurrencyUtils.toStringCurrency().text.bold.xl.color(ColorUtils(widget.plan.textColor!).toColor()).make(),
+                          ),
+                        ],
+                      ),
+                      "Per Month".text.bold.xl.color(ColorUtils(widget.plan.textColor!).toColor()).make(),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          if (_calcYearPrice != null)
+                          _calcYearPrice!.text.lg.light.color(ColorUtils(widget.plan.textColor!).toColor()).lineThrough.make(),
+                          if (_calcYearPrice != null)
+                          SizedBox(width: 5,),
+                          CurrencyUtils(widget.plan).getYearPrice().text.bold.lg.color(ColorUtils(widget.plan.textColor!).toColor()).make(),
+                          SizedBox(width: 5,),
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 2),
+                            child: CurrencyUtils.toStringCurrency().text.bold.sm.color(ColorUtils(widget.plan.textColor!).toColor()).make(),
+                          ),
+                        ],
+                      ),
+                      "Per Year".text.bold.sm.color(ColorUtils(widget.plan.textColor!).toColor()).make(),
+                      SizedBox(height: 10,),
+                      StringUtils.getTranslatedString(_authBloc.state.locale!, widget.plan.description!).text.bold.sm.color(ColorUtils(widget.plan.textColor!).toColor()).overflow(TextOverflow.ellipsis).make(),
+                      Row(
+                        children: [
+                          Spacer(),
+                          Container(
+                            decoration: BoxDecoration(
+                              color: Colors.white.withOpacity(.2),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            margin: EdgeInsets.only(top: 10),
+                            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                            child: "Learn More".text.color(ColorUtils(widget.plan.textColor!).toColor()).make(),
+                          )
+                        ],
+                      )
+                    ],
+                  ),
+                ),
               ],
             )
-          ],
+          ),
         ),
-      ),
     );
   }
 }

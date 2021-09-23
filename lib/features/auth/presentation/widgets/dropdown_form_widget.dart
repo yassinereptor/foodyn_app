@@ -1,17 +1,11 @@
 import 'dart:convert';
-import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:foodyn_rest/core/config/router/router.dart';
-import 'package:foodyn_rest/core/config/theme/input_decoration_theme.dart';
-import 'package:foodyn_rest/core/utils/theme_brightness.dart';
-import 'package:foodyn_rest/core/config/theme/global_theme.dart';
-import 'package:foodyn_rest/features/auth/presentation/bloc/auth_bloc/auth_bloc.dart';
-import 'package:foodyn_rest/features/auth/presentation/widgets/text_form_widget.dart';
+import '../../../../core/config/router/router.dart';
+import '../../../../core/config/theme/global_theme.dart';
+import 'text_form_widget.dart';
 import 'package:velocity_x/velocity_x.dart';
-import 'dart:math' as math;
 
 import 'bottom_sheet_widget.dart';
 

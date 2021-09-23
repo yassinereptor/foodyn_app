@@ -10,8 +10,8 @@ class TabsModel {
   TabsModel({
     required this.title,
     required this.icon,
-    this.subtitles = null,
-    this.body = null,
+    this.subtitles,
+    this.body,
     this.selected_subtitle = 0
   });
 }

@@ -3,13 +3,12 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:foodyn_rest/core/config/injectable/injection.dart';
-import 'package:foodyn_rest/core/config/router/router.dart';
-import 'package:foodyn_rest/core/config/theme/global_theme.dart';
-import 'package:foodyn_rest/core/utils/theme_brightness.dart';
-import 'package:foodyn_rest/features/auth/domain/entities/auth_failure.dart';
-import 'package:foodyn_rest/features/auth/presentation/bloc/auth_bloc/auth_bloc.dart';
-import 'package:foodyn_rest/features/auth/presentation/pages/login_page.dart';
+import 'package:foodyn_rest/core/domain/entities/auth_failure.dart';
+import '../../../../core/config/injectable/injection.dart';
+import '../../../../core/config/router/router.dart';
+import '../../../../core/config/theme/global_theme.dart';
+import '../../../../core/bloc/auth_bloc/auth_bloc.dart';
+import '../pages/login_page.dart';
 import 'package:seafarer/seafarer.dart';
 import 'package:velocity_x/velocity_x.dart';
 
@@ -17,8 +16,9 @@ class SliverAppBarWidget extends StatefulWidget {
   final bool logout;
   final bool back;
   final Color? color;
+  final BoxDecoration? decoration;
 
-  const SliverAppBarWidget({Key? key, this.logout = false, this.back = true, this.color = null})
+  const SliverAppBarWidget({Key? key, this.logout = false, this.back = true, this.color, this.decoration})
       : super(key: key);
 
   @override
@@ -70,6 +70,7 @@ class _SliverAppBarWidgetState extends State<SliverAppBarWidget> {
             floating: true,
             automaticallyImplyLeading: false,
             flexibleSpace: Container(
+              decoration: widget.decoration,
               padding: EdgeInsets.symmetric(horizontal: 20),
               child: FocusTraversalGroup(
                 policy: OrderedTraversalPolicy(),

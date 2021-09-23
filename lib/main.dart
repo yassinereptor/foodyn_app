@@ -6,8 +6,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:foodyn_rest/features/auth/presentation/pages/complete_register_page.dart';
-import 'package:foodyn_rest/features/dashboard/presentation/pages/dashboard_page.dart';
+import 'core/domain/entities/auth_failure.dart';
+import 'features/auth/presentation/pages/complete_register_page.dart';
+import 'features/dashboard/presentation/pages/dashboard_page.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:seafarer/seafarer.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -18,10 +19,9 @@ import 'core/config/theme/themes.dart';
 import 'core/l10n/l10n.dart';
 import 'core/utils/add_post_frame_callback.dart';
 import 'core/widgets/dialogs/jwt_expired_dialog.dart';
-import 'features/auth/domain/entities/auth_failure.dart';
 import 'features/auth/presentation/pages/choose_plan_page.dart';
 import 'features/languages/presentation/pages/languages_page.dart';
-import 'features/auth/presentation/bloc/auth_bloc/auth_bloc.dart';
+import 'core/bloc/auth_bloc/auth_bloc.dart';
 import 'features/splash/presentation/pages/splash_page.dart';
 import 'features/auth/presentation/pages/register_page.dart';
 
@@ -54,7 +54,6 @@ class _ApplicationState extends State<Application> {
   @override
   void initState() {
     addPostFrameCallback((_) {
-      // EyroToastSetup.shared.navigatorKey = Routes.seafarer.navigatorKey;
       final arLang = intl.DateFormat("", "ar");
       arLang.dateSymbols.ZERODIGIT = "0";
     });

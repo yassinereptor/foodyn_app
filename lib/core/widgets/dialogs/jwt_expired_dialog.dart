@@ -2,11 +2,9 @@ import 'dart:ui';
 
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
-import 'package:foodyn_rest/core/config/router/router.dart';
-import 'package:foodyn_rest/core/config/theme/global_theme.dart';
+import '../../config/router/router.dart';
+import '../../config/theme/global_theme.dart';
 import 'package:velocity_x/velocity_x.dart';
-
-import '../../l10n/l10n.dart';
 
 class JwtExpiredDialog extends StatefulWidget {
   const JwtExpiredDialog({

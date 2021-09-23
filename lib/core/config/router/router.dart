@@ -1,21 +1,23 @@
-import 'package:flutter/material.dart';
-import 'package:foodyn_rest/core/models/plan_model.dart';
-import 'package:foodyn_rest/features/dashboard/presentation/pages/dashboard_page.dart';
-import 'package:foodyn_rest/features/auth/presentation/pages/bank_card_page.dart';
-import 'package:foodyn_rest/features/auth/presentation/pages/bank_transfer_page.dart';
-import 'package:foodyn_rest/features/auth/presentation/pages/choose_payment_page.dart';
-import 'package:foodyn_rest/features/auth/presentation/pages/choose_plan_page.dart';
-import 'package:foodyn_rest/features/auth/presentation/pages/complete_register_page.dart';
-import 'package:foodyn_rest/features/auth/presentation/pages/forget_password_page.dart';
-import 'package:foodyn_rest/features/auth/presentation/pages/geolocation_page.dart';
-import 'package:foodyn_rest/features/auth/presentation/pages/learnmore_page.dart';
-import 'package:foodyn_rest/features/auth/presentation/pages/login_page.dart';
-import 'package:foodyn_rest/features/auth/presentation/pages/plan_page.dart';
-import 'package:foodyn_rest/features/auth/presentation/pages/register_image_page.dart';
-import 'package:foodyn_rest/features/auth/presentation/pages/register_page.dart';
+import 'package:foodyn_rest/core/data/models/coupon_model.dart';
+import 'package:foodyn_rest/core/data/models/plan_model.dart';
 
-import 'package:foodyn_rest/features/intro/presentation/pages/intro_page.dart';
-import 'package:foodyn_rest/features/auth/presentation/pages/verify_otp_page.dart';
+import '../../../features/auth/presentation/pages/payment_page.dart';
+import '../../../features/dashboard/presentation/pages/dashboard_page.dart';
+import '../../../features/auth/presentation/pages/bank_card_page.dart';
+import '../../../features/auth/presentation/pages/bank_transfer_page.dart';
+import '../../../features/auth/presentation/pages/choose_payment_page.dart';
+import '../../../features/auth/presentation/pages/choose_plan_page.dart';
+import '../../../features/auth/presentation/pages/complete_register_page.dart';
+import '../../../features/auth/presentation/pages/forget_password_page.dart';
+import '../../../features/auth/presentation/pages/geolocation_page.dart';
+import '../../../features/auth/presentation/pages/learnmore_page.dart';
+import '../../../features/auth/presentation/pages/login_page.dart';
+import '../../../features/auth/presentation/pages/plan_page.dart';
+import '../../../features/auth/presentation/pages/register_image_page.dart';
+import '../../../features/auth/presentation/pages/register_page.dart';
+
+import '../../../features/intro/presentation/pages/intro_page.dart';
+import '../../../features/auth/presentation/pages/verify_otp_page.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../features/languages/presentation/pages/languages_page.dart';
@@ -91,7 +93,28 @@ class Routes {
 
     seafarer.addRoute(SeafarerRoute(
       name: ChoosePaymentPage.kRouteName,
-      builder: (context, args, paramMap) => ChoosePaymentPage(),
+      params: [
+        SeafarerParam<PlanModel>(name: "plan"),
+        SeafarerParam<CouponModel?>(name: "coupon"),
+      ],
+      builder: (context, args, params) {
+        return ChoosePaymentPage(
+          plan: params.param("plan"),
+          coupon: params.param("coupon"),
+        );
+      },
+    ));
+
+    seafarer.addRoute(SeafarerRoute(
+      name: PaymentPage.kRouteName,
+      params: [
+        SeafarerParam<PlanModel>(name: "plan"),
+      ],
+      builder: (context, args, params) {
+        return PaymentPage(
+          plan: params.param("plan"),
+        );
+      },
     ));
 
     seafarer.addRoute(SeafarerRoute(

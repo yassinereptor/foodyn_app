@@ -7,7 +7,6 @@ class PlanQuery {
         description,
         monthPrice,
         yearPrice,
-        currency,
         primaryColor,
         accentColor,
         textColor,

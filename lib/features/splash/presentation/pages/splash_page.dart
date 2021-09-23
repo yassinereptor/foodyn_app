@@ -1,11 +1,7 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:foodyn_rest/core/utils/theme_brightness.dart';
-import 'package:foodyn_rest/core/config/theme/global_theme.dart';
-import 'package:foodyn_rest/features/auth/presentation/bloc/auth_bloc/auth_bloc.dart';
-import 'package:velocity_x/velocity_x.dart';
+import '../../../../core/utils/theme_brightness.dart';
+import '../../../../core/bloc/auth_bloc/auth_bloc.dart';
 
 class SplashPage extends StatefulWidget {
   static const kRouteName = "/";

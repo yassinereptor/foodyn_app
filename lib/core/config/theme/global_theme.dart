@@ -27,7 +27,7 @@ class GlobalTheme {
   static const kTransferColor = kOrangeColor;
   static const kPaypalColor = Color(0xff005EA6);
   static const kCardColor = Color(0xffF5B417);
-  static const kGooglePayColor = kGradient4Color2;
+  static const kGooglePayColor = kAccentDarkColor;
   static const kApplePayColor = Color(0xff2C2C2C);
 
 }

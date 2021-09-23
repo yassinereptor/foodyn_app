@@ -2,15 +2,12 @@ import 'dart:convert';
 
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:foodyn_rest/core/models/record_model.dart';
-import 'package:foodyn_rest/core/utils/global_utils.dart';
-import 'package:foodyn_rest/features/auth/domain/entities/auth_failure.dart';
+import 'package:foodyn_rest/core/data/models/record_model.dart';
+import 'package:foodyn_rest/core/domain/entities/auth_failure.dart';
 import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../../../core/error/exeptions.dart';
 
 abstract class ISettingsLocalDataSource {
   Future<Either<AuthFailure?, RecordModel>> loadSettings();

@@ -6,28 +6,21 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:foodyn_rest/core/config/injectable/injection.dart';
-import 'package:foodyn_rest/core/config/router/router.dart';
-import 'package:foodyn_rest/core/config/theme/input_decoration_theme.dart';
-import 'package:foodyn_rest/core/enums/image.type.dart';
-import 'package:foodyn_rest/core/utils/theme_brightness.dart';
-import 'package:foodyn_rest/core/widgets/modal_container_widget.dart';
-import 'package:foodyn_rest/features/auth/domain/entities/auth_failure.dart';
-import 'package:foodyn_rest/features/auth/presentation/bloc/profile_bloc/profile_bloc.dart';
-import 'package:foodyn_rest/features/dashboard/presentation/pages/dashboard_page.dart';
-import 'package:foodyn_rest/features/auth/presentation/widgets/sliver_app_bar_widget.dart';
-import 'package:foodyn_rest/features/auth/presentation/widgets/password_text_form_widget.dart';
-import 'package:foodyn_rest/features/auth/presentation/widgets/resend_email_widget.dart';
-import 'package:foodyn_rest/features/auth/presentation/widgets/text_form_widget.dart';
-import 'package:foodyn_rest/core/config/theme/global_theme.dart';
-import 'package:foodyn_rest/features/auth/presentation/bloc/auth_bloc/auth_bloc.dart';
+import 'package:foodyn_rest/core/domain/entities/auth_failure.dart';
+import '../../../../core/config/injectable/injection.dart';
+import '../../../../core/config/router/router.dart';
+import '../../../../core/enums/image.type.dart';
+import '../../../../core/utils/theme_brightness.dart';
+import '../../../../core/widgets/modal_container_widget.dart';
+import '../../../../core/bloc/profile_bloc/profile_bloc.dart';
+import '../widgets/sliver_app_bar_widget.dart';
+import '../widgets/resend_email_widget.dart';
+import '../../../../core/config/theme/global_theme.dart';
+import '../../../../core/bloc/auth_bloc/auth_bloc.dart';
 import 'package:mime/mime.dart';
-
 import 'package:velocity_x/velocity_x.dart';
 
 import 'choose_plan_page.dart';
-import 'learnmore_page.dart';
-import 'login_page.dart';
 
 class RegisterImagePage extends StatefulWidget {
   static const kRouteName = "/register-image";

@@ -1,23 +1,19 @@
-import 'dart:ui';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:foodyn_rest/core/config/router/router.dart';
-import 'package:foodyn_rest/core/config/theme/global_theme.dart';
-import 'package:foodyn_rest/core/utils/theme_brightness.dart';
-import 'package:velocity_x/velocity_x.dart';
+import '../../../../core/config/theme/global_theme.dart';
+import '../../../../core/utils/theme_brightness.dart';
 
 class CardViewWidget extends StatefulWidget {
   final String fullname;
   final String cardNumber;
   final String expireDate;
-  final String CCV;
+  final String ccv;
 
   const CardViewWidget({Key? key,
     required this.fullname,
     required this.cardNumber,
     required this.expireDate,
-    required this.CCV,
+    required this.ccv,
   }) : super(key: key);
 
   @override

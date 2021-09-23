@@ -3,17 +3,15 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:foodyn_rest/core/config/injectable/injection.dart';
-import 'package:foodyn_rest/core/config/router/router.dart';
-import 'package:foodyn_rest/core/config/theme/global_theme.dart';
-import 'package:foodyn_rest/core/models/user_model.dart';
-import 'package:foodyn_rest/core/utils/theme_brightness.dart';
-import 'package:foodyn_rest/features/auth/domain/entities/auth_failure.dart';
-import 'package:foodyn_rest/features/auth/presentation/bloc/auth_bloc/auth_bloc.dart';
-import 'package:foodyn_rest/features/auth/presentation/bloc/mail_bloc/mail_bloc.dart';
+import 'package:foodyn_rest/core/data/models/user_model.dart';
+import 'package:foodyn_rest/core/domain/entities/auth_failure.dart';
+import '../../../../core/config/injectable/injection.dart';
+import '../../../../core/config/theme/global_theme.dart';
+import '../../../../core/utils/theme_brightness.dart';
+import '../../../../core/bloc/auth_bloc/auth_bloc.dart';
+import '../../../../core/bloc/mail_bloc/mail_bloc.dart';
 import 'package:timer_count_down/timer_controller.dart';
 import 'package:timer_count_down/timer_count_down.dart';
-import 'package:velocity_x/velocity_x.dart';
 
 class ResendEmailWidget extends StatefulWidget {
   const ResendEmailWidget({Key? key}) : super(key: key);

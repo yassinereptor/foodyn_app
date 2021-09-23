@@ -1,14 +1,6 @@
-import 'dart:ui';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:foodyn_rest/core/config/router/router.dart';
-import 'package:foodyn_rest/core/config/theme/input_decoration_theme.dart';
-import 'package:foodyn_rest/core/utils/theme_brightness.dart';
-import 'package:foodyn_rest/core/config/theme/global_theme.dart';
-import 'package:foodyn_rest/features/auth/presentation/bloc/auth_bloc/auth_bloc.dart';
-import 'package:velocity_x/velocity_x.dart';
+import '../../../../core/config/theme/global_theme.dart';
 
 
 class TextFormWidget extends StatefulWidget {
@@ -19,7 +11,7 @@ class TextFormWidget extends StatefulWidget {
   final TextInputType keyboardType;
   final int? maxLength;
 
-  const TextFormWidget({Key? key, this.maxLength = null, required this.hint, required this.validator, this.controller = null, required this.onChanged, this.keyboardType = TextInputType.text}) : super(key: key);
+  const TextFormWidget({Key? key, this.maxLength, required this.hint, required this.validator, this.controller, required this.onChanged, this.keyboardType = TextInputType.text}) : super(key: key);
 
   @override
   _TextFormWidgetState createState() => _TextFormWidgetState();

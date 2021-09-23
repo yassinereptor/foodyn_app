@@ -1,41 +1,30 @@
 import 'dart:convert';
 import 'dart:ui';
 
-import 'package:direct_select_flutter/direct_select_container.dart';
-import 'package:direct_select_flutter/direct_select_item.dart';
-import 'package:direct_select_flutter/direct_select_list.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:foodyn_rest/core/config/injectable/injection.dart';
-import 'package:foodyn_rest/core/config/router/router.dart';
-import 'package:foodyn_rest/core/config/theme/input_decoration_theme.dart';
-import 'package:foodyn_rest/core/models/profile_model.dart';
-import 'package:foodyn_rest/core/utils/theme_brightness.dart';
-import 'package:foodyn_rest/core/widgets/modal_container_widget.dart';
-import 'package:foodyn_rest/features/auth/domain/entities/auth_failure.dart';
-import 'package:foodyn_rest/features/auth/presentation/bloc/auth_bloc/auth_bloc.dart';
-import 'package:foodyn_rest/features/auth/presentation/bloc/geolocation_bloc/geolocation_bloc.dart';
-import 'package:foodyn_rest/features/auth/presentation/bloc/profile_bloc/profile_bloc.dart';
-import 'package:foodyn_rest/features/auth/presentation/pages/geolocation_page.dart';
-import 'package:foodyn_rest/features/auth/presentation/pages/register_image_page.dart';
-import 'package:foodyn_rest/features/auth/presentation/pages/verify_otp_page.dart';
-import 'package:foodyn_rest/features/auth/presentation/widgets/sliver_app_bar_widget.dart';
-import 'package:foodyn_rest/features/auth/presentation/widgets/bottom_sheet_widget.dart';
-import 'package:foodyn_rest/features/auth/presentation/widgets/dropdown_form_widget.dart';
-import 'package:foodyn_rest/features/auth/presentation/widgets/geolocation_text_form_widget.dart';
-import 'package:foodyn_rest/features/auth/presentation/widgets/password_text_form_widget.dart';
-import 'package:foodyn_rest/features/auth/presentation/widgets/resend_email_widget.dart';
-import 'package:foodyn_rest/features/auth/presentation/widgets/text_form_widget.dart';
-import 'package:foodyn_rest/core/config/theme/global_theme.dart';
-import 'package:foodyn_rest/features/auth/presentation/bloc/auth_bloc/auth_bloc.dart';
+import 'package:foodyn_rest/core/data/models/profile_model.dart';
+import 'package:foodyn_rest/core/domain/entities/auth_failure.dart';
+import '../../../../core/config/injectable/injection.dart';
+import '../../../../core/config/router/router.dart';
+import '../../../../core/utils/theme_brightness.dart';
+import '../../../../core/widgets/modal_container_widget.dart';
+import '../../../../core/bloc/auth_bloc/auth_bloc.dart';
+import '../../../../core/bloc/geolocation_bloc/geolocation_bloc.dart';
+import '../../../../core/bloc/profile_bloc/profile_bloc.dart';
+import 'geolocation_page.dart';
+import 'register_image_page.dart';
+import 'verify_otp_page.dart';
+import '../widgets/sliver_app_bar_widget.dart';
+import '../widgets/dropdown_form_widget.dart';
+import '../widgets/geolocation_text_form_widget.dart';
+import '../widgets/resend_email_widget.dart';
+import '../widgets/text_form_widget.dart';
+import '../../../../core/config/theme/global_theme.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:velocity_x/velocity_x.dart';
-
-import 'choose_plan_page.dart';
-import 'learnmore_page.dart';
-import 'login_page.dart';
 
 class CompleteRegisterPage extends StatefulWidget {
   static const kRouteName = "/complete-register";
@@ -104,21 +93,34 @@ class _CompleteRegisterPageState extends State<CompleteRegisterPage> {
     if (_authBloc.state.user != null && _authBloc.state.user!.profile != null) {
       ProfileModel profileModel = _authBloc.state.user!.profile!;
       _fullnameTextEditingController.text = profileModel.fullname!;
-       _adresseTextEditingController.text = (profileModel.adresse != null) ? profileModel.adresse! : "";
-      _selectedDialCodeIndex = (profileModel.dialCode != null) ? profileModel.dialCode! : 145;
-       _phoneNumberTextEditingController.text = (profileModel.phoneNumber != null) ? profileModel.phoneNumber! : "";
-      _selectedCountryIndex = (profileModel.country != null) ? profileModel.country! : 145;
-      _cityTextEditingController.text = (profileModel.city != null) ? profileModel.city! : "";
-      _zipCodeTextEditingController.text = (profileModel.zipCode != null) ? profileModel.zipCode!.toString() : "";
-      _selectedGenderIndex = (profileModel.gender != null) ? profileModel.gender! : 0;
-      _selectedMarker = (profileModel.posLat != null && profileModel.posLng != null) ? new LatLng(profileModel.posLat!, profileModel.posLng!) : null;
+      _adresseTextEditingController.text =
+          (profileModel.adresse != null) ? profileModel.adresse! : "";
+      _selectedDialCodeIndex =
+          (profileModel.dialCode != null) ? profileModel.dialCode! : 145;
+      _phoneNumberTextEditingController.text =
+          (profileModel.phoneNumber != null) ? profileModel.phoneNumber! : "";
+      _selectedCountryIndex =
+          (profileModel.country != null) ? profileModel.country! : 145;
+      _cityTextEditingController.text =
+          (profileModel.city != null) ? profileModel.city! : "";
+      _zipCodeTextEditingController.text = (profileModel.zipCode != null)
+          ? profileModel.zipCode!.toString()
+          : "";
+      _selectedGenderIndex =
+          (profileModel.gender != null) ? profileModel.gender! : 0;
+      _selectedMarker =
+          (profileModel.posLat != null && profileModel.posLng != null)
+              ? new LatLng(profileModel.posLat!, profileModel.posLng!)
+              : null;
     }
   }
 
   void _onCompleteRegister() {
     // Validate returns true if the form is valid, or false otherwise.
     if (_formKey.currentState!.validate() && _authBloc.state.user != null) {
-      _profileModel.id = (_authBloc.state.user!.profile != null) ? _authBloc.state.user!.profile!.id : null;
+      _profileModel.id = (_authBloc.state.user!.profile != null)
+          ? _authBloc.state.user!.profile!.id
+          : null;
       _profileModel.fullname = (_fullnameTextEditingController.text.isEmpty)
           ? null
           : _fullnameTextEditingController.text;
@@ -161,8 +163,7 @@ class _CompleteRegisterPageState extends State<CompleteRegisterPage> {
         _addMarker(latLng);
         _isFirsttimeMap = false;
       });
-    }
-    else {
+    } else {
       setState(() {
         _selectedMarker = null;
         _isFirsttimeMap = true;
@@ -196,39 +197,39 @@ class _CompleteRegisterPageState extends State<CompleteRegisterPage> {
     super.dispose();
   }
 
-  
-  void _onTypeloadingInProgress () {
-    
+  void _onTypeloadingInProgress() {
+    setState(() {
+      _showModal = true;
+      _modalType = ModalContainerType.LOADING;
+    });
   }
 
-  void _onTypeloadingSuccess () {
-  }
+  void _onTypeloadingSuccess() {}
 
-  void _onTypeloadingProfileSuccess (ProfileModel? profile) {
+  void _onTypeloadingProfileSuccess(ProfileModel? profile) {
     _authBloc.state.user!.profile = profile;
     setState(() {
-        _modalType = ModalContainerType.SUCCESS;
+      _modalType = ModalContainerType.SUCCESS;
     });
-      Future.delayed(Duration(milliseconds: 2000), () {
-        setState(() {
-          _showModal = false;
-          _modalType = ModalContainerType.LOADING;
+    Future.delayed(Duration(milliseconds: 2000), () {
+      setState(() {
+        _showModal = false;
+        _modalType = ModalContainerType.LOADING;
+      });
+      if (_phoneNumberTextEditingController.text.isEmpty) {
+        Routes.seafarer.navigate(RegisterImagePage.kRouteName);
+      } else {
+        Routes.seafarer.navigate(VerifyOtpPage.kRouteName, params: {
+          "title": "Verify Phone Number",
+          "logout": true,
+          "onSuccess": _onSuccess,
+          "onError": _onError,
         });
-        if (_phoneNumberTextEditingController.text.isEmpty) {
-          Routes.seafarer.navigate(RegisterImagePage.kRouteName);
-        } else {
-          Routes.seafarer.navigate(VerifyOtpPage.kRouteName, params: {
-            "title": "Verify Phone Number",
-            "logout": true,
-            "onSuccess": _onSuccess,
-            "onError": _onError,
-          });
-        }
+      }
     });
-    
   }
 
-  void _onTypeloadingFailure (AuthFailure failure) {
+  void _onTypeloadingFailure(AuthFailure failure) {
     setState(() {
       _modalType = ModalContainerType.FAILURE;
     });
@@ -266,12 +267,11 @@ class _CompleteRegisterPageState extends State<CompleteRegisterPage> {
             BlocListener<ProfileBloc, ProfileState>(
               listener: (context, state) {
                 state.maybeWhen(
-                  loadingInProgress: _onTypeloadingInProgress,
-                  loadingSuccess: _onTypeloadingSuccess,
-                  loadingProfileSuccess: _onTypeloadingProfileSuccess,
-                  loadingFailed: _onTypeloadingFailure,
-                  orElse: (){}
-                );
+                    loadingInProgress: _onTypeloadingInProgress,
+                    loadingSuccess: _onTypeloadingSuccess,
+                    loadingProfileSuccess: _onTypeloadingProfileSuccess,
+                    loadingFailed: _onTypeloadingFailure,
+                    orElse: () {});
               },
             ),
             BlocListener<GeolocationBloc, GeolocationState>(
@@ -282,8 +282,7 @@ class _CompleteRegisterPageState extends State<CompleteRegisterPage> {
                       _addMarker(latlng);
                       _isFirsttimeMap = false;
                     },
-                    getGeolocationFailed: (failure) {
-                    },
+                    getGeolocationFailed: (failure) {},
                     orElse: () {});
               },
             ),
@@ -315,13 +314,13 @@ class _CompleteRegisterPageState extends State<CompleteRegisterPage> {
 
             return Scaffold(
                 body: ModalContainerWidget(
-                onLoading: _modalReset,
-                onSucceed: _modalReset,
-                onFailed: _modalReset,
-                type: _modalType,
-                show: _showModal,
-                child: SafeArea(
-                              child: CustomScrollView(
+              onLoading: _modalReset,
+              onSucceed: _modalReset,
+              onFailed: _modalReset,
+              type: _modalType,
+              show: _showModal,
+              child: SafeArea(
+                child: CustomScrollView(
                   shrinkWrap: true,
                   slivers: [
                     SliverAppBarWidget(logout: true, back: false),
@@ -384,15 +383,16 @@ class _CompleteRegisterPageState extends State<CompleteRegisterPage> {
                                                 child: DropdownFormWidget(
                                                   onSelect: (index) =>
                                                       setState(() {
-                                                    _selectedGenderIndex = index;
+                                                    _selectedGenderIndex =
+                                                        index;
                                                   }),
                                                   list: _genderList,
                                                   defaultIndex:
                                                       _selectedGenderIndex,
                                                   modifyListOutput: (text) =>
                                                       text,
-                                                  modifySelectedOutput: (text) =>
-                                                      text,
+                                                  modifySelectedOutput:
+                                                      (text) => text,
                                                   searchForm: false,
                                                 )),
                                           ),
@@ -475,8 +475,8 @@ class _CompleteRegisterPageState extends State<CompleteRegisterPage> {
                                                 borderRadius:
                                                     BorderRadius.circular(10),
                                                 border: Border.all(
-                                                    color:
-                                                        GlobalTheme.kOrangeColor,
+                                                    color: GlobalTheme
+                                                        .kOrangeColor,
                                                     width: 1)),
                                             child: ClipRRect(
                                               borderRadius:
@@ -494,9 +494,12 @@ class _CompleteRegisterPageState extends State<CompleteRegisterPage> {
                                                   child: Stack(children: [
                                                     GoogleMap(
                                                       liteModeEnabled: true,
-                                                      zoomControlsEnabled: false,
-                                                      zoomGesturesEnabled: false,
-                                                      onMapCreated: _onMapCreated,
+                                                      zoomControlsEnabled:
+                                                          false,
+                                                      zoomGesturesEnabled:
+                                                          false,
+                                                      onMapCreated:
+                                                          _onMapCreated,
                                                       markers:
                                                           _markersList.toSet(),
                                                       initialCameraPosition:
@@ -515,10 +518,12 @@ class _CompleteRegisterPageState extends State<CompleteRegisterPage> {
                                                         ? InkWell(
                                                             onTap:
                                                                 _getGeolocation,
-                                                            child: BackdropFilter(
+                                                            child:
+                                                                BackdropFilter(
                                                               filter: ImageFilter
                                                                   .blur(
-                                                                      sigmaX: 5.0,
+                                                                      sigmaX:
+                                                                          5.0,
                                                                       sigmaY:
                                                                           5.0),
                                                               child: Container(
@@ -670,9 +675,9 @@ class _CompleteRegisterPageState extends State<CompleteRegisterPage> {
                       ),
                     )
                   ],
-                              ),
-                            ),
-                ));
+                ),
+              ),
+            ));
           }),
         ));
   }

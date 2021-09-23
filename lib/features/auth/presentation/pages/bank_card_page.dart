@@ -2,22 +2,15 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:foodyn_rest/core/config/router/router.dart';
-import 'package:foodyn_rest/core/config/theme/input_decoration_theme.dart';
-import 'package:foodyn_rest/core/utils/theme_brightness.dart';
-import 'package:foodyn_rest/features/dashboard/presentation/pages/dashboard_page.dart';
-import 'package:foodyn_rest/features/auth/presentation/widgets/sliver_app_bar_widget.dart';
-import 'package:foodyn_rest/features/auth/presentation/widgets/password_text_form_widget.dart';
-import 'package:foodyn_rest/features/auth/presentation/widgets/resend_email_widget.dart';
-import 'package:foodyn_rest/features/auth/presentation/widgets/text_form_widget.dart';
-import 'package:foodyn_rest/core/config/theme/global_theme.dart';
-import 'package:foodyn_rest/features/auth/presentation/bloc/auth_bloc/auth_bloc.dart';
+import '../../../../core/config/router/router.dart';
+import '../../../../core/utils/theme_brightness.dart';
+import '../../../dashboard/presentation/pages/dashboard_page.dart';
+import '../widgets/sliver_app_bar_widget.dart';
+import '../widgets/resend_email_widget.dart';
+import '../widgets/text_form_widget.dart';
+import '../../../../core/config/theme/global_theme.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'package:awesome_card/awesome_card.dart';
-import 'choose_plan_page.dart';
-import 'learnmore_page.dart';
-import 'login_page.dart';
 
 class BankCardPage extends StatefulWidget {
   static const kRouteName = "/bank-card";

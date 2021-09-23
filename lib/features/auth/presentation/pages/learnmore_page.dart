@@ -2,17 +2,9 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:foodyn_rest/core/config/router/router.dart';
-import 'package:foodyn_rest/core/config/theme/input_decoration_theme.dart';
-import 'package:foodyn_rest/core/utils/theme_brightness.dart';
-import 'package:foodyn_rest/features/auth/presentation/pages/register_page.dart';
-import 'package:foodyn_rest/features/auth/presentation/widgets/sliver_app_bar_widget.dart';
-import 'package:foodyn_rest/features/auth/presentation/widgets/password_text_form_widget.dart';
-import 'package:foodyn_rest/features/auth/presentation/widgets/text_form_widget.dart';
-import 'package:foodyn_rest/core/config/theme/global_theme.dart';
-import 'package:foodyn_rest/features/auth/presentation/bloc/auth_bloc/auth_bloc.dart';
-import 'package:velocity_x/velocity_x.dart';
+import '../../../../core/utils/theme_brightness.dart';
+import '../widgets/sliver_app_bar_widget.dart';
+import '../../../../core/config/theme/global_theme.dart';
 
 class LearnmorePage extends StatefulWidget {
   static const kRouteName = "/learnmore";

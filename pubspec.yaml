@@ -63,7 +63,7 @@ dependencies:
   # throughout the applicaiton.
   flutter_dotenv: ^5.0.0
   # Pull to Refresh swipe indicator
-  pull_to_refresh: ^1.6.4
+  pull_to_refresh: ^2.0.0
   sprintf: "^5.0.0"
   geolocator: ^7.0.1
   # A simple yet powerful Flutter plugin for showing Toast at Android and iOS.
@@ -94,6 +94,7 @@ dependencies:
   flare_flutter: ^3.0.2
   timer_count_down: ^2.2.0
   mime: ^1.0.0
+  cached_network_image: ^3.1.0
 
 dev_dependencies:
   flutter_test:
