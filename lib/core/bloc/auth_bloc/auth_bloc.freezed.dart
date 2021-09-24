@@ -47,12 +47,6 @@ class _$AuthEventTearOff {
   _Logout logout() {
     return _Logout();
   }
-
-  _SetLanguage setLanguage(String lang) {
-    return _SetLanguage(
-      lang,
-    );
-  }
 }
 
 /// @nodoc
@@ -68,7 +62,6 @@ mixin _$AuthEvent {
     required TResult Function(String email) forgetPassword,
     required TResult Function() jwtIsExpired,
     required TResult Function() logout,
-    required TResult Function(String lang) setLanguage,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -79,7 +72,6 @@ mixin _$AuthEvent {
     TResult Function(String email)? forgetPassword,
     TResult Function()? jwtIsExpired,
     TResult Function()? logout,
-    TResult Function(String lang)? setLanguage,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -91,7 +83,6 @@ mixin _$AuthEvent {
     required TResult Function(_ForgetPassword value) forgetPassword,
     required TResult Function(_JwtIsExpired value) jwtIsExpired,
     required TResult Function(_Logout value) logout,
-    required TResult Function(_SetLanguage value) setLanguage,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -102,7 +93,6 @@ mixin _$AuthEvent {
     TResult Function(_ForgetPassword value)? forgetPassword,
     TResult Function(_JwtIsExpired value)? jwtIsExpired,
     TResult Function(_Logout value)? logout,
-    TResult Function(_SetLanguage value)? setLanguage,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -166,7 +156,6 @@ class _$_Started implements _Started {
     required TResult Function(String email) forgetPassword,
     required TResult Function() jwtIsExpired,
     required TResult Function() logout,
-    required TResult Function(String lang) setLanguage,
   }) {
     return started();
   }
@@ -180,7 +169,6 @@ class _$_Started implements _Started {
     TResult Function(String email)? forgetPassword,
     TResult Function()? jwtIsExpired,
     TResult Function()? logout,
-    TResult Function(String lang)? setLanguage,
     required TResult orElse(),
   }) {
     if (started != null) {
@@ -198,7 +186,6 @@ class _$_Started implements _Started {
     required TResult Function(_ForgetPassword value) forgetPassword,
     required TResult Function(_JwtIsExpired value) jwtIsExpired,
     required TResult Function(_Logout value) logout,
-    required TResult Function(_SetLanguage value) setLanguage,
   }) {
     return started(this);
   }
@@ -212,7 +199,6 @@ class _$_Started implements _Started {
     TResult Function(_ForgetPassword value)? forgetPassword,
     TResult Function(_JwtIsExpired value)? jwtIsExpired,
     TResult Function(_Logout value)? logout,
-    TResult Function(_SetLanguage value)? setLanguage,
     required TResult orElse(),
   }) {
     if (started != null) {
@@ -306,7 +292,6 @@ class _$_Login implements _Login {
     required TResult Function(String email) forgetPassword,
     required TResult Function() jwtIsExpired,
     required TResult Function() logout,
-    required TResult Function(String lang) setLanguage,
   }) {
     return login(email, password);
   }
@@ -320,7 +305,6 @@ class _$_Login implements _Login {
     TResult Function(String email)? forgetPassword,
     TResult Function()? jwtIsExpired,
     TResult Function()? logout,
-    TResult Function(String lang)? setLanguage,
     required TResult orElse(),
   }) {
     if (login != null) {
@@ -338,7 +322,6 @@ class _$_Login implements _Login {
     required TResult Function(_ForgetPassword value) forgetPassword,
     required TResult Function(_JwtIsExpired value) jwtIsExpired,
     required TResult Function(_Logout value) logout,
-    required TResult Function(_SetLanguage value) setLanguage,
   }) {
     return login(this);
   }
@@ -352,7 +335,6 @@ class _$_Login implements _Login {
     TResult Function(_ForgetPassword value)? forgetPassword,
     TResult Function(_JwtIsExpired value)? jwtIsExpired,
     TResult Function(_Logout value)? logout,
-    TResult Function(_SetLanguage value)? setLanguage,
     required TResult orElse(),
   }) {
     if (login != null) {
@@ -451,7 +433,6 @@ class _$_Register implements _Register {
     required TResult Function(String email) forgetPassword,
     required TResult Function() jwtIsExpired,
     required TResult Function() logout,
-    required TResult Function(String lang) setLanguage,
   }) {
     return register(email, password);
   }
@@ -465,7 +446,6 @@ class _$_Register implements _Register {
     TResult Function(String email)? forgetPassword,
     TResult Function()? jwtIsExpired,
     TResult Function()? logout,
-    TResult Function(String lang)? setLanguage,
     required TResult orElse(),
   }) {
     if (register != null) {
@@ -483,7 +463,6 @@ class _$_Register implements _Register {
     required TResult Function(_ForgetPassword value) forgetPassword,
     required TResult Function(_JwtIsExpired value) jwtIsExpired,
     required TResult Function(_Logout value) logout,
-    required TResult Function(_SetLanguage value) setLanguage,
   }) {
     return register(this);
   }
@@ -497,7 +476,6 @@ class _$_Register implements _Register {
     TResult Function(_ForgetPassword value)? forgetPassword,
     TResult Function(_JwtIsExpired value)? jwtIsExpired,
     TResult Function(_Logout value)? logout,
-    TResult Function(_SetLanguage value)? setLanguage,
     required TResult orElse(),
   }) {
     if (register != null) {
@@ -587,7 +565,6 @@ class _$_ForgetPassword implements _ForgetPassword {
     required TResult Function(String email) forgetPassword,
     required TResult Function() jwtIsExpired,
     required TResult Function() logout,
-    required TResult Function(String lang) setLanguage,
   }) {
     return forgetPassword(email);
   }
@@ -601,7 +578,6 @@ class _$_ForgetPassword implements _ForgetPassword {
     TResult Function(String email)? forgetPassword,
     TResult Function()? jwtIsExpired,
     TResult Function()? logout,
-    TResult Function(String lang)? setLanguage,
     required TResult orElse(),
   }) {
     if (forgetPassword != null) {
@@ -619,7 +595,6 @@ class _$_ForgetPassword implements _ForgetPassword {
     required TResult Function(_ForgetPassword value) forgetPassword,
     required TResult Function(_JwtIsExpired value) jwtIsExpired,
     required TResult Function(_Logout value) logout,
-    required TResult Function(_SetLanguage value) setLanguage,
   }) {
     return forgetPassword(this);
   }
@@ -633,7 +608,6 @@ class _$_ForgetPassword implements _ForgetPassword {
     TResult Function(_ForgetPassword value)? forgetPassword,
     TResult Function(_JwtIsExpired value)? jwtIsExpired,
     TResult Function(_Logout value)? logout,
-    TResult Function(_SetLanguage value)? setLanguage,
     required TResult orElse(),
   }) {
     if (forgetPassword != null) {
@@ -697,7 +671,6 @@ class _$_JwtIsExpired implements _JwtIsExpired {
     required TResult Function(String email) forgetPassword,
     required TResult Function() jwtIsExpired,
     required TResult Function() logout,
-    required TResult Function(String lang) setLanguage,
   }) {
     return jwtIsExpired();
   }
@@ -711,7 +684,6 @@ class _$_JwtIsExpired implements _JwtIsExpired {
     TResult Function(String email)? forgetPassword,
     TResult Function()? jwtIsExpired,
     TResult Function()? logout,
-    TResult Function(String lang)? setLanguage,
     required TResult orElse(),
   }) {
     if (jwtIsExpired != null) {
@@ -729,7 +701,6 @@ class _$_JwtIsExpired implements _JwtIsExpired {
     required TResult Function(_ForgetPassword value) forgetPassword,
     required TResult Function(_JwtIsExpired value) jwtIsExpired,
     required TResult Function(_Logout value) logout,
-    required TResult Function(_SetLanguage value) setLanguage,
   }) {
     return jwtIsExpired(this);
   }
@@ -743,7 +714,6 @@ class _$_JwtIsExpired implements _JwtIsExpired {
     TResult Function(_ForgetPassword value)? forgetPassword,
     TResult Function(_JwtIsExpired value)? jwtIsExpired,
     TResult Function(_Logout value)? logout,
-    TResult Function(_SetLanguage value)? setLanguage,
     required TResult orElse(),
   }) {
     if (jwtIsExpired != null) {
@@ -800,7 +770,6 @@ class _$_Logout implements _Logout {
     required TResult Function(String email) forgetPassword,
     required TResult Function() jwtIsExpired,
     required TResult Function() logout,
-    required TResult Function(String lang) setLanguage,
   }) {
     return logout();
   }
@@ -814,7 +783,6 @@ class _$_Logout implements _Logout {
     TResult Function(String email)? forgetPassword,
     TResult Function()? jwtIsExpired,
     TResult Function()? logout,
-    TResult Function(String lang)? setLanguage,
     required TResult orElse(),
   }) {
     if (logout != null) {
@@ -832,7 +800,6 @@ class _$_Logout implements _Logout {
     required TResult Function(_ForgetPassword value) forgetPassword,
     required TResult Function(_JwtIsExpired value) jwtIsExpired,
     required TResult Function(_Logout value) logout,
-    required TResult Function(_SetLanguage value) setLanguage,
   }) {
     return logout(this);
   }
@@ -846,7 +813,6 @@ class _$_Logout implements _Logout {
     TResult Function(_ForgetPassword value)? forgetPassword,
     TResult Function(_JwtIsExpired value)? jwtIsExpired,
     TResult Function(_Logout value)? logout,
-    TResult Function(_SetLanguage value)? setLanguage,
     required TResult orElse(),
   }) {
     if (logout != null) {
@@ -858,141 +824,6 @@ class _$_Logout implements _Logout {
 
 abstract class _Logout implements AuthEvent {
   factory _Logout() = _$_Logout;
-}
-
-/// @nodoc
-abstract class _$SetLanguageCopyWith<$Res> {
-  factory _$SetLanguageCopyWith(
-          _SetLanguage value, $Res Function(_SetLanguage) then) =
-      __$SetLanguageCopyWithImpl<$Res>;
-  $Res call({String lang});
-}
-
-/// @nodoc
-class __$SetLanguageCopyWithImpl<$Res> extends _$AuthEventCopyWithImpl<$Res>
-    implements _$SetLanguageCopyWith<$Res> {
-  __$SetLanguageCopyWithImpl(
-      _SetLanguage _value, $Res Function(_SetLanguage) _then)
-      : super(_value, (v) => _then(v as _SetLanguage));
-
-  @override
-  _SetLanguage get _value => super._value as _SetLanguage;
-
-  @override
-  $Res call({
-    Object? lang = freezed,
-  }) {
-    return _then(_SetLanguage(
-      lang == freezed
-          ? _value.lang
-          : lang // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$_SetLanguage implements _SetLanguage {
-  _$_SetLanguage(this.lang);
-
-  @override
-  final String lang;
-
-  @override
-  String toString() {
-    return 'AuthEvent.setLanguage(lang: $lang)';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other is _SetLanguage &&
-            (identical(other.lang, lang) ||
-                const DeepCollectionEquality().equals(other.lang, lang)));
-  }
-
-  @override
-  int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(lang);
-
-  @JsonKey(ignore: true)
-  @override
-  _$SetLanguageCopyWith<_SetLanguage> get copyWith =>
-      __$SetLanguageCopyWithImpl<_SetLanguage>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() started,
-    required TResult Function(String email, String password) login,
-    required TResult Function(String email, String password) register,
-    required TResult Function(String email) forgetPassword,
-    required TResult Function() jwtIsExpired,
-    required TResult Function() logout,
-    required TResult Function(String lang) setLanguage,
-  }) {
-    return setLanguage(lang);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? started,
-    TResult Function(String email, String password)? login,
-    TResult Function(String email, String password)? register,
-    TResult Function(String email)? forgetPassword,
-    TResult Function()? jwtIsExpired,
-    TResult Function()? logout,
-    TResult Function(String lang)? setLanguage,
-    required TResult orElse(),
-  }) {
-    if (setLanguage != null) {
-      return setLanguage(lang);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Started value) started,
-    required TResult Function(_Login value) login,
-    required TResult Function(_Register value) register,
-    required TResult Function(_ForgetPassword value) forgetPassword,
-    required TResult Function(_JwtIsExpired value) jwtIsExpired,
-    required TResult Function(_Logout value) logout,
-    required TResult Function(_SetLanguage value) setLanguage,
-  }) {
-    return setLanguage(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Started value)? started,
-    TResult Function(_Login value)? login,
-    TResult Function(_Register value)? register,
-    TResult Function(_ForgetPassword value)? forgetPassword,
-    TResult Function(_JwtIsExpired value)? jwtIsExpired,
-    TResult Function(_Logout value)? logout,
-    TResult Function(_SetLanguage value)? setLanguage,
-    required TResult orElse(),
-  }) {
-    if (setLanguage != null) {
-      return setLanguage(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _SetLanguage implements AuthEvent {
-  factory _SetLanguage(String lang) = _$_SetLanguage;
-
-  String get lang => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
-  _$SetLanguageCopyWith<_SetLanguage> get copyWith =>
-      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -1259,7 +1090,7 @@ class _$AuthStateTypeTearOff {
     return const _LoadingSuccess();
   }
 
-  _LoadingFailed loadingFailed(AuthFailure failure) {
+  _LoadingFailed loadingFailed(AppFailure failure) {
     return _LoadingFailed(
       failure,
     );
@@ -1280,7 +1111,7 @@ mixin _$AuthStateType {
     required TResult Function() initial,
     required TResult Function() loadingInProgress,
     required TResult Function() loadingSuccess,
-    required TResult Function(AuthFailure failure) loadingFailed,
+    required TResult Function(AppFailure failure) loadingFailed,
     required TResult Function() logedOut,
   }) =>
       throw _privateConstructorUsedError;
@@ -1289,7 +1120,7 @@ mixin _$AuthStateType {
     TResult Function()? initial,
     TResult Function()? loadingInProgress,
     TResult Function()? loadingSuccess,
-    TResult Function(AuthFailure failure)? loadingFailed,
+    TResult Function(AppFailure failure)? loadingFailed,
     TResult Function()? logedOut,
     required TResult orElse(),
   }) =>
@@ -1372,7 +1203,7 @@ class _$_Initial implements _Initial {
     required TResult Function() initial,
     required TResult Function() loadingInProgress,
     required TResult Function() loadingSuccess,
-    required TResult Function(AuthFailure failure) loadingFailed,
+    required TResult Function(AppFailure failure) loadingFailed,
     required TResult Function() logedOut,
   }) {
     return initial();
@@ -1384,7 +1215,7 @@ class _$_Initial implements _Initial {
     TResult Function()? initial,
     TResult Function()? loadingInProgress,
     TResult Function()? loadingSuccess,
-    TResult Function(AuthFailure failure)? loadingFailed,
+    TResult Function(AppFailure failure)? loadingFailed,
     TResult Function()? logedOut,
     required TResult orElse(),
   }) {
@@ -1470,7 +1301,7 @@ class _$_LoadingInProgress implements _LoadingInProgress {
     required TResult Function() initial,
     required TResult Function() loadingInProgress,
     required TResult Function() loadingSuccess,
-    required TResult Function(AuthFailure failure) loadingFailed,
+    required TResult Function(AppFailure failure) loadingFailed,
     required TResult Function() logedOut,
   }) {
     return loadingInProgress();
@@ -1482,7 +1313,7 @@ class _$_LoadingInProgress implements _LoadingInProgress {
     TResult Function()? initial,
     TResult Function()? loadingInProgress,
     TResult Function()? loadingSuccess,
-    TResult Function(AuthFailure failure)? loadingFailed,
+    TResult Function(AppFailure failure)? loadingFailed,
     TResult Function()? logedOut,
     required TResult orElse(),
   }) {
@@ -1568,7 +1399,7 @@ class _$_LoadingSuccess implements _LoadingSuccess {
     required TResult Function() initial,
     required TResult Function() loadingInProgress,
     required TResult Function() loadingSuccess,
-    required TResult Function(AuthFailure failure) loadingFailed,
+    required TResult Function(AppFailure failure) loadingFailed,
     required TResult Function() logedOut,
   }) {
     return loadingSuccess();
@@ -1580,7 +1411,7 @@ class _$_LoadingSuccess implements _LoadingSuccess {
     TResult Function()? initial,
     TResult Function()? loadingInProgress,
     TResult Function()? loadingSuccess,
-    TResult Function(AuthFailure failure)? loadingFailed,
+    TResult Function(AppFailure failure)? loadingFailed,
     TResult Function()? logedOut,
     required TResult orElse(),
   }) {
@@ -1628,9 +1459,9 @@ abstract class _$LoadingFailedCopyWith<$Res> {
   factory _$LoadingFailedCopyWith(
           _LoadingFailed value, $Res Function(_LoadingFailed) then) =
       __$LoadingFailedCopyWithImpl<$Res>;
-  $Res call({AuthFailure failure});
+  $Res call({AppFailure failure});
 
-  $AuthFailureCopyWith<$Res> get failure;
+  $AppFailureCopyWith<$Res> get failure;
 }
 
 /// @nodoc
@@ -1652,13 +1483,13 @@ class __$LoadingFailedCopyWithImpl<$Res>
       failure == freezed
           ? _value.failure
           : failure // ignore: cast_nullable_to_non_nullable
-              as AuthFailure,
+              as AppFailure,
     ));
   }
 
   @override
-  $AuthFailureCopyWith<$Res> get failure {
-    return $AuthFailureCopyWith<$Res>(_value.failure, (value) {
+  $AppFailureCopyWith<$Res> get failure {
+    return $AppFailureCopyWith<$Res>(_value.failure, (value) {
       return _then(_value.copyWith(failure: value));
     });
   }
@@ -1670,7 +1501,7 @@ class _$_LoadingFailed implements _LoadingFailed {
   const _$_LoadingFailed(this.failure);
 
   @override
-  final AuthFailure failure;
+  final AppFailure failure;
 
   @override
   String toString() {
@@ -1700,7 +1531,7 @@ class _$_LoadingFailed implements _LoadingFailed {
     required TResult Function() initial,
     required TResult Function() loadingInProgress,
     required TResult Function() loadingSuccess,
-    required TResult Function(AuthFailure failure) loadingFailed,
+    required TResult Function(AppFailure failure) loadingFailed,
     required TResult Function() logedOut,
   }) {
     return loadingFailed(failure);
@@ -1712,7 +1543,7 @@ class _$_LoadingFailed implements _LoadingFailed {
     TResult Function()? initial,
     TResult Function()? loadingInProgress,
     TResult Function()? loadingSuccess,
-    TResult Function(AuthFailure failure)? loadingFailed,
+    TResult Function(AppFailure failure)? loadingFailed,
     TResult Function()? logedOut,
     required TResult orElse(),
   }) {
@@ -1752,9 +1583,9 @@ class _$_LoadingFailed implements _LoadingFailed {
 }
 
 abstract class _LoadingFailed implements AuthStateType {
-  const factory _LoadingFailed(AuthFailure failure) = _$_LoadingFailed;
+  const factory _LoadingFailed(AppFailure failure) = _$_LoadingFailed;
 
-  AuthFailure get failure => throw _privateConstructorUsedError;
+  AppFailure get failure => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   _$LoadingFailedCopyWith<_LoadingFailed> get copyWith =>
       throw _privateConstructorUsedError;
@@ -1800,7 +1631,7 @@ class _$_LogedOut implements _LogedOut {
     required TResult Function() initial,
     required TResult Function() loadingInProgress,
     required TResult Function() loadingSuccess,
-    required TResult Function(AuthFailure failure) loadingFailed,
+    required TResult Function(AppFailure failure) loadingFailed,
     required TResult Function() logedOut,
   }) {
     return logedOut();
@@ -1812,7 +1643,7 @@ class _$_LogedOut implements _LogedOut {
     TResult Function()? initial,
     TResult Function()? loadingInProgress,
     TResult Function()? loadingSuccess,
-    TResult Function(AuthFailure failure)? loadingFailed,
+    TResult Function(AppFailure failure)? loadingFailed,
     TResult Function()? logedOut,
     required TResult orElse(),
   }) {

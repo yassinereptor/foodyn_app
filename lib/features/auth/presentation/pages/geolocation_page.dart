@@ -4,6 +4,7 @@ import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../core/config/injectable/injection.dart';
 import '../../../../core/config/router/router.dart';
 import '../../../../core/utils/theme_brightness.dart';
 import '../../../../core/bloc/geolocation_bloc/geolocation_bloc.dart';
@@ -37,7 +38,7 @@ class _GeolocationPageState extends State<GeolocationPage> {
   @override
   void initState() {
     super.initState();
-    _geolocationBloc = GeolocationBloc();
+    _geolocationBloc = getIt<GeolocationBloc>();
     _center = LatLng(31.6298, -8.0101);
   }
 

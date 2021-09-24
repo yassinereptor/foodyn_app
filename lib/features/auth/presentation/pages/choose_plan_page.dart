@@ -3,18 +3,18 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:foodyn_rest/core/data/models/plan_model.dart';
-import 'package:foodyn_rest/core/domain/entities/auth_failure.dart';
+import 'package:velocity_x/velocity_x.dart';
+
+import '../../../../core/bloc/auth_bloc/auth_bloc.dart';
+import '../../../../core/bloc/config_bloc/config_bloc.dart';
 import '../../../../core/config/injectable/injection.dart';
+import '../../../../core/config/theme/global_theme.dart';
+import '../../../../core/data/models/plan_model.dart';
+import '../../../../core/domain/entities/app_failure.dart';
 import '../../../../core/utils/theme_brightness.dart';
 import '../../../../core/widgets/modal_container_widget.dart';
-import '../../../../core/bloc/setting_bloc/setting_bloc.dart';
-import '../widgets/sliver_app_bar_widget.dart';
+import '../../../../core/widgets/scaffold_container_widget.dart';
 import '../widgets/plan_item_widget.dart';
-import '../widgets/resend_email_widget.dart';
-import '../../../../core/config/theme/global_theme.dart';
-import '../../../../core/bloc/auth_bloc/auth_bloc.dart';
-import 'package:velocity_x/velocity_x.dart';
 
 class ChoosePlanPage extends StatefulWidget {
   static const kRouteName = "/choose-plan";
@@ -27,7 +27,7 @@ class ChoosePlanPage extends StatefulWidget {
 
 class _ChoosePlanPageState extends State<ChoosePlanPage> {
   int selected = 0;
-  late SettingBloc _settingBloc;
+  late ConfigBloc _configBloc;
   late AuthBloc _authBloc;
   List<PlanModel>? _plansList = [];
   bool _showModal = false;
@@ -37,12 +37,12 @@ class _ChoosePlanPageState extends State<ChoosePlanPage> {
   void initState() {
     super.initState();
     _authBloc = context.read<AuthBloc>();
-    _settingBloc = getIt<SettingBloc>();
+    _configBloc = getIt<ConfigBloc>();
   }
 
   @override
   void dispose() {
-    _settingBloc.close();
+    _configBloc.close();
     super.dispose();
   }
 
@@ -66,7 +66,7 @@ class _ChoosePlanPageState extends State<ChoosePlanPage> {
     });
   }
 
-  void _onTypeloadingFailure(AuthFailure failure) {
+  void _onTypeloadingFailure(AppFailure failure) {
     setState(() {
       _modalType = ModalContainerType.FAILURE;
     });
@@ -78,99 +78,62 @@ class _ChoosePlanPageState extends State<ChoosePlanPage> {
     });
   }
 
-  void _modalReset() {
-    setState(() {
-      _showModal = false;
-      _modalType = ModalContainerType.LOADING;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => _settingBloc..add(SettingEvent.getPlans())),
+        BlocProvider(
+            create: (context) => _configBloc..add(ConfigEvent.getPlans())),
         BlocProvider(create: (context) => _authBloc)
       ],
-      child: BlocListener<SettingBloc, SettingState>(
-        listener: (context, state) {
-          state.maybeWhen(
-              loadingInProgress: _onTypeloadingInProgress,
-              loadingPlansSuccess: _onTypeloadingPlansSuccess,
-              loadingFailed: _onTypeloadingFailure,
-              orElse: () {});
-        },
-        child: Scaffold(
-          body: ModalContainerWidget(
-            onLoading: _modalReset,
-            onSucceed: _modalReset,
-            onFailed: _modalReset,
-            child: SafeArea(
-              child: CustomScrollView(
-                shrinkWrap: true,
-                slivers: [
-                  SliverAppBarWidget(
-                    logout: true,
-                    back: _authBloc.state.user!.membership != null,
-                  ),
-                  SliverToBoxAdapter(
-                    child: SingleChildScrollView(
-                      child: Padding(
-                        padding: EdgeInsets.only(left: 20, right: 20),
-                        child: Column(
-                          children: [
-                            ResendEmailWidget(),
-                            Row(
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.only(top: 5, bottom: 15),
-                                  child: "Choose a plan".text.xl2.make(),
-                                ),
-                              ],
-                            ),
-                            InkWell(
-                              onTap: () {
-                                // Routes.seafarer.navigate(ChoosePlanPage.kRouteName);
-                              },
-                              child: Container(
-                                decoration: BoxDecoration(
-                                    color: GlobalTheme.kOrangeColor,
-                                    borderRadius: BorderRadius.circular(10)),
-                                padding: Vx.mH32,
-                                height: 65.0,
-                                child: Directionality(
-                                  textDirection: TextDirection.rtl,
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      "For A Special Plan Contact Us"
-                                          .text
-                                          .xl
-                                          .color((isDark(context))
-                                              ? GlobalTheme.kPrimaryColor
-                                              : GlobalTheme.kAccentColor)
-                                          .make(),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            ..._plansList!
-                                .map((plan) => PlanItemWidget(plan: plan))
-                          ],
-                        ),
-                      ),
+      child: BlocListener<ConfigBloc, ConfigState>(
+          listener: (context, state) {
+            state.maybeWhen(
+                loadingInProgress: _onTypeloadingInProgress,
+                loadingPlansSuccess: _onTypeloadingPlansSuccess,
+                loadingFailed: _onTypeloadingFailure,
+                orElse: () {});
+          },
+          child: ScaffoldContainerWidget(
+            show: _showModal,
+            type: _modalType,
+            logout: true,
+            back: _authBloc.state.user!.membership != null,
+            title: "Choose a plan",
+            children: [
+              InkWell(
+                onTap: () {
+                  // Routes.seafarer.navigate(ChoosePlanPage.kRouteName);
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                      color: GlobalTheme.kOrangeColor,
+                      borderRadius: BorderRadius.circular(10)),
+                  padding: Vx.mH32,
+                  height: 65.0,
+                  child: Directionality(
+                    textDirection: TextDirection.rtl,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        "For A Special Plan Contact Us"
+                            .text
+                            .xl
+                            .color((isDark(context))
+                                ? GlobalTheme.kPrimaryColor
+                                : GlobalTheme.kAccentColor)
+                            .make(),
+                      ],
                     ),
-                  )
-                ],
+                  ),
+                ),
               ),
-            ),
-          ),
-        ),
-      ),
+              SizedBox(
+                height: 10,
+              ),
+              ..._plansList!.map((plan) => PlanItemWidget(plan: plan))
+            ],
+          )),
     );
   }
 }

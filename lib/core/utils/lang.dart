@@ -1,7 +1,7 @@
 
 
-import '../config/injectable/injection.dart';
 import '../bloc/auth_bloc/auth_bloc.dart';
+import '../config/injectable/injection.dart';
 
 bool isAr() {
   // ignore: close_sinks

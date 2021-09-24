@@ -1,28 +1,25 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import '../../config/injectable/injection.dart';
-import '../../error/failures.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:injectable/injectable.dart';
 import 'package:logger/logger.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../error/failures.dart';
+
+part 'geolocation_bloc.freezed.dart';
 part 'geolocation_event.dart';
 part 'geolocation_state.dart';
-part 'geolocation_bloc.freezed.dart';
 
 @injectable
 class GeolocationBloc extends Bloc<GeolocationEvent, GeolocationState> {
-  late Logger logger;
-  late SharedPreferences prefs;
+  late Logger _logger;
 
-  GeolocationBloc() : super(_Initial()) {
-    this.logger = getIt<Logger>();
-    this.prefs = getIt<SharedPreferences>();
-  }
+  GeolocationBloc(
+    this._logger
+  ) : super(_Initial());
 
   @override
   Stream<GeolocationState> mapEventToState(GeolocationEvent gEvent) async* {
@@ -33,24 +30,24 @@ class GeolocationBloc extends Bloc<GeolocationEvent, GeolocationState> {
 
   @override
   void onEvent(GeolocationEvent event) {
-    logger.d(event.toString());
+    _logger.d(event.toString());
     super.onEvent(event);
   }
 
   @override
   void onChange(Change<GeolocationState> change) {
-    logger.d(change.nextState.toString());
+    _logger.d(change.nextState.toString());
     super.onChange(change);
   }
 
   @override
   void onError(Object error, StackTrace stackTrace) {
-    logger.e(error);
+    _logger.e(error);
     super.onError(error, stackTrace);
   }
 
   Stream<GeolocationState> _getGeolocationHandler() async* {
-    GeolocationFailure? failure = null;
+    GeolocationFailure? failure;
     late Position position;
     late LatLng latlng;
     bool serviceEnabled;

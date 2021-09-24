@@ -40,7 +40,7 @@ class _PasswordTextFormWidgetState extends State<PasswordTextFormWidget> {
         bottomLeft: Radius.circular(Vx.dp10)),
     borderSide: BorderSide(color: GlobalTheme.kOrangeColor, width: 1),
   );
-  bool pass_err_count = false;
+  bool passErrCount = false;
 
   void _toggleObscure() {
     setState(() {
@@ -75,13 +75,13 @@ class _PasswordTextFormWidgetState extends State<PasswordTextFormWidget> {
           validator: (value) {
             String? ret = ValidatorService.passwordValidator(value);
             setState(() {
-              pass_err_count = (ret != null);
+              passErrCount = (ret != null);
             });
             return ret;
           },
         )),
         Container(
-          margin: EdgeInsets.only(bottom: (pass_err_count) ? 20 : 0),
+          margin: EdgeInsets.only(bottom: (passErrCount) ? 20 : 0),
           height: 65,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.only(

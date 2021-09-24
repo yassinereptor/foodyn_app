@@ -6,7 +6,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'core/domain/entities/auth_failure.dart';
+import 'core/bloc/config_bloc/config_bloc.dart';
+import 'core/domain/entities/app_failure.dart';
 import 'features/auth/presentation/pages/complete_register_page.dart';
 import 'features/dashboard/presentation/pages/dashboard_page.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
@@ -49,7 +50,8 @@ class Application extends StatefulWidget {
 }
 
 class _ApplicationState extends State<Application> {
-  AuthBloc _authBloc = getIt<AuthBloc>();
+  late AuthBloc _authBloc = getIt<AuthBloc>();
+  late ConfigBloc _configBloc = getIt<ConfigBloc>();
 
   @override
   void initState() {
@@ -57,6 +59,8 @@ class _ApplicationState extends State<Application> {
       final arLang = intl.DateFormat("", "ar");
       arLang.dateSymbols.ZERODIGIT = "0";
     });
+    _authBloc = getIt<AuthBloc>();
+    _configBloc = getIt<ConfigBloc>();
     super.initState();
   }
 
@@ -68,8 +72,15 @@ class _ApplicationState extends State<Application> {
   
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => _authBloc..add(AuthEvent.started()),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => _configBloc..add(ConfigEvent.started()),
+        ),
+        BlocProvider(
+          create: (context) => _authBloc..add(AuthEvent.started()),
+        )
+      ],
       child: MaterialApp(
         title: "Foodyn Restaurant",
         debugShowCheckedModeBanner: false,
@@ -153,7 +164,7 @@ class _ApplicationState extends State<Application> {
                   );
                 },
                 loadingFailed: (failure) {
-                  if (failure == AuthFailure.expiredJwt() || failure == AuthFailure.unauthorized()) {
+                  if (failure == AppFailure.expiredJwt() || failure == AppFailure.unauthorized()) {
                     showDialog(
                       context: Routes.seafarer.navigatorKey!.currentContext!,
                       builder: (context) {

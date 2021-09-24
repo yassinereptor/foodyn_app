@@ -1,31 +1,26 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import '../../data/datasources/authentication_local_data_source.dart';
-import '../../data/models/user_model.dart';
-import '../../domain/entities/auth_failure.dart';
-import '../../domain/repositories/i_authentication_repository.dart';
-import '../../services/graphql_service.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:logger/logger.dart';
 
+import '../../data/models/user_model.dart';
+import '../../domain/entities/app_failure.dart';
+import '../../domain/repositories/i_auth_repository.dart';
+
+part 'mail_bloc.freezed.dart';
 part 'mail_event.dart';
 part 'mail_state.dart';
-part 'mail_bloc.freezed.dart';
 
 @injectable
 class MailBloc extends Bloc<MailEvent, MailState> {
-  final IAuthenticationRepository authenticationRepository;
-  final IAuthenticationLocalDataSource authenticationLocalDataSource;
-  final Logger logger;
-  final GraphQLService graphQL;
+  final IAuthRepository _authRepository;
+  final Logger _logger;
   
   MailBloc(
-    this.logger,
-    this.graphQL,
-    this.authenticationLocalDataSource,
-    this.authenticationRepository,
+    this._logger,
+    this._authRepository,
   ) : super(_Initial());
 
   @override
@@ -40,60 +35,52 @@ class MailBloc extends Bloc<MailEvent, MailState> {
 
   @override
   void onEvent(MailEvent event) {
-    logger.d(event.toString());
+    _logger.d(event.toString());
     super.onEvent(event);
   }
 
   @override
   void onChange(Change<MailState> change) {
-    logger.d(change.nextState.toString());
+    _logger.d(change.nextState.toString());
     super.onChange(change);
   }
 
   @override
   void onError(Object error, StackTrace stackTrace) {
-    logger.e(error);
+    _logger.e(error);
     super.onError(error, stackTrace);
   }
 
   Stream<MailState> _resendConfirmationEmailHandler(String email) async* {
-    bool failed = false;
-    AuthFailure? failure;
+    AppFailure? appFailure;
     yield MailState.loadingInProgress();
 
-    final either = await authenticationRepository.resendConfirmationEmail(email);
-    either.fold((l) {
-      failed = true;
-      failure = l;
-    }, (r) {
-      failed = false;
+    final either = await _authRepository.resendConfirmationEmail(email);
+    either.fold((failure) {
+      appFailure = failure;
+    }, (value) {
     });
-    
-    if (failed)
-      yield MailState.loadingFailed(failure!);
+    if (appFailure != null)
+      yield MailState.loadingFailed(appFailure!);
     else
       yield MailState.loadingSuccess(null);
   }
 
   Stream<MailState> _confirmationEmailStatusHandler() async* {
-    bool failed = false;
-    AuthFailure? failure;
-    UserModel? userModel;
+    AppFailure? appFailure;
+    UserModel? user;
 
     yield MailState.loadingInProgress();
-
-    final either = await authenticationRepository.getUser();
-    either.fold((l) {
-      failed = true;
-      failure = l;
-    }, (r) {
-      failed = false;
-      userModel = r;
+    final either = await _authRepository.getUser();
+    either.fold((failure) {
+      appFailure = failure;
+    }, (value) {
+      user = value;
     });
-    if (failed)
-      yield MailState.loadingFailed(failure!);
+    if (appFailure != null)
+      yield MailState.loadingFailed(appFailure!);
     else
-      yield MailState.loadingSuccess(userModel);
+      yield MailState.loadingSuccess(user);
   }
   
 }

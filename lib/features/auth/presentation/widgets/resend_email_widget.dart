@@ -3,8 +3,8 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:foodyn_rest/core/data/models/user_model.dart';
-import 'package:foodyn_rest/core/domain/entities/auth_failure.dart';
+import '../../../../core/data/models/user_model.dart';
+import '../../../../core/domain/entities/app_failure.dart';
 import '../../../../core/config/injectable/injection.dart';
 import '../../../../core/config/theme/global_theme.dart';
 import '../../../../core/utils/theme_brightness.dart';
@@ -62,7 +62,7 @@ class _ResendEmailWidgetState extends State<ResendEmailWidget> {
       _authBloc.state.user!.verified = userModel.verified;
   }
 
-  void _onTypeloadingFailure(AuthFailure failure) {
+  void _onTypeloadingFailure(AppFailure failure) {
     final snackBar = SnackBar(content: Text("Resend email failed !"));
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }

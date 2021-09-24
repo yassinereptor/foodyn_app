@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:foodyn_rest/core/domain/entities/auth_failure.dart';
+import '../../../../core/domain/entities/app_failure.dart';
 import '../../../../core/config/injectable/injection.dart';
 import '../../../../core/config/router/router.dart';
 import '../../../../core/config/theme/global_theme.dart';
@@ -45,7 +45,7 @@ class _SliverAppBarWidgetState extends State<SliverAppBarWidget> {
       child: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, state) {
           state.type.maybeWhen(
-              loadingFailed: (AuthFailure message) {
+              loadingFailed: (AppFailure message) {
                 message.maybeWhen(
                     storage: () {
                       final snackBar =

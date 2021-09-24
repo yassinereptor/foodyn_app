@@ -4,7 +4,7 @@ class TabsModel {
   String title;
   IconData icon;
   List<TabsModel>? subtitles;
-  int selected_subtitle;
+  int selectedSubtitle;
   Widget? body;
 
   TabsModel({
@@ -12,6 +12,6 @@ class TabsModel {
     required this.icon,
     this.subtitles,
     this.body,
-    this.selected_subtitle = 0
+    this.selectedSubtitle = 0
   });
 }

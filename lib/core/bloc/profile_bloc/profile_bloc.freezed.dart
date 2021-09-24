@@ -487,7 +487,7 @@ class _$ProfileStateTearOff {
     );
   }
 
-  _LoadingFailed loadingFailed(AuthFailure failure) {
+  _LoadingFailed loadingFailed(AppFailure failure) {
     return _LoadingFailed(
       failure,
     );
@@ -506,7 +506,7 @@ mixin _$ProfileState {
     required TResult Function() loadingSuccess,
     required TResult Function(ProfileModel? profile) loadingProfileSuccess,
     required TResult Function(CouponModel? coupon) loadingCouponSuccess,
-    required TResult Function(AuthFailure failure) loadingFailed,
+    required TResult Function(AppFailure failure) loadingFailed,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -516,7 +516,7 @@ mixin _$ProfileState {
     TResult Function()? loadingSuccess,
     TResult Function(ProfileModel? profile)? loadingProfileSuccess,
     TResult Function(CouponModel? coupon)? loadingCouponSuccess,
-    TResult Function(AuthFailure failure)? loadingFailed,
+    TResult Function(AppFailure failure)? loadingFailed,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -602,7 +602,7 @@ class _$_Initial implements _Initial {
     required TResult Function() loadingSuccess,
     required TResult Function(ProfileModel? profile) loadingProfileSuccess,
     required TResult Function(CouponModel? coupon) loadingCouponSuccess,
-    required TResult Function(AuthFailure failure) loadingFailed,
+    required TResult Function(AppFailure failure) loadingFailed,
   }) {
     return initial();
   }
@@ -615,7 +615,7 @@ class _$_Initial implements _Initial {
     TResult Function()? loadingSuccess,
     TResult Function(ProfileModel? profile)? loadingProfileSuccess,
     TResult Function(CouponModel? coupon)? loadingCouponSuccess,
-    TResult Function(AuthFailure failure)? loadingFailed,
+    TResult Function(AppFailure failure)? loadingFailed,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -705,7 +705,7 @@ class _$_LoadingInProgress implements _LoadingInProgress {
     required TResult Function() loadingSuccess,
     required TResult Function(ProfileModel? profile) loadingProfileSuccess,
     required TResult Function(CouponModel? coupon) loadingCouponSuccess,
-    required TResult Function(AuthFailure failure) loadingFailed,
+    required TResult Function(AppFailure failure) loadingFailed,
   }) {
     return loadingInProgress();
   }
@@ -718,7 +718,7 @@ class _$_LoadingInProgress implements _LoadingInProgress {
     TResult Function()? loadingSuccess,
     TResult Function(ProfileModel? profile)? loadingProfileSuccess,
     TResult Function(CouponModel? coupon)? loadingCouponSuccess,
-    TResult Function(AuthFailure failure)? loadingFailed,
+    TResult Function(AppFailure failure)? loadingFailed,
     required TResult orElse(),
   }) {
     if (loadingInProgress != null) {
@@ -808,7 +808,7 @@ class _$_LoadingSuccess implements _LoadingSuccess {
     required TResult Function() loadingSuccess,
     required TResult Function(ProfileModel? profile) loadingProfileSuccess,
     required TResult Function(CouponModel? coupon) loadingCouponSuccess,
-    required TResult Function(AuthFailure failure) loadingFailed,
+    required TResult Function(AppFailure failure) loadingFailed,
   }) {
     return loadingSuccess();
   }
@@ -821,7 +821,7 @@ class _$_LoadingSuccess implements _LoadingSuccess {
     TResult Function()? loadingSuccess,
     TResult Function(ProfileModel? profile)? loadingProfileSuccess,
     TResult Function(CouponModel? coupon)? loadingCouponSuccess,
-    TResult Function(AuthFailure failure)? loadingFailed,
+    TResult Function(AppFailure failure)? loadingFailed,
     required TResult orElse(),
   }) {
     if (loadingSuccess != null) {
@@ -937,7 +937,7 @@ class _$_LoadingProfileSuccess implements _LoadingProfileSuccess {
     required TResult Function() loadingSuccess,
     required TResult Function(ProfileModel? profile) loadingProfileSuccess,
     required TResult Function(CouponModel? coupon) loadingCouponSuccess,
-    required TResult Function(AuthFailure failure) loadingFailed,
+    required TResult Function(AppFailure failure) loadingFailed,
   }) {
     return loadingProfileSuccess(profile);
   }
@@ -950,7 +950,7 @@ class _$_LoadingProfileSuccess implements _LoadingProfileSuccess {
     TResult Function()? loadingSuccess,
     TResult Function(ProfileModel? profile)? loadingProfileSuccess,
     TResult Function(CouponModel? coupon)? loadingCouponSuccess,
-    TResult Function(AuthFailure failure)? loadingFailed,
+    TResult Function(AppFailure failure)? loadingFailed,
     required TResult orElse(),
   }) {
     if (loadingProfileSuccess != null) {
@@ -1072,7 +1072,7 @@ class _$_LoadingCouponSuccess implements _LoadingCouponSuccess {
     required TResult Function() loadingSuccess,
     required TResult Function(ProfileModel? profile) loadingProfileSuccess,
     required TResult Function(CouponModel? coupon) loadingCouponSuccess,
-    required TResult Function(AuthFailure failure) loadingFailed,
+    required TResult Function(AppFailure failure) loadingFailed,
   }) {
     return loadingCouponSuccess(coupon);
   }
@@ -1085,7 +1085,7 @@ class _$_LoadingCouponSuccess implements _LoadingCouponSuccess {
     TResult Function()? loadingSuccess,
     TResult Function(ProfileModel? profile)? loadingProfileSuccess,
     TResult Function(CouponModel? coupon)? loadingCouponSuccess,
-    TResult Function(AuthFailure failure)? loadingFailed,
+    TResult Function(AppFailure failure)? loadingFailed,
     required TResult orElse(),
   }) {
     if (loadingCouponSuccess != null) {
@@ -1141,9 +1141,9 @@ abstract class _$LoadingFailedCopyWith<$Res> {
   factory _$LoadingFailedCopyWith(
           _LoadingFailed value, $Res Function(_LoadingFailed) then) =
       __$LoadingFailedCopyWithImpl<$Res>;
-  $Res call({AuthFailure failure});
+  $Res call({AppFailure failure});
 
-  $AuthFailureCopyWith<$Res> get failure;
+  $AppFailureCopyWith<$Res> get failure;
 }
 
 /// @nodoc
@@ -1165,13 +1165,13 @@ class __$LoadingFailedCopyWithImpl<$Res>
       failure == freezed
           ? _value.failure
           : failure // ignore: cast_nullable_to_non_nullable
-              as AuthFailure,
+              as AppFailure,
     ));
   }
 
   @override
-  $AuthFailureCopyWith<$Res> get failure {
-    return $AuthFailureCopyWith<$Res>(_value.failure, (value) {
+  $AppFailureCopyWith<$Res> get failure {
+    return $AppFailureCopyWith<$Res>(_value.failure, (value) {
       return _then(_value.copyWith(failure: value));
     });
   }
@@ -1183,7 +1183,7 @@ class _$_LoadingFailed implements _LoadingFailed {
   const _$_LoadingFailed(this.failure);
 
   @override
-  final AuthFailure failure;
+  final AppFailure failure;
 
   @override
   String toString() {
@@ -1215,7 +1215,7 @@ class _$_LoadingFailed implements _LoadingFailed {
     required TResult Function() loadingSuccess,
     required TResult Function(ProfileModel? profile) loadingProfileSuccess,
     required TResult Function(CouponModel? coupon) loadingCouponSuccess,
-    required TResult Function(AuthFailure failure) loadingFailed,
+    required TResult Function(AppFailure failure) loadingFailed,
   }) {
     return loadingFailed(failure);
   }
@@ -1228,7 +1228,7 @@ class _$_LoadingFailed implements _LoadingFailed {
     TResult Function()? loadingSuccess,
     TResult Function(ProfileModel? profile)? loadingProfileSuccess,
     TResult Function(CouponModel? coupon)? loadingCouponSuccess,
-    TResult Function(AuthFailure failure)? loadingFailed,
+    TResult Function(AppFailure failure)? loadingFailed,
     required TResult orElse(),
   }) {
     if (loadingFailed != null) {
@@ -1270,9 +1270,9 @@ class _$_LoadingFailed implements _LoadingFailed {
 }
 
 abstract class _LoadingFailed implements ProfileState {
-  const factory _LoadingFailed(AuthFailure failure) = _$_LoadingFailed;
+  const factory _LoadingFailed(AppFailure failure) = _$_LoadingFailed;
 
-  AuthFailure get failure => throw _privateConstructorUsedError;
+  AppFailure get failure => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   _$LoadingFailedCopyWith<_LoadingFailed> get copyWith =>
       throw _privateConstructorUsedError;

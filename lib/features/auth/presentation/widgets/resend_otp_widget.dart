@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:foodyn_rest/core/domain/entities/auth_failure.dart';
+import '../../../../core/domain/entities/app_failure.dart';
 import '../../../../core/bloc/otp_bloc/otp_bloc.dart';
 import '../../../../core/config/injectable/injection.dart';
 import '../../../../core/config/theme/global_theme.dart';
@@ -55,7 +55,7 @@ class _ResendOTPWidgetState extends State<ResendOTPWidget> {
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
-  void _onTypeloadingFailure(AuthFailure failure) {
+  void _onTypeloadingFailure(AppFailure failure) {
     final snackBar = SnackBar(content: Text("Resend code failed !"));
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }

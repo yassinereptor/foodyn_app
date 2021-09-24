@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
-import 'package:foodyn_rest/core/data/models/profile_model.dart';
-import 'package:foodyn_rest/core/data/models/user_model.dart';
+import 'profile_model.dart';
+import 'user_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'image_model.g.dart';

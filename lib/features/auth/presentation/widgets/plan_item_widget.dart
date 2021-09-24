@@ -4,7 +4,7 @@ import 'dart:math' as math;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:foodyn_rest/core/data/models/plan_model.dart';
+import '../../../../core/data/models/plan_model.dart';
 import '../../../../core/config/router/router.dart';
 import '../../../../core/utils/color_utils.dart';
 import '../../../../core/utils/currency_utils.dart';

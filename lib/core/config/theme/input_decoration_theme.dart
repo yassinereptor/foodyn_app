@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'global_theme.dart';
 import 'package:velocity_x/velocity_x.dart';
+
+import 'global_theme.dart';
 
 final labelStyle = TextStyle(
   fontSize: Vx.dp16,

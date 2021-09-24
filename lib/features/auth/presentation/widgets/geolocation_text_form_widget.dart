@@ -13,7 +13,7 @@ class GeolocationTextFormWidget extends StatefulWidget {
 
   const GeolocationTextFormWidget(
       {Key? key,
-      this.controller = null,
+      this.controller,
       required this.onTap})
       : super(key: key);
 
@@ -40,7 +40,7 @@ class _GeolocationTextFormWidgetState extends State<GeolocationTextFormWidget> {
         bottomLeft: Radius.circular(Vx.dp10)),
     borderSide: BorderSide(color: GlobalTheme.kOrangeColor, width: 1),
   );
-  bool pass_err_count = false;
+  bool passErrCount = false;
 
   @override
   void initState() {
@@ -67,19 +67,19 @@ class _GeolocationTextFormWidgetState extends State<GeolocationTextFormWidget> {
           validator: (value) {
             // if (value == null || value.isEmpty) {
             //   setState(() {
-            //     pass_err_count = true;
+            //     passErrCount = true;
             //   });
             //   return '● Please enter some text';
             // }
             // setState(() {
-            //   pass_err_count = false;
+            //   passErrCount = false;
             // });
             return null;
           },
           controller: (widget.controller == null) ? TextEditingController() : widget.controller
         )),
         Container(
-          margin: EdgeInsets.only(bottom: (pass_err_count) ? 20 : 0),
+          margin: EdgeInsets.only(bottom: (passErrCount) ? 20 : 0),
           height: 65,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.only(

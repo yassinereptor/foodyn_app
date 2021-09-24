@@ -159,7 +159,7 @@ class _DashboardPageState extends State<DashboardPage>
   List<Widget> _buildTabViews() {
     return [
       ..._tabsModel
-          .mapIndexed((e, index) => e.subtitles![e.selected_subtitle].body!)
+          .mapIndexed((e, index) => e.subtitles![e.selectedSubtitle].body!)
     ];
   }
 }

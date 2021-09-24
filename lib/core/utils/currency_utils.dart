@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:foodyn_rest/core/data/models/plan_model.dart';
+import '../data/models/plan_model.dart';
 
 import '../enums/currency.type.dart';
 

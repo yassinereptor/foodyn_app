@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:foodyn_rest/core/data/models/coupon_model.dart';
+import '../../../../core/data/models/coupon_model.dart';
 import '../../../../core/bloc/profile_bloc/profile_bloc.dart';
 import '../../../../core/config/injectable/injection.dart';
 import '../../../../core/config/theme/input_decoration_theme.dart';

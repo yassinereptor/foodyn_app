@@ -2,13 +2,11 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
-import 'package:foodyn_rest/core/data/models/coupon_model.dart';
-import '../../data/datasources/authentication_local_data_source.dart';
+import '../../data/models/coupon_model.dart';
+import '../../domain/entities/app_failure.dart';
+import '../../domain/repositories/i_profile_repository.dart';
 import '../../data/models/profile_model.dart';
-import '../../domain/entities/auth_failure.dart';
-import '../../domain/repositories/i_authentication_repository.dart';
 import '../../enums/image.type.dart';
-import '../../services/graphql_service.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import 'package:injectable/injectable.dart';
@@ -20,16 +18,12 @@ part 'profile_bloc.freezed.dart';
 
 @injectable
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
-  final IAuthenticationRepository authenticationRepository;
-  final IAuthenticationLocalDataSource authenticationLocalDataSource;
-  final Logger logger;
-  final GraphQLService graphQL;
+  final IProfileRepository _profileRepository;
+  final Logger _logger;
 
   ProfileBloc(
-    this.logger,
-    this.graphQL,
-    this.authenticationLocalDataSource,
-    this.authenticationRepository,
+    this._logger,
+    this._profileRepository,
   ) : super(_Initial());
 
   @override
@@ -45,81 +39,71 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
 
   @override
   void onEvent(ProfileEvent event) {
-    logger.d(event.toString());
+    _logger.d(event.toString());
     super.onEvent(event);
   }
 
   @override
   void onChange(Change<ProfileState> change) {
-    logger.d(change.nextState.toString());
+    _logger.d(change.nextState.toString());
     super.onChange(change);
   }
 
   @override
   void onError(Object error, StackTrace stackTrace) {
-    logger.e(error);
+    _logger.e(error);
     super.onError(error, stackTrace);
   }
 
   Stream<ProfileState> _uploadImageHandler(ImageType type, File file) async* {
-    bool failed = false;
-    AuthFailure? failure;
+    AppFailure? appFailure;
     yield ProfileState.loadingInProgress();
 
-    final either = await authenticationRepository.uploadImage(ImageType.PROFILE, file);
-    either.fold((l) {
-      failed = true;
-      failure = l;
-    }, (r) {
-      failed = false;
+    final either = await _profileRepository.uploadImage(ImageType.PROFILE, file);
+    either.fold((failure) {
+      appFailure = failure;
+    }, (value) {
     });
-    
-    if (failed)
-      yield ProfileState.loadingFailed(failure!);
+    if (appFailure != null)
+      yield ProfileState.loadingFailed(appFailure!);
     else
       yield ProfileState.loadingSuccess();
   }
 
 
   Stream<ProfileState> _saveProfileHandler(ProfileModel profile) async* {
-    bool failed = false;
-    AuthFailure? failure;
+    AppFailure? appFailure;
     ProfileModel? profileModel;
 
-    final either = await authenticationRepository.saveProfile(profile);
-    either.fold((l) {
-      failed = true;
-      failure = l;
-    }, (r) {
-      failed = false;
-      profileModel = r;
+    final either = await _profileRepository.saveProfile(profile);
+    either.fold((failure) {
+      appFailure = failure;
+    }, (value) {
+      profileModel = value;
     });
-    if (failed)
-      yield ProfileState.loadingFailed(failure!);
+    if (appFailure != null)
+      yield ProfileState.loadingFailed(appFailure!);
     else
       yield ProfileState.loadingProfileSuccess(profileModel);
   }
 
   Stream<ProfileState> _checkCouponStatus(String code) async* {
-    bool failed = false;
-    AuthFailure? failure;
-    CouponModel? couponModel;
+    AppFailure? appFailure;
+    CouponModel? coupon;
 
     if (code.isEmpty)
       yield ProfileState.initial();
     else {
-      final either = await authenticationRepository.checkCouponStatus(code);
-      either.fold((l) {
-        failed = true;
-        failure = l;
-      }, (r) {
-        failed = false;
-        couponModel = r;
+      final either = await _profileRepository.checkCouponStatus(code);
+      either.fold((failure) {
+        appFailure = failure;
+      }, (value) {
+        coupon = value;
       });
-      if (failed || couponModel == null)
-        yield ProfileState.loadingFailed((failure != null) ? failure! : AuthFailure.local());
+      if (appFailure != null || coupon == null)
+        yield ProfileState.loadingFailed((appFailure != null) ? appFailure! : AppFailure.local());
       else
-        yield ProfileState.loadingCouponSuccess(couponModel);
+        yield ProfileState.loadingCouponSuccess(coupon);
     }
   }
 }

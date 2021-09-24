@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
-import 'package:foodyn_rest/core/data/models/plan_model.dart';
-import 'package:foodyn_rest/core/data/models/user_model.dart';
+import 'plan_model.dart';
+import 'user_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'membership_model.g.dart';
@@ -8,25 +8,25 @@ part 'membership_model.g.dart';
 @JsonSerializable()
 class MembershipModel extends Equatable  {
   @JsonKey(name: "id")
-  int? id;
+  final int? id;
   @JsonKey(name: "user")
-  UserModel? user;
+  final UserModel? user;
   @JsonKey(name: "plan")
-  PlanModel? plan;
+  final PlanModel? plan;
   @JsonKey(name: "startAt")
-  DateTime? startAt;
+  final DateTime? startAt;
   @JsonKey(name: "endAt")
-  DateTime? endAt;
+  final DateTime? endAt;
   @JsonKey(name: "active")
-  bool? active;
+  final bool? active;
   @JsonKey(name: "banned")
-  bool? banned;
+  final bool? banned;
   @JsonKey(name: "createdAt")
-  DateTime? createdAt;
+  final DateTime? createdAt;
   @JsonKey(name: "updatedAt")
-  DateTime? updatedAt;
+  final DateTime? updatedAt;
   @JsonKey(name: "deletedAt")
-  DateTime? deletedAt;
+  final DateTime? deletedAt;
 
   MembershipModel({
     this.id,

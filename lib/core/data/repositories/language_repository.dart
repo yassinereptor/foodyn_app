@@ -1,31 +1,31 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
-import 'package:foodyn_rest/core/domain/entities/auth_failure.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../../core/error/exeptions.dart';
+import '../../domain/entities/app_failure.dart';
 import '../../domain/repositories/i_language_repository.dart';
-import '../datasources/language_local_data_source.dart';
+import '../datasources/local/language_local_data_source.dart';
 
 @Injectable(as: ILanguageRepository)
 class LanguageRepository implements ILanguageRepository {
-  final ILanguageLocalDataSource localeDataSource;
+  final ILanguageLocalDataSource _languageLocalDataSource;
 
-  LanguageRepository(this.localeDataSource);
+  LanguageRepository(this._languageLocalDataSource);
 
   @override
   Future<Locale?> getLanguage() async {
-    final response = await localeDataSource.getLanguage();
+    final response = await _languageLocalDataSource.getLanguage();
     return response;
   }
 
   @override
-  Future<Either<AuthFailure, Locale>> setLanguage(String lang) async {
+  Future<Either<AppFailure, Locale>> setLanguage(String lang) async {
     try {
-      final response = await localeDataSource.setLanguage(lang);
+      final response = await _languageLocalDataSource.setLanguage(lang);
       return Right(response);
     } on CacheExeption {
-      return Left(AuthFailure.storage());
+      return Left(AppFailure.storage());
     }
   }
 }

@@ -1,8 +1,8 @@
 import 'package:equatable/equatable.dart';
-import 'package:foodyn_rest/core/data/models/profile_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import 'membership_model.dart';
+import 'profile_model.dart';
 
 part 'user_model.g.dart';
 

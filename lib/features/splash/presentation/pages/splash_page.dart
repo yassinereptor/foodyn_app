@@ -13,11 +13,8 @@ class SplashPage extends StatefulWidget {
 }
 
 class _SplashPageState extends State<SplashPage> {
-  late AuthBloc _authBloc;
-  
   @override
   void initState() {
-    _authBloc = BlocProvider.of<AuthBloc>(context);
     super.initState();
   }
 

@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:foodyn_rest/core/data/models/user_model.dart';
+import 'user_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'record_model.g.dart';
@@ -7,9 +7,9 @@ part 'record_model.g.dart';
 @JsonSerializable()
 class RecordModel extends Equatable {
   @JsonKey(name: "id")
-  int? id;
+  final int? id;
   @JsonKey(name: "user")
-  UserModel? user;
+  final UserModel? user;
   @JsonKey(name: "status")
   final String? status;
   @JsonKey(name: "country")
@@ -39,11 +39,11 @@ class RecordModel extends Equatable {
   @JsonKey(name: "query")
   final String? query;
   @JsonKey(name: "createdAt")
-  DateTime? createdAt;
+  final DateTime? createdAt;
   @JsonKey(name: "updatedAt")
-  DateTime? updatedAt;
+  final DateTime? updatedAt;
   @JsonKey(name: "deletedAt")
-  DateTime? deletedAt;
+  final DateTime? deletedAt;
 
   RecordModel(
   {

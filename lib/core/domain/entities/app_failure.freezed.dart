@@ -1,7 +1,7 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
 
-part of 'auth_failure.dart';
+part of 'app_failure.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -13,8 +13,8 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-class _$AuthFailureTearOff {
-  const _$AuthFailureTearOff();
+class _$AppFailureTearOff {
+  const _$AppFailureTearOff();
 
   _Network network() {
     return const _Network();
@@ -54,10 +54,10 @@ class _$AuthFailureTearOff {
 }
 
 /// @nodoc
-const $AuthFailure = _$AuthFailureTearOff();
+const $AppFailure = _$AppFailureTearOff();
 
 /// @nodoc
-mixin _$AuthFailure {
+mixin _$AppFailure {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() network,
@@ -111,19 +111,19 @@ mixin _$AuthFailure {
 }
 
 /// @nodoc
-abstract class $AuthFailureCopyWith<$Res> {
-  factory $AuthFailureCopyWith(
-          AuthFailure value, $Res Function(AuthFailure) then) =
-      _$AuthFailureCopyWithImpl<$Res>;
+abstract class $AppFailureCopyWith<$Res> {
+  factory $AppFailureCopyWith(
+          AppFailure value, $Res Function(AppFailure) then) =
+      _$AppFailureCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$AuthFailureCopyWithImpl<$Res> implements $AuthFailureCopyWith<$Res> {
-  _$AuthFailureCopyWithImpl(this._value, this._then);
+class _$AppFailureCopyWithImpl<$Res> implements $AppFailureCopyWith<$Res> {
+  _$AppFailureCopyWithImpl(this._value, this._then);
 
-  final AuthFailure _value;
+  final AppFailure _value;
   // ignore: unused_field
-  final $Res Function(AuthFailure) _then;
+  final $Res Function(AppFailure) _then;
 }
 
 /// @nodoc
@@ -133,7 +133,7 @@ abstract class _$NetworkCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$NetworkCopyWithImpl<$Res> extends _$AuthFailureCopyWithImpl<$Res>
+class __$NetworkCopyWithImpl<$Res> extends _$AppFailureCopyWithImpl<$Res>
     implements _$NetworkCopyWith<$Res> {
   __$NetworkCopyWithImpl(_Network _value, $Res Function(_Network) _then)
       : super(_value, (v) => _then(v as _Network));
@@ -149,7 +149,7 @@ class _$_Network implements _Network {
 
   @override
   String toString() {
-    return 'AuthFailure.network()';
+    return 'AppFailure.network()';
   }
 
   @override
@@ -229,7 +229,7 @@ class _$_Network implements _Network {
   }
 }
 
-abstract class _Network implements AuthFailure {
+abstract class _Network implements AppFailure {
   const factory _Network() = _$_Network;
 }
 
@@ -241,7 +241,7 @@ abstract class _$ServerCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$ServerCopyWithImpl<$Res> extends _$AuthFailureCopyWithImpl<$Res>
+class __$ServerCopyWithImpl<$Res> extends _$AppFailureCopyWithImpl<$Res>
     implements _$ServerCopyWith<$Res> {
   __$ServerCopyWithImpl(_Server _value, $Res Function(_Server) _then)
       : super(_value, (v) => _then(v as _Server));
@@ -279,7 +279,7 @@ class _$_Server implements _Server {
 
   @override
   String toString() {
-    return 'AuthFailure.server(message: $message, status: $status)';
+    return 'AppFailure.server(message: $message, status: $status)';
   }
 
   @override
@@ -373,7 +373,7 @@ class _$_Server implements _Server {
   }
 }
 
-abstract class _Server implements AuthFailure {
+abstract class _Server implements AppFailure {
   const factory _Server({String? message, int? status}) = _$_Server;
 
   String? get message => throw _privateConstructorUsedError;
@@ -391,7 +391,7 @@ abstract class _$GraphQlServerCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$GraphQlServerCopyWithImpl<$Res> extends _$AuthFailureCopyWithImpl<$Res>
+class __$GraphQlServerCopyWithImpl<$Res> extends _$AppFailureCopyWithImpl<$Res>
     implements _$GraphQlServerCopyWith<$Res> {
   __$GraphQlServerCopyWithImpl(
       _GraphQlServer _value, $Res Function(_GraphQlServer) _then)
@@ -431,7 +431,7 @@ class _$_GraphQlServer implements _GraphQlServer {
 
   @override
   String toString() {
-    return 'AuthFailure.graphQlserver(graphqlErrors: $graphqlErrors, linkException: $linkException)';
+    return 'AppFailure.graphQlserver(graphqlErrors: $graphqlErrors, linkException: $linkException)';
   }
 
   @override
@@ -526,7 +526,7 @@ class _$_GraphQlServer implements _GraphQlServer {
   }
 }
 
-abstract class _GraphQlServer implements AuthFailure {
+abstract class _GraphQlServer implements AppFailure {
   const factory _GraphQlServer(
       {List<GraphQLError> graphqlErrors,
       LinkException? linkException}) = _$_GraphQlServer;
@@ -545,7 +545,7 @@ abstract class _$StorageCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$StorageCopyWithImpl<$Res> extends _$AuthFailureCopyWithImpl<$Res>
+class __$StorageCopyWithImpl<$Res> extends _$AppFailureCopyWithImpl<$Res>
     implements _$StorageCopyWith<$Res> {
   __$StorageCopyWithImpl(_Storage _value, $Res Function(_Storage) _then)
       : super(_value, (v) => _then(v as _Storage));
@@ -561,7 +561,7 @@ class _$_Storage implements _Storage {
 
   @override
   String toString() {
-    return 'AuthFailure.storage()';
+    return 'AppFailure.storage()';
   }
 
   @override
@@ -641,7 +641,7 @@ class _$_Storage implements _Storage {
   }
 }
 
-abstract class _Storage implements AuthFailure {
+abstract class _Storage implements AppFailure {
   const factory _Storage() = _$_Storage;
 }
 
@@ -652,7 +652,7 @@ abstract class _$LocalCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$LocalCopyWithImpl<$Res> extends _$AuthFailureCopyWithImpl<$Res>
+class __$LocalCopyWithImpl<$Res> extends _$AppFailureCopyWithImpl<$Res>
     implements _$LocalCopyWith<$Res> {
   __$LocalCopyWithImpl(_Local _value, $Res Function(_Local) _then)
       : super(_value, (v) => _then(v as _Local));
@@ -668,7 +668,7 @@ class _$_Local implements _Local {
 
   @override
   String toString() {
-    return 'AuthFailure.local()';
+    return 'AppFailure.local()';
   }
 
   @override
@@ -748,7 +748,7 @@ class _$_Local implements _Local {
   }
 }
 
-abstract class _Local implements AuthFailure {
+abstract class _Local implements AppFailure {
   const factory _Local() = _$_Local;
 }
 
@@ -760,7 +760,7 @@ abstract class _$ExpiredCodeCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$ExpiredCodeCopyWithImpl<$Res> extends _$AuthFailureCopyWithImpl<$Res>
+class __$ExpiredCodeCopyWithImpl<$Res> extends _$AppFailureCopyWithImpl<$Res>
     implements _$ExpiredCodeCopyWith<$Res> {
   __$ExpiredCodeCopyWithImpl(
       _ExpiredCode _value, $Res Function(_ExpiredCode) _then)
@@ -777,7 +777,7 @@ class _$_ExpiredCode implements _ExpiredCode {
 
   @override
   String toString() {
-    return 'AuthFailure.expiredJwt()';
+    return 'AppFailure.expiredJwt()';
   }
 
   @override
@@ -857,7 +857,7 @@ class _$_ExpiredCode implements _ExpiredCode {
   }
 }
 
-abstract class _ExpiredCode implements AuthFailure {
+abstract class _ExpiredCode implements AppFailure {
   const factory _ExpiredCode() = _$_ExpiredCode;
 }
 
@@ -869,7 +869,7 @@ abstract class _$UnauthorizedCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$UnauthorizedCopyWithImpl<$Res> extends _$AuthFailureCopyWithImpl<$Res>
+class __$UnauthorizedCopyWithImpl<$Res> extends _$AppFailureCopyWithImpl<$Res>
     implements _$UnauthorizedCopyWith<$Res> {
   __$UnauthorizedCopyWithImpl(
       _Unauthorized _value, $Res Function(_Unauthorized) _then)
@@ -886,7 +886,7 @@ class _$_Unauthorized implements _Unauthorized {
 
   @override
   String toString() {
-    return 'AuthFailure.unauthorized()';
+    return 'AppFailure.unauthorized()';
   }
 
   @override
@@ -966,6 +966,6 @@ class _$_Unauthorized implements _Unauthorized {
   }
 }
 
-abstract class _Unauthorized implements AuthFailure {
+abstract class _Unauthorized implements AppFailure {
   const factory _Unauthorized() = _$_Unauthorized;
 }

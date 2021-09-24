@@ -6,33 +6,33 @@ part 'plan_model.g.dart';
 @JsonSerializable()
 class PlanModel extends Equatable  {
   @JsonKey(name: "id")
-  int? id;
+  final int? id;
   @JsonKey(name: "title")
-  String? title;
+  final String? title;
   @JsonKey(name: "description")
-  String? description;
+  final String? description;
   @JsonKey(name: "monthPrice")
-  String? monthPrice;
+  final String? monthPrice;
   @JsonKey(name: "yearPrice")
-  String? yearPrice;
+  final String? yearPrice;
   @JsonKey(name: "primaryColor")
-  String? primaryColor;
+  final String? primaryColor;
   @JsonKey(name: "accentColor")
-  String? accentColor;
+  final String? accentColor;
   @JsonKey(name: "textColor")
-  String? textColor;
+  final String? textColor;
   @JsonKey(name: "recommended")
-  bool? recommended;
+  final bool? recommended;
   @JsonKey(name: "special")
-  bool? special;
+  final bool? special;
   @JsonKey(name: "endAt")
-  DateTime? endAt;
+  final DateTime? endAt;
   @JsonKey(name: "createdAt")
-  DateTime? createdAt;
+  final DateTime? createdAt;
   @JsonKey(name: "updatedAt")
-  DateTime? updatedAt;
+  final DateTime? updatedAt;
   @JsonKey(name: "deletedAt")
-  DateTime? deletedAt;
+  final DateTime? deletedAt;
 
   PlanModel({
     this.id,

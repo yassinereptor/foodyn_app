@@ -6,31 +6,31 @@ part 'payment_model.g.dart';
 @JsonSerializable()
 class PaymentModel extends Equatable  {
   @JsonKey(name: "id")
-  int? id;
+  final int? id;
   @JsonKey(name: "type")
-  int? type;
+  final int? type;
   @JsonKey(name: "title")
-  String? title;
+  final String? title;
   @JsonKey(name: "description")
-  String? description;
+  final String? description;
   @JsonKey(name: "asset")
-  String? asset;
+  final String? asset;
   @JsonKey(name: "primaryColor")
-  String? primaryColor;
+  final String? primaryColor;
   @JsonKey(name: "accentColor")
-  String? accentColor;
+  final String? accentColor;
   @JsonKey(name: "textColor")
-  String? textColor;
+  final String? textColor;
   @JsonKey(name: "soon")
-  bool? soon;
+  final bool? soon;
   @JsonKey(name: "active")
-  bool? active;
+  final bool? active;
   @JsonKey(name: "createdAt")
-  DateTime? createdAt;
+  final DateTime? createdAt;
   @JsonKey(name: "updatedAt")
-  DateTime? updatedAt;
+  final DateTime? updatedAt;
   @JsonKey(name: "deletedAt")
-  DateTime? deletedAt;
+  final DateTime? deletedAt;
 
   PaymentModel({
     this.id,

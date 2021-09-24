@@ -5,26 +5,26 @@ import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:foodyn_rest/core/data/models/profile_model.dart';
-import 'package:foodyn_rest/core/domain/entities/auth_failure.dart';
-import '../../../../core/config/injectable/injection.dart';
-import '../../../../core/config/router/router.dart';
-import '../../../../core/utils/theme_brightness.dart';
-import '../../../../core/widgets/modal_container_widget.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:velocity_x/velocity_x.dart';
+
 import '../../../../core/bloc/auth_bloc/auth_bloc.dart';
 import '../../../../core/bloc/geolocation_bloc/geolocation_bloc.dart';
 import '../../../../core/bloc/profile_bloc/profile_bloc.dart';
+import '../../../../core/config/injectable/injection.dart';
+import '../../../../core/config/router/router.dart';
+import '../../../../core/config/theme/global_theme.dart';
+import '../../../../core/data/models/profile_model.dart';
+import '../../../../core/domain/entities/app_failure.dart';
+import '../../../../core/utils/theme_brightness.dart';
+import '../../../../core/widgets/modal_container_widget.dart';
+import '../../../../core/widgets/scaffold_container_widget.dart';
+import '../widgets/dropdown_form_widget.dart';
+import '../widgets/geolocation_text_form_widget.dart';
+import '../widgets/text_form_widget.dart';
 import 'geolocation_page.dart';
 import 'register_image_page.dart';
 import 'verify_otp_page.dart';
-import '../widgets/sliver_app_bar_widget.dart';
-import '../widgets/dropdown_form_widget.dart';
-import '../widgets/geolocation_text_form_widget.dart';
-import '../widgets/resend_email_widget.dart';
-import '../widgets/text_form_widget.dart';
-import '../../../../core/config/theme/global_theme.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:velocity_x/velocity_x.dart';
 
 class CompleteRegisterPage extends StatefulWidget {
   static const kRouteName = "/complete-register";
@@ -229,7 +229,7 @@ class _CompleteRegisterPageState extends State<CompleteRegisterPage> {
     });
   }
 
-  void _onTypeloadingFailure(AuthFailure failure) {
+  void _onTypeloadingFailure(AppFailure failure) {
     setState(() {
       _modalType = ModalContainerType.FAILURE;
     });
@@ -238,13 +238,6 @@ class _CompleteRegisterPageState extends State<CompleteRegisterPage> {
         _showModal = false;
         _modalType = ModalContainerType.LOADING;
       });
-    });
-  }
-
-  void _modalReset() {
-    setState(() {
-      _showModal = false;
-      _modalType = ModalContainerType.LOADING;
     });
   }
 
@@ -312,372 +305,275 @@ class _CompleteRegisterPageState extends State<CompleteRegisterPage> {
                 },
                 orElse: () {});
 
-            return Scaffold(
-                body: ModalContainerWidget(
-              onLoading: _modalReset,
-              onSucceed: _modalReset,
-              onFailed: _modalReset,
+            return ScaffoldContainerWidget(
               type: _modalType,
               show: _showModal,
-              child: SafeArea(
-                child: CustomScrollView(
-                  shrinkWrap: true,
-                  slivers: [
-                    SliverAppBarWidget(logout: true, back: false),
-                    SliverToBoxAdapter(
-                      child: SingleChildScrollView(
-                        child: Padding(
-                          padding:
-                              EdgeInsets.only(left: 20, right: 20, bottom: 20),
+              logout: true,
+              back: false,
+              title: "Complete your registration",
+              subtitle: "*: required",
+              children: [
+                Form(
+                  key: _formKey,
+                  child: Column(
+                    children: <Widget>[
+                      Padding(
+                          padding: EdgeInsets.only(bottom: 20),
+                          child: TextFormWidget(
+                            onChanged: (_) {},
+                            hint: "Full name *",
+                            keyboardType: TextInputType.name,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return '● Please enter your full name';
+                              }
+                              return null;
+                            },
+                            controller: _fullnameTextEditingController,
+                          )),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Padding(
+                                padding: EdgeInsets.only(bottom: 20),
+                                child: DropdownFormWidget(
+                                  onSelect: (index) => setState(() {
+                                    _selectedGenderIndex = index;
+                                  }),
+                                  list: _genderList,
+                                  defaultIndex: _selectedGenderIndex,
+                                  modifyListOutput: (text) => text,
+                                  modifySelectedOutput: (text) => text,
+                                  searchForm: false,
+                                )),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Padding(
+                                padding: EdgeInsets.only(bottom: 20),
+                                child: DropdownFormWidget(
+                                  onSelect: (index) => setState(() {
+                                    _selectedDialCodeIndex = index;
+                                  }),
+                                  list: _phoneCodes,
+                                  defaultIndex: _selectedDialCodeIndex,
+                                  modifyListOutput: (text) {
+                                    final jsonResult = json.decode(text);
+                                    return jsonResult["name"] +
+                                        " (" +
+                                        jsonResult["dialCode"] +
+                                        ")";
+                                  },
+                                  modifySelectedOutput: (text) {
+                                    final jsonResult = json.decode(text);
+                                    return jsonResult["code"] +
+                                        " (" +
+                                        jsonResult["dialCode"] +
+                                        ")";
+                                  },
+                                )),
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Expanded(
+                            child: Padding(
+                                padding: EdgeInsets.only(bottom: 20),
+                                child: TextFormWidget(
+                                  onChanged: (_) {},
+                                  hint: "Phone number",
+                                  keyboardType: TextInputType.phone,
+                                  validator: (value) {
+                                    // if (value == null ||
+                                    //     value.isEmpty) {
+                                    //   return '● Please enter some text';
+                                    // }
+                                    return null;
+                                  },
+                                  controller: _phoneNumberTextEditingController,
+                                )),
+                          ),
+                        ],
+                      ),
+                      Padding(
+                          padding: EdgeInsets.only(bottom: 20),
+                          child: GeolocationTextFormWidget(
+                            onTap: _onGeolocationMapClicked,
+                            controller: _adresseTextEditingController,
+                          )),
+                      Padding(
+                          padding: EdgeInsets.only(bottom: 20),
                           child: Container(
-                            child: Column(
-                              children: [
-                                ResendEmailWidget(),
-                                Row(
-                                  children: [
-                                    Padding(
-                                      padding:
-                                          EdgeInsets.only(top: 5, bottom: 15),
-                                      child: "Complete your registration"
-                                          .text
-                                          .xl2
-                                          .make(),
+                            height: 150,
+                            width: MediaQuery.of(context).size.width - 40,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                border: Border.all(
+                                    color: GlobalTheme.kOrangeColor, width: 1)),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(10),
+                              child: MediaQuery(
+                                  data: MediaQuery.of(context).copyWith(
+                                      size: Size(
+                                          MediaQuery.of(context).size.width -
+                                              38,
+                                          148)),
+                                  child: Stack(children: [
+                                    GoogleMap(
+                                      liteModeEnabled: true,
+                                      zoomControlsEnabled: false,
+                                      zoomGesturesEnabled: false,
+                                      onMapCreated: _onMapCreated,
+                                      markers: _markersList.toSet(),
+                                      initialCameraPosition: CameraPosition(
+                                        target: (_selectedMarker == null)
+                                            ? _defaultSelectedMarker
+                                            : _selectedMarker!,
+                                        zoom: 13.0,
+                                      ),
+                                      onTap: (_) {
+                                        _onGeolocationMapClicked();
+                                      },
                                     ),
-                                  ],
-                                ),
-                                Form(
-                                  key: _formKey,
-                                  child: Column(
-                                    children: <Widget>[
-                                      Row(
-                                        children: [
-                                          Padding(
-                                            padding: EdgeInsets.only(
-                                                top: 5, bottom: 15),
-                                            child: "*: required".text.sm.make(),
-                                          ),
-                                        ],
-                                      ),
-                                      Padding(
-                                          padding: EdgeInsets.only(bottom: 20),
-                                          child: TextFormWidget(
-                                            onChanged: (_) {},
-                                            hint: "Full name *",
-                                            keyboardType: TextInputType.name,
-                                            validator: (value) {
-                                              if (value == null ||
-                                                  value.isEmpty) {
-                                                return '● Please enter your full name';
-                                              }
-                                              return null;
-                                            },
-                                            controller:
-                                                _fullnameTextEditingController,
-                                          )),
-                                      Row(
-                                        children: [
-                                          Expanded(
-                                            child: Padding(
-                                                padding:
-                                                    EdgeInsets.only(bottom: 20),
-                                                child: DropdownFormWidget(
-                                                  onSelect: (index) =>
-                                                      setState(() {
-                                                    _selectedGenderIndex =
-                                                        index;
-                                                  }),
-                                                  list: _genderList,
-                                                  defaultIndex:
-                                                      _selectedGenderIndex,
-                                                  modifyListOutput: (text) =>
-                                                      text,
-                                                  modifySelectedOutput:
-                                                      (text) => text,
-                                                  searchForm: false,
-                                                )),
-                                          ),
-                                        ],
-                                      ),
-                                      Row(
-                                        children: [
-                                          Expanded(
-                                            child: Padding(
-                                                padding:
-                                                    EdgeInsets.only(bottom: 20),
-                                                child: DropdownFormWidget(
-                                                  onSelect: (index) =>
-                                                      setState(() {
-                                                    _selectedDialCodeIndex =
-                                                        index;
-                                                  }),
-                                                  list: _phoneCodes,
-                                                  defaultIndex:
-                                                      _selectedDialCodeIndex,
-                                                  modifyListOutput: (text) {
-                                                    final jsonResult =
-                                                        json.decode(text);
-                                                    return jsonResult["name"] +
-                                                        " (" +
-                                                        jsonResult["dialCode"] +
-                                                        ")";
-                                                  },
-                                                  modifySelectedOutput: (text) {
-                                                    final jsonResult =
-                                                        json.decode(text);
-                                                    return jsonResult["code"] +
-                                                        " (" +
-                                                        jsonResult["dialCode"] +
-                                                        ")";
-                                                  },
-                                                )),
-                                          ),
-                                          SizedBox(
-                                            width: 10,
-                                          ),
-                                          Expanded(
-                                            child: Padding(
-                                                padding:
-                                                    EdgeInsets.only(bottom: 20),
-                                                child: TextFormWidget(
-                                                  onChanged: (_) {},
-                                                  hint: "Phone number",
-                                                  keyboardType:
-                                                      TextInputType.phone,
-                                                  validator: (value) {
-                                                    // if (value == null ||
-                                                    //     value.isEmpty) {
-                                                    //   return '● Please enter some text';
-                                                    // }
-                                                    return null;
-                                                  },
-                                                  controller:
-                                                      _phoneNumberTextEditingController,
-                                                )),
-                                          ),
-                                        ],
-                                      ),
-                                      Padding(
-                                          padding: EdgeInsets.only(bottom: 20),
-                                          child: GeolocationTextFormWidget(
-                                            onTap: _onGeolocationMapClicked,
-                                            controller:
-                                                _adresseTextEditingController,
-                                          )),
-                                      Padding(
-                                          padding: EdgeInsets.only(bottom: 20),
-                                          child: Container(
-                                            height: 150,
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width -
-                                                40,
-                                            decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                                border: Border.all(
-                                                    color: GlobalTheme
-                                                        .kOrangeColor,
-                                                    width: 1)),
-                                            child: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                              child: MediaQuery(
-                                                  data: MediaQuery.of(context)
-                                                      .copyWith(
-                                                          size: Size(
-                                                              MediaQuery.of(
-                                                                          context)
-                                                                      .size
-                                                                      .width -
-                                                                  38,
-                                                              148)),
-                                                  child: Stack(children: [
-                                                    GoogleMap(
-                                                      liteModeEnabled: true,
-                                                      zoomControlsEnabled:
-                                                          false,
-                                                      zoomGesturesEnabled:
-                                                          false,
-                                                      onMapCreated:
-                                                          _onMapCreated,
-                                                      markers:
-                                                          _markersList.toSet(),
-                                                      initialCameraPosition:
-                                                          CameraPosition(
-                                                        target: (_selectedMarker ==
-                                                                null)
-                                                            ? _defaultSelectedMarker
-                                                            : _selectedMarker!,
-                                                        zoom: 13.0,
+                                    _isFirsttimeMap
+                                        ? InkWell(
+                                            onTap: _getGeolocation,
+                                            child: BackdropFilter(
+                                              filter: ImageFilter.blur(
+                                                  sigmaX: 5.0, sigmaY: 5.0),
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                    color: Colors.black
+                                                        .withOpacity(.5)),
+                                                child: Center(
+                                                  child: Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Text(
+                                                        "Get Your Location",
+                                                        style: TextStyle(
+                                                            color: isDark(
+                                                                    context)
+                                                                ? GlobalTheme
+                                                                    .kPrimaryColor
+                                                                : GlobalTheme
+                                                                    .kAccentColor),
                                                       ),
-                                                      onTap: (_) {
-                                                        _onGeolocationMapClicked();
-                                                      },
-                                                    ),
-                                                    _isFirsttimeMap
-                                                        ? InkWell(
-                                                            onTap:
-                                                                _getGeolocation,
-                                                            child:
-                                                                BackdropFilter(
-                                                              filter: ImageFilter
-                                                                  .blur(
-                                                                      sigmaX:
-                                                                          5.0,
-                                                                      sigmaY:
-                                                                          5.0),
-                                                              child: Container(
-                                                                decoration: BoxDecoration(
-                                                                    color: Colors
-                                                                        .black
-                                                                        .withOpacity(
-                                                                            .5)),
-                                                                child: Center(
-                                                                  child: Column(
-                                                                    mainAxisAlignment:
-                                                                        MainAxisAlignment
-                                                                            .center,
-                                                                    children: [
-                                                                      Text(
-                                                                        "Get Your Location",
-                                                                        style: TextStyle(
-                                                                            color: isDark(context)
-                                                                                ? GlobalTheme.kPrimaryColor
-                                                                                : GlobalTheme.kAccentColor),
-                                                                      ),
-                                                                      myLocationWidget,
-                                                                    ],
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          )
-                                                        : Container()
-                                                  ])),
+                                                      myLocationWidget,
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
                                             ),
-                                          )),
-                                      Row(
-                                        children: [
-                                          Expanded(
-                                            child: Padding(
-                                                padding:
-                                                    EdgeInsets.only(bottom: 20),
-                                                child: DropdownFormWidget(
-                                                  onSelect: (index) {
-                                                    setState(() {
-                                                      _selectedCountryIndex =
-                                                          index;
-                                                    });
-                                                  },
-                                                  list: _phoneCodes,
-                                                  defaultIndex:
-                                                      _selectedCountryIndex,
-                                                  modifyListOutput: (text) {
-                                                    final jsonResult =
-                                                        json.decode(text);
-                                                    return jsonResult["name"];
-                                                  },
-                                                  modifySelectedOutput: (text) {
-                                                    final jsonResult =
-                                                        json.decode(text);
-                                                    return jsonResult["name"] +
-                                                        " (" +
-                                                        jsonResult["code"] +
-                                                        ")";
-                                                  },
-                                                )),
-                                          ),
-                                        ],
-                                      ),
-                                      Row(
-                                        children: [
-                                          Expanded(
-                                            child: Padding(
-                                                padding:
-                                                    EdgeInsets.only(bottom: 20),
-                                                child: TextFormWidget(
-                                                  onChanged: (_) {},
-                                                  hint: "City",
-                                                  keyboardType:
-                                                      TextInputType.text,
-                                                  validator: (value) {
-                                                    // if (value == null ||
-                                                    //     value.isEmpty) {
-                                                    //   return '● Please enter some text';
-                                                    // }
-                                                    return null;
-                                                  },
-                                                  controller:
-                                                      _cityTextEditingController,
-                                                )),
-                                          ),
-                                          SizedBox(
-                                            width: 10,
-                                          ),
-                                          Expanded(
-                                            child: Padding(
-                                                padding:
-                                                    EdgeInsets.only(bottom: 20),
-                                                child: TextFormWidget(
-                                                  onChanged: (_) {},
-                                                  hint: "Zip Code",
-                                                  keyboardType:
-                                                      TextInputType.number,
-                                                  validator: (value) {
-                                                    // if (value == null ||
-                                                    //     value.isEmpty) {
-                                                    //   return '● Please enter some text';
-                                                    // }
-                                                    return null;
-                                                  },
-                                                  controller:
-                                                      _zipCodeTextEditingController,
-                                                )),
-                                          ),
-                                        ],
-                                      ),
-                                      InkWell(
-                                        onTap: _onCompleteRegister,
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                              color: GlobalTheme.kOrangeColor,
-                                              borderRadius:
-                                                  BorderRadius.circular(10)),
-                                          padding: Vx.mH32,
-                                          height: 65.0,
-                                          child: Directionality(
-                                            textDirection: TextDirection.rtl,
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                "Continue"
-                                                    .text
-                                                    .xl
-                                                    .color((isDark(context))
-                                                        ? GlobalTheme
-                                                            .kPrimaryColor
-                                                        : GlobalTheme
-                                                            .kAccentColor)
-                                                    .make(),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
+                                          )
+                                        : Container()
+                                  ])),
+                            ),
+                          )),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Padding(
+                                padding: EdgeInsets.only(bottom: 20),
+                                child: DropdownFormWidget(
+                                  onSelect: (index) {
+                                    setState(() {
+                                      _selectedCountryIndex = index;
+                                    });
+                                  },
+                                  list: _phoneCodes,
+                                  defaultIndex: _selectedCountryIndex,
+                                  modifyListOutput: (text) {
+                                    final jsonResult = json.decode(text);
+                                    return jsonResult["name"];
+                                  },
+                                  modifySelectedOutput: (text) {
+                                    final jsonResult = json.decode(text);
+                                    return jsonResult["name"] +
+                                        " (" +
+                                        jsonResult["code"] +
+                                        ")";
+                                  },
+                                )),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Padding(
+                                padding: EdgeInsets.only(bottom: 20),
+                                child: TextFormWidget(
+                                  onChanged: (_) {},
+                                  hint: "City",
+                                  keyboardType: TextInputType.text,
+                                  validator: (value) {
+                                    // if (value == null ||
+                                    //     value.isEmpty) {
+                                    //   return '● Please enter some text';
+                                    // }
+                                    return null;
+                                  },
+                                  controller: _cityTextEditingController,
+                                )),
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Expanded(
+                            child: Padding(
+                                padding: EdgeInsets.only(bottom: 20),
+                                child: TextFormWidget(
+                                  onChanged: (_) {},
+                                  hint: "Zip Code",
+                                  keyboardType: TextInputType.number,
+                                  validator: (value) {
+                                    // if (value == null ||
+                                    //     value.isEmpty) {
+                                    //   return '● Please enter some text';
+                                    // }
+                                    return null;
+                                  },
+                                  controller: _zipCodeTextEditingController,
+                                )),
+                          ),
+                        ],
+                      ),
+                      InkWell(
+                        onTap: _onCompleteRegister,
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: GlobalTheme.kOrangeColor,
+                              borderRadius: BorderRadius.circular(10)),
+                          padding: Vx.mH32,
+                          height: 65.0,
+                          child: Directionality(
+                            textDirection: TextDirection.rtl,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                "Continue"
+                                    .text
+                                    .xl
+                                    .color((isDark(context))
+                                        ? GlobalTheme.kPrimaryColor
+                                        : GlobalTheme.kAccentColor)
+                                    .make(),
                               ],
                             ),
                           ),
                         ),
                       ),
-                    )
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            ));
+              ],
+            );
           }),
         ));
   }

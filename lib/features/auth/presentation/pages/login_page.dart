@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:foodyn_rest/core/domain/entities/auth_failure.dart';
+import '../../../../core/domain/entities/app_failure.dart';
 import '../../../../core/config/router/router.dart';
 import '../../../../core/services/validator_service.dart';
 import '../../../../core/utils/theme_brightness.dart';
@@ -79,7 +79,7 @@ class _LoginPageState extends State<LoginPage> {
     });
   }
 
-  void _onTypeloadingFailure (AuthFailure failure) {
+  void _onTypeloadingFailure (AppFailure failure) {
     setState(() {
       _modalType = ModalContainerType.FAILURE;
     });
@@ -89,13 +89,6 @@ class _LoginPageState extends State<LoginPage> {
         _modalType = ModalContainerType.LOADING;
       });
     });
-  }
-
-  void _modalReset() {
-    setState(() {
-                    _showModal = false;
-                    _modalType = ModalContainerType.LOADING;
-                  });
   }
 
   @override
@@ -114,9 +107,6 @@ class _LoginPageState extends State<LoginPage> {
         builder: (context, state) {
           return Scaffold(
               body: ModalContainerWidget(
-                onLoading: _modalReset,
-                onSucceed: _modalReset,
-                onFailed: _modalReset,
                 type: _modalType,
                 show: _showModal,
                 child: SingleChildScrollView(

@@ -1,7 +1,7 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
 
-part of 'setting_bloc.dart';
+part of 'config_bloc.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -13,65 +13,174 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-class _$SettingEventTearOff {
-  const _$SettingEventTearOff();
+class _$ConfigEventTearOff {
+  const _$ConfigEventTearOff();
+
+  _Started started() {
+    return _Started();
+  }
 
   _GetPlans getPlans() {
-    return const _GetPlans();
+    return _GetPlans();
   }
 
   _GetPayments getPayments() {
-    return const _GetPayments();
+    return _GetPayments();
+  }
+
+  _SetLanguage setLanguage(String lang) {
+    return _SetLanguage(
+      lang,
+    );
   }
 }
 
 /// @nodoc
-const $SettingEvent = _$SettingEventTearOff();
+const $ConfigEvent = _$ConfigEventTearOff();
 
 /// @nodoc
-mixin _$SettingEvent {
+mixin _$ConfigEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
+    required TResult Function() started,
     required TResult Function() getPlans,
     required TResult Function() getPayments,
+    required TResult Function(String lang) setLanguage,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? started,
     TResult Function()? getPlans,
     TResult Function()? getPayments,
+    TResult Function(String lang)? setLanguage,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(_Started value) started,
     required TResult Function(_GetPlans value) getPlans,
     required TResult Function(_GetPayments value) getPayments,
+    required TResult Function(_SetLanguage value) setLanguage,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Started value)? started,
     TResult Function(_GetPlans value)? getPlans,
     TResult Function(_GetPayments value)? getPayments,
+    TResult Function(_SetLanguage value)? setLanguage,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $SettingEventCopyWith<$Res> {
-  factory $SettingEventCopyWith(
-          SettingEvent value, $Res Function(SettingEvent) then) =
-      _$SettingEventCopyWithImpl<$Res>;
+abstract class $ConfigEventCopyWith<$Res> {
+  factory $ConfigEventCopyWith(
+          ConfigEvent value, $Res Function(ConfigEvent) then) =
+      _$ConfigEventCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$SettingEventCopyWithImpl<$Res> implements $SettingEventCopyWith<$Res> {
-  _$SettingEventCopyWithImpl(this._value, this._then);
+class _$ConfigEventCopyWithImpl<$Res> implements $ConfigEventCopyWith<$Res> {
+  _$ConfigEventCopyWithImpl(this._value, this._then);
 
-  final SettingEvent _value;
+  final ConfigEvent _value;
   // ignore: unused_field
-  final $Res Function(SettingEvent) _then;
+  final $Res Function(ConfigEvent) _then;
+}
+
+/// @nodoc
+abstract class _$StartedCopyWith<$Res> {
+  factory _$StartedCopyWith(_Started value, $Res Function(_Started) then) =
+      __$StartedCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$StartedCopyWithImpl<$Res> extends _$ConfigEventCopyWithImpl<$Res>
+    implements _$StartedCopyWith<$Res> {
+  __$StartedCopyWithImpl(_Started _value, $Res Function(_Started) _then)
+      : super(_value, (v) => _then(v as _Started));
+
+  @override
+  _Started get _value => super._value as _Started;
+}
+
+/// @nodoc
+
+class _$_Started implements _Started {
+  _$_Started();
+
+  @override
+  String toString() {
+    return 'ConfigEvent.started()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is _Started);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() started,
+    required TResult Function() getPlans,
+    required TResult Function() getPayments,
+    required TResult Function(String lang) setLanguage,
+  }) {
+    return started();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? started,
+    TResult Function()? getPlans,
+    TResult Function()? getPayments,
+    TResult Function(String lang)? setLanguage,
+    required TResult orElse(),
+  }) {
+    if (started != null) {
+      return started();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Started value) started,
+    required TResult Function(_GetPlans value) getPlans,
+    required TResult Function(_GetPayments value) getPayments,
+    required TResult Function(_SetLanguage value) setLanguage,
+  }) {
+    return started(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Started value)? started,
+    TResult Function(_GetPlans value)? getPlans,
+    TResult Function(_GetPayments value)? getPayments,
+    TResult Function(_SetLanguage value)? setLanguage,
+    required TResult orElse(),
+  }) {
+    if (started != null) {
+      return started(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _Started implements ConfigEvent {
+  factory _Started() = _$_Started;
 }
 
 /// @nodoc
@@ -81,7 +190,7 @@ abstract class _$GetPlansCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$GetPlansCopyWithImpl<$Res> extends _$SettingEventCopyWithImpl<$Res>
+class __$GetPlansCopyWithImpl<$Res> extends _$ConfigEventCopyWithImpl<$Res>
     implements _$GetPlansCopyWith<$Res> {
   __$GetPlansCopyWithImpl(_GetPlans _value, $Res Function(_GetPlans) _then)
       : super(_value, (v) => _then(v as _GetPlans));
@@ -93,11 +202,11 @@ class __$GetPlansCopyWithImpl<$Res> extends _$SettingEventCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_GetPlans implements _GetPlans {
-  const _$_GetPlans();
+  _$_GetPlans();
 
   @override
   String toString() {
-    return 'SettingEvent.getPlans()';
+    return 'ConfigEvent.getPlans()';
   }
 
   @override
@@ -111,8 +220,10 @@ class _$_GetPlans implements _GetPlans {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
+    required TResult Function() started,
     required TResult Function() getPlans,
     required TResult Function() getPayments,
+    required TResult Function(String lang) setLanguage,
   }) {
     return getPlans();
   }
@@ -120,8 +231,10 @@ class _$_GetPlans implements _GetPlans {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? started,
     TResult Function()? getPlans,
     TResult Function()? getPayments,
+    TResult Function(String lang)? setLanguage,
     required TResult orElse(),
   }) {
     if (getPlans != null) {
@@ -133,8 +246,10 @@ class _$_GetPlans implements _GetPlans {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(_Started value) started,
     required TResult Function(_GetPlans value) getPlans,
     required TResult Function(_GetPayments value) getPayments,
+    required TResult Function(_SetLanguage value) setLanguage,
   }) {
     return getPlans(this);
   }
@@ -142,8 +257,10 @@ class _$_GetPlans implements _GetPlans {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Started value)? started,
     TResult Function(_GetPlans value)? getPlans,
     TResult Function(_GetPayments value)? getPayments,
+    TResult Function(_SetLanguage value)? setLanguage,
     required TResult orElse(),
   }) {
     if (getPlans != null) {
@@ -153,8 +270,8 @@ class _$_GetPlans implements _GetPlans {
   }
 }
 
-abstract class _GetPlans implements SettingEvent {
-  const factory _GetPlans() = _$_GetPlans;
+abstract class _GetPlans implements ConfigEvent {
+  factory _GetPlans() = _$_GetPlans;
 }
 
 /// @nodoc
@@ -165,7 +282,7 @@ abstract class _$GetPaymentsCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$GetPaymentsCopyWithImpl<$Res> extends _$SettingEventCopyWithImpl<$Res>
+class __$GetPaymentsCopyWithImpl<$Res> extends _$ConfigEventCopyWithImpl<$Res>
     implements _$GetPaymentsCopyWith<$Res> {
   __$GetPaymentsCopyWithImpl(
       _GetPayments _value, $Res Function(_GetPayments) _then)
@@ -178,11 +295,11 @@ class __$GetPaymentsCopyWithImpl<$Res> extends _$SettingEventCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_GetPayments implements _GetPayments {
-  const _$_GetPayments();
+  _$_GetPayments();
 
   @override
   String toString() {
-    return 'SettingEvent.getPayments()';
+    return 'ConfigEvent.getPayments()';
   }
 
   @override
@@ -196,8 +313,10 @@ class _$_GetPayments implements _GetPayments {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
+    required TResult Function() started,
     required TResult Function() getPlans,
     required TResult Function() getPayments,
+    required TResult Function(String lang) setLanguage,
   }) {
     return getPayments();
   }
@@ -205,8 +324,10 @@ class _$_GetPayments implements _GetPayments {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? started,
     TResult Function()? getPlans,
     TResult Function()? getPayments,
+    TResult Function(String lang)? setLanguage,
     required TResult orElse(),
   }) {
     if (getPayments != null) {
@@ -218,8 +339,10 @@ class _$_GetPayments implements _GetPayments {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(_Started value) started,
     required TResult Function(_GetPlans value) getPlans,
     required TResult Function(_GetPayments value) getPayments,
+    required TResult Function(_SetLanguage value) setLanguage,
   }) {
     return getPayments(this);
   }
@@ -227,8 +350,10 @@ class _$_GetPayments implements _GetPayments {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Started value)? started,
     TResult Function(_GetPlans value)? getPlans,
     TResult Function(_GetPayments value)? getPayments,
+    TResult Function(_SetLanguage value)? setLanguage,
     required TResult orElse(),
   }) {
     if (getPayments != null) {
@@ -238,13 +363,136 @@ class _$_GetPayments implements _GetPayments {
   }
 }
 
-abstract class _GetPayments implements SettingEvent {
-  const factory _GetPayments() = _$_GetPayments;
+abstract class _GetPayments implements ConfigEvent {
+  factory _GetPayments() = _$_GetPayments;
 }
 
 /// @nodoc
-class _$SettingStateTearOff {
-  const _$SettingStateTearOff();
+abstract class _$SetLanguageCopyWith<$Res> {
+  factory _$SetLanguageCopyWith(
+          _SetLanguage value, $Res Function(_SetLanguage) then) =
+      __$SetLanguageCopyWithImpl<$Res>;
+  $Res call({String lang});
+}
+
+/// @nodoc
+class __$SetLanguageCopyWithImpl<$Res> extends _$ConfigEventCopyWithImpl<$Res>
+    implements _$SetLanguageCopyWith<$Res> {
+  __$SetLanguageCopyWithImpl(
+      _SetLanguage _value, $Res Function(_SetLanguage) _then)
+      : super(_value, (v) => _then(v as _SetLanguage));
+
+  @override
+  _SetLanguage get _value => super._value as _SetLanguage;
+
+  @override
+  $Res call({
+    Object? lang = freezed,
+  }) {
+    return _then(_SetLanguage(
+      lang == freezed
+          ? _value.lang
+          : lang // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_SetLanguage implements _SetLanguage {
+  _$_SetLanguage(this.lang);
+
+  @override
+  final String lang;
+
+  @override
+  String toString() {
+    return 'ConfigEvent.setLanguage(lang: $lang)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _SetLanguage &&
+            (identical(other.lang, lang) ||
+                const DeepCollectionEquality().equals(other.lang, lang)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(lang);
+
+  @JsonKey(ignore: true)
+  @override
+  _$SetLanguageCopyWith<_SetLanguage> get copyWith =>
+      __$SetLanguageCopyWithImpl<_SetLanguage>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() started,
+    required TResult Function() getPlans,
+    required TResult Function() getPayments,
+    required TResult Function(String lang) setLanguage,
+  }) {
+    return setLanguage(lang);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? started,
+    TResult Function()? getPlans,
+    TResult Function()? getPayments,
+    TResult Function(String lang)? setLanguage,
+    required TResult orElse(),
+  }) {
+    if (setLanguage != null) {
+      return setLanguage(lang);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Started value) started,
+    required TResult Function(_GetPlans value) getPlans,
+    required TResult Function(_GetPayments value) getPayments,
+    required TResult Function(_SetLanguage value) setLanguage,
+  }) {
+    return setLanguage(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Started value)? started,
+    TResult Function(_GetPlans value)? getPlans,
+    TResult Function(_GetPayments value)? getPayments,
+    TResult Function(_SetLanguage value)? setLanguage,
+    required TResult orElse(),
+  }) {
+    if (setLanguage != null) {
+      return setLanguage(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _SetLanguage implements ConfigEvent {
+  factory _SetLanguage(String lang) = _$_SetLanguage;
+
+  String get lang => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  _$SetLanguageCopyWith<_SetLanguage> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+class _$ConfigStateTearOff {
+  const _$ConfigStateTearOff();
 
   _Initial initial() {
     return const _Initial();
@@ -266,7 +514,17 @@ class _$SettingStateTearOff {
     );
   }
 
-  _LoadingFailed loadingFailed(AuthFailure failure) {
+  _LoadingLanguageSuccess loadingLanguageSuccess(Locale? locale) {
+    return _LoadingLanguageSuccess(
+      locale,
+    );
+  }
+
+  _LoadingSuccess loadingSuccess() {
+    return const _LoadingSuccess();
+  }
+
+  _LoadingFailed loadingFailed(AppFailure failure) {
     return _LoadingFailed(
       failure,
     );
@@ -274,10 +532,10 @@ class _$SettingStateTearOff {
 }
 
 /// @nodoc
-const $SettingState = _$SettingStateTearOff();
+const $ConfigState = _$ConfigStateTearOff();
 
 /// @nodoc
-mixin _$SettingState {
+mixin _$ConfigState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
@@ -285,7 +543,9 @@ mixin _$SettingState {
     required TResult Function(List<PlanModel>? plans) loadingPlansSuccess,
     required TResult Function(List<PaymentModel>? payments)
         loadingPaymentsSuccess,
-    required TResult Function(AuthFailure failure) loadingFailed,
+    required TResult Function(Locale? locale) loadingLanguageSuccess,
+    required TResult Function() loadingSuccess,
+    required TResult Function(AppFailure failure) loadingFailed,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -294,7 +554,9 @@ mixin _$SettingState {
     TResult Function()? loadingInProgress,
     TResult Function(List<PlanModel>? plans)? loadingPlansSuccess,
     TResult Function(List<PaymentModel>? payments)? loadingPaymentsSuccess,
-    TResult Function(AuthFailure failure)? loadingFailed,
+    TResult Function(Locale? locale)? loadingLanguageSuccess,
+    TResult Function()? loadingSuccess,
+    TResult Function(AppFailure failure)? loadingFailed,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -305,6 +567,9 @@ mixin _$SettingState {
     required TResult Function(_LoadingPlansSuccess value) loadingPlansSuccess,
     required TResult Function(_LoadingPaymentsSuccess value)
         loadingPaymentsSuccess,
+    required TResult Function(_LoadingLanguageSuccess value)
+        loadingLanguageSuccess,
+    required TResult Function(_LoadingSuccess value) loadingSuccess,
     required TResult Function(_LoadingFailed value) loadingFailed,
   }) =>
       throw _privateConstructorUsedError;
@@ -314,6 +579,8 @@ mixin _$SettingState {
     TResult Function(_LoadingInProgress value)? loadingInProgress,
     TResult Function(_LoadingPlansSuccess value)? loadingPlansSuccess,
     TResult Function(_LoadingPaymentsSuccess value)? loadingPaymentsSuccess,
+    TResult Function(_LoadingLanguageSuccess value)? loadingLanguageSuccess,
+    TResult Function(_LoadingSuccess value)? loadingSuccess,
     TResult Function(_LoadingFailed value)? loadingFailed,
     required TResult orElse(),
   }) =>
@@ -321,19 +588,19 @@ mixin _$SettingState {
 }
 
 /// @nodoc
-abstract class $SettingStateCopyWith<$Res> {
-  factory $SettingStateCopyWith(
-          SettingState value, $Res Function(SettingState) then) =
-      _$SettingStateCopyWithImpl<$Res>;
+abstract class $ConfigStateCopyWith<$Res> {
+  factory $ConfigStateCopyWith(
+          ConfigState value, $Res Function(ConfigState) then) =
+      _$ConfigStateCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$SettingStateCopyWithImpl<$Res> implements $SettingStateCopyWith<$Res> {
-  _$SettingStateCopyWithImpl(this._value, this._then);
+class _$ConfigStateCopyWithImpl<$Res> implements $ConfigStateCopyWith<$Res> {
+  _$ConfigStateCopyWithImpl(this._value, this._then);
 
-  final SettingState _value;
+  final ConfigState _value;
   // ignore: unused_field
-  final $Res Function(SettingState) _then;
+  final $Res Function(ConfigState) _then;
 }
 
 /// @nodoc
@@ -343,7 +610,7 @@ abstract class _$InitialCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$InitialCopyWithImpl<$Res> extends _$SettingStateCopyWithImpl<$Res>
+class __$InitialCopyWithImpl<$Res> extends _$ConfigStateCopyWithImpl<$Res>
     implements _$InitialCopyWith<$Res> {
   __$InitialCopyWithImpl(_Initial _value, $Res Function(_Initial) _then)
       : super(_value, (v) => _then(v as _Initial));
@@ -359,7 +626,7 @@ class _$_Initial implements _Initial {
 
   @override
   String toString() {
-    return 'SettingState.initial()';
+    return 'ConfigState.initial()';
   }
 
   @override
@@ -378,7 +645,9 @@ class _$_Initial implements _Initial {
     required TResult Function(List<PlanModel>? plans) loadingPlansSuccess,
     required TResult Function(List<PaymentModel>? payments)
         loadingPaymentsSuccess,
-    required TResult Function(AuthFailure failure) loadingFailed,
+    required TResult Function(Locale? locale) loadingLanguageSuccess,
+    required TResult Function() loadingSuccess,
+    required TResult Function(AppFailure failure) loadingFailed,
   }) {
     return initial();
   }
@@ -390,7 +659,9 @@ class _$_Initial implements _Initial {
     TResult Function()? loadingInProgress,
     TResult Function(List<PlanModel>? plans)? loadingPlansSuccess,
     TResult Function(List<PaymentModel>? payments)? loadingPaymentsSuccess,
-    TResult Function(AuthFailure failure)? loadingFailed,
+    TResult Function(Locale? locale)? loadingLanguageSuccess,
+    TResult Function()? loadingSuccess,
+    TResult Function(AppFailure failure)? loadingFailed,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -407,6 +678,9 @@ class _$_Initial implements _Initial {
     required TResult Function(_LoadingPlansSuccess value) loadingPlansSuccess,
     required TResult Function(_LoadingPaymentsSuccess value)
         loadingPaymentsSuccess,
+    required TResult Function(_LoadingLanguageSuccess value)
+        loadingLanguageSuccess,
+    required TResult Function(_LoadingSuccess value) loadingSuccess,
     required TResult Function(_LoadingFailed value) loadingFailed,
   }) {
     return initial(this);
@@ -419,6 +693,8 @@ class _$_Initial implements _Initial {
     TResult Function(_LoadingInProgress value)? loadingInProgress,
     TResult Function(_LoadingPlansSuccess value)? loadingPlansSuccess,
     TResult Function(_LoadingPaymentsSuccess value)? loadingPaymentsSuccess,
+    TResult Function(_LoadingLanguageSuccess value)? loadingLanguageSuccess,
+    TResult Function(_LoadingSuccess value)? loadingSuccess,
     TResult Function(_LoadingFailed value)? loadingFailed,
     required TResult orElse(),
   }) {
@@ -429,7 +705,7 @@ class _$_Initial implements _Initial {
   }
 }
 
-abstract class _Initial implements SettingState {
+abstract class _Initial implements ConfigState {
   const factory _Initial() = _$_Initial;
 }
 
@@ -442,7 +718,7 @@ abstract class _$LoadingInProgressCopyWith<$Res> {
 
 /// @nodoc
 class __$LoadingInProgressCopyWithImpl<$Res>
-    extends _$SettingStateCopyWithImpl<$Res>
+    extends _$ConfigStateCopyWithImpl<$Res>
     implements _$LoadingInProgressCopyWith<$Res> {
   __$LoadingInProgressCopyWithImpl(
       _LoadingInProgress _value, $Res Function(_LoadingInProgress) _then)
@@ -459,7 +735,7 @@ class _$_LoadingInProgress implements _LoadingInProgress {
 
   @override
   String toString() {
-    return 'SettingState.loadingInProgress()';
+    return 'ConfigState.loadingInProgress()';
   }
 
   @override
@@ -478,7 +754,9 @@ class _$_LoadingInProgress implements _LoadingInProgress {
     required TResult Function(List<PlanModel>? plans) loadingPlansSuccess,
     required TResult Function(List<PaymentModel>? payments)
         loadingPaymentsSuccess,
-    required TResult Function(AuthFailure failure) loadingFailed,
+    required TResult Function(Locale? locale) loadingLanguageSuccess,
+    required TResult Function() loadingSuccess,
+    required TResult Function(AppFailure failure) loadingFailed,
   }) {
     return loadingInProgress();
   }
@@ -490,7 +768,9 @@ class _$_LoadingInProgress implements _LoadingInProgress {
     TResult Function()? loadingInProgress,
     TResult Function(List<PlanModel>? plans)? loadingPlansSuccess,
     TResult Function(List<PaymentModel>? payments)? loadingPaymentsSuccess,
-    TResult Function(AuthFailure failure)? loadingFailed,
+    TResult Function(Locale? locale)? loadingLanguageSuccess,
+    TResult Function()? loadingSuccess,
+    TResult Function(AppFailure failure)? loadingFailed,
     required TResult orElse(),
   }) {
     if (loadingInProgress != null) {
@@ -507,6 +787,9 @@ class _$_LoadingInProgress implements _LoadingInProgress {
     required TResult Function(_LoadingPlansSuccess value) loadingPlansSuccess,
     required TResult Function(_LoadingPaymentsSuccess value)
         loadingPaymentsSuccess,
+    required TResult Function(_LoadingLanguageSuccess value)
+        loadingLanguageSuccess,
+    required TResult Function(_LoadingSuccess value) loadingSuccess,
     required TResult Function(_LoadingFailed value) loadingFailed,
   }) {
     return loadingInProgress(this);
@@ -519,6 +802,8 @@ class _$_LoadingInProgress implements _LoadingInProgress {
     TResult Function(_LoadingInProgress value)? loadingInProgress,
     TResult Function(_LoadingPlansSuccess value)? loadingPlansSuccess,
     TResult Function(_LoadingPaymentsSuccess value)? loadingPaymentsSuccess,
+    TResult Function(_LoadingLanguageSuccess value)? loadingLanguageSuccess,
+    TResult Function(_LoadingSuccess value)? loadingSuccess,
     TResult Function(_LoadingFailed value)? loadingFailed,
     required TResult orElse(),
   }) {
@@ -529,7 +814,7 @@ class _$_LoadingInProgress implements _LoadingInProgress {
   }
 }
 
-abstract class _LoadingInProgress implements SettingState {
+abstract class _LoadingInProgress implements ConfigState {
   const factory _LoadingInProgress() = _$_LoadingInProgress;
 }
 
@@ -543,7 +828,7 @@ abstract class _$LoadingPlansSuccessCopyWith<$Res> {
 
 /// @nodoc
 class __$LoadingPlansSuccessCopyWithImpl<$Res>
-    extends _$SettingStateCopyWithImpl<$Res>
+    extends _$ConfigStateCopyWithImpl<$Res>
     implements _$LoadingPlansSuccessCopyWith<$Res> {
   __$LoadingPlansSuccessCopyWithImpl(
       _LoadingPlansSuccess _value, $Res Function(_LoadingPlansSuccess) _then)
@@ -575,7 +860,7 @@ class _$_LoadingPlansSuccess implements _LoadingPlansSuccess {
 
   @override
   String toString() {
-    return 'SettingState.loadingPlansSuccess(plans: $plans)';
+    return 'ConfigState.loadingPlansSuccess(plans: $plans)';
   }
 
   @override
@@ -604,7 +889,9 @@ class _$_LoadingPlansSuccess implements _LoadingPlansSuccess {
     required TResult Function(List<PlanModel>? plans) loadingPlansSuccess,
     required TResult Function(List<PaymentModel>? payments)
         loadingPaymentsSuccess,
-    required TResult Function(AuthFailure failure) loadingFailed,
+    required TResult Function(Locale? locale) loadingLanguageSuccess,
+    required TResult Function() loadingSuccess,
+    required TResult Function(AppFailure failure) loadingFailed,
   }) {
     return loadingPlansSuccess(plans);
   }
@@ -616,7 +903,9 @@ class _$_LoadingPlansSuccess implements _LoadingPlansSuccess {
     TResult Function()? loadingInProgress,
     TResult Function(List<PlanModel>? plans)? loadingPlansSuccess,
     TResult Function(List<PaymentModel>? payments)? loadingPaymentsSuccess,
-    TResult Function(AuthFailure failure)? loadingFailed,
+    TResult Function(Locale? locale)? loadingLanguageSuccess,
+    TResult Function()? loadingSuccess,
+    TResult Function(AppFailure failure)? loadingFailed,
     required TResult orElse(),
   }) {
     if (loadingPlansSuccess != null) {
@@ -633,6 +922,9 @@ class _$_LoadingPlansSuccess implements _LoadingPlansSuccess {
     required TResult Function(_LoadingPlansSuccess value) loadingPlansSuccess,
     required TResult Function(_LoadingPaymentsSuccess value)
         loadingPaymentsSuccess,
+    required TResult Function(_LoadingLanguageSuccess value)
+        loadingLanguageSuccess,
+    required TResult Function(_LoadingSuccess value) loadingSuccess,
     required TResult Function(_LoadingFailed value) loadingFailed,
   }) {
     return loadingPlansSuccess(this);
@@ -645,6 +937,8 @@ class _$_LoadingPlansSuccess implements _LoadingPlansSuccess {
     TResult Function(_LoadingInProgress value)? loadingInProgress,
     TResult Function(_LoadingPlansSuccess value)? loadingPlansSuccess,
     TResult Function(_LoadingPaymentsSuccess value)? loadingPaymentsSuccess,
+    TResult Function(_LoadingLanguageSuccess value)? loadingLanguageSuccess,
+    TResult Function(_LoadingSuccess value)? loadingSuccess,
     TResult Function(_LoadingFailed value)? loadingFailed,
     required TResult orElse(),
   }) {
@@ -655,7 +949,7 @@ class _$_LoadingPlansSuccess implements _LoadingPlansSuccess {
   }
 }
 
-abstract class _LoadingPlansSuccess implements SettingState {
+abstract class _LoadingPlansSuccess implements ConfigState {
   const factory _LoadingPlansSuccess(List<PlanModel>? plans) =
       _$_LoadingPlansSuccess;
 
@@ -675,7 +969,7 @@ abstract class _$LoadingPaymentsSuccessCopyWith<$Res> {
 
 /// @nodoc
 class __$LoadingPaymentsSuccessCopyWithImpl<$Res>
-    extends _$SettingStateCopyWithImpl<$Res>
+    extends _$ConfigStateCopyWithImpl<$Res>
     implements _$LoadingPaymentsSuccessCopyWith<$Res> {
   __$LoadingPaymentsSuccessCopyWithImpl(_LoadingPaymentsSuccess _value,
       $Res Function(_LoadingPaymentsSuccess) _then)
@@ -707,7 +1001,7 @@ class _$_LoadingPaymentsSuccess implements _LoadingPaymentsSuccess {
 
   @override
   String toString() {
-    return 'SettingState.loadingPaymentsSuccess(payments: $payments)';
+    return 'ConfigState.loadingPaymentsSuccess(payments: $payments)';
   }
 
   @override
@@ -737,7 +1031,9 @@ class _$_LoadingPaymentsSuccess implements _LoadingPaymentsSuccess {
     required TResult Function(List<PlanModel>? plans) loadingPlansSuccess,
     required TResult Function(List<PaymentModel>? payments)
         loadingPaymentsSuccess,
-    required TResult Function(AuthFailure failure) loadingFailed,
+    required TResult Function(Locale? locale) loadingLanguageSuccess,
+    required TResult Function() loadingSuccess,
+    required TResult Function(AppFailure failure) loadingFailed,
   }) {
     return loadingPaymentsSuccess(payments);
   }
@@ -749,7 +1045,9 @@ class _$_LoadingPaymentsSuccess implements _LoadingPaymentsSuccess {
     TResult Function()? loadingInProgress,
     TResult Function(List<PlanModel>? plans)? loadingPlansSuccess,
     TResult Function(List<PaymentModel>? payments)? loadingPaymentsSuccess,
-    TResult Function(AuthFailure failure)? loadingFailed,
+    TResult Function(Locale? locale)? loadingLanguageSuccess,
+    TResult Function()? loadingSuccess,
+    TResult Function(AppFailure failure)? loadingFailed,
     required TResult orElse(),
   }) {
     if (loadingPaymentsSuccess != null) {
@@ -766,6 +1064,9 @@ class _$_LoadingPaymentsSuccess implements _LoadingPaymentsSuccess {
     required TResult Function(_LoadingPlansSuccess value) loadingPlansSuccess,
     required TResult Function(_LoadingPaymentsSuccess value)
         loadingPaymentsSuccess,
+    required TResult Function(_LoadingLanguageSuccess value)
+        loadingLanguageSuccess,
+    required TResult Function(_LoadingSuccess value) loadingSuccess,
     required TResult Function(_LoadingFailed value) loadingFailed,
   }) {
     return loadingPaymentsSuccess(this);
@@ -778,6 +1079,8 @@ class _$_LoadingPaymentsSuccess implements _LoadingPaymentsSuccess {
     TResult Function(_LoadingInProgress value)? loadingInProgress,
     TResult Function(_LoadingPlansSuccess value)? loadingPlansSuccess,
     TResult Function(_LoadingPaymentsSuccess value)? loadingPaymentsSuccess,
+    TResult Function(_LoadingLanguageSuccess value)? loadingLanguageSuccess,
+    TResult Function(_LoadingSuccess value)? loadingSuccess,
     TResult Function(_LoadingFailed value)? loadingFailed,
     required TResult orElse(),
   }) {
@@ -788,7 +1091,7 @@ class _$_LoadingPaymentsSuccess implements _LoadingPaymentsSuccess {
   }
 }
 
-abstract class _LoadingPaymentsSuccess implements SettingState {
+abstract class _LoadingPaymentsSuccess implements ConfigState {
   const factory _LoadingPaymentsSuccess(List<PaymentModel>? payments) =
       _$_LoadingPaymentsSuccess;
 
@@ -799,18 +1102,267 @@ abstract class _LoadingPaymentsSuccess implements SettingState {
 }
 
 /// @nodoc
+abstract class _$LoadingLanguageSuccessCopyWith<$Res> {
+  factory _$LoadingLanguageSuccessCopyWith(_LoadingLanguageSuccess value,
+          $Res Function(_LoadingLanguageSuccess) then) =
+      __$LoadingLanguageSuccessCopyWithImpl<$Res>;
+  $Res call({Locale? locale});
+}
+
+/// @nodoc
+class __$LoadingLanguageSuccessCopyWithImpl<$Res>
+    extends _$ConfigStateCopyWithImpl<$Res>
+    implements _$LoadingLanguageSuccessCopyWith<$Res> {
+  __$LoadingLanguageSuccessCopyWithImpl(_LoadingLanguageSuccess _value,
+      $Res Function(_LoadingLanguageSuccess) _then)
+      : super(_value, (v) => _then(v as _LoadingLanguageSuccess));
+
+  @override
+  _LoadingLanguageSuccess get _value => super._value as _LoadingLanguageSuccess;
+
+  @override
+  $Res call({
+    Object? locale = freezed,
+  }) {
+    return _then(_LoadingLanguageSuccess(
+      locale == freezed
+          ? _value.locale
+          : locale // ignore: cast_nullable_to_non_nullable
+              as Locale?,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_LoadingLanguageSuccess implements _LoadingLanguageSuccess {
+  const _$_LoadingLanguageSuccess(this.locale);
+
+  @override
+  final Locale? locale;
+
+  @override
+  String toString() {
+    return 'ConfigState.loadingLanguageSuccess(locale: $locale)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _LoadingLanguageSuccess &&
+            (identical(other.locale, locale) ||
+                const DeepCollectionEquality().equals(other.locale, locale)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(locale);
+
+  @JsonKey(ignore: true)
+  @override
+  _$LoadingLanguageSuccessCopyWith<_LoadingLanguageSuccess> get copyWith =>
+      __$LoadingLanguageSuccessCopyWithImpl<_LoadingLanguageSuccess>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loadingInProgress,
+    required TResult Function(List<PlanModel>? plans) loadingPlansSuccess,
+    required TResult Function(List<PaymentModel>? payments)
+        loadingPaymentsSuccess,
+    required TResult Function(Locale? locale) loadingLanguageSuccess,
+    required TResult Function() loadingSuccess,
+    required TResult Function(AppFailure failure) loadingFailed,
+  }) {
+    return loadingLanguageSuccess(locale);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loadingInProgress,
+    TResult Function(List<PlanModel>? plans)? loadingPlansSuccess,
+    TResult Function(List<PaymentModel>? payments)? loadingPaymentsSuccess,
+    TResult Function(Locale? locale)? loadingLanguageSuccess,
+    TResult Function()? loadingSuccess,
+    TResult Function(AppFailure failure)? loadingFailed,
+    required TResult orElse(),
+  }) {
+    if (loadingLanguageSuccess != null) {
+      return loadingLanguageSuccess(locale);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_LoadingInProgress value) loadingInProgress,
+    required TResult Function(_LoadingPlansSuccess value) loadingPlansSuccess,
+    required TResult Function(_LoadingPaymentsSuccess value)
+        loadingPaymentsSuccess,
+    required TResult Function(_LoadingLanguageSuccess value)
+        loadingLanguageSuccess,
+    required TResult Function(_LoadingSuccess value) loadingSuccess,
+    required TResult Function(_LoadingFailed value) loadingFailed,
+  }) {
+    return loadingLanguageSuccess(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_LoadingInProgress value)? loadingInProgress,
+    TResult Function(_LoadingPlansSuccess value)? loadingPlansSuccess,
+    TResult Function(_LoadingPaymentsSuccess value)? loadingPaymentsSuccess,
+    TResult Function(_LoadingLanguageSuccess value)? loadingLanguageSuccess,
+    TResult Function(_LoadingSuccess value)? loadingSuccess,
+    TResult Function(_LoadingFailed value)? loadingFailed,
+    required TResult orElse(),
+  }) {
+    if (loadingLanguageSuccess != null) {
+      return loadingLanguageSuccess(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _LoadingLanguageSuccess implements ConfigState {
+  const factory _LoadingLanguageSuccess(Locale? locale) =
+      _$_LoadingLanguageSuccess;
+
+  Locale? get locale => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  _$LoadingLanguageSuccessCopyWith<_LoadingLanguageSuccess> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$LoadingSuccessCopyWith<$Res> {
+  factory _$LoadingSuccessCopyWith(
+          _LoadingSuccess value, $Res Function(_LoadingSuccess) then) =
+      __$LoadingSuccessCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$LoadingSuccessCopyWithImpl<$Res>
+    extends _$ConfigStateCopyWithImpl<$Res>
+    implements _$LoadingSuccessCopyWith<$Res> {
+  __$LoadingSuccessCopyWithImpl(
+      _LoadingSuccess _value, $Res Function(_LoadingSuccess) _then)
+      : super(_value, (v) => _then(v as _LoadingSuccess));
+
+  @override
+  _LoadingSuccess get _value => super._value as _LoadingSuccess;
+}
+
+/// @nodoc
+
+class _$_LoadingSuccess implements _LoadingSuccess {
+  const _$_LoadingSuccess();
+
+  @override
+  String toString() {
+    return 'ConfigState.loadingSuccess()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is _LoadingSuccess);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loadingInProgress,
+    required TResult Function(List<PlanModel>? plans) loadingPlansSuccess,
+    required TResult Function(List<PaymentModel>? payments)
+        loadingPaymentsSuccess,
+    required TResult Function(Locale? locale) loadingLanguageSuccess,
+    required TResult Function() loadingSuccess,
+    required TResult Function(AppFailure failure) loadingFailed,
+  }) {
+    return loadingSuccess();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loadingInProgress,
+    TResult Function(List<PlanModel>? plans)? loadingPlansSuccess,
+    TResult Function(List<PaymentModel>? payments)? loadingPaymentsSuccess,
+    TResult Function(Locale? locale)? loadingLanguageSuccess,
+    TResult Function()? loadingSuccess,
+    TResult Function(AppFailure failure)? loadingFailed,
+    required TResult orElse(),
+  }) {
+    if (loadingSuccess != null) {
+      return loadingSuccess();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_LoadingInProgress value) loadingInProgress,
+    required TResult Function(_LoadingPlansSuccess value) loadingPlansSuccess,
+    required TResult Function(_LoadingPaymentsSuccess value)
+        loadingPaymentsSuccess,
+    required TResult Function(_LoadingLanguageSuccess value)
+        loadingLanguageSuccess,
+    required TResult Function(_LoadingSuccess value) loadingSuccess,
+    required TResult Function(_LoadingFailed value) loadingFailed,
+  }) {
+    return loadingSuccess(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_LoadingInProgress value)? loadingInProgress,
+    TResult Function(_LoadingPlansSuccess value)? loadingPlansSuccess,
+    TResult Function(_LoadingPaymentsSuccess value)? loadingPaymentsSuccess,
+    TResult Function(_LoadingLanguageSuccess value)? loadingLanguageSuccess,
+    TResult Function(_LoadingSuccess value)? loadingSuccess,
+    TResult Function(_LoadingFailed value)? loadingFailed,
+    required TResult orElse(),
+  }) {
+    if (loadingSuccess != null) {
+      return loadingSuccess(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _LoadingSuccess implements ConfigState {
+  const factory _LoadingSuccess() = _$_LoadingSuccess;
+}
+
+/// @nodoc
 abstract class _$LoadingFailedCopyWith<$Res> {
   factory _$LoadingFailedCopyWith(
           _LoadingFailed value, $Res Function(_LoadingFailed) then) =
       __$LoadingFailedCopyWithImpl<$Res>;
-  $Res call({AuthFailure failure});
+  $Res call({AppFailure failure});
 
-  $AuthFailureCopyWith<$Res> get failure;
+  $AppFailureCopyWith<$Res> get failure;
 }
 
 /// @nodoc
-class __$LoadingFailedCopyWithImpl<$Res>
-    extends _$SettingStateCopyWithImpl<$Res>
+class __$LoadingFailedCopyWithImpl<$Res> extends _$ConfigStateCopyWithImpl<$Res>
     implements _$LoadingFailedCopyWith<$Res> {
   __$LoadingFailedCopyWithImpl(
       _LoadingFailed _value, $Res Function(_LoadingFailed) _then)
@@ -827,13 +1379,13 @@ class __$LoadingFailedCopyWithImpl<$Res>
       failure == freezed
           ? _value.failure
           : failure // ignore: cast_nullable_to_non_nullable
-              as AuthFailure,
+              as AppFailure,
     ));
   }
 
   @override
-  $AuthFailureCopyWith<$Res> get failure {
-    return $AuthFailureCopyWith<$Res>(_value.failure, (value) {
+  $AppFailureCopyWith<$Res> get failure {
+    return $AppFailureCopyWith<$Res>(_value.failure, (value) {
       return _then(_value.copyWith(failure: value));
     });
   }
@@ -845,11 +1397,11 @@ class _$_LoadingFailed implements _LoadingFailed {
   const _$_LoadingFailed(this.failure);
 
   @override
-  final AuthFailure failure;
+  final AppFailure failure;
 
   @override
   String toString() {
-    return 'SettingState.loadingFailed(failure: $failure)';
+    return 'ConfigState.loadingFailed(failure: $failure)';
   }
 
   @override
@@ -877,7 +1429,9 @@ class _$_LoadingFailed implements _LoadingFailed {
     required TResult Function(List<PlanModel>? plans) loadingPlansSuccess,
     required TResult Function(List<PaymentModel>? payments)
         loadingPaymentsSuccess,
-    required TResult Function(AuthFailure failure) loadingFailed,
+    required TResult Function(Locale? locale) loadingLanguageSuccess,
+    required TResult Function() loadingSuccess,
+    required TResult Function(AppFailure failure) loadingFailed,
   }) {
     return loadingFailed(failure);
   }
@@ -889,7 +1443,9 @@ class _$_LoadingFailed implements _LoadingFailed {
     TResult Function()? loadingInProgress,
     TResult Function(List<PlanModel>? plans)? loadingPlansSuccess,
     TResult Function(List<PaymentModel>? payments)? loadingPaymentsSuccess,
-    TResult Function(AuthFailure failure)? loadingFailed,
+    TResult Function(Locale? locale)? loadingLanguageSuccess,
+    TResult Function()? loadingSuccess,
+    TResult Function(AppFailure failure)? loadingFailed,
     required TResult orElse(),
   }) {
     if (loadingFailed != null) {
@@ -906,6 +1462,9 @@ class _$_LoadingFailed implements _LoadingFailed {
     required TResult Function(_LoadingPlansSuccess value) loadingPlansSuccess,
     required TResult Function(_LoadingPaymentsSuccess value)
         loadingPaymentsSuccess,
+    required TResult Function(_LoadingLanguageSuccess value)
+        loadingLanguageSuccess,
+    required TResult Function(_LoadingSuccess value) loadingSuccess,
     required TResult Function(_LoadingFailed value) loadingFailed,
   }) {
     return loadingFailed(this);
@@ -918,6 +1477,8 @@ class _$_LoadingFailed implements _LoadingFailed {
     TResult Function(_LoadingInProgress value)? loadingInProgress,
     TResult Function(_LoadingPlansSuccess value)? loadingPlansSuccess,
     TResult Function(_LoadingPaymentsSuccess value)? loadingPaymentsSuccess,
+    TResult Function(_LoadingLanguageSuccess value)? loadingLanguageSuccess,
+    TResult Function(_LoadingSuccess value)? loadingSuccess,
     TResult Function(_LoadingFailed value)? loadingFailed,
     required TResult orElse(),
   }) {
@@ -928,10 +1489,10 @@ class _$_LoadingFailed implements _LoadingFailed {
   }
 }
 
-abstract class _LoadingFailed implements SettingState {
-  const factory _LoadingFailed(AuthFailure failure) = _$_LoadingFailed;
+abstract class _LoadingFailed implements ConfigState {
+  const factory _LoadingFailed(AppFailure failure) = _$_LoadingFailed;
 
-  AuthFailure get failure => throw _privateConstructorUsedError;
+  AppFailure get failure => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   _$LoadingFailedCopyWith<_LoadingFailed> get copyWith =>
       throw _privateConstructorUsedError;

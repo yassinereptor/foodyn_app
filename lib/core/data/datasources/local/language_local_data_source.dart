@@ -6,7 +6,6 @@ import '../../../../core/error/exeptions.dart';
 
 abstract class ILanguageLocalDataSource {
   Future<Locale?> getLanguage();
-
   Future<Locale> setLanguage(String lang);
 }
 

@@ -12,18 +12,18 @@ class ModalContainerWidget extends StatefulWidget {
   final Widget child;
   final bool show;
   final ModalContainerType type;
-  final void Function() onLoading;
-  final void Function() onSucceed;
-  final void Function() onFailed;
+  final void Function()? onLoading;
+  final void Function()? onSucceed;
+  final void Function()? onFailed;
 
   const ModalContainerWidget(
       {Key? key,
       required this.child,
       this.show = false,
       this.type = ModalContainerType.LOADING,
-      required this.onLoading,
-      required this.onSucceed,
-      required this.onFailed})
+      this.onLoading,
+      this.onSucceed,
+      this.onFailed})
       : super(key: key);
 
   @override
@@ -42,6 +42,7 @@ class _ModalContainerWidgetState extends State<ModalContainerWidget> {
   late String _btnText;
   late Color _btnColor;
   bool _show = false;
+  ModalContainerType _type = ModalContainerType.LOADING;
 
   @override
   void initState() {
@@ -49,19 +50,36 @@ class _ModalContainerWidgetState extends State<ModalContainerWidget> {
     _text = "Loading ...";
     _btnText = "Cancel";
     _btnColor = GlobalTheme.kOrangeColor;
+    _show = widget.show;
+    _type = widget.type;
     super.initState();
   }
 
   void _onTap() {
-    switch (widget.type) {
+    switch (_type) {
       case ModalContainerType.LOADING:
-        widget.onLoading();
+        if (widget.onLoading != null)
+          widget.onLoading!();
+        setState(() {
+          _show = false;
+          _type = ModalContainerType.LOADING;
+        });
         break;
       case ModalContainerType.SUCCESS:
-        widget.onSucceed();
+        if (widget.onSucceed != null)
+          widget.onSucceed!();
+        setState(() {
+          _show = false;
+          _type = ModalContainerType.LOADING;
+        });
         break;
       case ModalContainerType.FAILURE:
-        widget.onFailed();
+        if (widget.onFailed != null)
+          widget.onFailed!();
+        setState(() {
+          _show = false;
+          _type = ModalContainerType.LOADING;
+        });
         break;
     }
   }
@@ -69,7 +87,7 @@ class _ModalContainerWidgetState extends State<ModalContainerWidget> {
   @override
   Widget build(BuildContext context) {
     double _width = MediaQuery.of(context).size.width / 3;
-    switch (widget.type) {
+    switch (_type) {
       case ModalContainerType.LOADING:
         _animationIndex = !isDark(context) ? 0 : 1;
         _text = "Loading ...";
@@ -89,7 +107,6 @@ class _ModalContainerWidgetState extends State<ModalContainerWidget> {
         _btnColor = GlobalTheme.kRedColor;
         break;
     }
-    _show = widget.show;
 
     return Stack(
       children: [

@@ -1,5 +1,5 @@
-import 'package:foodyn_rest/core/data/models/coupon_model.dart';
-import 'package:foodyn_rest/core/data/models/plan_model.dart';
+import '../../data/models/coupon_model.dart';
+import '../../data/models/plan_model.dart';
 
 import '../../../features/auth/presentation/pages/payment_page.dart';
 import '../../../features/dashboard/presentation/pages/dashboard_page.dart';

@@ -7,5 +7,5 @@ class OtpState with _$OtpState {
   const factory OtpState.loadingSent() = _LoadingSent;
   const factory OtpState.loadingInProgress() = _LoadingInProgress;
   const factory OtpState.loadingSuccess() = _LoadingSuccess;
-  const factory OtpState.loadingFailed(AuthFailure failure) = _LoadingFailed;
+  const factory OtpState.loadingFailed(AppFailure failure) = _LoadingFailed;
 }

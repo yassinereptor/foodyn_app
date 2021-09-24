@@ -3,8 +3,9 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:foodyn_rest/core/data/models/plan_model.dart';
-import 'package:foodyn_rest/core/domain/entities/auth_failure.dart';
+import '../../../../core/bloc/config_bloc/config_bloc.dart';
+import '../../../../core/data/models/plan_model.dart';
+import '../../../../core/domain/entities/app_failure.dart';
 import '../../../../core/config/injectable/injection.dart';
 import '../../../../core/config/router/router.dart';
 import '../../../../core/utils/color_utils.dart';
@@ -12,7 +13,6 @@ import '../../../../core/utils/currency_utils.dart';
 import '../../../../core/utils/string_utils.dart';
 import '../../../../core/utils/theme_brightness.dart';
 import '../../../../core/widgets/modal_container_widget.dart';
-import '../../../../core/bloc/setting_bloc/setting_bloc.dart';
 import 'payment_page.dart';
 import '../../../../core/config/theme/global_theme.dart';
 import '../../../../core/bloc/auth_bloc/auth_bloc.dart';
@@ -37,7 +37,7 @@ class PlanPage extends StatefulWidget {
 }
 
 class _PlanPageState extends State<PlanPage> with SingleTickerProviderStateMixin {
-  late SettingBloc _settingBloc;
+  late ConfigBloc _configBloc;
   late AuthBloc _authBloc;
   bool _showModal = false;
   ModalContainerType _modalType = ModalContainerType.LOADING;
@@ -66,13 +66,13 @@ late Animation<double> animation;
       });
     controller.forward();
     _authBloc = context.read<AuthBloc>();
-    _settingBloc = getIt<SettingBloc>();
+    _configBloc = getIt<ConfigBloc>();
     _calcYearPrice = CurrencyUtils(widget.plan).getCalcYearPrice();
   }
 
   @override
   void dispose() {
-    _settingBloc.close();
+    _configBloc.close();
     super.dispose();
   }
 
@@ -93,7 +93,7 @@ late Animation<double> animation;
     
   }
 
-  void _onTypeloadingFailure (AuthFailure failure) {
+  void _onTypeloadingFailure (AppFailure failure) {
     setState(() {
       _modalType = ModalContainerType.FAILURE;
     });
@@ -102,13 +102,6 @@ late Animation<double> animation;
         _showModal = false;
         _modalType = ModalContainerType.LOADING;
       });
-    });
-  }
-
-  void _modalReset() {
-    setState(() {
-      _showModal = false;
-      _modalType = ModalContainerType.LOADING;
     });
   }
 
@@ -121,7 +114,7 @@ late Animation<double> animation;
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => _settingBloc
+          create: (context) => _configBloc
           ),
           BlocProvider(
           create: (context) => _authBloc
@@ -132,7 +125,7 @@ late Animation<double> animation;
             BlocListener<AuthBloc, AuthState>(
               listener: (context, state) {
                 state.type.maybeWhen(
-                  loadingFailed: (AuthFailure message) {
+                  loadingFailed: (AppFailure message) {
                     message.maybeWhen(
                         storage: () {
                           final snackBar =
@@ -151,7 +144,7 @@ late Animation<double> animation;
                   orElse: () {});
               },
             ),
-            BlocListener<SettingBloc, SettingState>(
+            BlocListener<ConfigBloc, ConfigState>(
               listener: (context, state) {
                 state.maybeWhen(
                   loadingInProgress: _onTypeloadingInProgress,
@@ -163,9 +156,8 @@ late Animation<double> animation;
           ],
           child: Scaffold(
             body: ModalContainerWidget(
-              onLoading: _modalReset,
-              onSucceed: _modalReset,
-              onFailed: _modalReset,
+              type: _modalType,
+              show: _showModal,
               child: Stack(
                 children: [
                   Container(
