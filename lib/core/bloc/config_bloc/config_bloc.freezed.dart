@@ -20,6 +20,10 @@ class _$ConfigEventTearOff {
     return _Started();
   }
 
+  _GetResourcePhone getPhoneResource() {
+    return _GetResourcePhone();
+  }
+
   _GetPlans getPlans() {
     return _GetPlans();
   }
@@ -43,6 +47,7 @@ mixin _$ConfigEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() started,
+    required TResult Function() getPhoneResource,
     required TResult Function() getPlans,
     required TResult Function() getPayments,
     required TResult Function(String lang) setLanguage,
@@ -51,6 +56,7 @@ mixin _$ConfigEvent {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
+    TResult Function()? getPhoneResource,
     TResult Function()? getPlans,
     TResult Function()? getPayments,
     TResult Function(String lang)? setLanguage,
@@ -60,6 +66,7 @@ mixin _$ConfigEvent {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Started value) started,
+    required TResult Function(_GetResourcePhone value) getPhoneResource,
     required TResult Function(_GetPlans value) getPlans,
     required TResult Function(_GetPayments value) getPayments,
     required TResult Function(_SetLanguage value) setLanguage,
@@ -68,6 +75,7 @@ mixin _$ConfigEvent {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Started value)? started,
+    TResult Function(_GetResourcePhone value)? getPhoneResource,
     TResult Function(_GetPlans value)? getPlans,
     TResult Function(_GetPayments value)? getPayments,
     TResult Function(_SetLanguage value)? setLanguage,
@@ -130,6 +138,7 @@ class _$_Started implements _Started {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() started,
+    required TResult Function() getPhoneResource,
     required TResult Function() getPlans,
     required TResult Function() getPayments,
     required TResult Function(String lang) setLanguage,
@@ -141,6 +150,7 @@ class _$_Started implements _Started {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
+    TResult Function()? getPhoneResource,
     TResult Function()? getPlans,
     TResult Function()? getPayments,
     TResult Function(String lang)? setLanguage,
@@ -156,6 +166,7 @@ class _$_Started implements _Started {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Started value) started,
+    required TResult Function(_GetResourcePhone value) getPhoneResource,
     required TResult Function(_GetPlans value) getPlans,
     required TResult Function(_GetPayments value) getPayments,
     required TResult Function(_SetLanguage value) setLanguage,
@@ -167,6 +178,7 @@ class _$_Started implements _Started {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Started value)? started,
+    TResult Function(_GetResourcePhone value)? getPhoneResource,
     TResult Function(_GetPlans value)? getPlans,
     TResult Function(_GetPayments value)? getPayments,
     TResult Function(_SetLanguage value)? setLanguage,
@@ -181,6 +193,104 @@ class _$_Started implements _Started {
 
 abstract class _Started implements ConfigEvent {
   factory _Started() = _$_Started;
+}
+
+/// @nodoc
+abstract class _$GetResourcePhoneCopyWith<$Res> {
+  factory _$GetResourcePhoneCopyWith(
+          _GetResourcePhone value, $Res Function(_GetResourcePhone) then) =
+      __$GetResourcePhoneCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$GetResourcePhoneCopyWithImpl<$Res>
+    extends _$ConfigEventCopyWithImpl<$Res>
+    implements _$GetResourcePhoneCopyWith<$Res> {
+  __$GetResourcePhoneCopyWithImpl(
+      _GetResourcePhone _value, $Res Function(_GetResourcePhone) _then)
+      : super(_value, (v) => _then(v as _GetResourcePhone));
+
+  @override
+  _GetResourcePhone get _value => super._value as _GetResourcePhone;
+}
+
+/// @nodoc
+
+class _$_GetResourcePhone implements _GetResourcePhone {
+  _$_GetResourcePhone();
+
+  @override
+  String toString() {
+    return 'ConfigEvent.getPhoneResource()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is _GetResourcePhone);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() started,
+    required TResult Function() getPhoneResource,
+    required TResult Function() getPlans,
+    required TResult Function() getPayments,
+    required TResult Function(String lang) setLanguage,
+  }) {
+    return getPhoneResource();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? started,
+    TResult Function()? getPhoneResource,
+    TResult Function()? getPlans,
+    TResult Function()? getPayments,
+    TResult Function(String lang)? setLanguage,
+    required TResult orElse(),
+  }) {
+    if (getPhoneResource != null) {
+      return getPhoneResource();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Started value) started,
+    required TResult Function(_GetResourcePhone value) getPhoneResource,
+    required TResult Function(_GetPlans value) getPlans,
+    required TResult Function(_GetPayments value) getPayments,
+    required TResult Function(_SetLanguage value) setLanguage,
+  }) {
+    return getPhoneResource(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Started value)? started,
+    TResult Function(_GetResourcePhone value)? getPhoneResource,
+    TResult Function(_GetPlans value)? getPlans,
+    TResult Function(_GetPayments value)? getPayments,
+    TResult Function(_SetLanguage value)? setLanguage,
+    required TResult orElse(),
+  }) {
+    if (getPhoneResource != null) {
+      return getPhoneResource(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _GetResourcePhone implements ConfigEvent {
+  factory _GetResourcePhone() = _$_GetResourcePhone;
 }
 
 /// @nodoc
@@ -221,6 +331,7 @@ class _$_GetPlans implements _GetPlans {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() started,
+    required TResult Function() getPhoneResource,
     required TResult Function() getPlans,
     required TResult Function() getPayments,
     required TResult Function(String lang) setLanguage,
@@ -232,6 +343,7 @@ class _$_GetPlans implements _GetPlans {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
+    TResult Function()? getPhoneResource,
     TResult Function()? getPlans,
     TResult Function()? getPayments,
     TResult Function(String lang)? setLanguage,
@@ -247,6 +359,7 @@ class _$_GetPlans implements _GetPlans {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Started value) started,
+    required TResult Function(_GetResourcePhone value) getPhoneResource,
     required TResult Function(_GetPlans value) getPlans,
     required TResult Function(_GetPayments value) getPayments,
     required TResult Function(_SetLanguage value) setLanguage,
@@ -258,6 +371,7 @@ class _$_GetPlans implements _GetPlans {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Started value)? started,
+    TResult Function(_GetResourcePhone value)? getPhoneResource,
     TResult Function(_GetPlans value)? getPlans,
     TResult Function(_GetPayments value)? getPayments,
     TResult Function(_SetLanguage value)? setLanguage,
@@ -314,6 +428,7 @@ class _$_GetPayments implements _GetPayments {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() started,
+    required TResult Function() getPhoneResource,
     required TResult Function() getPlans,
     required TResult Function() getPayments,
     required TResult Function(String lang) setLanguage,
@@ -325,6 +440,7 @@ class _$_GetPayments implements _GetPayments {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
+    TResult Function()? getPhoneResource,
     TResult Function()? getPlans,
     TResult Function()? getPayments,
     TResult Function(String lang)? setLanguage,
@@ -340,6 +456,7 @@ class _$_GetPayments implements _GetPayments {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Started value) started,
+    required TResult Function(_GetResourcePhone value) getPhoneResource,
     required TResult Function(_GetPlans value) getPlans,
     required TResult Function(_GetPayments value) getPayments,
     required TResult Function(_SetLanguage value) setLanguage,
@@ -351,6 +468,7 @@ class _$_GetPayments implements _GetPayments {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Started value)? started,
+    TResult Function(_GetResourcePhone value)? getPhoneResource,
     TResult Function(_GetPlans value)? getPlans,
     TResult Function(_GetPayments value)? getPayments,
     TResult Function(_SetLanguage value)? setLanguage,
@@ -432,6 +550,7 @@ class _$_SetLanguage implements _SetLanguage {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() started,
+    required TResult Function() getPhoneResource,
     required TResult Function() getPlans,
     required TResult Function() getPayments,
     required TResult Function(String lang) setLanguage,
@@ -443,6 +562,7 @@ class _$_SetLanguage implements _SetLanguage {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
+    TResult Function()? getPhoneResource,
     TResult Function()? getPlans,
     TResult Function()? getPayments,
     TResult Function(String lang)? setLanguage,
@@ -458,6 +578,7 @@ class _$_SetLanguage implements _SetLanguage {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Started value) started,
+    required TResult Function(_GetResourcePhone value) getPhoneResource,
     required TResult Function(_GetPlans value) getPlans,
     required TResult Function(_GetPayments value) getPayments,
     required TResult Function(_SetLanguage value) setLanguage,
@@ -469,6 +590,7 @@ class _$_SetLanguage implements _SetLanguage {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Started value)? started,
+    TResult Function(_GetResourcePhone value)? getPhoneResource,
     TResult Function(_GetPlans value)? getPlans,
     TResult Function(_GetPayments value)? getPayments,
     TResult Function(_SetLanguage value)? setLanguage,
@@ -520,6 +642,13 @@ class _$ConfigStateTearOff {
     );
   }
 
+  _LoadingResourcePhoneSuccess loadingResourcePhoneSuccess(
+      List<String>? resource) {
+    return _LoadingResourcePhoneSuccess(
+      resource,
+    );
+  }
+
   _LoadingSuccess loadingSuccess() {
     return const _LoadingSuccess();
   }
@@ -544,6 +673,8 @@ mixin _$ConfigState {
     required TResult Function(List<PaymentModel>? payments)
         loadingPaymentsSuccess,
     required TResult Function(Locale? locale) loadingLanguageSuccess,
+    required TResult Function(List<String>? resource)
+        loadingResourcePhoneSuccess,
     required TResult Function() loadingSuccess,
     required TResult Function(AppFailure failure) loadingFailed,
   }) =>
@@ -555,6 +686,7 @@ mixin _$ConfigState {
     TResult Function(List<PlanModel>? plans)? loadingPlansSuccess,
     TResult Function(List<PaymentModel>? payments)? loadingPaymentsSuccess,
     TResult Function(Locale? locale)? loadingLanguageSuccess,
+    TResult Function(List<String>? resource)? loadingResourcePhoneSuccess,
     TResult Function()? loadingSuccess,
     TResult Function(AppFailure failure)? loadingFailed,
     required TResult orElse(),
@@ -569,6 +701,8 @@ mixin _$ConfigState {
         loadingPaymentsSuccess,
     required TResult Function(_LoadingLanguageSuccess value)
         loadingLanguageSuccess,
+    required TResult Function(_LoadingResourcePhoneSuccess value)
+        loadingResourcePhoneSuccess,
     required TResult Function(_LoadingSuccess value) loadingSuccess,
     required TResult Function(_LoadingFailed value) loadingFailed,
   }) =>
@@ -580,6 +714,8 @@ mixin _$ConfigState {
     TResult Function(_LoadingPlansSuccess value)? loadingPlansSuccess,
     TResult Function(_LoadingPaymentsSuccess value)? loadingPaymentsSuccess,
     TResult Function(_LoadingLanguageSuccess value)? loadingLanguageSuccess,
+    TResult Function(_LoadingResourcePhoneSuccess value)?
+        loadingResourcePhoneSuccess,
     TResult Function(_LoadingSuccess value)? loadingSuccess,
     TResult Function(_LoadingFailed value)? loadingFailed,
     required TResult orElse(),
@@ -646,6 +782,8 @@ class _$_Initial implements _Initial {
     required TResult Function(List<PaymentModel>? payments)
         loadingPaymentsSuccess,
     required TResult Function(Locale? locale) loadingLanguageSuccess,
+    required TResult Function(List<String>? resource)
+        loadingResourcePhoneSuccess,
     required TResult Function() loadingSuccess,
     required TResult Function(AppFailure failure) loadingFailed,
   }) {
@@ -660,6 +798,7 @@ class _$_Initial implements _Initial {
     TResult Function(List<PlanModel>? plans)? loadingPlansSuccess,
     TResult Function(List<PaymentModel>? payments)? loadingPaymentsSuccess,
     TResult Function(Locale? locale)? loadingLanguageSuccess,
+    TResult Function(List<String>? resource)? loadingResourcePhoneSuccess,
     TResult Function()? loadingSuccess,
     TResult Function(AppFailure failure)? loadingFailed,
     required TResult orElse(),
@@ -680,6 +819,8 @@ class _$_Initial implements _Initial {
         loadingPaymentsSuccess,
     required TResult Function(_LoadingLanguageSuccess value)
         loadingLanguageSuccess,
+    required TResult Function(_LoadingResourcePhoneSuccess value)
+        loadingResourcePhoneSuccess,
     required TResult Function(_LoadingSuccess value) loadingSuccess,
     required TResult Function(_LoadingFailed value) loadingFailed,
   }) {
@@ -694,6 +835,8 @@ class _$_Initial implements _Initial {
     TResult Function(_LoadingPlansSuccess value)? loadingPlansSuccess,
     TResult Function(_LoadingPaymentsSuccess value)? loadingPaymentsSuccess,
     TResult Function(_LoadingLanguageSuccess value)? loadingLanguageSuccess,
+    TResult Function(_LoadingResourcePhoneSuccess value)?
+        loadingResourcePhoneSuccess,
     TResult Function(_LoadingSuccess value)? loadingSuccess,
     TResult Function(_LoadingFailed value)? loadingFailed,
     required TResult orElse(),
@@ -755,6 +898,8 @@ class _$_LoadingInProgress implements _LoadingInProgress {
     required TResult Function(List<PaymentModel>? payments)
         loadingPaymentsSuccess,
     required TResult Function(Locale? locale) loadingLanguageSuccess,
+    required TResult Function(List<String>? resource)
+        loadingResourcePhoneSuccess,
     required TResult Function() loadingSuccess,
     required TResult Function(AppFailure failure) loadingFailed,
   }) {
@@ -769,6 +914,7 @@ class _$_LoadingInProgress implements _LoadingInProgress {
     TResult Function(List<PlanModel>? plans)? loadingPlansSuccess,
     TResult Function(List<PaymentModel>? payments)? loadingPaymentsSuccess,
     TResult Function(Locale? locale)? loadingLanguageSuccess,
+    TResult Function(List<String>? resource)? loadingResourcePhoneSuccess,
     TResult Function()? loadingSuccess,
     TResult Function(AppFailure failure)? loadingFailed,
     required TResult orElse(),
@@ -789,6 +935,8 @@ class _$_LoadingInProgress implements _LoadingInProgress {
         loadingPaymentsSuccess,
     required TResult Function(_LoadingLanguageSuccess value)
         loadingLanguageSuccess,
+    required TResult Function(_LoadingResourcePhoneSuccess value)
+        loadingResourcePhoneSuccess,
     required TResult Function(_LoadingSuccess value) loadingSuccess,
     required TResult Function(_LoadingFailed value) loadingFailed,
   }) {
@@ -803,6 +951,8 @@ class _$_LoadingInProgress implements _LoadingInProgress {
     TResult Function(_LoadingPlansSuccess value)? loadingPlansSuccess,
     TResult Function(_LoadingPaymentsSuccess value)? loadingPaymentsSuccess,
     TResult Function(_LoadingLanguageSuccess value)? loadingLanguageSuccess,
+    TResult Function(_LoadingResourcePhoneSuccess value)?
+        loadingResourcePhoneSuccess,
     TResult Function(_LoadingSuccess value)? loadingSuccess,
     TResult Function(_LoadingFailed value)? loadingFailed,
     required TResult orElse(),
@@ -890,6 +1040,8 @@ class _$_LoadingPlansSuccess implements _LoadingPlansSuccess {
     required TResult Function(List<PaymentModel>? payments)
         loadingPaymentsSuccess,
     required TResult Function(Locale? locale) loadingLanguageSuccess,
+    required TResult Function(List<String>? resource)
+        loadingResourcePhoneSuccess,
     required TResult Function() loadingSuccess,
     required TResult Function(AppFailure failure) loadingFailed,
   }) {
@@ -904,6 +1056,7 @@ class _$_LoadingPlansSuccess implements _LoadingPlansSuccess {
     TResult Function(List<PlanModel>? plans)? loadingPlansSuccess,
     TResult Function(List<PaymentModel>? payments)? loadingPaymentsSuccess,
     TResult Function(Locale? locale)? loadingLanguageSuccess,
+    TResult Function(List<String>? resource)? loadingResourcePhoneSuccess,
     TResult Function()? loadingSuccess,
     TResult Function(AppFailure failure)? loadingFailed,
     required TResult orElse(),
@@ -924,6 +1077,8 @@ class _$_LoadingPlansSuccess implements _LoadingPlansSuccess {
         loadingPaymentsSuccess,
     required TResult Function(_LoadingLanguageSuccess value)
         loadingLanguageSuccess,
+    required TResult Function(_LoadingResourcePhoneSuccess value)
+        loadingResourcePhoneSuccess,
     required TResult Function(_LoadingSuccess value) loadingSuccess,
     required TResult Function(_LoadingFailed value) loadingFailed,
   }) {
@@ -938,6 +1093,8 @@ class _$_LoadingPlansSuccess implements _LoadingPlansSuccess {
     TResult Function(_LoadingPlansSuccess value)? loadingPlansSuccess,
     TResult Function(_LoadingPaymentsSuccess value)? loadingPaymentsSuccess,
     TResult Function(_LoadingLanguageSuccess value)? loadingLanguageSuccess,
+    TResult Function(_LoadingResourcePhoneSuccess value)?
+        loadingResourcePhoneSuccess,
     TResult Function(_LoadingSuccess value)? loadingSuccess,
     TResult Function(_LoadingFailed value)? loadingFailed,
     required TResult orElse(),
@@ -1032,6 +1189,8 @@ class _$_LoadingPaymentsSuccess implements _LoadingPaymentsSuccess {
     required TResult Function(List<PaymentModel>? payments)
         loadingPaymentsSuccess,
     required TResult Function(Locale? locale) loadingLanguageSuccess,
+    required TResult Function(List<String>? resource)
+        loadingResourcePhoneSuccess,
     required TResult Function() loadingSuccess,
     required TResult Function(AppFailure failure) loadingFailed,
   }) {
@@ -1046,6 +1205,7 @@ class _$_LoadingPaymentsSuccess implements _LoadingPaymentsSuccess {
     TResult Function(List<PlanModel>? plans)? loadingPlansSuccess,
     TResult Function(List<PaymentModel>? payments)? loadingPaymentsSuccess,
     TResult Function(Locale? locale)? loadingLanguageSuccess,
+    TResult Function(List<String>? resource)? loadingResourcePhoneSuccess,
     TResult Function()? loadingSuccess,
     TResult Function(AppFailure failure)? loadingFailed,
     required TResult orElse(),
@@ -1066,6 +1226,8 @@ class _$_LoadingPaymentsSuccess implements _LoadingPaymentsSuccess {
         loadingPaymentsSuccess,
     required TResult Function(_LoadingLanguageSuccess value)
         loadingLanguageSuccess,
+    required TResult Function(_LoadingResourcePhoneSuccess value)
+        loadingResourcePhoneSuccess,
     required TResult Function(_LoadingSuccess value) loadingSuccess,
     required TResult Function(_LoadingFailed value) loadingFailed,
   }) {
@@ -1080,6 +1242,8 @@ class _$_LoadingPaymentsSuccess implements _LoadingPaymentsSuccess {
     TResult Function(_LoadingPlansSuccess value)? loadingPlansSuccess,
     TResult Function(_LoadingPaymentsSuccess value)? loadingPaymentsSuccess,
     TResult Function(_LoadingLanguageSuccess value)? loadingLanguageSuccess,
+    TResult Function(_LoadingResourcePhoneSuccess value)?
+        loadingResourcePhoneSuccess,
     TResult Function(_LoadingSuccess value)? loadingSuccess,
     TResult Function(_LoadingFailed value)? loadingFailed,
     required TResult orElse(),
@@ -1173,6 +1337,8 @@ class _$_LoadingLanguageSuccess implements _LoadingLanguageSuccess {
     required TResult Function(List<PaymentModel>? payments)
         loadingPaymentsSuccess,
     required TResult Function(Locale? locale) loadingLanguageSuccess,
+    required TResult Function(List<String>? resource)
+        loadingResourcePhoneSuccess,
     required TResult Function() loadingSuccess,
     required TResult Function(AppFailure failure) loadingFailed,
   }) {
@@ -1187,6 +1353,7 @@ class _$_LoadingLanguageSuccess implements _LoadingLanguageSuccess {
     TResult Function(List<PlanModel>? plans)? loadingPlansSuccess,
     TResult Function(List<PaymentModel>? payments)? loadingPaymentsSuccess,
     TResult Function(Locale? locale)? loadingLanguageSuccess,
+    TResult Function(List<String>? resource)? loadingResourcePhoneSuccess,
     TResult Function()? loadingSuccess,
     TResult Function(AppFailure failure)? loadingFailed,
     required TResult orElse(),
@@ -1207,6 +1374,8 @@ class _$_LoadingLanguageSuccess implements _LoadingLanguageSuccess {
         loadingPaymentsSuccess,
     required TResult Function(_LoadingLanguageSuccess value)
         loadingLanguageSuccess,
+    required TResult Function(_LoadingResourcePhoneSuccess value)
+        loadingResourcePhoneSuccess,
     required TResult Function(_LoadingSuccess value) loadingSuccess,
     required TResult Function(_LoadingFailed value) loadingFailed,
   }) {
@@ -1221,6 +1390,8 @@ class _$_LoadingLanguageSuccess implements _LoadingLanguageSuccess {
     TResult Function(_LoadingPlansSuccess value)? loadingPlansSuccess,
     TResult Function(_LoadingPaymentsSuccess value)? loadingPaymentsSuccess,
     TResult Function(_LoadingLanguageSuccess value)? loadingLanguageSuccess,
+    TResult Function(_LoadingResourcePhoneSuccess value)?
+        loadingResourcePhoneSuccess,
     TResult Function(_LoadingSuccess value)? loadingSuccess,
     TResult Function(_LoadingFailed value)? loadingFailed,
     required TResult orElse(),
@@ -1240,6 +1411,158 @@ abstract class _LoadingLanguageSuccess implements ConfigState {
   @JsonKey(ignore: true)
   _$LoadingLanguageSuccessCopyWith<_LoadingLanguageSuccess> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$LoadingResourcePhoneSuccessCopyWith<$Res> {
+  factory _$LoadingResourcePhoneSuccessCopyWith(
+          _LoadingResourcePhoneSuccess value,
+          $Res Function(_LoadingResourcePhoneSuccess) then) =
+      __$LoadingResourcePhoneSuccessCopyWithImpl<$Res>;
+  $Res call({List<String>? resource});
+}
+
+/// @nodoc
+class __$LoadingResourcePhoneSuccessCopyWithImpl<$Res>
+    extends _$ConfigStateCopyWithImpl<$Res>
+    implements _$LoadingResourcePhoneSuccessCopyWith<$Res> {
+  __$LoadingResourcePhoneSuccessCopyWithImpl(
+      _LoadingResourcePhoneSuccess _value,
+      $Res Function(_LoadingResourcePhoneSuccess) _then)
+      : super(_value, (v) => _then(v as _LoadingResourcePhoneSuccess));
+
+  @override
+  _LoadingResourcePhoneSuccess get _value =>
+      super._value as _LoadingResourcePhoneSuccess;
+
+  @override
+  $Res call({
+    Object? resource = freezed,
+  }) {
+    return _then(_LoadingResourcePhoneSuccess(
+      resource == freezed
+          ? _value.resource
+          : resource // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_LoadingResourcePhoneSuccess implements _LoadingResourcePhoneSuccess {
+  const _$_LoadingResourcePhoneSuccess(this.resource);
+
+  @override
+  final List<String>? resource;
+
+  @override
+  String toString() {
+    return 'ConfigState.loadingResourcePhoneSuccess(resource: $resource)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _LoadingResourcePhoneSuccess &&
+            (identical(other.resource, resource) ||
+                const DeepCollectionEquality()
+                    .equals(other.resource, resource)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(resource);
+
+  @JsonKey(ignore: true)
+  @override
+  _$LoadingResourcePhoneSuccessCopyWith<_LoadingResourcePhoneSuccess>
+      get copyWith => __$LoadingResourcePhoneSuccessCopyWithImpl<
+          _LoadingResourcePhoneSuccess>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loadingInProgress,
+    required TResult Function(List<PlanModel>? plans) loadingPlansSuccess,
+    required TResult Function(List<PaymentModel>? payments)
+        loadingPaymentsSuccess,
+    required TResult Function(Locale? locale) loadingLanguageSuccess,
+    required TResult Function(List<String>? resource)
+        loadingResourcePhoneSuccess,
+    required TResult Function() loadingSuccess,
+    required TResult Function(AppFailure failure) loadingFailed,
+  }) {
+    return loadingResourcePhoneSuccess(resource);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loadingInProgress,
+    TResult Function(List<PlanModel>? plans)? loadingPlansSuccess,
+    TResult Function(List<PaymentModel>? payments)? loadingPaymentsSuccess,
+    TResult Function(Locale? locale)? loadingLanguageSuccess,
+    TResult Function(List<String>? resource)? loadingResourcePhoneSuccess,
+    TResult Function()? loadingSuccess,
+    TResult Function(AppFailure failure)? loadingFailed,
+    required TResult orElse(),
+  }) {
+    if (loadingResourcePhoneSuccess != null) {
+      return loadingResourcePhoneSuccess(resource);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_LoadingInProgress value) loadingInProgress,
+    required TResult Function(_LoadingPlansSuccess value) loadingPlansSuccess,
+    required TResult Function(_LoadingPaymentsSuccess value)
+        loadingPaymentsSuccess,
+    required TResult Function(_LoadingLanguageSuccess value)
+        loadingLanguageSuccess,
+    required TResult Function(_LoadingResourcePhoneSuccess value)
+        loadingResourcePhoneSuccess,
+    required TResult Function(_LoadingSuccess value) loadingSuccess,
+    required TResult Function(_LoadingFailed value) loadingFailed,
+  }) {
+    return loadingResourcePhoneSuccess(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_LoadingInProgress value)? loadingInProgress,
+    TResult Function(_LoadingPlansSuccess value)? loadingPlansSuccess,
+    TResult Function(_LoadingPaymentsSuccess value)? loadingPaymentsSuccess,
+    TResult Function(_LoadingLanguageSuccess value)? loadingLanguageSuccess,
+    TResult Function(_LoadingResourcePhoneSuccess value)?
+        loadingResourcePhoneSuccess,
+    TResult Function(_LoadingSuccess value)? loadingSuccess,
+    TResult Function(_LoadingFailed value)? loadingFailed,
+    required TResult orElse(),
+  }) {
+    if (loadingResourcePhoneSuccess != null) {
+      return loadingResourcePhoneSuccess(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _LoadingResourcePhoneSuccess implements ConfigState {
+  const factory _LoadingResourcePhoneSuccess(List<String>? resource) =
+      _$_LoadingResourcePhoneSuccess;
+
+  List<String>? get resource => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  _$LoadingResourcePhoneSuccessCopyWith<_LoadingResourcePhoneSuccess>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -1288,6 +1611,8 @@ class _$_LoadingSuccess implements _LoadingSuccess {
     required TResult Function(List<PaymentModel>? payments)
         loadingPaymentsSuccess,
     required TResult Function(Locale? locale) loadingLanguageSuccess,
+    required TResult Function(List<String>? resource)
+        loadingResourcePhoneSuccess,
     required TResult Function() loadingSuccess,
     required TResult Function(AppFailure failure) loadingFailed,
   }) {
@@ -1302,6 +1627,7 @@ class _$_LoadingSuccess implements _LoadingSuccess {
     TResult Function(List<PlanModel>? plans)? loadingPlansSuccess,
     TResult Function(List<PaymentModel>? payments)? loadingPaymentsSuccess,
     TResult Function(Locale? locale)? loadingLanguageSuccess,
+    TResult Function(List<String>? resource)? loadingResourcePhoneSuccess,
     TResult Function()? loadingSuccess,
     TResult Function(AppFailure failure)? loadingFailed,
     required TResult orElse(),
@@ -1322,6 +1648,8 @@ class _$_LoadingSuccess implements _LoadingSuccess {
         loadingPaymentsSuccess,
     required TResult Function(_LoadingLanguageSuccess value)
         loadingLanguageSuccess,
+    required TResult Function(_LoadingResourcePhoneSuccess value)
+        loadingResourcePhoneSuccess,
     required TResult Function(_LoadingSuccess value) loadingSuccess,
     required TResult Function(_LoadingFailed value) loadingFailed,
   }) {
@@ -1336,6 +1664,8 @@ class _$_LoadingSuccess implements _LoadingSuccess {
     TResult Function(_LoadingPlansSuccess value)? loadingPlansSuccess,
     TResult Function(_LoadingPaymentsSuccess value)? loadingPaymentsSuccess,
     TResult Function(_LoadingLanguageSuccess value)? loadingLanguageSuccess,
+    TResult Function(_LoadingResourcePhoneSuccess value)?
+        loadingResourcePhoneSuccess,
     TResult Function(_LoadingSuccess value)? loadingSuccess,
     TResult Function(_LoadingFailed value)? loadingFailed,
     required TResult orElse(),
@@ -1430,6 +1760,8 @@ class _$_LoadingFailed implements _LoadingFailed {
     required TResult Function(List<PaymentModel>? payments)
         loadingPaymentsSuccess,
     required TResult Function(Locale? locale) loadingLanguageSuccess,
+    required TResult Function(List<String>? resource)
+        loadingResourcePhoneSuccess,
     required TResult Function() loadingSuccess,
     required TResult Function(AppFailure failure) loadingFailed,
   }) {
@@ -1444,6 +1776,7 @@ class _$_LoadingFailed implements _LoadingFailed {
     TResult Function(List<PlanModel>? plans)? loadingPlansSuccess,
     TResult Function(List<PaymentModel>? payments)? loadingPaymentsSuccess,
     TResult Function(Locale? locale)? loadingLanguageSuccess,
+    TResult Function(List<String>? resource)? loadingResourcePhoneSuccess,
     TResult Function()? loadingSuccess,
     TResult Function(AppFailure failure)? loadingFailed,
     required TResult orElse(),
@@ -1464,6 +1797,8 @@ class _$_LoadingFailed implements _LoadingFailed {
         loadingPaymentsSuccess,
     required TResult Function(_LoadingLanguageSuccess value)
         loadingLanguageSuccess,
+    required TResult Function(_LoadingResourcePhoneSuccess value)
+        loadingResourcePhoneSuccess,
     required TResult Function(_LoadingSuccess value) loadingSuccess,
     required TResult Function(_LoadingFailed value) loadingFailed,
   }) {
@@ -1478,6 +1813,8 @@ class _$_LoadingFailed implements _LoadingFailed {
     TResult Function(_LoadingPlansSuccess value)? loadingPlansSuccess,
     TResult Function(_LoadingPaymentsSuccess value)? loadingPaymentsSuccess,
     TResult Function(_LoadingLanguageSuccess value)? loadingLanguageSuccess,
+    TResult Function(_LoadingResourcePhoneSuccess value)?
+        loadingResourcePhoneSuccess,
     TResult Function(_LoadingSuccess value)? loadingSuccess,
     TResult Function(_LoadingFailed value)? loadingFailed,
     required TResult orElse(),

@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:foodyn_rest/core/data/models/coupon_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'plan_model.g.dart';
@@ -7,6 +8,8 @@ part 'plan_model.g.dart';
 class PlanModel extends Equatable  {
   @JsonKey(name: "id")
   final int? id;
+  @JsonKey(name: "memberships")
+  final List<CouponModel>? memberships;
   @JsonKey(name: "title")
   final String? title;
   @JsonKey(name: "description")
@@ -27,15 +30,10 @@ class PlanModel extends Equatable  {
   final bool? special;
   @JsonKey(name: "endAt")
   final DateTime? endAt;
-  @JsonKey(name: "createdAt")
-  final DateTime? createdAt;
-  @JsonKey(name: "updatedAt")
-  final DateTime? updatedAt;
-  @JsonKey(name: "deletedAt")
-  final DateTime? deletedAt;
 
   PlanModel({
     this.id,
+    this.memberships,
     this.title,
     this.description,
     this.monthPrice,
@@ -46,9 +44,6 @@ class PlanModel extends Equatable  {
     this.recommended,
     this.special,
     this.endAt,
-    this.createdAt,
-    this.updatedAt,
-    this.deletedAt
   });
 
   factory PlanModel.fromJson(Map<String, dynamic> json) =>
@@ -60,6 +55,7 @@ class PlanModel extends Equatable  {
   String toString() {
     return """PlanModel(
     id: $id,
+    memberships: $memberships,
     title: $title,
     description: $description,
     monthPrice: $monthPrice,
@@ -69,16 +65,14 @@ class PlanModel extends Equatable  {
     textColor: $textColor,
     recommended: $recommended,
     special: $special,
-    endAt: $endAt,
-    createdAt: $createdAt,
-    updatedAt: $updatedAt,
-    deletedAt: $deletedAt
+    endAt: $endAt
     )""";
   }
 
   @override
   List<Object?> get props => [
         id,
+        memberships,
         title,
         description,
         monthPrice,
@@ -89,9 +83,6 @@ class PlanModel extends Equatable  {
         recommended,
         special,
         endAt,
-        createdAt,
-        updatedAt,
-        deletedAt
       ];
 
 }

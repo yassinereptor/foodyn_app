@@ -125,4 +125,27 @@ class ConfigRepository implements IConfigRepository {
     }
   }
 
+  @override
+  Future<Either<AppFailure?, List<String>?>> getPhoneResource() async {
+    try {
+      final isConnected = await _networkInfo.isConnected;
+      if (isConnected == false) return Left(AppFailure.network());
+      final response = await _configRemoteDataSource.getPhoneResource();
+      return Right(response);
+    } on UnauthorizedExeption {
+      return Left(AppFailure.unauthorized());
+    } on JwtExpiredExeption {
+      return Left(AppFailure.expiredJwt());
+    } on ServerExeption catch (e) {
+      return Left(AppFailure.server(
+        message: e.message,
+      ));
+    } on OperationException catch (error) {
+      return Left(AppFailure.graphQlserver(
+        linkException: error.linkException,
+        graphqlErrors: error.graphqlErrors,
+      ));
+    }
+  }
+
 }

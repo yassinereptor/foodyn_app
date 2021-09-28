@@ -7,10 +7,7 @@ class ProfileQuery {
           id,
           type,
           filename,
-          filepath,
-          createdAt,
-          updatedAt,
-          deletedAt
+          filepath
         },
         fullname,
         adresse,
@@ -22,10 +19,7 @@ class ProfileQuery {
         zipCode,
         gender,
         posLat,
-        posLng,
-        createdAt,
-        updatedAt,
-        deletedAt
+        posLng
       }
     }
     """;
@@ -37,10 +31,7 @@ class ProfileQuery {
           id,
           type,
           filename,
-          filepath,
-          createdAt,
-          updatedAt,
-          deletedAt
+          filepath
         },
         fullname,
         adresse,
@@ -52,10 +43,7 @@ class ProfileQuery {
         zipCode,
         gender,
         posLat,
-        posLng,
-        createdAt,
-        updatedAt,
-        deletedAt
+        posLng
       }
     }
     """;
@@ -67,10 +55,7 @@ class ProfileQuery {
           id,
           type,
           filename,
-          filepath,
-          createdAt,
-          updatedAt,
-          deletedAt
+          filepath
         },
         fullname,
         adresse,
@@ -82,10 +67,7 @@ class ProfileQuery {
         zipCode,
         gender,
         posLat,
-        posLng,
-        createdAt,
-        updatedAt,
-        deletedAt
+        posLng
       }
     }
     """;
@@ -98,10 +80,7 @@ class ProfileQuery {
             id,
             type,
             filename,
-            filepath,
-            createdAt,
-            updatedAt,
-            deletedAt
+            filepath
           },
           fullname,
           adresse,
@@ -113,10 +92,17 @@ class ProfileQuery {
           zipCode,
           gender,
           posLat,
-          posLng,
-          createdAt,
-          updatedAt,
-          deletedAt
+          posLng
+        }
+      }
+    """;
+
+    static const String saveMembershipMutation = r"""
+      mutation saveMembershipMutation($membership : InsertOrUpdateMembershipInput!){
+        insertOrUpdateMembership(membership: $membership) {
+          id,
+          startAt,
+          endAt
         }
       }
     """;

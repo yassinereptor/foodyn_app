@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:foodyn_rest/core/data/models/user_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'coupon_model.g.dart';
@@ -7,6 +8,8 @@ part 'coupon_model.g.dart';
 class CouponModel extends Equatable  {
   @JsonKey(name: "id")
   int? id;
+  @JsonKey(name: "memberships")
+  List<UserModel>? memberships;
   @JsonKey(name: "code")
   String? code;
   @JsonKey(name: "quantity")
@@ -17,26 +20,15 @@ class CouponModel extends Equatable  {
   int? reduction;
   @JsonKey(name: "endAt")
   DateTime? endAt;
-  @JsonKey(name: "active")
-  bool? active;
-  @JsonKey(name: "createdAt")
-  DateTime? createdAt;
-  @JsonKey(name: "updatedAt")
-  DateTime? updatedAt;
-  @JsonKey(name: "deletedAt")
-  DateTime? deletedAt;
 
   CouponModel({
     this.id,
+    this.memberships,
     this.code,
     this.quantity,
     this.used,
     this.reduction,
-    this.endAt,
-    this.active,
-    this.createdAt,
-    this.updatedAt,
-    this.deletedAt,
+    this.endAt
   });
 
   factory CouponModel.fromJson(Map<String, dynamic> json) =>
@@ -48,30 +40,24 @@ class CouponModel extends Equatable  {
   String toString() {
     return """CouponModel(
       id: $id,
+      memberships: $memberships,
       code: $code,
       quantity: $quantity,
       used: $used,
       reduction: $reduction,
-      endAt: $endAt,
-      active: $active,
-      createdAt: $createdAt,
-      updatedAt: $updatedAt,
-      deletedAt: $deletedAt
+      endAt: $endAt
     )""";
   }
 
   @override
   List<Object?> get props => [
         id,
+        memberships,
         code,
         quantity,
         used,
         reduction,
-        endAt,
-        active,
-        createdAt,
-        updatedAt,
-        deletedAt
+        endAt
       ];
 
 }

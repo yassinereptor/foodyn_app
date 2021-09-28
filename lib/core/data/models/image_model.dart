@@ -19,12 +19,6 @@ class ImageModel extends Equatable  {
   String? filename;
   @JsonKey(name: "filepath")
   String? filepath;
-  @JsonKey(name: "createdAt")
-  DateTime? createdAt;
-  @JsonKey(name: "updatedAt")
-  DateTime? updatedAt;
-  @JsonKey(name: "deletedAt")
-  DateTime? deletedAt;
 
   ImageModel({
     this.id,
@@ -33,9 +27,6 @@ class ImageModel extends Equatable  {
     this.profile,
     this.filename,
     this.filepath,
-    this.createdAt,
-    this.updatedAt,
-    this.deletedAt,
   });
 
   factory ImageModel.fromJson(Map<String, dynamic> json) =>
@@ -51,10 +42,7 @@ class ImageModel extends Equatable  {
     type: $type,
     profile: $profile,
     filename: $filename,
-    filepath: $filepath,
-    createdAt: $createdAt,
-    updatedAt: $updatedAt,
-    deletedAt: $deletedAt
+    filepath: $filepath
     )""";
   }
 
@@ -65,10 +53,7 @@ class ImageModel extends Equatable  {
         type,
         profile,
         filename,
-        filepath,
-        createdAt,
-        updatedAt,
-        deletedAt
+        filepath
       ];
 
 }

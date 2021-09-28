@@ -29,6 +29,14 @@ class _$ProfileEventTearOff {
     );
   }
 
+  _SaveMembership saveMembership(int planId, int periodId, int? couponId) {
+    return _SaveMembership(
+      planId,
+      periodId,
+      couponId,
+    );
+  }
+
   _CheckCouponStatus checkCouponStatus(String code) {
     return _CheckCouponStatus(
       code,
@@ -45,6 +53,8 @@ mixin _$ProfileEvent {
   TResult when<TResult extends Object?>({
     required TResult Function(ImageType type, File file) uploadImage,
     required TResult Function(ProfileModel profile) saveProfile,
+    required TResult Function(int planId, int periodId, int? couponId)
+        saveMembership,
     required TResult Function(String code) checkCouponStatus,
   }) =>
       throw _privateConstructorUsedError;
@@ -52,6 +62,7 @@ mixin _$ProfileEvent {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(ImageType type, File file)? uploadImage,
     TResult Function(ProfileModel profile)? saveProfile,
+    TResult Function(int planId, int periodId, int? couponId)? saveMembership,
     TResult Function(String code)? checkCouponStatus,
     required TResult orElse(),
   }) =>
@@ -60,6 +71,7 @@ mixin _$ProfileEvent {
   TResult map<TResult extends Object?>({
     required TResult Function(_UploadImage value) uploadImage,
     required TResult Function(_SaveProfile value) saveProfile,
+    required TResult Function(_SaveMembership value) saveMembership,
     required TResult Function(_CheckCouponStatus value) checkCouponStatus,
   }) =>
       throw _privateConstructorUsedError;
@@ -67,6 +79,7 @@ mixin _$ProfileEvent {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_UploadImage value)? uploadImage,
     TResult Function(_SaveProfile value)? saveProfile,
+    TResult Function(_SaveMembership value)? saveMembership,
     TResult Function(_CheckCouponStatus value)? checkCouponStatus,
     required TResult orElse(),
   }) =>
@@ -166,6 +179,8 @@ class _$_UploadImage implements _UploadImage {
   TResult when<TResult extends Object?>({
     required TResult Function(ImageType type, File file) uploadImage,
     required TResult Function(ProfileModel profile) saveProfile,
+    required TResult Function(int planId, int periodId, int? couponId)
+        saveMembership,
     required TResult Function(String code) checkCouponStatus,
   }) {
     return uploadImage(type, file);
@@ -176,6 +191,7 @@ class _$_UploadImage implements _UploadImage {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(ImageType type, File file)? uploadImage,
     TResult Function(ProfileModel profile)? saveProfile,
+    TResult Function(int planId, int periodId, int? couponId)? saveMembership,
     TResult Function(String code)? checkCouponStatus,
     required TResult orElse(),
   }) {
@@ -190,6 +206,7 @@ class _$_UploadImage implements _UploadImage {
   TResult map<TResult extends Object?>({
     required TResult Function(_UploadImage value) uploadImage,
     required TResult Function(_SaveProfile value) saveProfile,
+    required TResult Function(_SaveMembership value) saveMembership,
     required TResult Function(_CheckCouponStatus value) checkCouponStatus,
   }) {
     return uploadImage(this);
@@ -200,6 +217,7 @@ class _$_UploadImage implements _UploadImage {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_UploadImage value)? uploadImage,
     TResult Function(_SaveProfile value)? saveProfile,
+    TResult Function(_SaveMembership value)? saveMembership,
     TResult Function(_CheckCouponStatus value)? checkCouponStatus,
     required TResult orElse(),
   }) {
@@ -286,6 +304,8 @@ class _$_SaveProfile implements _SaveProfile {
   TResult when<TResult extends Object?>({
     required TResult Function(ImageType type, File file) uploadImage,
     required TResult Function(ProfileModel profile) saveProfile,
+    required TResult Function(int planId, int periodId, int? couponId)
+        saveMembership,
     required TResult Function(String code) checkCouponStatus,
   }) {
     return saveProfile(profile);
@@ -296,6 +316,7 @@ class _$_SaveProfile implements _SaveProfile {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(ImageType type, File file)? uploadImage,
     TResult Function(ProfileModel profile)? saveProfile,
+    TResult Function(int planId, int periodId, int? couponId)? saveMembership,
     TResult Function(String code)? checkCouponStatus,
     required TResult orElse(),
   }) {
@@ -310,6 +331,7 @@ class _$_SaveProfile implements _SaveProfile {
   TResult map<TResult extends Object?>({
     required TResult Function(_UploadImage value) uploadImage,
     required TResult Function(_SaveProfile value) saveProfile,
+    required TResult Function(_SaveMembership value) saveMembership,
     required TResult Function(_CheckCouponStatus value) checkCouponStatus,
   }) {
     return saveProfile(this);
@@ -320,6 +342,7 @@ class _$_SaveProfile implements _SaveProfile {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_UploadImage value)? uploadImage,
     TResult Function(_SaveProfile value)? saveProfile,
+    TResult Function(_SaveMembership value)? saveMembership,
     TResult Function(_CheckCouponStatus value)? checkCouponStatus,
     required TResult orElse(),
   }) {
@@ -336,6 +359,157 @@ abstract class _SaveProfile implements ProfileEvent {
   ProfileModel get profile => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   _$SaveProfileCopyWith<_SaveProfile> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$SaveMembershipCopyWith<$Res> {
+  factory _$SaveMembershipCopyWith(
+          _SaveMembership value, $Res Function(_SaveMembership) then) =
+      __$SaveMembershipCopyWithImpl<$Res>;
+  $Res call({int planId, int periodId, int? couponId});
+}
+
+/// @nodoc
+class __$SaveMembershipCopyWithImpl<$Res>
+    extends _$ProfileEventCopyWithImpl<$Res>
+    implements _$SaveMembershipCopyWith<$Res> {
+  __$SaveMembershipCopyWithImpl(
+      _SaveMembership _value, $Res Function(_SaveMembership) _then)
+      : super(_value, (v) => _then(v as _SaveMembership));
+
+  @override
+  _SaveMembership get _value => super._value as _SaveMembership;
+
+  @override
+  $Res call({
+    Object? planId = freezed,
+    Object? periodId = freezed,
+    Object? couponId = freezed,
+  }) {
+    return _then(_SaveMembership(
+      planId == freezed
+          ? _value.planId
+          : planId // ignore: cast_nullable_to_non_nullable
+              as int,
+      periodId == freezed
+          ? _value.periodId
+          : periodId // ignore: cast_nullable_to_non_nullable
+              as int,
+      couponId == freezed
+          ? _value.couponId
+          : couponId // ignore: cast_nullable_to_non_nullable
+              as int?,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_SaveMembership implements _SaveMembership {
+  _$_SaveMembership(this.planId, this.periodId, this.couponId);
+
+  @override
+  final int planId;
+  @override
+  final int periodId;
+  @override
+  final int? couponId;
+
+  @override
+  String toString() {
+    return 'ProfileEvent.saveMembership(planId: $planId, periodId: $periodId, couponId: $couponId)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _SaveMembership &&
+            (identical(other.planId, planId) ||
+                const DeepCollectionEquality().equals(other.planId, planId)) &&
+            (identical(other.periodId, periodId) ||
+                const DeepCollectionEquality()
+                    .equals(other.periodId, periodId)) &&
+            (identical(other.couponId, couponId) ||
+                const DeepCollectionEquality()
+                    .equals(other.couponId, couponId)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(planId) ^
+      const DeepCollectionEquality().hash(periodId) ^
+      const DeepCollectionEquality().hash(couponId);
+
+  @JsonKey(ignore: true)
+  @override
+  _$SaveMembershipCopyWith<_SaveMembership> get copyWith =>
+      __$SaveMembershipCopyWithImpl<_SaveMembership>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(ImageType type, File file) uploadImage,
+    required TResult Function(ProfileModel profile) saveProfile,
+    required TResult Function(int planId, int periodId, int? couponId)
+        saveMembership,
+    required TResult Function(String code) checkCouponStatus,
+  }) {
+    return saveMembership(planId, periodId, couponId);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(ImageType type, File file)? uploadImage,
+    TResult Function(ProfileModel profile)? saveProfile,
+    TResult Function(int planId, int periodId, int? couponId)? saveMembership,
+    TResult Function(String code)? checkCouponStatus,
+    required TResult orElse(),
+  }) {
+    if (saveMembership != null) {
+      return saveMembership(planId, periodId, couponId);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_UploadImage value) uploadImage,
+    required TResult Function(_SaveProfile value) saveProfile,
+    required TResult Function(_SaveMembership value) saveMembership,
+    required TResult Function(_CheckCouponStatus value) checkCouponStatus,
+  }) {
+    return saveMembership(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_UploadImage value)? uploadImage,
+    TResult Function(_SaveProfile value)? saveProfile,
+    TResult Function(_SaveMembership value)? saveMembership,
+    TResult Function(_CheckCouponStatus value)? checkCouponStatus,
+    required TResult orElse(),
+  }) {
+    if (saveMembership != null) {
+      return saveMembership(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _SaveMembership implements ProfileEvent {
+  factory _SaveMembership(int planId, int periodId, int? couponId) =
+      _$_SaveMembership;
+
+  int get planId => throw _privateConstructorUsedError;
+  int get periodId => throw _privateConstructorUsedError;
+  int? get couponId => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  _$SaveMembershipCopyWith<_SaveMembership> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -406,6 +580,8 @@ class _$_CheckCouponStatus implements _CheckCouponStatus {
   TResult when<TResult extends Object?>({
     required TResult Function(ImageType type, File file) uploadImage,
     required TResult Function(ProfileModel profile) saveProfile,
+    required TResult Function(int planId, int periodId, int? couponId)
+        saveMembership,
     required TResult Function(String code) checkCouponStatus,
   }) {
     return checkCouponStatus(code);
@@ -416,6 +592,7 @@ class _$_CheckCouponStatus implements _CheckCouponStatus {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(ImageType type, File file)? uploadImage,
     TResult Function(ProfileModel profile)? saveProfile,
+    TResult Function(int planId, int periodId, int? couponId)? saveMembership,
     TResult Function(String code)? checkCouponStatus,
     required TResult orElse(),
   }) {
@@ -430,6 +607,7 @@ class _$_CheckCouponStatus implements _CheckCouponStatus {
   TResult map<TResult extends Object?>({
     required TResult Function(_UploadImage value) uploadImage,
     required TResult Function(_SaveProfile value) saveProfile,
+    required TResult Function(_SaveMembership value) saveMembership,
     required TResult Function(_CheckCouponStatus value) checkCouponStatus,
   }) {
     return checkCouponStatus(this);
@@ -440,6 +618,7 @@ class _$_CheckCouponStatus implements _CheckCouponStatus {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_UploadImage value)? uploadImage,
     TResult Function(_SaveProfile value)? saveProfile,
+    TResult Function(_SaveMembership value)? saveMembership,
     TResult Function(_CheckCouponStatus value)? checkCouponStatus,
     required TResult orElse(),
   }) {
@@ -487,6 +666,13 @@ class _$ProfileStateTearOff {
     );
   }
 
+  _LoadingMembershipSuccess loadingMembershipSuccess(
+      MembershipModel? membership) {
+    return _LoadingMembershipSuccess(
+      membership,
+    );
+  }
+
   _LoadingFailed loadingFailed(AppFailure failure) {
     return _LoadingFailed(
       failure,
@@ -506,6 +692,8 @@ mixin _$ProfileState {
     required TResult Function() loadingSuccess,
     required TResult Function(ProfileModel? profile) loadingProfileSuccess,
     required TResult Function(CouponModel? coupon) loadingCouponSuccess,
+    required TResult Function(MembershipModel? membership)
+        loadingMembershipSuccess,
     required TResult Function(AppFailure failure) loadingFailed,
   }) =>
       throw _privateConstructorUsedError;
@@ -516,6 +704,7 @@ mixin _$ProfileState {
     TResult Function()? loadingSuccess,
     TResult Function(ProfileModel? profile)? loadingProfileSuccess,
     TResult Function(CouponModel? coupon)? loadingCouponSuccess,
+    TResult Function(MembershipModel? membership)? loadingMembershipSuccess,
     TResult Function(AppFailure failure)? loadingFailed,
     required TResult orElse(),
   }) =>
@@ -528,6 +717,8 @@ mixin _$ProfileState {
     required TResult Function(_LoadingProfileSuccess value)
         loadingProfileSuccess,
     required TResult Function(_LoadingCouponSuccess value) loadingCouponSuccess,
+    required TResult Function(_LoadingMembershipSuccess value)
+        loadingMembershipSuccess,
     required TResult Function(_LoadingFailed value) loadingFailed,
   }) =>
       throw _privateConstructorUsedError;
@@ -538,6 +729,7 @@ mixin _$ProfileState {
     TResult Function(_LoadingSuccess value)? loadingSuccess,
     TResult Function(_LoadingProfileSuccess value)? loadingProfileSuccess,
     TResult Function(_LoadingCouponSuccess value)? loadingCouponSuccess,
+    TResult Function(_LoadingMembershipSuccess value)? loadingMembershipSuccess,
     TResult Function(_LoadingFailed value)? loadingFailed,
     required TResult orElse(),
   }) =>
@@ -602,6 +794,8 @@ class _$_Initial implements _Initial {
     required TResult Function() loadingSuccess,
     required TResult Function(ProfileModel? profile) loadingProfileSuccess,
     required TResult Function(CouponModel? coupon) loadingCouponSuccess,
+    required TResult Function(MembershipModel? membership)
+        loadingMembershipSuccess,
     required TResult Function(AppFailure failure) loadingFailed,
   }) {
     return initial();
@@ -615,6 +809,7 @@ class _$_Initial implements _Initial {
     TResult Function()? loadingSuccess,
     TResult Function(ProfileModel? profile)? loadingProfileSuccess,
     TResult Function(CouponModel? coupon)? loadingCouponSuccess,
+    TResult Function(MembershipModel? membership)? loadingMembershipSuccess,
     TResult Function(AppFailure failure)? loadingFailed,
     required TResult orElse(),
   }) {
@@ -633,6 +828,8 @@ class _$_Initial implements _Initial {
     required TResult Function(_LoadingProfileSuccess value)
         loadingProfileSuccess,
     required TResult Function(_LoadingCouponSuccess value) loadingCouponSuccess,
+    required TResult Function(_LoadingMembershipSuccess value)
+        loadingMembershipSuccess,
     required TResult Function(_LoadingFailed value) loadingFailed,
   }) {
     return initial(this);
@@ -646,6 +843,7 @@ class _$_Initial implements _Initial {
     TResult Function(_LoadingSuccess value)? loadingSuccess,
     TResult Function(_LoadingProfileSuccess value)? loadingProfileSuccess,
     TResult Function(_LoadingCouponSuccess value)? loadingCouponSuccess,
+    TResult Function(_LoadingMembershipSuccess value)? loadingMembershipSuccess,
     TResult Function(_LoadingFailed value)? loadingFailed,
     required TResult orElse(),
   }) {
@@ -705,6 +903,8 @@ class _$_LoadingInProgress implements _LoadingInProgress {
     required TResult Function() loadingSuccess,
     required TResult Function(ProfileModel? profile) loadingProfileSuccess,
     required TResult Function(CouponModel? coupon) loadingCouponSuccess,
+    required TResult Function(MembershipModel? membership)
+        loadingMembershipSuccess,
     required TResult Function(AppFailure failure) loadingFailed,
   }) {
     return loadingInProgress();
@@ -718,6 +918,7 @@ class _$_LoadingInProgress implements _LoadingInProgress {
     TResult Function()? loadingSuccess,
     TResult Function(ProfileModel? profile)? loadingProfileSuccess,
     TResult Function(CouponModel? coupon)? loadingCouponSuccess,
+    TResult Function(MembershipModel? membership)? loadingMembershipSuccess,
     TResult Function(AppFailure failure)? loadingFailed,
     required TResult orElse(),
   }) {
@@ -736,6 +937,8 @@ class _$_LoadingInProgress implements _LoadingInProgress {
     required TResult Function(_LoadingProfileSuccess value)
         loadingProfileSuccess,
     required TResult Function(_LoadingCouponSuccess value) loadingCouponSuccess,
+    required TResult Function(_LoadingMembershipSuccess value)
+        loadingMembershipSuccess,
     required TResult Function(_LoadingFailed value) loadingFailed,
   }) {
     return loadingInProgress(this);
@@ -749,6 +952,7 @@ class _$_LoadingInProgress implements _LoadingInProgress {
     TResult Function(_LoadingSuccess value)? loadingSuccess,
     TResult Function(_LoadingProfileSuccess value)? loadingProfileSuccess,
     TResult Function(_LoadingCouponSuccess value)? loadingCouponSuccess,
+    TResult Function(_LoadingMembershipSuccess value)? loadingMembershipSuccess,
     TResult Function(_LoadingFailed value)? loadingFailed,
     required TResult orElse(),
   }) {
@@ -808,6 +1012,8 @@ class _$_LoadingSuccess implements _LoadingSuccess {
     required TResult Function() loadingSuccess,
     required TResult Function(ProfileModel? profile) loadingProfileSuccess,
     required TResult Function(CouponModel? coupon) loadingCouponSuccess,
+    required TResult Function(MembershipModel? membership)
+        loadingMembershipSuccess,
     required TResult Function(AppFailure failure) loadingFailed,
   }) {
     return loadingSuccess();
@@ -821,6 +1027,7 @@ class _$_LoadingSuccess implements _LoadingSuccess {
     TResult Function()? loadingSuccess,
     TResult Function(ProfileModel? profile)? loadingProfileSuccess,
     TResult Function(CouponModel? coupon)? loadingCouponSuccess,
+    TResult Function(MembershipModel? membership)? loadingMembershipSuccess,
     TResult Function(AppFailure failure)? loadingFailed,
     required TResult orElse(),
   }) {
@@ -839,6 +1046,8 @@ class _$_LoadingSuccess implements _LoadingSuccess {
     required TResult Function(_LoadingProfileSuccess value)
         loadingProfileSuccess,
     required TResult Function(_LoadingCouponSuccess value) loadingCouponSuccess,
+    required TResult Function(_LoadingMembershipSuccess value)
+        loadingMembershipSuccess,
     required TResult Function(_LoadingFailed value) loadingFailed,
   }) {
     return loadingSuccess(this);
@@ -852,6 +1061,7 @@ class _$_LoadingSuccess implements _LoadingSuccess {
     TResult Function(_LoadingSuccess value)? loadingSuccess,
     TResult Function(_LoadingProfileSuccess value)? loadingProfileSuccess,
     TResult Function(_LoadingCouponSuccess value)? loadingCouponSuccess,
+    TResult Function(_LoadingMembershipSuccess value)? loadingMembershipSuccess,
     TResult Function(_LoadingFailed value)? loadingFailed,
     required TResult orElse(),
   }) {
@@ -937,6 +1147,8 @@ class _$_LoadingProfileSuccess implements _LoadingProfileSuccess {
     required TResult Function() loadingSuccess,
     required TResult Function(ProfileModel? profile) loadingProfileSuccess,
     required TResult Function(CouponModel? coupon) loadingCouponSuccess,
+    required TResult Function(MembershipModel? membership)
+        loadingMembershipSuccess,
     required TResult Function(AppFailure failure) loadingFailed,
   }) {
     return loadingProfileSuccess(profile);
@@ -950,6 +1162,7 @@ class _$_LoadingProfileSuccess implements _LoadingProfileSuccess {
     TResult Function()? loadingSuccess,
     TResult Function(ProfileModel? profile)? loadingProfileSuccess,
     TResult Function(CouponModel? coupon)? loadingCouponSuccess,
+    TResult Function(MembershipModel? membership)? loadingMembershipSuccess,
     TResult Function(AppFailure failure)? loadingFailed,
     required TResult orElse(),
   }) {
@@ -968,6 +1181,8 @@ class _$_LoadingProfileSuccess implements _LoadingProfileSuccess {
     required TResult Function(_LoadingProfileSuccess value)
         loadingProfileSuccess,
     required TResult Function(_LoadingCouponSuccess value) loadingCouponSuccess,
+    required TResult Function(_LoadingMembershipSuccess value)
+        loadingMembershipSuccess,
     required TResult Function(_LoadingFailed value) loadingFailed,
   }) {
     return loadingProfileSuccess(this);
@@ -981,6 +1196,7 @@ class _$_LoadingProfileSuccess implements _LoadingProfileSuccess {
     TResult Function(_LoadingSuccess value)? loadingSuccess,
     TResult Function(_LoadingProfileSuccess value)? loadingProfileSuccess,
     TResult Function(_LoadingCouponSuccess value)? loadingCouponSuccess,
+    TResult Function(_LoadingMembershipSuccess value)? loadingMembershipSuccess,
     TResult Function(_LoadingFailed value)? loadingFailed,
     required TResult orElse(),
   }) {
@@ -1072,6 +1288,8 @@ class _$_LoadingCouponSuccess implements _LoadingCouponSuccess {
     required TResult Function() loadingSuccess,
     required TResult Function(ProfileModel? profile) loadingProfileSuccess,
     required TResult Function(CouponModel? coupon) loadingCouponSuccess,
+    required TResult Function(MembershipModel? membership)
+        loadingMembershipSuccess,
     required TResult Function(AppFailure failure) loadingFailed,
   }) {
     return loadingCouponSuccess(coupon);
@@ -1085,6 +1303,7 @@ class _$_LoadingCouponSuccess implements _LoadingCouponSuccess {
     TResult Function()? loadingSuccess,
     TResult Function(ProfileModel? profile)? loadingProfileSuccess,
     TResult Function(CouponModel? coupon)? loadingCouponSuccess,
+    TResult Function(MembershipModel? membership)? loadingMembershipSuccess,
     TResult Function(AppFailure failure)? loadingFailed,
     required TResult orElse(),
   }) {
@@ -1103,6 +1322,8 @@ class _$_LoadingCouponSuccess implements _LoadingCouponSuccess {
     required TResult Function(_LoadingProfileSuccess value)
         loadingProfileSuccess,
     required TResult Function(_LoadingCouponSuccess value) loadingCouponSuccess,
+    required TResult Function(_LoadingMembershipSuccess value)
+        loadingMembershipSuccess,
     required TResult Function(_LoadingFailed value) loadingFailed,
   }) {
     return loadingCouponSuccess(this);
@@ -1116,6 +1337,7 @@ class _$_LoadingCouponSuccess implements _LoadingCouponSuccess {
     TResult Function(_LoadingSuccess value)? loadingSuccess,
     TResult Function(_LoadingProfileSuccess value)? loadingProfileSuccess,
     TResult Function(_LoadingCouponSuccess value)? loadingCouponSuccess,
+    TResult Function(_LoadingMembershipSuccess value)? loadingMembershipSuccess,
     TResult Function(_LoadingFailed value)? loadingFailed,
     required TResult orElse(),
   }) {
@@ -1133,6 +1355,149 @@ abstract class _LoadingCouponSuccess implements ProfileState {
   CouponModel? get coupon => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   _$LoadingCouponSuccessCopyWith<_LoadingCouponSuccess> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$LoadingMembershipSuccessCopyWith<$Res> {
+  factory _$LoadingMembershipSuccessCopyWith(_LoadingMembershipSuccess value,
+          $Res Function(_LoadingMembershipSuccess) then) =
+      __$LoadingMembershipSuccessCopyWithImpl<$Res>;
+  $Res call({MembershipModel? membership});
+}
+
+/// @nodoc
+class __$LoadingMembershipSuccessCopyWithImpl<$Res>
+    extends _$ProfileStateCopyWithImpl<$Res>
+    implements _$LoadingMembershipSuccessCopyWith<$Res> {
+  __$LoadingMembershipSuccessCopyWithImpl(_LoadingMembershipSuccess _value,
+      $Res Function(_LoadingMembershipSuccess) _then)
+      : super(_value, (v) => _then(v as _LoadingMembershipSuccess));
+
+  @override
+  _LoadingMembershipSuccess get _value =>
+      super._value as _LoadingMembershipSuccess;
+
+  @override
+  $Res call({
+    Object? membership = freezed,
+  }) {
+    return _then(_LoadingMembershipSuccess(
+      membership == freezed
+          ? _value.membership
+          : membership // ignore: cast_nullable_to_non_nullable
+              as MembershipModel?,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_LoadingMembershipSuccess implements _LoadingMembershipSuccess {
+  const _$_LoadingMembershipSuccess(this.membership);
+
+  @override
+  final MembershipModel? membership;
+
+  @override
+  String toString() {
+    return 'ProfileState.loadingMembershipSuccess(membership: $membership)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _LoadingMembershipSuccess &&
+            (identical(other.membership, membership) ||
+                const DeepCollectionEquality()
+                    .equals(other.membership, membership)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(membership);
+
+  @JsonKey(ignore: true)
+  @override
+  _$LoadingMembershipSuccessCopyWith<_LoadingMembershipSuccess> get copyWith =>
+      __$LoadingMembershipSuccessCopyWithImpl<_LoadingMembershipSuccess>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loadingInProgress,
+    required TResult Function() loadingSuccess,
+    required TResult Function(ProfileModel? profile) loadingProfileSuccess,
+    required TResult Function(CouponModel? coupon) loadingCouponSuccess,
+    required TResult Function(MembershipModel? membership)
+        loadingMembershipSuccess,
+    required TResult Function(AppFailure failure) loadingFailed,
+  }) {
+    return loadingMembershipSuccess(membership);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loadingInProgress,
+    TResult Function()? loadingSuccess,
+    TResult Function(ProfileModel? profile)? loadingProfileSuccess,
+    TResult Function(CouponModel? coupon)? loadingCouponSuccess,
+    TResult Function(MembershipModel? membership)? loadingMembershipSuccess,
+    TResult Function(AppFailure failure)? loadingFailed,
+    required TResult orElse(),
+  }) {
+    if (loadingMembershipSuccess != null) {
+      return loadingMembershipSuccess(membership);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_LoadingInProgress value) loadingInProgress,
+    required TResult Function(_LoadingSuccess value) loadingSuccess,
+    required TResult Function(_LoadingProfileSuccess value)
+        loadingProfileSuccess,
+    required TResult Function(_LoadingCouponSuccess value) loadingCouponSuccess,
+    required TResult Function(_LoadingMembershipSuccess value)
+        loadingMembershipSuccess,
+    required TResult Function(_LoadingFailed value) loadingFailed,
+  }) {
+    return loadingMembershipSuccess(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_LoadingInProgress value)? loadingInProgress,
+    TResult Function(_LoadingSuccess value)? loadingSuccess,
+    TResult Function(_LoadingProfileSuccess value)? loadingProfileSuccess,
+    TResult Function(_LoadingCouponSuccess value)? loadingCouponSuccess,
+    TResult Function(_LoadingMembershipSuccess value)? loadingMembershipSuccess,
+    TResult Function(_LoadingFailed value)? loadingFailed,
+    required TResult orElse(),
+  }) {
+    if (loadingMembershipSuccess != null) {
+      return loadingMembershipSuccess(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _LoadingMembershipSuccess implements ProfileState {
+  const factory _LoadingMembershipSuccess(MembershipModel? membership) =
+      _$_LoadingMembershipSuccess;
+
+  MembershipModel? get membership => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  _$LoadingMembershipSuccessCopyWith<_LoadingMembershipSuccess> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -1215,6 +1580,8 @@ class _$_LoadingFailed implements _LoadingFailed {
     required TResult Function() loadingSuccess,
     required TResult Function(ProfileModel? profile) loadingProfileSuccess,
     required TResult Function(CouponModel? coupon) loadingCouponSuccess,
+    required TResult Function(MembershipModel? membership)
+        loadingMembershipSuccess,
     required TResult Function(AppFailure failure) loadingFailed,
   }) {
     return loadingFailed(failure);
@@ -1228,6 +1595,7 @@ class _$_LoadingFailed implements _LoadingFailed {
     TResult Function()? loadingSuccess,
     TResult Function(ProfileModel? profile)? loadingProfileSuccess,
     TResult Function(CouponModel? coupon)? loadingCouponSuccess,
+    TResult Function(MembershipModel? membership)? loadingMembershipSuccess,
     TResult Function(AppFailure failure)? loadingFailed,
     required TResult orElse(),
   }) {
@@ -1246,6 +1614,8 @@ class _$_LoadingFailed implements _LoadingFailed {
     required TResult Function(_LoadingProfileSuccess value)
         loadingProfileSuccess,
     required TResult Function(_LoadingCouponSuccess value) loadingCouponSuccess,
+    required TResult Function(_LoadingMembershipSuccess value)
+        loadingMembershipSuccess,
     required TResult Function(_LoadingFailed value) loadingFailed,
   }) {
     return loadingFailed(this);
@@ -1259,6 +1629,7 @@ class _$_LoadingFailed implements _LoadingFailed {
     TResult Function(_LoadingSuccess value)? loadingSuccess,
     TResult Function(_LoadingProfileSuccess value)? loadingProfileSuccess,
     TResult Function(_LoadingCouponSuccess value)? loadingCouponSuccess,
+    TResult Function(_LoadingMembershipSuccess value)? loadingMembershipSuccess,
     TResult Function(_LoadingFailed value)? loadingFailed,
     required TResult orElse(),
   }) {

@@ -69,8 +69,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     yield state.copyWith(type: AuthStateType.loadingInProgress());
 
     Locale? locale = await _languageRepository.getLanguage();
-    final tokenEither = await _authRepository.getToken();
-    tokenEither.fold((failure) {
+    (await _authRepository.getToken()).fold((failure) {
       appFailure = failure;
     }, (value) {
       token = value;
@@ -87,8 +86,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       );
     }
     else {
-      final userEither = await _authRepository.getUser();
-      userEither.fold((failure) {
+      (await _authRepository.getUser()).fold((failure) {
         appFailure = failure;
       }, (value) {
         user = value;
@@ -96,8 +94,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       if (appFailure != null)
         yield state.copyWith(type: AuthStateType.loadingFailed(appFailure!));
       else {
-        var recordEither = await _configRepository.getLocalRecord();
-        recordEither.fold((failure) {
+        (await _configRepository.getLocalRecord()).fold((failure) {
           appFailure = failure;
         }, (value) {
           record = value;
@@ -105,8 +102,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         if (appFailure != null)
           yield state.copyWith(type: AuthStateType.loadingFailed(appFailure!));
         else {
-          recordEither = await _configRepository.setRemoteRecord(record);
-          recordEither.fold((failure) {
+          (await _configRepository.setRemoteRecord(record)).fold((failure) {
             appFailure = failure;
           }, (value) {
             record = value;
@@ -133,9 +129,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     RecordModel? record;
 
     yield state.copyWith(type: AuthStateType.loadingInProgress());
-    final either = await _authRepository
-        .login(UserModel(email: email, password: password));
-    either.fold((failure) {
+    (await _authRepository
+        .login(UserModel(email: email, password: password))).fold((failure) {
       appFailure = failure;
     }, (value) {
       token = value.token;
@@ -143,8 +138,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     if (appFailure != null)
       yield state.copyWith(type: AuthStateType.loadingFailed(appFailure!));
     else {
-      final userEither = await _authRepository.getUser();
-      userEither.fold((failure) {
+      (await _authRepository.getUser()).fold((failure) {
         appFailure = failure;
       }, (value) {
         user = value;
@@ -152,8 +146,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       if (appFailure != null)
         yield state.copyWith(type: AuthStateType.loadingFailed(appFailure!));
       else {
-        var recordEither = await _configRepository.getLocalRecord();
-        recordEither.fold((failure) {
+        (await _configRepository.getLocalRecord()).fold((failure) {
           appFailure = failure;
         }, (value) {
           record = value;
@@ -161,8 +154,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         if (appFailure != null)
           yield state.copyWith(type: AuthStateType.loadingFailed(appFailure!));
         else {
-          recordEither = await _configRepository.setRemoteRecord(record);
-          recordEither.fold((failure) {
+          (await _configRepository.setRemoteRecord(record)).fold((failure) {
             appFailure = failure;
           }, (value) {
             record = value;
@@ -188,8 +180,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     RecordModel? record;
 
     yield state.copyWith(type: AuthStateType.loadingInProgress());
-    final either = await _authRepository.register(user);
-    either.fold((failure) {
+    (await _authRepository.register(user)).fold((failure) {
       appFailure = failure;
     }, (value) {
       token = value.token;
@@ -197,8 +188,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     if (appFailure != null)
       yield state.copyWith(type: AuthStateType.loadingFailed(appFailure!));
     else {
-      final userEither = await _authRepository.getUser();
-      userEither.fold((failure) {
+      (await _authRepository.getUser()).fold((failure) {
         appFailure = failure;
       }, (value) {
         user = value;
@@ -206,8 +196,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       if (appFailure != null)
         yield state.copyWith(type: AuthStateType.loadingFailed(appFailure!));
       else {
-        var recordEither = await _configRepository.getLocalRecord();
-        recordEither.fold((failure) {
+        (await _configRepository.getLocalRecord()).fold((failure) {
           appFailure = failure;
         }, (value) {
           record = value;
@@ -215,8 +204,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         if (appFailure != null)
           yield state.copyWith(type: AuthStateType.loadingFailed(appFailure!));
         else {
-          recordEither = await _configRepository.setRemoteRecord(record);
-          recordEither.fold((failure) {
+          (await _configRepository.setRemoteRecord(record)).fold((failure) {
             appFailure = failure;
           }, (value) {
             record = value;
@@ -240,8 +228,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     UserModel user = new UserModel(email: email);
 
     yield state.copyWith(type: AuthStateType.loadingInProgress());
-    final either = await _authRepository.forgetPassword(user);
-    either.fold((failure) {
+    (await _authRepository.forgetPassword(user)).fold((failure) {
       appFailure = failure;
     }, (value) {
     });
@@ -258,8 +245,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     AppFailure? appFailure;
     yield state.copyWith(type: AuthStateType.loadingInProgress());
 
-    final either = await _authRepository.logout();
-    either.fold((failure) {
+    (await _authRepository.logout()).fold((failure) {
       appFailure = failure;
     }, (value) {
     });

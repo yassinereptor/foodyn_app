@@ -1,8 +1,10 @@
 import 'dart:convert';
+import 'dart:io';
 
 import '../../models/record_model.dart';
 import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:path_provider/path_provider.dart';
 
 import '../../../../core/services/graphql_service.dart';
 
@@ -13,14 +15,15 @@ abstract class IConfigLocalDataSource {
 
 @Injectable(as: IConfigLocalDataSource)
 class ConfigLocalDataSource implements IConfigLocalDataSource {
-  final GraphQLService graphQL;
-  final SharedPreferences prefs;
+  final SharedPreferences _sharedPreferences;
 
-  ConfigLocalDataSource(this.graphQL, this.prefs);
+  ConfigLocalDataSource(
+    this._sharedPreferences
+  );
 
   @override
   Future<RecordModel?> getRecord() async {
-    final record = prefs.getString("user_record");
+    final record = _sharedPreferences.getString("user_record");
     if (record != null) {
       final result = jsonDecode(record);
       return RecordModel.fromJson(result);
@@ -30,7 +33,7 @@ class ConfigLocalDataSource implements IConfigLocalDataSource {
   
    @override
   Future<bool> setRecord(RecordModel? record) async {
-    final response = await prefs.setString("user_record", jsonEncode(record));
+    final response = await _sharedPreferences.setString("user_record", jsonEncode(record));
     return response;
   }
 

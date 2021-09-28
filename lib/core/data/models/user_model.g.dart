@@ -12,22 +12,13 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) {
     profile: json['profile'] == null
         ? null
         : ProfileModel.fromJson(json['profile'] as Map<String, dynamic>),
-    membership: json['membership'] == null
-        ? null
-        : MembershipModel.fromJson(json['membership'] as Map<String, dynamic>),
+    memberships: (json['memberships'] as List<dynamic>?)
+        ?.map((e) => MembershipModel.fromJson(e as Map<String, dynamic>))
+        .toList(),
     type: json['type'] as int?,
     email: json['email'] as String?,
     password: json['password'] as String?,
     verified: json['verified'] as bool?,
-    createdAt: json['createdAt'] == null
-        ? null
-        : DateTime.parse(json['createdAt'] as String),
-    updatedAt: json['updatedAt'] == null
-        ? null
-        : DateTime.parse(json['updatedAt'] as String),
-    deletedAt: json['deletedAt'] == null
-        ? null
-        : DateTime.parse(json['deletedAt'] as String),
   );
 }
 
@@ -35,11 +26,8 @@ Map<String, dynamic> _$UserModelToJson(UserModel instance) => <String, dynamic>{
       'id': instance.id,
       'type': instance.type,
       'profile': instance.profile,
-      'membership': instance.membership,
+      'memberships': instance.memberships,
       'email': instance.email,
       'password': instance.password,
       'verified': instance.verified,
-      'createdAt': instance.createdAt?.toIso8601String(),
-      'updatedAt': instance.updatedAt?.toIso8601String(),
-      'deletedAt': instance.deletedAt?.toIso8601String(),
     };

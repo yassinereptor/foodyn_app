@@ -24,7 +24,9 @@ class _LearnmorePageState extends State<LearnmorePage> {
 
   @override
   Widget build(BuildContext context) {
-    return ScaffoldContainerWidget(children: [
+    return ScaffoldContainerWidget(
+      emailResend: false,
+      children: [
       SizedBox(
         height: 10,
       ),

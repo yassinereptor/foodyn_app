@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
+import 'package:foodyn_rest/core/data/models/membership_model.dart';
 import '../../data/models/coupon_model.dart';
 import '../../domain/entities/app_failure.dart';
 import '../../domain/repositories/i_profile_repository.dart';
@@ -33,6 +34,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     yield* gEvent.when(
       uploadImage: (type, file) => _uploadImageHandler(type, file),
       saveProfile: (profile) => _saveProfileHandler(profile),
+      saveMembership: (planId, periodId, couponId) => _saveMembershipHandler(planId, periodId, couponId),
       checkCouponStatus: (code) => _checkCouponStatus(code)
     );
   }
@@ -59,8 +61,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     AppFailure? appFailure;
     yield ProfileState.loadingInProgress();
 
-    final either = await _profileRepository.uploadImage(ImageType.PROFILE, file);
-    either.fold((failure) {
+    (await _profileRepository.uploadImage(ImageType.PROFILE, file)).fold((failure) {
       appFailure = failure;
     }, (value) {
     });
@@ -75,8 +76,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     AppFailure? appFailure;
     ProfileModel? profileModel;
 
-    final either = await _profileRepository.saveProfile(profile);
-    either.fold((failure) {
+    (await _profileRepository.saveProfile(profile)).fold((failure) {
       appFailure = failure;
     }, (value) {
       profileModel = value;
@@ -87,6 +87,21 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       yield ProfileState.loadingProfileSuccess(profileModel);
   }
 
+  Stream<ProfileState> _saveMembershipHandler(int planId, int periodId, int? couponId) async* {
+    AppFailure? appFailure;
+    MembershipModel? membershipModel;
+
+    (await _profileRepository.saveMembership(planId, periodId, couponId)).fold((failure) {
+      appFailure = failure;
+    }, (value) {
+      membershipModel = value;
+    });
+    if (appFailure != null)
+      yield ProfileState.loadingFailed(appFailure!);
+    else
+      yield ProfileState.loadingMembershipSuccess(membershipModel);
+  }
+
   Stream<ProfileState> _checkCouponStatus(String code) async* {
     AppFailure? appFailure;
     CouponModel? coupon;
@@ -94,8 +109,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     if (code.isEmpty)
       yield ProfileState.initial();
     else {
-      final either = await _profileRepository.checkCouponStatus(code);
-      either.fold((failure) {
+      (await _profileRepository.checkCouponStatus(code)).fold((failure) {
         appFailure = failure;
       }, (value) {
         coupon = value;

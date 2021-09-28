@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:foodyn_rest/core/data/models/coupon_model.dart';
 import 'plan_model.dart';
 import 'user_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -13,32 +14,20 @@ class MembershipModel extends Equatable  {
   final UserModel? user;
   @JsonKey(name: "plan")
   final PlanModel? plan;
+  @JsonKey(name: "coupon")
+  final CouponModel? coupon;
   @JsonKey(name: "startAt")
   final DateTime? startAt;
   @JsonKey(name: "endAt")
   final DateTime? endAt;
-  @JsonKey(name: "active")
-  final bool? active;
-  @JsonKey(name: "banned")
-  final bool? banned;
-  @JsonKey(name: "createdAt")
-  final DateTime? createdAt;
-  @JsonKey(name: "updatedAt")
-  final DateTime? updatedAt;
-  @JsonKey(name: "deletedAt")
-  final DateTime? deletedAt;
 
   MembershipModel({
     this.id,
     this.user,
     this.plan,
+    this.coupon,
     this.startAt,
-    this.endAt,
-    this.active,
-    this.banned,
-    this.createdAt,
-    this.updatedAt,
-    this.deletedAt
+    this.endAt
   });
 
   factory MembershipModel.fromJson(Map<String, dynamic> json) =>
@@ -52,13 +41,9 @@ class MembershipModel extends Equatable  {
     id: $id,
     user: $user,
     plan: $plan,
+    coupon: $coupon,
     startAt: $startAt,
-    endAt: $endAt,
-    active: $active,
-    banned: $banned,
-    createdAt: $createdAt,
-    updatedAt: $updatedAt,
-    deletedAt: $deletedAt
+    endAt: $endAt
     )""";
   }
 
@@ -67,13 +52,9 @@ class MembershipModel extends Equatable  {
         id,
         user,
         plan,
+        coupon,
         startAt,
-        endAt,
-        active,
-        banned,
-        createdAt,
-        updatedAt,
-        deletedAt
+        endAt
       ];
 
 }

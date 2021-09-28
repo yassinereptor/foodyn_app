@@ -37,12 +37,6 @@ class ProfileModel extends Equatable  {
   double? posLat;
   @JsonKey(name: "posLng")
   double? posLng;
-  @JsonKey(name: "createdAt")
-  DateTime? createdAt;
-  @JsonKey(name: "updatedAt")
-  DateTime? updatedAt;
-  @JsonKey(name: "deletedAt")
-  DateTime? deletedAt;
 
   ProfileModel({
     this.id,
@@ -59,9 +53,6 @@ class ProfileModel extends Equatable  {
     this.gender,
     this.posLat,
     this.posLng,
-    this.createdAt,
-    this.updatedAt,
-    this.deletedAt
   });
 
   factory ProfileModel.fromJson(Map<String, dynamic> json) =>
@@ -85,10 +76,7 @@ class ProfileModel extends Equatable  {
     zipCode: $zipCode,
     gender: $gender,
     posLat: $posLat,
-    posLng: $posLng,
-    createdAt: $createdAt,
-    updatedAt: $updatedAt,
-    deletedAt: $deletedAt
+    posLng: $posLng
     )""";
   }
 
@@ -108,9 +96,6 @@ class ProfileModel extends Equatable  {
         gender,
         posLat,
         posLng,
-        createdAt,
-        updatedAt,
-        deletedAt
       ];
 
 }

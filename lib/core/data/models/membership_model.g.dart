@@ -15,22 +15,14 @@ MembershipModel _$MembershipModelFromJson(Map<String, dynamic> json) {
     plan: json['plan'] == null
         ? null
         : PlanModel.fromJson(json['plan'] as Map<String, dynamic>),
+    coupon: json['coupon'] == null
+        ? null
+        : CouponModel.fromJson(json['coupon'] as Map<String, dynamic>),
     startAt: json['startAt'] == null
         ? null
         : DateTime.parse(json['startAt'] as String),
     endAt:
         json['endAt'] == null ? null : DateTime.parse(json['endAt'] as String),
-    active: json['active'] as bool?,
-    banned: json['banned'] as bool?,
-    createdAt: json['createdAt'] == null
-        ? null
-        : DateTime.parse(json['createdAt'] as String),
-    updatedAt: json['updatedAt'] == null
-        ? null
-        : DateTime.parse(json['updatedAt'] as String),
-    deletedAt: json['deletedAt'] == null
-        ? null
-        : DateTime.parse(json['deletedAt'] as String),
   );
 }
 
@@ -39,11 +31,7 @@ Map<String, dynamic> _$MembershipModelToJson(MembershipModel instance) =>
       'id': instance.id,
       'user': instance.user,
       'plan': instance.plan,
+      'coupon': instance.coupon,
       'startAt': instance.startAt?.toIso8601String(),
       'endAt': instance.endAt?.toIso8601String(),
-      'active': instance.active,
-      'banned': instance.banned,
-      'createdAt': instance.createdAt?.toIso8601String(),
-      'updatedAt': instance.updatedAt?.toIso8601String(),
-      'deletedAt': instance.deletedAt?.toIso8601String(),
     };

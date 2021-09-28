@@ -6,6 +6,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:foodyn_rest/features/auth/presentation/widgets/botton_widget.dart';
 import '../../../../core/widgets/scaffold_container_widget.dart';
 import '../../../../core/domain/entities/app_failure.dart';
 import '../../../../core/config/injectable/injection.dart';
@@ -74,9 +75,9 @@ class _RegisterImagePageState extends State<RegisterImagePage> {
     }
   }
 
-  void _onTypeloadingInProgress() {}
+  void _onStateLoadingInProgress() {}
 
-  void _onTypeloadingSuccess() {
+  void _onStateLoadingSuccess() {
     setState(() {
       _modalType = ModalContainerType.SUCCESS;
     });
@@ -89,7 +90,7 @@ class _RegisterImagePageState extends State<RegisterImagePage> {
     });
   }
 
-  void _onTypeloadingFailure(AppFailure failure) {
+  void _onStateLoadingFailure(AppFailure failure) {
     setState(() {
       _modalType = ModalContainerType.FAILURE;
     });
@@ -120,9 +121,9 @@ class _RegisterImagePageState extends State<RegisterImagePage> {
       child: BlocConsumer<ProfileBloc, ProfileState>(
         listener: (context, state) {
           state.maybeWhen(
-              loadingInProgress: _onTypeloadingInProgress,
-              loadingSuccess: _onTypeloadingSuccess,
-              loadingFailed: _onTypeloadingFailure,
+              loadingInProgress: _onStateLoadingInProgress,
+              loadingSuccess: _onStateLoadingSuccess,
+              loadingFailed: _onStateLoadingFailure,
               orElse: () {});
         },
         builder: (context, state) {
@@ -221,35 +222,23 @@ class _RegisterImagePageState extends State<RegisterImagePage> {
               SizedBox(
                 height: 20,
               ),
-              InkWell(
+              ButtonWidget(
+                background: isDark(context)
+                    ? GlobalTheme.kPrimaryLightColor
+                    : GlobalTheme.kAccentDarkColor,
                 onTap: () {
                   Routes.seafarer.navigate(ChoosePlanPage.kRouteName);
                 },
-                child: Container(
-                  decoration: BoxDecoration(
-                      color: isDark(context)
-                          ? GlobalTheme.kPrimaryLightColor
-                          : GlobalTheme.kAccentDarkColor,
-                      borderRadius: BorderRadius.circular(10)),
-                  padding: Vx.mH32,
-                  height: 65.0,
-                  child: Directionality(
-                    textDirection: TextDirection.rtl,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        "Skip"
-                            .text
-                            .xl
-                            .color((isDark(context))
-                                ? GlobalTheme.kAccentColor
-                                : GlobalTheme.kPrimaryColor)
-                            .make(),
-                      ],
-                    ),
-                  ),
-                ),
-              )
+                children: [
+                  "Skip"
+                      .text
+                      .xl
+                      .color((isDark(context))
+                          ? GlobalTheme.kAccentColor
+                          : GlobalTheme.kPrimaryColor)
+                      .make(),
+                ],
+              ),
             ],
           );
         },

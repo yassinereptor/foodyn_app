@@ -38,12 +38,6 @@ class RecordModel extends Equatable {
   final String? operator;
   @JsonKey(name: "query")
   final String? query;
-  @JsonKey(name: "createdAt")
-  final DateTime? createdAt;
-  @JsonKey(name: "updatedAt")
-  final DateTime? updatedAt;
-  @JsonKey(name: "deletedAt")
-  final DateTime? deletedAt;
 
   RecordModel(
   {
@@ -63,9 +57,6 @@ class RecordModel extends Equatable {
     this.org,
     this.operator,
     this.query,
-    this.createdAt,
-    this.updatedAt,
-    this.deletedAt
   });
 
   factory RecordModel.fromJson(Map<String, dynamic> json) =>
@@ -91,10 +82,7 @@ class RecordModel extends Equatable {
     isp: $isp,
     org: $org,
     operator: $operator,
-    query: $query,
-    createdAt: $createdAt,
-    updatedAt: $updatedAt,
-    deletedAt: $deletedAt
+    query: $query
     )""";
   }
 
@@ -116,8 +104,5 @@ class RecordModel extends Equatable {
         org,
         operator,
         query,
-        createdAt,
-        updatedAt,
-        deletedAt
       ];
 }

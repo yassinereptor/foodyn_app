@@ -2,6 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:foodyn_rest/features/auth/presentation/widgets/botton_widget.dart';
 import '../../../../core/widgets/scaffold_container_widget.dart';
 import '../../../../core/bloc/config_bloc/config_bloc.dart';
 import '../../../../core/data/models/coupon_model.dart';
@@ -52,27 +54,22 @@ class _ChoosePaymentPageState extends State<ChoosePaymentPage> {
     super.dispose();
   }
 
-  void _onTypeloadingInProgress() {
+  void _onStateLoadingInProgress() {
     setState(() {
       _showModal = true;
       _modalType = ModalContainerType.LOADING;
     });
   }
 
-  void _onTypeloadingPaymentsSuccess(List<PaymentModel>? payments) {
+  void _onStateLoadingPaymentsSuccess(List<PaymentModel>? payments) {
     setState(() {
-      _modalType = ModalContainerType.SUCCESS;
-    });
-    Future.delayed(Duration(milliseconds: 2000), () {
-      setState(() {
-        _showModal = false;
-        _modalType = ModalContainerType.LOADING;
-        _paymentsList = payments;
-      });
+      _showModal = false;
+      _modalType = ModalContainerType.LOADING;
+      _paymentsList = payments;
     });
   }
 
-  void _onTypeloadingFailure(AppFailure failure) {
+  void _onStateLoadingFailure(AppFailure failure) {
     setState(() {
       _modalType = ModalContainerType.FAILURE;
     });
@@ -98,9 +95,9 @@ class _ChoosePaymentPageState extends State<ChoosePaymentPage> {
       child: BlocListener<ConfigBloc, ConfigState>(
           listener: (context, state) {
             state.maybeWhen(
-                loadingInProgress: _onTypeloadingInProgress,
-                loadingPaymentsSuccess: _onTypeloadingPaymentsSuccess,
-                loadingFailed: _onTypeloadingFailure,
+                loadingInProgress: _onStateLoadingInProgress,
+                loadingPaymentsSuccess: _onStateLoadingPaymentsSuccess,
+                loadingFailed: _onStateLoadingFailure,
                 orElse: () {});
           },
           child: ScaffoldContainerWidget(
@@ -111,60 +108,51 @@ class _ChoosePaymentPageState extends State<ChoosePaymentPage> {
             children: [
               ..._paymentsList!.mapIndexed(
                 (payment, index) => Padding(
-                  padding: EdgeInsets.only(top: 10, bottom: 10),
-                  child: InkWell(
-                    onTap: (!payment.soon!)
-                        ? () {
-                            if (payment.type! == PaymentType.TRANSFER.index)
-                              Routes.seafarer
-                                  .navigate(BankTransferPage.kRouteName);
-                            else if (payment.type! == PaymentType.CARD.index)
-                              Routes.seafarer.navigate(BankCardPage.kRouteName);
-                          }
-                        : () {},
-                    child: Container(
-                      decoration: BoxDecoration(
-                          color: ColorUtils(payment.primaryColor!).toColor(),
-                          borderRadius: BorderRadius.circular(10)),
-                      padding: Vx.mH32,
-                      height: 65.0,
-                      child: Row(
-                        children: [
-                          Padding(
-                              padding: const EdgeInsets.only(right: 20),
-                              child: CachedNetworkImage(
-                                  imageUrl: payment.asset!,
-                                  width: 40,
-                                  height: 40)),
-                          (!payment.soon!)
-                              ? (StringUtils.getTranslatedString(
-                                      _authBloc.state.locale!, payment.title!))
-                                  .text
-                                  .xl
-                                  .color(
-                                      ColorUtils(payment.textColor!).toColor())
-                                  .make()
-                              : (StringUtils.getTranslatedString(
-                                      _authBloc.state.locale!, payment.title!))
-                                  .text
-                                  .xl
-                                  .color(
-                                      ColorUtils(payment.textColor!).toColor())
-                                  .lineThrough
-                                  .make(),
-                          (!payment.soon!)
-                              ? Container()
-                              : " (Soon)"
-                                  .text
-                                  .xl
-                                  .color(
-                                      ColorUtils(payment.textColor!).toColor())
-                                  .make(),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
+                    padding: EdgeInsets.only(top: 10, bottom: 10),
+                    child: ButtonWidget(
+                      background: ColorUtils(payment.primaryColor!).toColor(),
+                      onTap: (!payment.soon!)
+                          ? () {
+                              if (payment.type! == PaymentType.TRANSFER.index)
+                                Routes.seafarer
+                                    .navigate(BankTransferPage.kRouteName);
+                              else if (payment.type! == PaymentType.CARD.index)
+                                Routes.seafarer
+                                    .navigate(BankCardPage.kRouteName);
+                            }
+                          : () {},
+                      children: [
+                        Padding(
+                            padding: const EdgeInsets.only(right: 20, left: 20),
+                            child: CachedNetworkImage(
+                                imageUrl: dotenv.env["SERVER_LINK"]! + payment.asset!,
+                                width: 40,
+                                height: 40)),
+                        (!payment.soon!)
+                            ? (StringUtils.getTranslatedString(
+                                    _authBloc.state.locale!, payment.title!))
+                                .text
+                                .xl
+                                .color(ColorUtils(payment.textColor!).toColor())
+                                .make()
+                            : (StringUtils.getTranslatedString(
+                                    _authBloc.state.locale!, payment.title!))
+                                .text
+                                .xl
+                                .color(ColorUtils(payment.textColor!).toColor())
+                                .lineThrough
+                                .make(),
+                        (!payment.soon!)
+                            ? Container()
+                            : " (Soon)"
+                                .text
+                                .xl
+                                .color(ColorUtils(payment.textColor!).toColor())
+                                .make(),
+                        SizedBox(width: 20,),
+                        Spacer(),
+                      ],
+                    )),
               )
             ],
           )),

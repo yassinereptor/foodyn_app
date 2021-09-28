@@ -9,6 +9,9 @@ part of 'plan_model.dart';
 PlanModel _$PlanModelFromJson(Map<String, dynamic> json) {
   return PlanModel(
     id: json['id'] as int?,
+    memberships: (json['memberships'] as List<dynamic>?)
+        ?.map((e) => CouponModel.fromJson(e as Map<String, dynamic>))
+        .toList(),
     title: json['title'] as String?,
     description: json['description'] as String?,
     monthPrice: json['monthPrice'] as String?,
@@ -20,20 +23,12 @@ PlanModel _$PlanModelFromJson(Map<String, dynamic> json) {
     special: json['special'] as bool?,
     endAt:
         json['endAt'] == null ? null : DateTime.parse(json['endAt'] as String),
-    createdAt: json['createdAt'] == null
-        ? null
-        : DateTime.parse(json['createdAt'] as String),
-    updatedAt: json['updatedAt'] == null
-        ? null
-        : DateTime.parse(json['updatedAt'] as String),
-    deletedAt: json['deletedAt'] == null
-        ? null
-        : DateTime.parse(json['deletedAt'] as String),
   );
 }
 
 Map<String, dynamic> _$PlanModelToJson(PlanModel instance) => <String, dynamic>{
       'id': instance.id,
+      'memberships': instance.memberships,
       'title': instance.title,
       'description': instance.description,
       'monthPrice': instance.monthPrice,
@@ -44,7 +39,4 @@ Map<String, dynamic> _$PlanModelToJson(PlanModel instance) => <String, dynamic>{
       'recommended': instance.recommended,
       'special': instance.special,
       'endAt': instance.endAt?.toIso8601String(),
-      'createdAt': instance.createdAt?.toIso8601String(),
-      'updatedAt': instance.updatedAt?.toIso8601String(),
-      'deletedAt': instance.deletedAt?.toIso8601String(),
     };

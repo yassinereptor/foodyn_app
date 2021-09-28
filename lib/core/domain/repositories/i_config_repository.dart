@@ -5,6 +5,7 @@ import '../../data/models/record_model.dart';
 import '../entities/app_failure.dart';
 
 abstract class IConfigRepository {
+  Future<Either<AppFailure?, List<String>?>> getPhoneResource();
   Future<Either<AppFailure?, RecordModel?>> getRemoteRecord();
   Future<Either<AppFailure?, RecordModel?>> getLocalRecord();
   Future<Either<AppFailure?, RecordModel?>> setRemoteRecord(RecordModel? record);

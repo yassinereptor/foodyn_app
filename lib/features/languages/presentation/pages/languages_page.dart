@@ -45,19 +45,12 @@ class _LanguagePageSstate extends State<LanguagesPage> {
   @override
   Widget build(BuildContext context) {
     return ScaffoldContainerWidget(
+      emailResend: false,
       logout: false,
       back: !widget.firstTime,
       title: S.of(context).please_choose_language,
       subtitle: S.of(context).change_language_anytime,
       children: [
-        Row(
-          children: [
-            Padding(
-              padding: EdgeInsets.only(top: 5, bottom: 15),
-              child: S.of(context).change_language_anytime.text.sm.make(),
-            ),
-          ],
-        ),
         ListView.separated(
           physics: NeverScrollableScrollPhysics(),
           shrinkWrap: true,

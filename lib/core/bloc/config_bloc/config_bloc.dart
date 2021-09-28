@@ -36,6 +36,7 @@ class ConfigBloc extends Bloc<ConfigEvent, ConfigState> {
   ) async* {
     yield* gEvent.when(
       started: () => _startedHandler(),
+      getPhoneResource: () => _getPhoneResourceHandler(),
       getPlans: () => _getPlansHandler(),
       getPayments: () => _getPaymentsHandler(),
       setLanguage: (lang) => _setLanguageHandler(lang),
@@ -67,8 +68,7 @@ class ConfigBloc extends Bloc<ConfigEvent, ConfigState> {
     yield ConfigState.loadingInProgress();
     Locale? locale = await _languageRepository.getLanguage();
     if (locale != null) S.load(locale);
-    var either = await _configRepository.getRemoteRecord();
-    either.fold((failure) {
+    (await _configRepository.getRemoteRecord()).fold((failure) {
       appFailure = failure;
     }, (value) {
       record = value;
@@ -77,8 +77,7 @@ class ConfigBloc extends Bloc<ConfigEvent, ConfigState> {
       yield ConfigState.loadingFailed(appFailure!);
     else
     {
-      final either = await _configRepository.setLocalRecord(record);
-      either.fold((failure) {
+      (await _configRepository.setLocalRecord(record)).fold((failure) {
         appFailure = failure;
       }, (value) {
         record = value;
@@ -95,8 +94,7 @@ class ConfigBloc extends Bloc<ConfigEvent, ConfigState> {
     List<PlanModel>? plans;
 
     yield ConfigState.loadingInProgress();
-    final either = await _configRepository.getPlans();
-    either.fold((failure) {
+    (await _configRepository.getPlans()).fold((failure) {
       appFailure = failure;
     }, (value) {
       plans = value;
@@ -112,8 +110,7 @@ class ConfigBloc extends Bloc<ConfigEvent, ConfigState> {
     List<PaymentModel>? payments;
 
     yield ConfigState.loadingInProgress();
-    final either = await _configRepository.getPayments();
-    either.fold((failure) {
+    (await _configRepository.getPayments()).fold((failure) {
       appFailure = failure;
     }, (value) {
       payments = value;
@@ -128,8 +125,7 @@ class ConfigBloc extends Bloc<ConfigEvent, ConfigState> {
     AppFailure? appFailure;
     Locale? locale;
 
-    final either = await _languageRepository.setLanguage(lang);
-    either.fold((failure) {
+    (await _languageRepository.setLanguage(lang)).fold((failure) {
       appFailure = failure;
     }, (value) {
       locale = value;
@@ -139,5 +135,21 @@ class ConfigBloc extends Bloc<ConfigEvent, ConfigState> {
       yield ConfigState.loadingFailed(appFailure!);
     else
       yield ConfigState.loadingLanguageSuccess(locale);
+  }
+
+  Stream<ConfigState> _getPhoneResourceHandler() async* {
+    AppFailure? appFailure;
+    List<String>? resource;
+
+    yield ConfigState.loadingInProgress();
+    (await _configRepository.getPhoneResource()).fold((failure) {
+      appFailure = failure;
+    }, (value) {
+      resource = value;
+    });
+    if (appFailure != null)
+      yield ConfigState.loadingFailed(appFailure!);
+    else
+      yield ConfigState.loadingResourcePhoneSuccess(resource);
   }
 }

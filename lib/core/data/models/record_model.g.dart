@@ -26,15 +26,6 @@ RecordModel _$RecordModelFromJson(Map<String, dynamic> json) {
     org: json['org'] as String?,
     operator: json['as'] as String?,
     query: json['query'] as String?,
-    createdAt: json['createdAt'] == null
-        ? null
-        : DateTime.parse(json['createdAt'] as String),
-    updatedAt: json['updatedAt'] == null
-        ? null
-        : DateTime.parse(json['updatedAt'] as String),
-    deletedAt: json['deletedAt'] == null
-        ? null
-        : DateTime.parse(json['deletedAt'] as String),
   );
 }
 
@@ -56,7 +47,4 @@ Map<String, dynamic> _$RecordModelToJson(RecordModel instance) =>
       'org': instance.org,
       'as': instance.operator,
       'query': instance.query,
-      'createdAt': instance.createdAt?.toIso8601String(),
-      'updatedAt': instance.updatedAt?.toIso8601String(),
-      'deletedAt': instance.deletedAt?.toIso8601String(),
     };

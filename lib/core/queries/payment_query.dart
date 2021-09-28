@@ -10,8 +10,7 @@ class PaymentQuery {
         primaryColor,
         accentColor,
         textColor,
-        soon,
-        active,
+        soon
       }
     }
     """;

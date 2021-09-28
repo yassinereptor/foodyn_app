@@ -63,8 +63,8 @@ Future<_i1.GetIt> $initGetIt(_i1.GetIt get,
       () => _i12.GeolocationBloc(get<_i9.Logger>()));
   gh.factory<_i13.IAuthLocalDataSource>(() => _i13.AuthLocalDataSource(
       get<_i4.GraphQLService>(), get<_i11.SharedPreferences>()));
-  gh.factory<_i14.IConfigLocalDataSource>(() => _i14.ConfigLocalDataSource(
-      get<_i4.GraphQLService>(), get<_i11.SharedPreferences>()));
+  gh.factory<_i14.IConfigLocalDataSource>(
+      () => _i14.ConfigLocalDataSource(get<_i11.SharedPreferences>()));
   gh.factory<_i15.ILanguageLocalDataSource>(
       () => _i15.LanguageLocalDataSource(get<_i11.SharedPreferences>()));
   gh.factory<_i16.ILanguageRepository>(

@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:foodyn_rest/features/auth/presentation/widgets/botton_widget.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import '../../../../core/bloc/auth_bloc/auth_bloc.dart';
@@ -18,8 +19,9 @@ import '../widgets/plan_item_widget.dart';
 
 class ChoosePlanPage extends StatefulWidget {
   static const kRouteName = "/choose-plan";
+  final bool back;
 
-  const ChoosePlanPage({Key? key}) : super(key: key);
+  const ChoosePlanPage({Key? key, this.back = true}) : super(key: key);
 
   @override
   _ChoosePlanPageState createState() => _ChoosePlanPageState();
@@ -46,27 +48,22 @@ class _ChoosePlanPageState extends State<ChoosePlanPage> {
     super.dispose();
   }
 
-  void _onTypeloadingInProgress() {
+  void _onStateLoadingInProgress() {
     setState(() {
       _showModal = true;
       _modalType = ModalContainerType.LOADING;
     });
   }
 
-  void _onTypeloadingPlansSuccess(List<PlanModel>? plans) {
+  void _onStateLoadingPlansSuccess(List<PlanModel>? plans) {
     setState(() {
-      _modalType = ModalContainerType.SUCCESS;
-    });
-    Future.delayed(Duration(milliseconds: 2000), () {
-      setState(() {
-        _showModal = false;
-        _modalType = ModalContainerType.LOADING;
-        _plansList = plans;
-      });
+      _showModal = false;
+      _modalType = ModalContainerType.LOADING;
+      _plansList = plans;
     });
   }
 
-  void _onTypeloadingFailure(AppFailure failure) {
+  void _onStateLoadingFailure(AppFailure failure) {
     setState(() {
       _modalType = ModalContainerType.FAILURE;
     });
@@ -89,44 +86,38 @@ class _ChoosePlanPageState extends State<ChoosePlanPage> {
       child: BlocListener<ConfigBloc, ConfigState>(
           listener: (context, state) {
             state.maybeWhen(
-                loadingInProgress: _onTypeloadingInProgress,
-                loadingPlansSuccess: _onTypeloadingPlansSuccess,
-                loadingFailed: _onTypeloadingFailure,
+                loadingInProgress: _onStateLoadingInProgress,
+                loadingPlansSuccess: _onStateLoadingPlansSuccess,
+                loadingFailed: _onStateLoadingFailure,
                 orElse: () {});
           },
           child: ScaffoldContainerWidget(
             show: _showModal,
             type: _modalType,
             logout: true,
-            back: _authBloc.state.user!.membership != null,
+            back: widget.back,
             title: "Choose a plan",
             children: [
-              InkWell(
+              ButtonWidget(
                 onTap: () {
-                  // Routes.seafarer.navigate(ChoosePlanPage.kRouteName);
                 },
-                child: Container(
-                  decoration: BoxDecoration(
-                      color: GlobalTheme.kOrangeColor,
-                      borderRadius: BorderRadius.circular(10)),
-                  padding: Vx.mH32,
-                  height: 65.0,
-                  child: Directionality(
-                    textDirection: TextDirection.rtl,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        "For A Special Plan Contact Us"
-                            .text
-                            .xl
-                            .color((isDark(context))
-                                ? GlobalTheme.kPrimaryColor
-                                : GlobalTheme.kAccentColor)
-                            .make(),
-                      ],
-                    ),
-                  ),
-                ),
+                children: [
+                      "For A Special Plan"
+                      .text
+                      .xl
+                      .lineThrough
+                      .color((isDark(context))
+                          ? GlobalTheme.kPrimaryColor
+                          : GlobalTheme.kAccentColor)
+                      .make(),
+                      " (Soon)"
+                      .text
+                      .xl
+                      .color((isDark(context))
+                          ? GlobalTheme.kPrimaryColor
+                          : GlobalTheme.kAccentColor)
+                      .make(),
+                ],
               ),
               SizedBox(
                 height: 10,

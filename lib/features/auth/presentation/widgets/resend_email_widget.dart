@@ -51,9 +51,9 @@ class _ResendEmailWidgetState extends State<ResendEmailWidget> {
         _authBloc.state.user!.email!));
   }
 
-  void _onTypeloadingInProgress() {}
+  void _onStateLoadingInProgress() {}
 
-  void _onTypeloadingSuccess(UserModel? userModel) {
+  void _onStateLoadingSuccess(UserModel? userModel) {
     if (userModel == null){
       final snackBar = SnackBar(content: Text("Email sent"));
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
@@ -62,7 +62,7 @@ class _ResendEmailWidgetState extends State<ResendEmailWidget> {
       _authBloc.state.user!.verified = userModel.verified;
   }
 
-  void _onTypeloadingFailure(AppFailure failure) {
+  void _onStateLoadingFailure(AppFailure failure) {
     final snackBar = SnackBar(content: Text("Resend email failed !"));
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
@@ -81,9 +81,9 @@ class _ResendEmailWidgetState extends State<ResendEmailWidget> {
       child: BlocConsumer<MailBloc, MailState>(
         listener: (context, state) {
           state.maybeWhen(
-              loadingInProgress: _onTypeloadingInProgress,
-              loadingSuccess: _onTypeloadingSuccess,
-              loadingFailed: _onTypeloadingFailure,
+              loadingInProgress: _onStateLoadingInProgress,
+              loadingSuccess: _onStateLoadingSuccess,
+              loadingFailed: _onStateLoadingFailure,
               orElse: () {});
         },
         builder: (context, state) {

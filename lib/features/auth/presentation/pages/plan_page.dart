@@ -3,6 +3,8 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:foodyn_rest/features/auth/presentation/widgets/botton_widget.dart';
+import 'package:foodyn_rest/features/auth/presentation/widgets/currency_button_widget.dart';
 import '../../../../core/bloc/config_bloc/config_bloc.dart';
 import '../../../../core/data/models/plan_model.dart';
 import '../../../../core/domain/entities/app_failure.dart';
@@ -27,33 +29,30 @@ class PlanPage extends StatefulWidget {
 
   final PlanModel plan;
 
-  const PlanPage(
-      {Key? key,
-      required this.plan})
-      : super(key: key);
+  const PlanPage({Key? key, required this.plan}) : super(key: key);
 
   @override
   _PlanPageState createState() => _PlanPageState();
 }
 
-class _PlanPageState extends State<PlanPage> with SingleTickerProviderStateMixin {
+class _PlanPageState extends State<PlanPage>
+    with SingleTickerProviderStateMixin {
   late ConfigBloc _configBloc;
   late AuthBloc _authBloc;
   bool _showModal = false;
   ModalContainerType _modalType = ModalContainerType.LOADING;
-late String? _calcYearPrice;
-late Animation<double> animation;
+  late String? _calcYearPrice;
+  late Animation<double> animation;
   late AnimationController controller;
+  int? _selectedCurrencyIndex;
 
   @override
   void initState() {
     super.initState();
     controller =
         AnimationController(vsync: this, duration: Duration(seconds: 10));
-    animation = Tween<double>(begin: 200, end: 400).animate(new CurvedAnimation(
-  parent: controller,
-  curve: Curves.easeInOutCubic
-))
+    animation = Tween<double>(begin: 200, end: 400).animate(
+        new CurvedAnimation(parent: controller, curve: Curves.easeInOutCubic))
       ..addListener(() {
         setState(() {});
       })
@@ -64,6 +63,7 @@ late Animation<double> animation;
           controller.forward();
         }
       });
+    CurrencyUtils.getCurrencyIndex().then((value) => _selectedCurrencyIndex = value);
     controller.forward();
     _authBloc = context.read<AuthBloc>();
     _configBloc = getIt<ConfigBloc>();
@@ -73,27 +73,30 @@ late Animation<double> animation;
   @override
   void dispose() {
     _configBloc.close();
+    controller.dispose();
     super.dispose();
   }
 
-  void _onTypeloadingInProgress () {
-    
-  }
-
-  void _onTypeloadingPlansSuccess (List<PlanModel>? plans) {
+  void _onStateLoadingInProgress() {
     setState(() {
-        _modalType = ModalContainerType.SUCCESS;
+      _showModal = true;
+      _modalType = ModalContainerType.LOADING;
     });
-      Future.delayed(Duration(milliseconds: 2000), () {
-        setState(() {
-          _showModal = false;
-          _modalType = ModalContainerType.LOADING;
-        });
-    });
-    
   }
 
-  void _onTypeloadingFailure (AppFailure failure) {
+  void _onStateLoadingPlansSuccess(List<PlanModel>? plans) {
+    setState(() {
+      _modalType = ModalContainerType.SUCCESS;
+    });
+    Future.delayed(Duration(milliseconds: 2000), () {
+      setState(() {
+        _showModal = false;
+        _modalType = ModalContainerType.LOADING;
+      });
+    });
+  }
+
+  void _onStateLoadingFailure(AppFailure failure) {
     setState(() {
       _modalType = ModalContainerType.FAILURE;
     });
@@ -113,18 +116,14 @@ late Animation<double> animation;
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(
-          create: (context) => _configBloc
-          ),
-          BlocProvider(
-          create: (context) => _authBloc
-          )
-        ],
-        child: MultiBlocListener(
-          listeners: [
-            BlocListener<AuthBloc, AuthState>(
-              listener: (context, state) {
-                state.type.maybeWhen(
+        BlocProvider(create: (context) => _configBloc),
+        BlocProvider(create: (context) => _authBloc)
+      ],
+      child: MultiBlocListener(
+        listeners: [
+          BlocListener<AuthBloc, AuthState>(
+            listener: (context, state) {
+              state.type.maybeWhen(
                   loadingFailed: (AppFailure message) {
                     message.maybeWhen(
                         storage: () {
@@ -142,153 +141,249 @@ late Animation<double> animation;
                     );
                   },
                   orElse: () {});
-              },
-            ),
-            BlocListener<ConfigBloc, ConfigState>(
-              listener: (context, state) {
-                state.maybeWhen(
-                  loadingInProgress: _onTypeloadingInProgress,
-                  loadingPlansSuccess: _onTypeloadingPlansSuccess,
-                  loadingFailed: _onTypeloadingFailure,
-                  orElse: (){});
-              },
-            )
-          ],
-          child: Scaffold(
-            body: ModalContainerWidget(
-              type: _modalType,
-              show: _showModal,
-              child: Stack(
-                children: [
-                  Container(
+            },
+          ),
+          BlocListener<ConfigBloc, ConfigState>(
+            listener: (context, state) {
+              state.maybeWhen(
+                  loadingInProgress: _onStateLoadingInProgress,
+                  loadingPlansSuccess: _onStateLoadingPlansSuccess,
+                  loadingFailed: _onStateLoadingFailure,
+                  orElse: () {});
+            },
+          )
+        ],
+        child: Scaffold(
+          body: ModalContainerWidget(
+            type: _modalType,
+            show: _showModal,
+            child: Stack(
+              children: [
+                Container(
                   child: Positioned(
                     right: 0,
                     top: animation.value,
                     child: Transform.rotate(
                       angle: -math.pi / 10,
                       child: Image.asset(
-                          isDark(context)? "assets/logos/foodyn_shape_light_logo.png" : "assets/logos/foodyn_shape_dark_logo.png",
-                          fit: BoxFit.contain,
-                          colorBlendMode: BlendMode.multiply,
-                          width: 400,
-                          height: 400,
-                        ),
+                        isDark(context)
+                            ? "assets/logos/foodyn_shape_light_logo.png"
+                            : "assets/logos/foodyn_shape_dark_logo.png",
+                        fit: BoxFit.contain,
+                        colorBlendMode: BlendMode.multiply,
+                        width: 400,
+                        height: 400,
                       ),
+                    ),
                   ),
                 ),
-                  Container(
-                    decoration: BoxDecoration(
+                Container(
+                  decoration: BoxDecoration(
                       gradient: LinearGradient(
-                          begin: Alignment.bottomRight,
-                          end: Alignment.topLeft,
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomRight,
                           colors: [
-                            ColorUtils(widget.plan.primaryColor!).toColor().withOpacity(0.9),
-                            ColorUtils(widget.plan.accentColor!).toColor(),
-                    ])),
-                    child: SafeArea(
-                      child: CustomScrollView(
-                        shrinkWrap: false,
-                        slivers: [
-                          SliverAppBar(
-                            backgroundColor: Colors.transparent,
-                            pinned: false,
-                            snap: false,
-                            floating: false,
-                            automaticallyImplyLeading: false,
-                            flexibleSpace: Container(
-                              color: Colors.transparent,
-                              padding: EdgeInsets.symmetric(horizontal: 20),
-                              child: FocusTraversalGroup(
-                                policy: OrderedTraversalPolicy(),
-                                child: Center(
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      GestureDetector(
-                                        onTap: () => Routes.seafarer.pop(),
-                                        child: Row(
-                                          children: [
-                                            Padding(
-                                              padding: const EdgeInsets.only(right: 10),
-                                              child: Icon(
-                                                      Icons.arrow_back_ios,
-                                                      color: ColorUtils(widget.plan.textColor!).toColor(),
-                                                    ),
+                        ColorUtils(widget.plan.primaryColor!).toColor(),
+                        ColorUtils(widget.plan.accentColor!).toColor().withOpacity(0.9),
+                      ])),
+                  child: SafeArea(
+                    child: CustomScrollView(
+                      shrinkWrap: false,
+                      slivers: [
+                        SliverAppBar(
+                          backgroundColor: Colors.transparent,
+                          pinned: false,
+                          snap: false,
+                          floating: false,
+                          automaticallyImplyLeading: false,
+                          flexibleSpace: Container(
+                            color: Colors.transparent,
+                            padding: EdgeInsets.symmetric(horizontal: 20),
+                            child: FocusTraversalGroup(
+                              policy: OrderedTraversalPolicy(),
+                              child: Center(
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    GestureDetector(
+                                      onTap: () => Routes.seafarer.pop(),
+                                      child: Row(
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                right: 10),
+                                            child: Icon(
+                                              Icons.arrow_back_ios,
+                                              color: ColorUtils(
+                                                      widget.plan.textColor!)
+                                                  .toColor(),
                                             ),
-                                            "Back".text.xl.color(ColorUtils(widget.plan.textColor!).toColor()).make(),
-                                          ],
-                                        ),
+                                          ),
+                                          "Back"
+                                              .text
+                                              .xl
+                                              .color(ColorUtils(
+                                                      widget.plan.textColor!)
+                                                  .toColor())
+                                              .make(),
+                                        ],
                                       ),
-                                      GestureDetector(
-                                              onTap: _onLogout,
-                                              child: "Log out"
-                                                  .text
-                                                  .xl
-                                                  .color(ColorUtils(widget.plan.textColor!).toColor())
-                                                  .make(),
-                                            )
-                                    ],
-                                  ),
+                                    ),
+                                    GestureDetector(
+                                      onTap: _onLogout,
+                                      child: "Log out"
+                                          .text
+                                          .xl
+                                          .color(
+                                              ColorUtils(widget.plan.textColor!)
+                                                  .toColor())
+                                          .make(),
+                                    )
+                                  ],
                                 ),
                               ),
                             ),
                           ),
-                          SliverToBoxAdapter(
-                            child: SingleChildScrollView(
-                              child: Padding(
-                                padding: EdgeInsets.only(left: 20, right: 20),
-                                child: Column(
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsets.only(top: 5, bottom: 15),
-                                      child: Row(
-                                        children: [
-                                          StringUtils.getTranslatedString(_authBloc.state.locale!, widget.plan.title!).text.bold.capitalize.xl2.color(ColorUtils(widget.plan.textColor!).toColor()).make(),
-                                          Spacer(),
-                                          IconButton(onPressed: (){},
-                                          padding: EdgeInsets.zero,
-                                          constraints: BoxConstraints(),
-                                          icon: Icon(Icons.monetization_on), color: ColorUtils(widget.plan.textColor!).toColor())
-                                        ],
+                        ),
+                        SliverToBoxAdapter(
+                          child: SingleChildScrollView(
+                            child: Padding(
+                              padding: EdgeInsets.only(left: 20, right: 20),
+                              child: Column(
+                                children: [
+                                  Padding(
+                                    padding:
+                                        EdgeInsets.only(top: 5, bottom: 15),
+                                    child: Row(
+                                      children: [
+                                        StringUtils.getTranslatedString(
+                                                _authBloc.state.locale!,
+                                                widget.plan.title!)
+                                            .text
+                                            .bold
+                                            .capitalize
+                                            .xl2
+                                            .color(ColorUtils(
+                                                    widget.plan.textColor!)
+                                                .toColor())
+                                            .make(),
+                                        Spacer(),
+                                        CurrencyButtonWidget(
+                                          color: ColorUtils(widget.plan.textColor!).toColor(),
+                                          onSelect: (index) => setState(() {
+                                            _selectedCurrencyIndex = index;
+                                          }),
+                                          plan: widget.plan,
+                                          modifyListOutput: (text) => text.toUpperCase()
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: [
+                                      CurrencyUtils(widget.plan)
+                                          .getMonthPrice()
+                                          .text
+                                          .light
+                                          .xl6
+                                          .color(
+                                              ColorUtils(widget.plan.textColor!)
+                                                  .toColor())
+                                          .make(),
+                                      SizedBox(
+                                        width: 10,
                                       ),
-                                    ),
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      crossAxisAlignment: CrossAxisAlignment.end,
-                                      children: [
-                                        CurrencyUtils(widget.plan).getMonthPrice().text.light.xl6.color(ColorUtils(widget.plan.textColor!).toColor()).make(),
-                                        SizedBox(width: 10,),
-                                        Padding(
-                                          padding: const EdgeInsets.only(bottom: 16),
-                                          child: CurrencyUtils.toStringCurrency().text.bold.xl.color(ColorUtils(widget.plan.textColor!).toColor()).make(),
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(bottom: 16),
+                                        child: CurrencyUtils.toStringCurrency(_selectedCurrencyIndex)
+                                            .text
+                                            .bold
+                                            .xl
+                                            .color(ColorUtils(
+                                                    widget.plan.textColor!)
+                                                .toColor())
+                                            .make(),
+                                      ),
+                                    ],
+                                  ),
+                                  "Per Month"
+                                      .text
+                                      .bold
+                                      .xl
+                                      .color(ColorUtils(widget.plan.textColor!)
+                                          .toColor())
+                                      .make(),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: [
+                                      if (_calcYearPrice != null)
+                                        _calcYearPrice!.text.xl3.light
+                                            .color(ColorUtils(
+                                                    widget.plan.textColor!)
+                                                .toColor())
+                                            .lineThrough
+                                            .make(),
+                                      if (_calcYearPrice != null)
+                                        SizedBox(
+                                          width: 10,
                                         ),
-                                      ],
-                                    ),
-                                    "Per Month".text.bold.xl.color(ColorUtils(widget.plan.textColor!).toColor()).make(),
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      crossAxisAlignment: CrossAxisAlignment.end,
-                                      children: [
-                                        if (_calcYearPrice != null)
-                                        _calcYearPrice!.text.xl3.light.color(ColorUtils(widget.plan.textColor!).toColor()).lineThrough.make(),
-                                        if (_calcYearPrice != null)
-                                        SizedBox(width: 10,),
-                                        CurrencyUtils(widget.plan).getYearPrice().text.bold.xl3.color(ColorUtils(widget.plan.textColor!).toColor()).make(),
-                                        SizedBox(width: 5,),
-                                        Padding(
-                                          padding: const EdgeInsets.only(bottom: 4),
-                                          child: CurrencyUtils.toStringCurrency().text.xl.bold.color(ColorUtils(widget.plan.textColor!).toColor()).make(),
-                                        ),
-                                      ],
-                                    ),
-                                    "Per Year".text.xl.bold.color(ColorUtils(widget.plan.textColor!).toColor()).make(),
-                                    SizedBox(height: 30,),
-                                    StringUtils.getTranslatedString(_authBloc.state.locale!, widget.plan.description!).text.bold.sm.color(ColorUtils(widget.plan.textColor!).toColor()).make(),
-                                    SizedBox(height: 20,),
-                                    
-                                    Padding(
-                                      padding: EdgeInsets.only(top: 10, bottom: 20),
-                                      child: InkWell(
+                                      CurrencyUtils(widget.plan)
+                                          .getYearPrice()
+                                          .text
+                                          .bold
+                                          .xl3
+                                          .color(
+                                              ColorUtils(widget.plan.textColor!)
+                                                  .toColor())
+                                          .make(),
+                                      SizedBox(
+                                        width: 5,
+                                      ),
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(bottom: 4),
+                                        child: CurrencyUtils.toStringCurrency(_selectedCurrencyIndex)
+                                            .text
+                                            .xl
+                                            .bold
+                                            .color(ColorUtils(
+                                                    widget.plan.textColor!)
+                                                .toColor())
+                                            .make(),
+                                      ),
+                                    ],
+                                  ),
+                                  "Per Year"
+                                      .text
+                                      .xl
+                                      .bold
+                                      .color(ColorUtils(widget.plan.textColor!)
+                                          .toColor())
+                                      .make(),
+                                  SizedBox(
+                                    height: 30,
+                                  ),
+                                  StringUtils.getTranslatedString(
+                                          _authBloc.state.locale!,
+                                          widget.plan.description!)
+                                      .text
+                                      .bold
+                                      .sm
+                                      .color(ColorUtils(widget.plan.textColor!)
+                                          .toColor())
+                                      .make(),
+                                  SizedBox(
+                                    height: 20,
+                                  ),
+                                  Padding(
+                                    padding:
+                                        EdgeInsets.only(top: 10, bottom: 20),
+                                    child: InkWell(
                                         onTap: () {
                                           Routes.seafarer.navigate(PaymentPage.kRouteName, params: {
                                             "plan": widget.plan,
@@ -298,34 +393,30 @@ late Animation<double> animation;
                                           decoration: BoxDecoration(
                                               color: GlobalTheme.kAccentColor,
                                               borderRadius: BorderRadius.circular(10)),
-                                          padding: Vx.mH32,
                                           height: 65.0,
-                                          child: Directionality(
-                                            textDirection: TextDirection.rtl,
-                                            child: Row(
-                                              mainAxisAlignment: MainAxisAlignment.center,
-                                              children: [
-                                                "Checkout".text.xl.color(ColorUtils(widget.plan.accentColor!).toColor()).make(),
-                                              ],
-                                            ),
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: [
+                                              "Checkout".text.xl.color(ColorUtils(widget.plan.primaryColor!).toColor()).make(),
+                                            ],
                                           ),
                                         ),
                                       ),
-                                    )
-                                  ],
-                                ),
+                                  )
+                                ],
                               ),
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),
+      ),
     );
   }
 }

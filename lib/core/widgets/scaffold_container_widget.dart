@@ -10,6 +10,7 @@ class ScaffoldContainerWidget extends StatefulWidget {
   final bool show;
   final bool logout;
   final bool back;
+  final bool emailResend;
   final String? title;
   final String? subtitle;
   final ModalContainerType type;
@@ -23,6 +24,7 @@ class ScaffoldContainerWidget extends StatefulWidget {
       this.show = false,
       this.logout = false,
       this.back = true,
+      this.emailResend = true,
       this.title,
       this.subtitle,
       this.type = ModalContainerType.LOADING,
@@ -55,7 +57,7 @@ class _ScaffoldContainerWidgetState extends State<ScaffoldContainerWidget> {
           child: CustomScrollView(
                   shrinkWrap: true,
                   slivers: [
-                    SliverAppBarWidget(logout: true, back: false),
+                    SliverAppBarWidget(logout: widget.logout, back: widget.back),
                     SliverToBoxAdapter(
                       child: SingleChildScrollView(
                         child: Padding(
@@ -64,6 +66,7 @@ class _ScaffoldContainerWidgetState extends State<ScaffoldContainerWidget> {
                           child: Container(
                             child: Column(
                               children: [
+                                if (widget.emailResend)
                                 ResendEmailWidget(),
                                 if (widget.title != null)
                                 Row(

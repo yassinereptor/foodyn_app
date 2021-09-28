@@ -55,8 +55,7 @@ class MailBloc extends Bloc<MailEvent, MailState> {
     AppFailure? appFailure;
     yield MailState.loadingInProgress();
 
-    final either = await _authRepository.resendConfirmationEmail(email);
-    either.fold((failure) {
+    (await _authRepository.resendConfirmationEmail(email)).fold((failure) {
       appFailure = failure;
     }, (value) {
     });
@@ -71,8 +70,7 @@ class MailBloc extends Bloc<MailEvent, MailState> {
     UserModel? user;
 
     yield MailState.loadingInProgress();
-    final either = await _authRepository.getUser();
-    either.fold((failure) {
+    (await _authRepository.getUser()).fold((failure) {
       appFailure = failure;
     }, (value) {
       user = value;

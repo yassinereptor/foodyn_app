@@ -33,12 +33,12 @@ class DropdownFormWidget extends StatefulWidget {
 
 class _DropdownFormWidgetState extends State<DropdownFormWidget> {
   late int defaultIndex;
-  late TextEditingController textEditingController;
+  late TextEditingController _textEditingController;
 
   
   @override
   void initState() {
-    textEditingController = new TextEditingController();
+    _textEditingController = new TextEditingController();
     super.initState();
   }
   
@@ -49,7 +49,7 @@ class _DropdownFormWidgetState extends State<DropdownFormWidget> {
     return GestureDetector(
       onTap: () => BottomSheetWidget.showBottomSheetWidget(
           context,
-          _DropdownFormInsideWidget(modifyListOutput: widget.modifyListOutput, list: widget.list, onSelect: widget.onSelect, textEditingController: textEditingController, searchForm: widget.searchForm,)),
+          _DropdownFormInsideWidget(modifyListOutput: widget.modifyListOutput, list: widget.list, onSelect: widget.onSelect, textEditingController: _textEditingController, searchForm: widget.searchForm,)),
       child: Container(
         constraints: BoxConstraints(maxHeight: 65),
         decoration: BoxDecoration(

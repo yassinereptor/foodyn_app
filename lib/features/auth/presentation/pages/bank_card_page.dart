@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:foodyn_rest/features/auth/presentation/widgets/botton_widget.dart';
 import '../../../../core/widgets/scaffold_container_widget.dart';
 import '../../../../core/config/router/router.dart';
 import '../../../../core/utils/theme_brightness.dart';
@@ -145,7 +146,7 @@ class _BankCardPageState extends State<BankCardPage> {
                     ),
                   ],
                 ),
-                InkWell(
+                ButtonWidget(
                   onTap: () {
                     // Validate returns true if the form is valid, or false otherwise.
                     if (_formKey.currentState!.validate()) {
@@ -156,28 +157,15 @@ class _BankCardPageState extends State<BankCardPage> {
                     }
                     Routes.seafarer.navigate(DashboardPage.kRouteName);
                   },
-                  child: Container(
-                    decoration: BoxDecoration(
-                        color: GlobalTheme.kOrangeColor,
-                        borderRadius: BorderRadius.circular(10)),
-                    padding: Vx.mH32,
-                    height: 65.0,
-                    child: Directionality(
-                      textDirection: TextDirection.rtl,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          "Diposit"
-                              .text
-                              .xl
-                              .color((isDark(context))
-                                  ? GlobalTheme.kPrimaryColor
-                                  : GlobalTheme.kAccentColor)
-                              .make(),
-                        ],
-                      ),
-                    ),
-                  ),
+                  children: [
+                    "Diposit"
+                        .text
+                        .xl
+                        .color((isDark(context))
+                            ? GlobalTheme.kPrimaryColor
+                            : GlobalTheme.kAccentColor)
+                        .make(),
+                  ],
                 ),
               ],
             ),

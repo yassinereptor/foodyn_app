@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:foodyn_rest/features/auth/presentation/widgets/botton_widget.dart';
 import '../../../../core/widgets/scaffold_container_widget.dart';
 import '../../../../core/domain/entities/app_failure.dart';
 import '../../../../core/config/injectable/injection.dart';
@@ -102,66 +103,38 @@ class _VerifyOtpPageState extends State<VerifyOtpPage> {
                             _currentOtp = otp;
                           });
                         }),
-                    InkWell(
+                    ButtonWidget(
                       onTap: () {
                         if (_formKey.currentState!.validate()) {
                           _otpBloc.add(OtpEvent.verifyOtp(_currentOtp!));
                         }
                       },
-                      child: Container(
-                        decoration: BoxDecoration(
-                            color: GlobalTheme.kOrangeColor,
-                            borderRadius: BorderRadius.circular(10)),
-                        padding: Vx.mH32,
-                        height: 65.0,
-                        child: Directionality(
-                          textDirection: TextDirection.rtl,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              "Verify"
-                                  .text
-                                  .xl
-                                  .color((isDark(context))
-                                      ? GlobalTheme.kPrimaryColor
-                                      : GlobalTheme.kAccentColor)
-                                  .make(),
-                            ],
-                          ),
-                        ),
-                      ),
+                      children: [
+                        "Verify"
+                            .text
+                            .xl
+                            .color((isDark(context))
+                                ? GlobalTheme.kPrimaryColor
+                                : GlobalTheme.kAccentColor)
+                            .make(),
+                      ],
                     ),
                     SizedBox(
                       height: 20,
                     ),
-                    InkWell(
+                    ButtonWidget(
                       onTap: () {
                         widget.onSuccess();
                       },
-                      child: Container(
-                        decoration: BoxDecoration(
-                            color: isDark(context)
-                                ? GlobalTheme.kPrimaryLightColor
-                                : GlobalTheme.kAccentDarkColor,
-                            borderRadius: BorderRadius.circular(10)),
-                        padding: Vx.mH32,
-                        height: 65.0,
-                        child: Directionality(
-                          textDirection: TextDirection.rtl,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              "Skip"
-                                  .text
-                                  .xl
-                                  .color((isDark(context))
-                                      ? GlobalTheme.kAccentColor
-                                      : GlobalTheme.kPrimaryColor)
-                                  .make(),
-                            ],
-                          ),
-                        ),
-                      ),
+                      children: [
+                        "Skip"
+                            .text
+                            .xl
+                            .color((isDark(context))
+                                ? GlobalTheme.kAccentColor
+                                : GlobalTheme.kPrimaryColor)
+                            .make(),
+                      ],
                     ),
                   ],
                 ),

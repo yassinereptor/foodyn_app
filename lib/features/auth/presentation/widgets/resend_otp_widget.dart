@@ -48,14 +48,14 @@ class _ResendOTPWidgetState extends State<ResendOTPWidget> {
     _otpBloc.add(OtpEvent.sendOtp(dialCode, phoneNumber));
   }
 
-  void _onTypeloadingSending() {}
+  void _onStateLoadingSending() {}
 
-  void _onTypeloadingSent() {
+  void _onStateLoadingSent() {
       final snackBar = SnackBar(content: Text("Code sent"));
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
-  void _onTypeloadingFailure(AppFailure failure) {
+  void _onStateLoadingFailure(AppFailure failure) {
     final snackBar = SnackBar(content: Text("Resend code failed !"));
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
@@ -73,9 +73,9 @@ class _ResendOTPWidgetState extends State<ResendOTPWidget> {
       child: BlocConsumer<OtpBloc, OtpState>(
         listener: (context, state) {
           state.maybeWhen(
-              loadingSending: _onTypeloadingSending,
-              loadingSent: _onTypeloadingSent,
-              loadingFailed: _onTypeloadingFailure,
+              loadingSending: _onStateLoadingSending,
+              loadingSent: _onStateLoadingSent,
+              loadingFailed: _onStateLoadingFailure,
               orElse: () {});
         },
         builder: (context, state) {

@@ -13,6 +13,7 @@ import '../../../services/graphql_service.dart';
 import 'package:injectable/injectable.dart';
 
 abstract class IConfigRemoteDataSource {
+  Future<List<String>?> getPhoneResource();
   Future<RecordModel?> getRemote();
   Future<RecordModel?> setRemote(RecordModel? record);
   Future<List<PlanModel>?> getPlans();
@@ -78,9 +79,6 @@ class ConfigRemoteDataSource implements IConfigRemoteDataSource {
     edited.remove("user");
     edited.putIfAbsent("operator", () => edited["as"]);
     edited.remove("as");
-    edited.remove("createdAt");
-    edited.remove("updatedAt");
-    edited.remove("deletedAt");
     final response = await _graphQLService.mutation(RecordQuery.saveRecordMutation, variables: {
       "record": edited,
     });
@@ -89,5 +87,20 @@ class ConfigRemoteDataSource implements IConfigRemoteDataSource {
       throw ServerExeption(message: result["errors"][0]["message"]);
     RecordModel newRecord = RecordModel.fromJson(result["insertOrUpdateRecord"]);
     return newRecord;
+  }
+
+  @override
+  Future<List<String>?> getPhoneResource() async {
+    var dio = Dio();
+    Response<String> response;
+
+    String? link = dotenv.env["SERVER_LINK"];
+    link = link! + "/json/phone.json";
+    response = await dio.get(link);
+    if (response.statusCode != 200)
+      throw ServerExeption(status: response.statusCode!, message: response.statusMessage!);
+    final jsonResult = json.decode(response.data!);
+    List<String>? result = [...jsonResult.map((item) => json.encode(item))];
+    return result;
   }
 }

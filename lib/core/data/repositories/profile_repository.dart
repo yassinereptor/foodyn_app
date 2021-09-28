@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dartz/dartz.dart';
+import 'package:foodyn_rest/core/data/models/membership_model.dart';
 import '../datasources/remote/profile_remote_data_source.dart';
 import '../models/coupon_model.dart';
 import '../models/image_model.dart';
@@ -100,6 +101,29 @@ class ProfileRepository implements IProfileRepository {
       final isConnected = await _networkInfo.isConnected;
       if (isConnected == false) return Left(AppFailure.network());
       final response = await _profileRemoteDataSource.checkCouponStatus(code);
+      return Right(response);
+    } on UnauthorizedExeption {
+      return Left(AppFailure.unauthorized());
+    } on JwtExpiredExeption {
+      return Left(AppFailure.expiredJwt());
+    } on ServerExeption catch (e) {
+      return Left(AppFailure.server(
+        message: e.message,
+      ));
+    } on OperationException catch (error) {
+      return Left(AppFailure.graphQlserver(
+        linkException: error.linkException,
+        graphqlErrors: error.graphqlErrors,
+      ));
+    }
+  }
+
+  @override
+  Future<Either<AppFailure, MembershipModel?>> saveMembership(int planId, int periodId, int? couponId) async {
+    try {
+      final isConnected = await _networkInfo.isConnected;
+      if (isConnected == false) return Left(AppFailure.network());
+      final response = await _profileRemoteDataSource.saveMembership(planId, periodId, couponId);
       return Right(response);
     } on UnauthorizedExeption {
       return Left(AppFailure.unauthorized());

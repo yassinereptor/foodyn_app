@@ -29,6 +29,7 @@ class AuthLocalDataSource implements IAuthLocalDataSource {
   @override
   Future<bool> saveToken(String token) async {
     final response = await prefs.setString("user_token", token);
+    graphQL.setToken(token);
     return response;
   }
 

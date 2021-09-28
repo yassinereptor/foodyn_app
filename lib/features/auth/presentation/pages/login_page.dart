@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:foodyn_rest/features/auth/presentation/widgets/botton_widget.dart';
 import '../../../../core/domain/entities/app_failure.dart';
 import '../../../../core/config/router/router.dart';
 import '../../../../core/services/validator_service.dart';
@@ -50,10 +51,11 @@ class _LoginPageState extends State<LoginPage> {
     FocusScope.of(context).requestFocus(FocusNode());
     // Validate returns true if the form is valid, or false otherwise.
     if (_formKey.currentState!.validate())
-      _authBloc.add(AuthEvent.login(emailTextEditingController.text, passwordTextEditingController.text));
+      _authBloc.add(AuthEvent.login(
+          emailTextEditingController.text, passwordTextEditingController.text));
   }
 
-  void _onTypeloadingInProgress () {
+  void _onStateLoadingInProgress() {
     setState(() {
       _showModal = true;
       _modalType = ModalContainerType.LOADING;
@@ -61,25 +63,29 @@ class _LoginPageState extends State<LoginPage> {
     });
   }
 
-  void _onTypeloadingSuccess () {
+  void _onStateLoadingSuccess() {
     setState(() {
       _modalType = ModalContainerType.SUCCESS;
     });
-      Future.delayed(Duration(milliseconds: 2000), () {
-        if (_authBloc.state.user!.profile == null || _authBloc.state.user!.profile!.id == null){
-          Routes.seafarer.navigate(CompleteRegisterPage.kRouteName,
-                  navigationType: NavigationType.pushAndRemoveUntil,
-                  removeUntilPredicate: (route) => false,);
-        }
-        else{
-          Routes.seafarer.navigate(DashboardPage.kRouteName,
-                  navigationType: NavigationType.pushAndRemoveUntil,
-                  removeUntilPredicate: (route) => false,);
-        }
+    Future.delayed(Duration(milliseconds: 2000), () {
+      if (_authBloc.state.user!.profile == null ||
+          _authBloc.state.user!.profile!.id == null) {
+        Routes.seafarer.navigate(
+          CompleteRegisterPage.kRouteName,
+          navigationType: NavigationType.pushAndRemoveUntil,
+          removeUntilPredicate: (route) => false,
+        );
+      } else {
+        Routes.seafarer.navigate(
+          DashboardPage.kRouteName,
+          navigationType: NavigationType.pushAndRemoveUntil,
+          removeUntilPredicate: (route) => false,
+        );
+      }
     });
   }
 
-  void _onTypeloadingFailure (AppFailure failure) {
+  void _onStateLoadingFailure(AppFailure failure) {
     setState(() {
       _modalType = ModalContainerType.FAILURE;
     });
@@ -98,19 +104,18 @@ class _LoginPageState extends State<LoginPage> {
       child: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, state) {
           state.type.maybeWhen(
-            loadingInProgress: _onTypeloadingInProgress,
-            loadingSuccess: _onTypeloadingSuccess,
-            loadingFailed: _onTypeloadingFailure,
-            orElse: (){}
-          );
+              loadingInProgress: _onStateLoadingInProgress,
+              loadingSuccess: _onStateLoadingSuccess,
+              loadingFailed: _onStateLoadingFailure,
+              orElse: () {});
         },
         builder: (context, state) {
           return Scaffold(
               body: ModalContainerWidget(
-                type: _modalType,
-                show: _showModal,
-                child: SingleChildScrollView(
-            child: Padding(
+            type: _modalType,
+            show: _showModal,
+            child: SingleChildScrollView(
+              child: Padding(
                 padding: EdgeInsets.only(left: 20, right: 20),
                 child: SizedBox(
                   height: MediaQuery.of(context).size.height,
@@ -150,32 +155,21 @@ class _LoginPageState extends State<LoginPage> {
                                   )),
                               Padding(
                                 padding: EdgeInsets.only(bottom: 20),
-                                child: PasswordTextFormWidget(controller: passwordTextEditingController,),
-                              ),
-                              InkWell(
-                                onTap: _login,
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                      color: GlobalTheme.kOrangeColor,
-                                      borderRadius: BorderRadius.circular(10)),
-                                  padding: Vx.mH32,
-                                  height: 65.0,
-                                  child: Directionality(
-                                    textDirection: TextDirection.rtl,
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        "Log in"
-                                            .text
-                                            .xl
-                                            .color((isDark(context))
-                                                ? GlobalTheme.kPrimaryColor
-                                                : GlobalTheme.kAccentColor)
-                                            .make(),
-                                      ],
-                                    ),
-                                  ),
+                                child: PasswordTextFormWidget(
+                                  controller: passwordTextEditingController,
                                 ),
+                              ),
+                              ButtonWidget(
+                                onTap: _login,
+                                children: [
+                                  "Log in"
+                                      .text
+                                      .xl
+                                      .color((isDark(context))
+                                          ? GlobalTheme.kPrimaryColor
+                                          : GlobalTheme.kAccentColor)
+                                      .make(),
+                                ],
                               ),
                               SizedBox(
                                 height: 20,
@@ -237,9 +231,9 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                 ),
+              ),
             ),
-          ),
-              ));
+          ));
         },
       ),
     );

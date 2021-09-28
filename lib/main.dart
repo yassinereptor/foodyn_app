@@ -141,9 +141,12 @@ class _ApplicationState extends State<Application> {
                           },
                         );
                       }
-                      else if (state.user!.membership == null || state.user!.membership!.id == null) {
+                      else if (state.user!.memberships == null || state.user!.memberships!.isEmpty){
                         Routes.seafarer.navigate(
                           ChoosePlanPage.kRouteName,
+                          params: {
+                            "back": false
+                          },
                           navigationType: NavigationType.pushAndRemoveUntil,
                           removeUntilPredicate: (route) {
                             return false;

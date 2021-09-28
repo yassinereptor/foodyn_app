@@ -5,6 +5,9 @@ import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:foodyn_rest/core/bloc/config_bloc/config_bloc.dart';
+import 'package:foodyn_rest/core/utils/resource_utils.dart';
+import 'package:foodyn_rest/features/auth/presentation/widgets/botton_widget.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:velocity_x/velocity_x.dart';
 
@@ -51,6 +54,7 @@ class _CompleteRegisterPageState extends State<CompleteRegisterPage> {
   late AuthBloc _authBloc;
   late ProfileBloc _profileBloc;
   late GeolocationBloc _geolocationBloc;
+  late ConfigBloc _configBloc;
   TextEditingController _fullnameTextEditingController =
       new TextEditingController();
   TextEditingController _phoneNumberTextEditingController =
@@ -65,6 +69,25 @@ class _CompleteRegisterPageState extends State<CompleteRegisterPage> {
   ProfileModel _profileModel = new ProfileModel();
   bool _showModal = false;
   ModalContainerType _modalType = ModalContainerType.LOADING;
+
+  @override
+  void initState() {
+    _defaultSelectedMarker = LatLng(31.6298, -8.0101);
+    _authBloc = context.read<AuthBloc>();
+    _geolocationBloc = getIt<GeolocationBloc>();
+    _profileBloc = getIt<ProfileBloc>();
+    _configBloc = getIt<ConfigBloc>();
+    _onFillFields();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _geolocationBloc.close();
+    _configBloc.close();
+    _profileBloc.close();
+    super.dispose();
+  }
 
   void _onMapCreated(GoogleMapController controller) {
     _mapController = controller;
@@ -116,7 +139,6 @@ class _CompleteRegisterPageState extends State<CompleteRegisterPage> {
   }
 
   void _onCompleteRegister() {
-    // Validate returns true if the form is valid, or false otherwise.
     if (_formKey.currentState!.validate() && _authBloc.state.user != null) {
       _profileModel.id = (_authBloc.state.user!.profile != null)
           ? _authBloc.state.user!.profile!.id
@@ -172,41 +194,14 @@ class _CompleteRegisterPageState extends State<CompleteRegisterPage> {
     }
   }
 
-  @override
-  void initState() {
-    DefaultAssetBundle.of(context)
-        .loadString("assets/raw/phone.json")
-        .then((value) {
-      final jsonResult = json.decode(value);
-      setState(() {
-        _phoneCodes = [...jsonResult.map((item) => json.encode(item))];
-        _selectedCountryIndex = _selectedDialCodeIndex = 145;
-      });
-    });
-    _defaultSelectedMarker = LatLng(31.6298, -8.0101);
-    _authBloc = context.read<AuthBloc>();
-    _geolocationBloc = getIt<GeolocationBloc>();
-    _profileBloc = getIt<ProfileBloc>();
-    _onFillFields();
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _geolocationBloc.close();
-    super.dispose();
-  }
-
-  void _onTypeloadingInProgress() {
+  void _onStateLoadingInProgress() {
     setState(() {
       _showModal = true;
       _modalType = ModalContainerType.LOADING;
     });
   }
 
-  void _onTypeloadingSuccess() {}
-
-  void _onTypeloadingProfileSuccess(ProfileModel? profile) {
+  void _onStateLoadingProfileSuccess(ProfileModel? profile) {
     _authBloc.state.user!.profile = profile;
     setState(() {
       _modalType = ModalContainerType.SUCCESS;
@@ -229,7 +224,16 @@ class _CompleteRegisterPageState extends State<CompleteRegisterPage> {
     });
   }
 
-  void _onTypeloadingFailure(AppFailure failure) {
+  void _onStateLoadingResourcePhoneSuccess(List<String>? resource) {
+    setState(() {
+      _showModal = false;
+      _modalType = ModalContainerType.LOADING;
+      _phoneCodes = resource!;
+      _selectedCountryIndex = _selectedDialCodeIndex = 145;
+    });
+  }
+
+  void _onStateLoadingFailure(AppFailure failure) {
     setState(() {
       _modalType = ModalContainerType.FAILURE;
     });
@@ -253,6 +257,10 @@ class _CompleteRegisterPageState extends State<CompleteRegisterPage> {
           ),
           BlocProvider(
             create: (context) => _profileBloc,
+          ),
+          BlocProvider(
+            create: (context) =>
+                _configBloc..add(ConfigEvent.getPhoneResource()),
           )
         ],
         child: MultiBlocListener(
@@ -260,10 +268,9 @@ class _CompleteRegisterPageState extends State<CompleteRegisterPage> {
             BlocListener<ProfileBloc, ProfileState>(
               listener: (context, state) {
                 state.maybeWhen(
-                    loadingInProgress: _onTypeloadingInProgress,
-                    loadingSuccess: _onTypeloadingSuccess,
-                    loadingProfileSuccess: _onTypeloadingProfileSuccess,
-                    loadingFailed: _onTypeloadingFailure,
+                    loadingInProgress: _onStateLoadingInProgress,
+                    loadingProfileSuccess: _onStateLoadingProfileSuccess,
+                    loadingFailed: _onStateLoadingFailure,
                     orElse: () {});
               },
             ),
@@ -276,6 +283,16 @@ class _CompleteRegisterPageState extends State<CompleteRegisterPage> {
                       _isFirsttimeMap = false;
                     },
                     getGeolocationFailed: (failure) {},
+                    orElse: () {});
+              },
+            ),
+            BlocListener<ConfigBloc, ConfigState>(
+              listener: (context, state) {
+                state.maybeWhen(
+                    loadingInProgress: _onStateLoadingInProgress,
+                    loadingResourcePhoneSuccess:
+                        _onStateLoadingResourcePhoneSuccess,
+                    loadingFailed: _onStateLoadingFailure,
                     orElse: () {});
               },
             ),
@@ -544,30 +561,17 @@ class _CompleteRegisterPageState extends State<CompleteRegisterPage> {
                           ),
                         ],
                       ),
-                      InkWell(
+                      ButtonWidget(
                         onTap: _onCompleteRegister,
-                        child: Container(
-                          decoration: BoxDecoration(
-                              color: GlobalTheme.kOrangeColor,
-                              borderRadius: BorderRadius.circular(10)),
-                          padding: Vx.mH32,
-                          height: 65.0,
-                          child: Directionality(
-                            textDirection: TextDirection.rtl,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                "Continue"
-                                    .text
-                                    .xl
-                                    .color((isDark(context))
-                                        ? GlobalTheme.kPrimaryColor
-                                        : GlobalTheme.kAccentColor)
-                                    .make(),
-                              ],
-                            ),
-                          ),
-                        ),
+                        children: [
+                          "Continue"
+                              .text
+                              .xl
+                              .color((isDark(context))
+                                  ? GlobalTheme.kPrimaryColor
+                                  : GlobalTheme.kAccentColor)
+                              .make(),
+                        ],
                       ),
                     ],
                   ),

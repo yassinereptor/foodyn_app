@@ -9,10 +9,7 @@ class UserQuery {
             id,
             type,
             filename,
-            filepath,
-            createdAt,
-            updatedAt,
-            deletedAt
+            filepath
           },
           fullname,
           adresse,
@@ -24,12 +21,9 @@ class UserQuery {
           zipCode,
           gender,
           posLat,
-          posLng,
-          createdAt,
-          updatedAt,
-          deletedAt
+          posLng
         },
-        membership {
+        memberships {
           id,
           plan {
             id,
@@ -45,19 +39,11 @@ class UserQuery {
             endAt
           },
           startAt,
-          endAt,
-          active,
-          banned,
-          createdAt,
-          updatedAt,
-          deletedAt
+          endAt
         },
         type,
         email,
-        verified,
-        createdAt,
-        updatedAt,
-        deletedAt
+        verified
       }
     }
     """;
@@ -71,10 +57,7 @@ class UserQuery {
             id,
             type,
             filename,
-            filepath,
-            createdAt,
-            updatedAt,
-            deletedAt
+            filepath
           },
           fullname,
           adresse,
@@ -86,12 +69,9 @@ class UserQuery {
           zipCode,
           gender,
           posLat,
-          posLng,
-          createdAt,
-          updatedAt,
-          deletedAt
+          posLng
         },
-        membership {
+        memberships {
           id,
           plan {
             id,
@@ -107,19 +87,11 @@ class UserQuery {
             endAt
           },
           startAt,
-          endAt,
-          active,
-          banned,
-          createdAt,
-          updatedAt,
-          deletedAt
+          endAt
         },
         type,
         email,
-        verified,
-        createdAt,
-        updatedAt,
-        deletedAt
+        verified
       }
     }
     """;
@@ -133,10 +105,7 @@ class UserQuery {
             id,
             type,
             filename,
-            filepath,
-            createdAt,
-            updatedAt,
-            deletedAt
+            filepath
           },
           fullname,
           adresse,
@@ -148,12 +117,9 @@ class UserQuery {
           zipCode,
           gender,
           posLat,
-          posLng,
-          createdAt,
-          updatedAt,
-          deletedAt
+          posLng
         },
-        membership {
+        memberships {
           id,
           plan {
             id,
@@ -169,19 +135,11 @@ class UserQuery {
             endAt
           },
           startAt,
-          endAt,
-          active,
-          banned,
-          createdAt,
-          updatedAt,
-          deletedAt
+          endAt
         },
         type,
         email,
-        verified,
-        createdAt,
-        updatedAt,
-        deletedAt
+        verified
       }
     }
     """;

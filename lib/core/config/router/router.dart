@@ -88,7 +88,12 @@ class Routes {
     
     seafarer.addRoute(SeafarerRoute(
       name: ChoosePlanPage.kRouteName,
-      builder: (context, args, paramMap) => ChoosePlanPage(),
+      params: [
+        SeafarerParam<bool>(name: "back", defaultValue: true),
+      ],
+      builder: (context, args, params) => ChoosePlanPage(
+        back: params.param("back"),
+      ),
     ));
 
     seafarer.addRoute(SeafarerRoute(

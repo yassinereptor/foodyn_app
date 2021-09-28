@@ -5,10 +5,7 @@ class ImageQuery {
         id,
         type,
         filename,
-        filepath,
-        createdAt,
-        updatedAt,
-        deletedAt
+        filepath
       }
     }
     """;
@@ -18,10 +15,7 @@ class ImageQuery {
         id,
         type,
         filename,
-        filepath,
-        createdAt,
-        updatedAt,
-        deletedAt
+        filepath
       }
     }
     """;

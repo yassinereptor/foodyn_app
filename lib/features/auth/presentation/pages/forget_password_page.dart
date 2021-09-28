@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:foodyn_rest/features/auth/presentation/widgets/botton_widget.dart';
 import '../../../../core/widgets/scaffold_container_widget.dart';
 import '../../../../core/config/injectable/injection.dart';
 import '../../../../core/config/router/router.dart';
@@ -111,30 +112,17 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
                           keyboardType: TextInputType.emailAddress,
                           validator: ValidatorService.emailValidator,
                         )),
-                    InkWell(
+                    ButtonWidget(
                       onTap: _forgetPassword,
-                      child: Container(
-                        decoration: BoxDecoration(
-                            color: GlobalTheme.kOrangeColor,
-                            borderRadius: BorderRadius.circular(10)),
-                        padding: Vx.mH32,
-                        height: 65.0,
-                        child: Directionality(
-                          textDirection: TextDirection.rtl,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              "Recover"
-                                  .text
-                                  .xl
-                                  .color((isDark(context))
-                                      ? GlobalTheme.kPrimaryColor
-                                      : GlobalTheme.kAccentColor)
-                                  .make(),
-                            ],
-                          ),
-                        ),
-                      ),
+                      children: [
+                        "Recover"
+                            .text
+                            .xl
+                            .color((isDark(context))
+                                ? GlobalTheme.kPrimaryColor
+                                : GlobalTheme.kAccentColor)
+                            .make(),
+                      ],
                     ),
                   ],
                 ),

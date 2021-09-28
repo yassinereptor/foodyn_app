@@ -3,6 +3,13 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:foodyn_rest/core/bloc/profile_bloc/profile_bloc.dart';
+import 'package:foodyn_rest/core/config/injectable/injection.dart';
+import 'package:foodyn_rest/core/data/models/membership_model.dart';
+import 'package:foodyn_rest/core/domain/entities/app_failure.dart';
+import 'package:foodyn_rest/features/auth/presentation/widgets/botton_widget.dart';
+import 'package:foodyn_rest/features/dashboard/presentation/pages/dashboard_page.dart';
+import 'package:seafarer/seafarer.dart';
 import '../../../../core/widgets/scaffold_container_widget.dart';
 import '../../../../core/data/models/coupon_model.dart';
 import '../../../../core/data/models/plan_model.dart';
@@ -34,6 +41,7 @@ class _PaymentPageState extends State<PaymentPage>
     with SingleTickerProviderStateMixin {
   final _formKey = GlobalKey<FormState>();
   late AuthBloc _authBloc;
+  late ProfileBloc _profileBloc;
   bool _showModal = false;
   ModalContainerType _modalType = ModalContainerType.LOADING;
   int selectedIndex = 0;
@@ -43,27 +51,37 @@ class _PaymentPageState extends State<PaymentPage>
   int _reductionPrice = 0;
   double _savePrice = 0;
   double _totalPrice = 0;
+  int? _selectedCurrencyIndex;
 
   @override
   void initState() {
     super.initState();
     _authBloc = context.read<AuthBloc>();
+    _profileBloc = getIt<ProfileBloc>();
     _monthPrice = double.parse(CurrencyUtils(widget.plan).getMonthPrice());
     _yearPrice = double.parse(CurrencyUtils(widget.plan).getYearPrice());
     _savePrice = 0;
     _getTotal();
+    CurrencyUtils.getCurrencyIndex()
+        .then((value) => _selectedCurrencyIndex = value);
   }
 
   @override
   void dispose() {
+    _profileBloc.close();
     super.dispose();
   }
 
   void _onCompletePayment() {
-    Routes.seafarer.navigate(ChoosePaymentPage.kRouteName, params: {
-      "plan": widget.plan,
-      "coupon": _coupon,
-    });
+    if (_totalPrice == 0) {
+      _profileBloc.add(ProfileEvent.saveMembership(widget.plan.id!,
+          selectedIndex, _coupon != null ? _coupon?.id : null));
+    } else {
+      Routes.seafarer.navigate(ChoosePaymentPage.kRouteName, params: {
+        "plan": widget.plan,
+        "coupon": _coupon,
+      });
+    }
   }
 
   void _onCouponSet(CouponModel? coupon) {
@@ -88,213 +106,262 @@ class _PaymentPageState extends State<PaymentPage>
     });
   }
 
+  void _onStateLoadingInProgress() {
+    setState(() {
+      _showModal = true;
+      _modalType = ModalContainerType.LOADING;
+    });
+  }
+
+  void _onStateLoadingMembershipSuccess(MembershipModel? membership) {
+    setState(() {
+      _modalType = ModalContainerType.SUCCESS;
+    });
+    Future.delayed(Duration(milliseconds: 2000), () {
+      setState(() {
+        _showModal = false;
+        _modalType = ModalContainerType.LOADING;
+      });
+    });
+    Routes.seafarer.navigate(
+      DashboardPage.kRouteName,
+      navigationType: NavigationType.pushAndRemoveUntil,
+      removeUntilPredicate: (route) {
+        return false;
+      },
+    );
+  }
+
+  void _onStateLoadingFailure(AppFailure failure) {
+    setState(() {
+      _modalType = ModalContainerType.FAILURE;
+    });
+    Future.delayed(Duration(milliseconds: 2000), () {
+      setState(() {
+        _showModal = false;
+        _modalType = ModalContainerType.LOADING;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-        create: (context) => _authBloc,
-        child: ScaffoldContainerWidget(
-          type: _modalType,
-          show: _showModal,
-          logout: true,
-          title: "Complete your payment",
-          children: [
-            Form(
-              key: _formKey,
-              child: Column(
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 20),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: InkWell(
-                            onTap: () {
-                              setState(() {
-                                selectedIndex = 0;
-                              });
-                              _getTotal();
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  color: (isDark(context))
-                                      ? GlobalTheme.kPrimaryLightColor
-                                      : GlobalTheme.kAccentDarkColor,
-                                  border: Border.all(
-                                      color: (selectedIndex != 0)
-                                          ? ((isDark(context))
-                                              ? GlobalTheme.kPrimaryLightColor
-                                              : GlobalTheme.kAccentDarkColor)
-                                          : GlobalTheme.kOrangeColor),
-                                  borderRadius: BorderRadius.circular(10)),
-                              height: 65,
-                              child: Container(
-                                child: Row(
-                                  children: [
-                                    Padding(
-                                        padding:
-                                            EdgeInsetsService.only(left: 20),
-                                        child: "Monthly".text.xl.make()),
-                                    Spacer(),
-                                    if (selectedIndex == 0)
-                                      Padding(
-                                          padding: EdgeInsets.only(
-                                              left: 20, right: 20),
-                                          child: Icon(
-                                            Icons.check,
-                                            size: Vx.dp32,
-                                            color: GlobalTheme.kOrangeColor,
-                                          )),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          width: 20,
-                        ),
-                        Expanded(
-                          child: InkWell(
-                            onTap: () {
-                              setState(() {
-                                selectedIndex = 1;
-                              });
-                              _getTotal();
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  color: (isDark(context))
-                                      ? GlobalTheme.kPrimaryLightColor
-                                      : GlobalTheme.kAccentDarkColor,
-                                  border: Border.all(
-                                      color: (selectedIndex != 1)
-                                          ? ((isDark(context))
-                                              ? GlobalTheme.kPrimaryLightColor
-                                              : GlobalTheme.kAccentDarkColor)
-                                          : GlobalTheme.kOrangeColor),
-                                  borderRadius: BorderRadius.circular(10)),
-                              height: 65,
-                              child: Container(
-                                child: Row(
-                                  children: [
-                                    Padding(
-                                        padding:
-                                            EdgeInsetsService.only(left: 20),
-                                        child: "Yearly".text.xl.make()),
-                                    Spacer(),
-                                    if (selectedIndex == 1)
-                                      Padding(
-                                          padding: EdgeInsets.only(
-                                              left: 20, right: 20),
-                                          child: Icon(
-                                            Icons.check,
-                                            size: Vx.dp32,
-                                            color: GlobalTheme.kOrangeColor,
-                                          )),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                      padding: EdgeInsets.only(bottom: 40),
-                      child: CouponTextFormWidget(
-                        onCouponSet: _onCouponSet,
-                      )),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
+    return MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (context) => _authBloc,
+          ),
+          BlocProvider(
+            create: (context) => _profileBloc,
+          )
+        ],
+        child: BlocListener<ProfileBloc, ProfileState>(
+          listener: (context, state) {
+            state.maybeWhen(
+            loadingInProgress: _onStateLoadingInProgress,
+            loadingMembershipSuccess: _onStateLoadingMembershipSuccess,
+            loadingFailed: _onStateLoadingFailure,
+            orElse: () {});
+          },
+          child: ScaffoldContainerWidget(
+            type: _modalType,
+            show: _showModal,
+            logout: true,
+            title: "Complete your payment",
+            children: [
+              Form(
+                key: _formKey,
+                child: Column(
+                  children: <Widget>[
+                    if (double.parse(CurrencyUtils(widget.plan).getMonthPrice()) != 0)
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 20),
+                      child: Row(
                         children: [
-                          "Plan:".text.xl.bold.make(),
-                          Spacer(),
-                          StringUtils.getTranslatedString(
-                                  _authBloc.state.locale!, widget.plan.title!)
-                              .text
-                              .xl
-                              .make(),
+                          Expanded(
+                            child: InkWell(
+                              onTap: () {
+                                setState(() {
+                                  selectedIndex = 0;
+                                });
+                                _getTotal();
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    color: (isDark(context))
+                                        ? GlobalTheme.kPrimaryLightColor
+                                        : GlobalTheme.kAccentDarkColor,
+                                    border: Border.all(
+                                        color: (selectedIndex != 0)
+                                            ? ((isDark(context))
+                                                ? GlobalTheme.kPrimaryLightColor
+                                                : GlobalTheme.kAccentDarkColor)
+                                            : GlobalTheme.kOrangeColor),
+                                    borderRadius: BorderRadius.circular(10)),
+                                height: 65,
+                                child: Container(
+                                  child: Row(
+                                    children: [
+                                      Padding(
+                                          padding:
+                                              EdgeInsetsService.only(left: 20),
+                                          child: "Monthly".text.xl.make()),
+                                      Spacer(),
+                                      if (selectedIndex == 0)
+                                        Padding(
+                                            padding: EdgeInsets.only(
+                                                left: 20, right: 20),
+                                            child: Icon(
+                                              Icons.check,
+                                              size: Vx.dp32,
+                                              color: GlobalTheme.kOrangeColor,
+                                            )),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Expanded(
+                            child: InkWell(
+                              onTap: () {
+                                setState(() {
+                                  selectedIndex = 1;
+                                });
+                                _getTotal();
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    color: (isDark(context))
+                                        ? GlobalTheme.kPrimaryLightColor
+                                        : GlobalTheme.kAccentDarkColor,
+                                    border: Border.all(
+                                        color: (selectedIndex != 1)
+                                            ? ((isDark(context))
+                                                ? GlobalTheme.kPrimaryLightColor
+                                                : GlobalTheme.kAccentDarkColor)
+                                            : GlobalTheme.kOrangeColor),
+                                    borderRadius: BorderRadius.circular(10)),
+                                height: 65,
+                                child: Container(
+                                  child: Row(
+                                    children: [
+                                      Padding(
+                                          padding:
+                                              EdgeInsetsService.only(left: 20),
+                                          child: "Yearly".text.xl.make()),
+                                      Spacer(),
+                                      if (selectedIndex == 1)
+                                        Padding(
+                                            padding: EdgeInsets.only(
+                                                left: 20, right: 20),
+                                            child: Icon(
+                                              Icons.check,
+                                              size: Vx.dp32,
+                                              color: GlobalTheme.kOrangeColor,
+                                            )),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
                         ],
                       ),
-                      if (_coupon != null)
+                    ),
+                    if (double.parse(CurrencyUtils(widget.plan).getMonthPrice()) != 0)
+                    Padding(
+                        padding: EdgeInsets.only(bottom: 20),
+                        child: CouponTextFormWidget(
+                          onCouponSet: _onCouponSet,
+                        )),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
                         Row(
                           children: [
-                            "Coupon:".text.xl.bold.make(),
+                            "Plan:".text.xl.bold.make(),
                             Spacer(),
-                            (_reductionPrice.toString() + "%")
+                            StringUtils.getTranslatedString(
+                                    _authBloc.state.locale!, widget.plan.title!)
                                 .text
-                                .bold
                                 .xl
                                 .make(),
                           ],
                         ),
-                      Row(
-                        children: [
-                          "Save:".text.xl.bold.make(),
-                          Spacer(),
-                          _savePrice.toStringAsFixed(2).text.bold.xl.make(),
-                          SizedBox(
-                            width: 10,
+                        if (_coupon != null)
+                          Row(
+                            children: [
+                              "Coupon:".text.xl.bold.make(),
+                              Spacer(),
+                              (_reductionPrice.toString() + "%")
+                                  .text
+                                  .bold
+                                  .xl
+                                  .make(),
+                            ],
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 0),
-                            child:
-                                CurrencyUtils.toStringCurrency().text.xl.make(),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          "Total:".text.xl.bold.make(),
-                          Spacer(),
-                          _totalPrice.toStringAsFixed(2).text.bold.xl.make(),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 0),
-                            child:
-                                CurrencyUtils.toStringCurrency().text.xl.make(),
-                          ),
-                        ],
-                      )
-                    ],
-                  ),
-                  SizedBox(
-                    height: 40,
-                  ),
-                  InkWell(
-                    onTap: _onCompletePayment,
-                    child: Container(
-                      decoration: BoxDecoration(
-                          color: GlobalTheme.kOrangeColor,
-                          borderRadius: BorderRadius.circular(10)),
-                      padding: Vx.mH32,
-                      height: 65.0,
-                      child: Directionality(
-                        textDirection: TextDirection.rtl,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                        Row(
                           children: [
-                            "Continue"
-                                .text
-                                .xl
-                                .color((isDark(context))
-                                    ? GlobalTheme.kPrimaryColor
-                                    : GlobalTheme.kAccentColor)
-                                .make(),
+                            "Save:".text.xl.bold.make(),
+                            Spacer(),
+                            _savePrice.toStringAsFixed(2).text.bold.xl.make(),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 0),
+                              child: CurrencyUtils.toStringCurrency(
+                                      _selectedCurrencyIndex)
+                                  .text
+                                  .xl
+                                  .make(),
+                            ),
                           ],
                         ),
-                      ),
+                        Row(
+                          children: [
+                            "Total:".text.xl.bold.make(),
+                            Spacer(),
+                            _totalPrice.toStringAsFixed(2).text.bold.xl.make(),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 0),
+                              child: CurrencyUtils.toStringCurrency(
+                                      _selectedCurrencyIndex)
+                                  .text
+                                  .xl
+                                  .make(),
+                            ),
+                          ],
+                        )
+                      ],
                     ),
-                  ),
-                ],
+                    SizedBox(
+                      height: 20,
+                    ),
+                    ButtonWidget(
+                      onTap: _onCompletePayment,
+                      children: [
+                        "Continue"
+                            .text
+                            .xl
+                            .color((isDark(context))
+                                ? GlobalTheme.kPrimaryColor
+                                : GlobalTheme.kAccentColor)
+                            .make(),
+                      ],
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ));
   }
 }

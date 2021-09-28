@@ -23,14 +23,6 @@ class PaymentModel extends Equatable  {
   final String? textColor;
   @JsonKey(name: "soon")
   final bool? soon;
-  @JsonKey(name: "active")
-  final bool? active;
-  @JsonKey(name: "createdAt")
-  final DateTime? createdAt;
-  @JsonKey(name: "updatedAt")
-  final DateTime? updatedAt;
-  @JsonKey(name: "deletedAt")
-  final DateTime? deletedAt;
 
   PaymentModel({
     this.id,
@@ -41,11 +33,7 @@ class PaymentModel extends Equatable  {
     this.primaryColor,
     this.accentColor,
     this.textColor,
-    this.soon,
-    this.active,
-    this.createdAt,
-    this.updatedAt,
-    this.deletedAt,
+    this.soon
   });
 
   factory PaymentModel.fromJson(Map<String, dynamic> json) =>
@@ -64,11 +52,7 @@ class PaymentModel extends Equatable  {
     primaryColor: $primaryColor,
     accentColor: $accentColor,
     textColor: $textColor,
-    soon: $soon,
-    active: $active,
-    createdAt: $createdAt,
-    updatedAt: $updatedAt,
-    deletedAt: $deletedAt
+    soon: $soon
     )""";
   }
 
@@ -82,11 +66,7 @@ class PaymentModel extends Equatable  {
         primaryColor,
         accentColor,
         textColor,
-        soon,
-        active,
-        createdAt,
-        updatedAt,
-        deletedAt
+        soon
       ];
 
 }

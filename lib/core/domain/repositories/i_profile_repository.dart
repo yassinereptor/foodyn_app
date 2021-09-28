@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dartz/dartz.dart';
+import 'package:foodyn_rest/core/data/models/membership_model.dart';
 import '../../data/models/coupon_model.dart';
 import '../../data/models/image_model.dart';
 import '../../data/models/profile_model.dart';
@@ -12,5 +13,6 @@ abstract class IProfileRepository {
   Future<Either<AppFailure, ImageModel?>> uploadImage(ImageType type, File file);
   Future<Either<AppFailure, ProfileModel?>> getProfile();
   Future<Either<AppFailure, ProfileModel?>> saveProfile(ProfileModel profile);
+  Future<Either<AppFailure, MembershipModel?>> saveMembership(int planId, int periodId, int? couponId);
   Future<Either<AppFailure, CouponModel?>> checkCouponStatus(String code);
 }

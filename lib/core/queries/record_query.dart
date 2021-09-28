@@ -16,10 +16,7 @@ class RecordQuery {
         isp,
         org,
         operator,
-        query,
-        createdAt,
-        updatedAt,
-        deletedAt
+        query
       }
     }
     """;
@@ -40,10 +37,7 @@ class RecordQuery {
         isp,
         org,
         operator,
-        query,
-        createdAt,
-        updatedAt,
-        deletedAt
+        query
       }
     }
     """;
@@ -64,10 +58,7 @@ class RecordQuery {
         isp,
         org,
         operator,
-        query,
-        createdAt,
-        updatedAt,
-        deletedAt
+        query
       }
     }
     """;
@@ -89,10 +80,7 @@ class RecordQuery {
         isp,
         org,
         operator,
-        query,
-        createdAt,
-        updatedAt,
-        deletedAt
+        query
       }
     }
     """;

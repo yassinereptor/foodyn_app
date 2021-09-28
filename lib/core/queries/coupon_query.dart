@@ -3,12 +3,12 @@ class CouponQuery {
     mutation checkCouponStatus ($code: String!) {
       checkCouponStatus(code: $code) {
         id,
+        memberships,
         code,
         quantity,
         used,
         reduction,
-        endAt,
-        active
+        endAt
       }
     }
     """;

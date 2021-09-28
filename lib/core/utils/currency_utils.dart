@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:shared_preferences/shared_preferences.dart';
+
 import '../data/models/plan_model.dart';
 
 import '../enums/currency.type.dart';
@@ -30,8 +32,14 @@ class CurrencyUtils {
       return price.toString();
     }
 
-    static String toStringCurrency() {
-      CurrencyType type = CurrencyType.MAD;
+    static Future<int?> getCurrencyIndex() async {
+      SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+      int? index = sharedPreferences.getInt("user_settings_currency");
+      return index;
+    }
+
+    static String toStringCurrency(int? index) {
+      CurrencyType type = (index != null) ? CurrencyType.values[index] : CurrencyType.MAD;
       switch(type){
         case CurrencyType.MAD:
           return "MAD";

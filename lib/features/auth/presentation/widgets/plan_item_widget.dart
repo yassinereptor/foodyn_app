@@ -14,6 +14,8 @@ import '../../../../core/bloc/auth_bloc/auth_bloc.dart';
 import '../pages/plan_page.dart';
 import 'package:velocity_x/velocity_x.dart';
 
+import 'currency_button_widget.dart';
+
 class PlanItemWidget extends StatefulWidget {
   final PlanModel plan;
 
@@ -29,6 +31,7 @@ class _PlanItemWidgetState extends State<PlanItemWidget> with SingleTickerProvid
   late AnimationController controller;
   late AuthBloc _authBloc;
   late String? _calcYearPrice;
+  int? _selectedCurrencyIndex;
 
   @override
   void initState() {
@@ -49,6 +52,7 @@ class _PlanItemWidgetState extends State<PlanItemWidget> with SingleTickerProvid
           controller.forward();
         }
       });
+    CurrencyUtils.getCurrencyIndex().then((value) => _selectedCurrencyIndex = value);
     controller.forward();
     _authBloc = context.read<AuthBloc>();
     _calcYearPrice = CurrencyUtils(widget.plan).getCalcYearPrice();
@@ -94,11 +98,11 @@ class _PlanItemWidgetState extends State<PlanItemWidget> with SingleTickerProvid
                   decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   gradient: LinearGradient(
-                      begin: Alignment.bottomRight,
-                      end: Alignment.topLeft,
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomRight,
                       colors: [
-                        ColorUtils(widget.plan.primaryColor!).toColor().withOpacity(0.9),
-                        ColorUtils(widget.plan.accentColor!).toColor(),
+                        ColorUtils(widget.plan.primaryColor!).toColor(),
+                        ColorUtils(widget.plan.accentColor!).toColor().withOpacity(0.9),
                       ])),
                   child: Column(
                     children: [
@@ -106,10 +110,14 @@ class _PlanItemWidgetState extends State<PlanItemWidget> with SingleTickerProvid
                         children: [
                           StringUtils.getTranslatedString(_authBloc.state.locale!, widget.plan.title!).text.bold.capitalize.xl2.color(ColorUtils(widget.plan.textColor!).toColor()).make(),
                           Spacer(),
-                          IconButton(onPressed: (){},
-                          padding: EdgeInsets.zero,
-    constraints: BoxConstraints(),
-                           icon: Icon(Icons.monetization_on), color: ColorUtils(widget.plan.textColor!).toColor())
+                          CurrencyButtonWidget(
+                            color: ColorUtils(widget.plan.textColor!).toColor(),
+                            onSelect: (index) => setState(() {
+                              _selectedCurrencyIndex = index;
+                            }),
+                            plan: widget.plan,
+                            modifyListOutput: (text) => text.toUpperCase()
+                          )
                         ],
                       ),
                       Row(
@@ -120,7 +128,7 @@ class _PlanItemWidgetState extends State<PlanItemWidget> with SingleTickerProvid
                           SizedBox(width: 10,),
                           Padding(
                             padding: const EdgeInsets.only(bottom: 10),
-                            child: CurrencyUtils.toStringCurrency().text.bold.xl.color(ColorUtils(widget.plan.textColor!).toColor()).make(),
+                            child: CurrencyUtils.toStringCurrency(_selectedCurrencyIndex).text.bold.xl.color(ColorUtils(widget.plan.textColor!).toColor()).make(),
                           ),
                         ],
                       ),
@@ -137,7 +145,7 @@ class _PlanItemWidgetState extends State<PlanItemWidget> with SingleTickerProvid
                           SizedBox(width: 5,),
                           Padding(
                             padding: const EdgeInsets.only(bottom: 2),
-                            child: CurrencyUtils.toStringCurrency().text.bold.sm.color(ColorUtils(widget.plan.textColor!).toColor()).make(),
+                            child: CurrencyUtils.toStringCurrency(_selectedCurrencyIndex).text.bold.sm.color(ColorUtils(widget.plan.textColor!).toColor()).make(),
                           ),
                         ],
                       ),

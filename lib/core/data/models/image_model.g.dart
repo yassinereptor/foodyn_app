@@ -18,15 +18,6 @@ ImageModel _$ImageModelFromJson(Map<String, dynamic> json) {
         : ProfileModel.fromJson(json['profile'] as Map<String, dynamic>),
     filename: json['filename'] as String?,
     filepath: json['filepath'] as String?,
-    createdAt: json['createdAt'] == null
-        ? null
-        : DateTime.parse(json['createdAt'] as String),
-    updatedAt: json['updatedAt'] == null
-        ? null
-        : DateTime.parse(json['updatedAt'] as String),
-    deletedAt: json['deletedAt'] == null
-        ? null
-        : DateTime.parse(json['deletedAt'] as String),
   );
 }
 
@@ -38,7 +29,4 @@ Map<String, dynamic> _$ImageModelToJson(ImageModel instance) =>
       'profile': instance.profile,
       'filename': instance.filename,
       'filepath': instance.filepath,
-      'createdAt': instance.createdAt?.toIso8601String(),
-      'updatedAt': instance.updatedAt?.toIso8601String(),
-      'deletedAt': instance.deletedAt?.toIso8601String(),
     };

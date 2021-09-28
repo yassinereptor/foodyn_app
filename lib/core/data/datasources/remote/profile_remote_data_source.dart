@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:foodyn_rest/core/data/models/membership_model.dart';
 import '../local/auth_local_data_source.dart';
 import '../../models/coupon_model.dart';
 import '../../models/image_model.dart';
@@ -21,6 +22,7 @@ abstract class IProfileRemoteDataSource {
   Future<ImageModel?> uploadImage(ImageType type, File file);
   Future<ProfileModel?> saveProfile(ProfileModel profile);
   Future<CouponModel?> checkCouponStatus(String code);
+  Future<MembershipModel?> saveMembership(int planId, int periodId, int? couponId);
 }
 
 @Injectable(as: IProfileRemoteDataSource)
@@ -98,9 +100,6 @@ class ProfileRemoteDataSource
     final edited = profile.toJson();
     edited.remove("user");
     edited.remove("image");
-    edited.remove("createdAt");
-    edited.remove("updatedAt");
-    edited.remove("deletedAt");
     edited.remove("phoneNumberVerified");
     final response = await _graphQLService.mutation(ProfileQuery.saveProfileMutation, variables: {
       "profile": edited,
@@ -124,6 +123,22 @@ class ProfileRemoteDataSource
       return null;
     CouponModel? couponModel = CouponModel.fromJson(result["checkCouponStatus"]);
     return couponModel;
+  }
+
+  @override
+  Future<MembershipModel?> saveMembership(int planId, int periodId, int? couponId) async {
+    Map<String, dynamic> object = {};
+    object.putIfAbsent("planId", () => planId);
+    object.putIfAbsent("periodId", () => periodId);
+    object.putIfAbsent("couponId", () => couponId);
+    final response = await _graphQLService.mutation(ProfileQuery.saveMembershipMutation, variables: {
+      "membership": object,
+    });
+    final result = jsonDecode(response);
+    if (result["errors"] != null)
+      throw ServerExeption(message: result["errors"][0]["message"]);
+    MembershipModel membershipModel= MembershipModel.fromJson(result["insertOrUpdateMembership"]);
+    return membershipModel;
   }
 
 }
