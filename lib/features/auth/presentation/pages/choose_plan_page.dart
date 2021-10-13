@@ -39,12 +39,13 @@ class _ChoosePlanPageState extends State<ChoosePlanPage> {
   void initState() {
     super.initState();
     _authBloc = context.read<AuthBloc>();
-    _configBloc = getIt<ConfigBloc>();
+    _configBloc = context.read<ConfigBloc>();
+    // if (_configBloc.state.plans == null)
+      // _configBloc.add(ConfigEvent.getPlans());
   }
 
   @override
   void dispose() {
-    _configBloc.close();
     super.dispose();
   }
 
@@ -55,11 +56,10 @@ class _ChoosePlanPageState extends State<ChoosePlanPage> {
     });
   }
 
-  void _onStateLoadingPlansSuccess(List<PlanModel>? plans) {
+  void _onStateLoadingSuccess() {
+    _onModalReset();
     setState(() {
-      _showModal = false;
-      _modalType = ModalContainerType.LOADING;
-      _plansList = plans;
+      _plansList = _configBloc.state.plans;
     });
   }
 
@@ -68,63 +68,61 @@ class _ChoosePlanPageState extends State<ChoosePlanPage> {
       _modalType = ModalContainerType.FAILURE;
     });
     Future.delayed(Duration(milliseconds: 2000), () {
-      setState(() {
-        _showModal = false;
-        _modalType = ModalContainerType.LOADING;
-      });
+      _onModalReset();
+    });
+  }
+
+  void _onModalReset() {
+    setState(() {
+      _showModal = false;
+      _modalType = ModalContainerType.LOADING;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(
-            create: (context) => _configBloc..add(ConfigEvent.getPlans())),
-        BlocProvider(create: (context) => _authBloc)
-      ],
-      child: BlocListener<ConfigBloc, ConfigState>(
-          listener: (context, state) {
-            state.maybeWhen(
-                loadingInProgress: _onStateLoadingInProgress,
-                loadingPlansSuccess: _onStateLoadingPlansSuccess,
-                loadingFailed: _onStateLoadingFailure,
-                orElse: () {});
-          },
-          child: ScaffoldContainerWidget(
-            show: _showModal,
-            type: _modalType,
-            logout: true,
-            back: widget.back,
-            title: "Choose a plan",
-            children: [
-              ButtonWidget(
-                onTap: () {
-                },
-                children: [
-                      "For A Special Plan"
-                      .text
-                      .xl
-                      .lineThrough
-                      .color((isDark(context))
-                          ? GlobalTheme.kPrimaryColor
-                          : GlobalTheme.kAccentColor)
-                      .make(),
-                      " (Soon)"
-                      .text
-                      .xl
-                      .color((isDark(context))
-                          ? GlobalTheme.kPrimaryColor
-                          : GlobalTheme.kAccentColor)
-                      .make(),
-                ],
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              ..._plansList!.map((plan) => PlanItemWidget(plan: plan))
-            ],
-          )),
-    );
+    return BlocListener<ConfigBloc, ConfigState>(
+        listener: (context, state) {
+          state.type.maybeWhen(
+              loadingInProgress: _onStateLoadingInProgress,
+              loadingSuccess: _onStateLoadingSuccess,
+              loadingFailed: _onStateLoadingFailure,
+              orElse: () {});
+        },
+        child: ScaffoldContainerWidget(
+          show: _showModal,
+          type: _modalType,
+          onReset: _onModalReset,
+          logout: true,
+          back: widget.back,
+          title: "Choose a plan",
+          children: [
+            ButtonWidget(
+              onTap: () {
+              },
+              children: [
+                    "For A Special Plan"
+                    .text
+                    .xl
+                    .lineThrough
+                    .color((isDark(context))
+                        ? GlobalTheme.kPrimaryColor
+                        : GlobalTheme.kAccentColor)
+                    .make(),
+                    " (Soon)"
+                    .text
+                    .xl
+                    .color((isDark(context))
+                        ? GlobalTheme.kPrimaryColor
+                        : GlobalTheme.kAccentColor)
+                    .make(),
+              ],
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            ..._plansList!.map((plan) => PlanItemWidget(plan: plan))
+          ],
+        ));
   }
 }

@@ -7,7 +7,8 @@ class ProfileQuery {
           id,
           type,
           filename,
-          filepath
+          filepath,
+          hash
         },
         fullname,
         adresse,
@@ -16,7 +17,6 @@ class ProfileQuery {
         phoneNumberVerified,
         country,
         city,
-        zipCode,
         gender,
         posLat,
         posLng
@@ -31,7 +31,8 @@ class ProfileQuery {
           id,
           type,
           filename,
-          filepath
+          filepath,
+hash
         },
         fullname,
         adresse,
@@ -40,7 +41,6 @@ class ProfileQuery {
         phoneNumberVerified,
         country,
         city,
-        zipCode,
         gender,
         posLat,
         posLng
@@ -55,7 +55,8 @@ class ProfileQuery {
           id,
           type,
           filename,
-          filepath
+          filepath,
+hash
         },
         fullname,
         adresse,
@@ -64,7 +65,6 @@ class ProfileQuery {
         phoneNumberVerified,
         country,
         city,
-        zipCode,
         gender,
         posLat,
         posLng
@@ -72,15 +72,16 @@ class ProfileQuery {
     }
     """;
 
-    static const String saveProfileMutation = r"""
-      mutation saveProfileMutation($profile : InsertOrUpdateProfileInput!){
+    static const String updateUserMutation = r"""
+      mutation updateUserMutation($profile : UpdateUserInput!){
         insertOrUpdateProfile(profile: $profile) {
           id,
           image {
             id,
             type,
             filename,
-            filepath
+            filepath,
+hash
           },
           fullname,
           adresse,
@@ -89,7 +90,6 @@ class ProfileQuery {
           phoneNumberVerified,
           country,
           city,
-          zipCode,
           gender,
           posLat,
           posLng

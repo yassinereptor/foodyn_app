@@ -2,22 +2,26 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:foodyn_rest/core/data/models/eatery_type_model.dart';
+import 'package:foodyn_rest/core/data/models/location_model.dart';
+import 'package:foodyn_rest/core/enums/config.type.dart';
+import 'package:foodyn_rest/core/queries/config_query.dart';
 import '../../models/payment_model.dart';
 import '../../models/plan_model.dart';
 import '../../models/record_model.dart';
 import '../../../error/exeptions.dart';
-import '../../../queries/payment_query.dart';
-import '../../../queries/plan_query.dart';
 import '../../../queries/record_query.dart';
 import '../../../services/graphql_service.dart';
 import 'package:injectable/injectable.dart';
 
 abstract class IConfigRemoteDataSource {
-  Future<List<String>?> getPhoneResource();
-  Future<RecordModel?> getRemote();
-  Future<RecordModel?> setRemote(RecordModel? record);
-  Future<List<PlanModel>?> getPlans();
-  Future<List<PaymentModel>?> getPayments();
+  Future<List<LocationModel>?> getRemoteLocationResource();
+  Future<RecordModel?> getRemoteRecord();
+  Future<RecordModel?> setRemoteRecord(RecordModel? record);
+  Future<List<PlanModel>?> getRemotePlans();
+  Future<List<PaymentModel>?> getRemotePayments();
+  Future<List<EateryTypeModel>?> getRemoteEateryTypes();
+  Future<DateTime?> getLastRemoteConfig(ConfigType type);
 }
 
 @Injectable(as: IConfigRemoteDataSource)
@@ -29,7 +33,7 @@ class ConfigRemoteDataSource implements IConfigRemoteDataSource {
     );
 
   @override
-  Future<RecordModel?> getRemote() async {
+  Future<RecordModel?> getRemoteRecord() async {
     var dio = Dio();
     Response<String> response;
     RecordModel recordModel;
@@ -43,8 +47,8 @@ class ConfigRemoteDataSource implements IConfigRemoteDataSource {
   }
 
   @override
-  Future<List<PaymentModel>?> getPayments() async {
-    final response = await _graphQLService.query(PaymentQuery.getPaymentsQuery);
+  Future<List<PaymentModel>?> getRemotePayments() async {
+    final response = await _graphQLService.query(ConfigQuery.getPaymentsQuery);
     final result = jsonDecode(response);
     if (result["errors"] != null)
       throw ServerExeption(message: result["errors"][0]["message"]);
@@ -57,8 +61,8 @@ class ConfigRemoteDataSource implements IConfigRemoteDataSource {
   }
 
   @override
-  Future<List<PlanModel>?> getPlans() async {
-    final response = await _graphQLService.query(PlanQuery.getPlansQuery);
+  Future<List<PlanModel>?> getRemotePlans() async {
+    final response = await _graphQLService.query(ConfigQuery.getPlansQuery);
     final result = jsonDecode(response);
     if (result["errors"] != null)
       throw ServerExeption(message: result["errors"][0]["message"]);
@@ -71,7 +75,7 @@ class ConfigRemoteDataSource implements IConfigRemoteDataSource {
   }
 
   @override
-  Future<RecordModel?> setRemote(RecordModel? record) async {
+  Future<RecordModel?> setRemoteRecord(RecordModel? record) async {
     if (record == null)
       return null;
     final edited = record.toJson();
@@ -90,17 +94,46 @@ class ConfigRemoteDataSource implements IConfigRemoteDataSource {
   }
 
   @override
-  Future<List<String>?> getPhoneResource() async {
+  Future<List<LocationModel>?> getRemoteLocationResource() async {
     var dio = Dio();
     Response<String> response;
 
     String? link = dotenv.env["SERVER_LINK"];
-    link = link! + "/json/phone.json";
+    link = link! + "/json/location.json";
     response = await dio.get(link);
     if (response.statusCode != 200)
       throw ServerExeption(status: response.statusCode!, message: response.statusMessage!);
     final jsonResult = json.decode(response.data!);
-    List<String>? result = [...jsonResult.map((item) => json.encode(item))];
+    List<LocationModel>? result = jsonResult.map<LocationModel>((item) => LocationModel.fromJson(item)).toList();
     return result;
   }
+
+  @override
+  Future<DateTime?> getLastRemoteConfig(ConfigType type) async {
+    final response = await _graphQLService.query(ConfigQuery.getLastRemoteConfig, variables: {
+      "type": type.index
+    });
+    final result = jsonDecode(response);
+    if (result["errors"] != null)
+      throw ServerExeption(message: result["errors"][0]["message"]);
+    if (result["lastRemoteConfig"] == null)
+      return null;
+    DateTime? createdAt = DateTime.parse(result["lastRemoteConfig"]["createdAt"]);
+    return createdAt;
+  }
+
+  @override
+  Future<List<EateryTypeModel>?> getRemoteEateryTypes() async {
+    final response = await _graphQLService.query(ConfigQuery.getEateryTypesQuery);
+    final result = jsonDecode(response);
+    if (result["errors"] != null)
+      throw ServerExeption(message: result["errors"][0]["message"]);
+    List<EateryTypeModel>? eateryTypeModel = result["eateryTypes"].map<EateryTypeModel>((e) {
+      return EateryTypeModel.fromJson(e);
+    }).toList();
+    if (eateryTypeModel == null)
+      eateryTypeModel = [];
+    return eateryTypeModel;
+  }
+
 }

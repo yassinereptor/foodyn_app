@@ -1,7 +1,11 @@
 import 'dart:ui';
 
+import 'package:flare_flutter/asset_provider.dart';
+import 'package:flare_flutter/flare_cache.dart';
+import 'package:flare_flutter/provider/asset_flare.dart';
 import 'package:flutter/material.dart';
 import 'package:flare_flutter/flare_actor.dart';
+import 'package:flutter/services.dart';
 import '../config/theme/global_theme.dart';
 import '../utils/theme_brightness.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -12,6 +16,7 @@ class ModalContainerWidget extends StatefulWidget {
   final Widget child;
   final bool show;
   final ModalContainerType type;
+  final void Function()? onReset;
   final void Function()? onLoading;
   final void Function()? onSucceed;
   final void Function()? onFailed;
@@ -21,6 +26,7 @@ class ModalContainerWidget extends StatefulWidget {
       required this.child,
       this.show = false,
       this.type = ModalContainerType.LOADING,
+      this.onReset,
       this.onLoading,
       this.onSucceed,
       this.onFailed})
@@ -41,8 +47,6 @@ class _ModalContainerWidgetState extends State<ModalContainerWidget> {
   late String _text;
   late String _btnText;
   late Color _btnColor;
-  bool _show = false;
-  ModalContainerType _type = ModalContainerType.LOADING;
 
   @override
   void initState() {
@@ -50,44 +54,37 @@ class _ModalContainerWidgetState extends State<ModalContainerWidget> {
     _text = "Loading ...";
     _btnText = "Cancel";
     _btnColor = GlobalTheme.kOrangeColor;
-    _show = widget.show;
-    _type = widget.type;
     super.initState();
   }
 
   void _onTap() {
-    switch (_type) {
+    switch (widget.type) {
       case ModalContainerType.LOADING:
         if (widget.onLoading != null)
           widget.onLoading!();
-        setState(() {
-          _show = false;
-          _type = ModalContainerType.LOADING;
-        });
+        if (widget.onReset != null)
+          widget.onReset!();
         break;
       case ModalContainerType.SUCCESS:
         if (widget.onSucceed != null)
           widget.onSucceed!();
-        setState(() {
-          _show = false;
-          _type = ModalContainerType.LOADING;
-        });
+        if (widget.onReset != null)
+          widget.onReset!();
         break;
       case ModalContainerType.FAILURE:
         if (widget.onFailed != null)
           widget.onFailed!();
-        setState(() {
-          _show = false;
-          _type = ModalContainerType.LOADING;
-        });
+        if (widget.onReset != null)
+          widget.onReset!();
         break;
     }
   }
 
   @override
   Widget build(BuildContext context) {
+
     double _width = MediaQuery.of(context).size.width / 3;
-    switch (_type) {
+    switch (widget.type) {
       case ModalContainerType.LOADING:
         _animationIndex = !isDark(context) ? 0 : 1;
         _text = "Loading ...";
@@ -111,7 +108,7 @@ class _ModalContainerWidgetState extends State<ModalContainerWidget> {
     return Stack(
       children: [
         widget.child,
-        _show
+        widget.show
             ? Stack(
                 children: [
                   BackdropFilter(
@@ -138,7 +135,7 @@ class _ModalContainerWidgetState extends State<ModalContainerWidget> {
                                     ? Icon(
                                         (_animationIndex == 2)
                                             ? Icons.check
-                                            : Icons.close,
+                                            : Icons.close_rounded,
                                         color: GlobalTheme.kAccentColor,
                                       )
                                     : Container(),

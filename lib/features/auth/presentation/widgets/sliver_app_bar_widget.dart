@@ -31,7 +31,7 @@ class _SliverAppBarWidgetState extends State<SliverAppBarWidget> {
   @override
   void initState() {
     super.initState();
-    _authBloc = getIt<AuthBloc>();
+    _authBloc = context.read<AuthBloc>();
   }
 
   void _onLogout() {
@@ -40,8 +40,8 @@ class _SliverAppBarWidgetState extends State<SliverAppBarWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => _authBloc,
+    return BlocProvider.value(
+      value: _authBloc,
       child: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, state) {
           state.type.maybeWhen(

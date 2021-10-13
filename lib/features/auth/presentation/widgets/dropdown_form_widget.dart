@@ -12,10 +12,11 @@ import 'bottom_sheet_widget.dart';
 class DropdownFormWidget extends StatefulWidget {
   final List<String> list;
   final int defaultIndex;
-  final void Function(int) onSelect;
+  final void Function(String, int) onSelect;
   final String Function(String) modifySelectedOutput;
   final String Function(String) modifyListOutput;
   final bool searchForm;
+  final bool rightRadius;
 
   const DropdownFormWidget(
       {Key? key,
@@ -24,7 +25,9 @@ class DropdownFormWidget extends StatefulWidget {
       required this.list,
       this.defaultIndex = 0,
       required this.onSelect,
-      this.searchForm = true})
+      this.searchForm = true,
+      this.rightRadius = true
+      })
       : super(key: key);
 
   @override
@@ -54,11 +57,12 @@ class _DropdownFormWidgetState extends State<DropdownFormWidget> {
         constraints: BoxConstraints(maxHeight: 65),
         decoration: BoxDecoration(
             color: GlobalTheme.kAccentDarkColor,
-            borderRadius: BorderRadius.circular(10)),
+            borderRadius: (widget.rightRadius) ? BorderRadius.circular(10) : BorderRadius.only(topLeft: Radius.circular(10), bottomLeft: Radius.circular(10))),
         padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
+            if (widget.list.isNotEmpty)
             widget
                 .modifySelectedOutput(widget.list[defaultIndex])
                 .text
@@ -76,7 +80,7 @@ class _DropdownFormWidgetState extends State<DropdownFormWidget> {
 
 class _DropdownFormInsideWidget extends StatefulWidget {
   final List<String> list;
-  final void Function(int) onSelect;
+  final void Function(String, int) onSelect;
   final String Function(String) modifyListOutput;
   final TextEditingController textEditingController;
   final bool searchForm;
@@ -111,15 +115,13 @@ class _DropdownFormInsideWidgetState extends State<_DropdownFormInsideWidget> {
   void runFilter(String text) {
     text = text.toLowerCase();
     List<String> result;
-    if (text.isEmpty)
-      result = widget.list;
-    else
+    
+    if (text.isNotEmpty && (text.isNumber() || text.isLetter()))
       result = widget.list.where((element) {
-        final jsonResult = json.decode(element);
-        return (jsonResult["name"].toString().toLowerCase().contains(text) ||
-            jsonResult["code"].toString().toLowerCase().contains(text) ||
-            jsonResult["dialCode"].toString().toLowerCase().contains(text));
+        return (element.toLowerCase().contains(text));
       }).toList();
+    else
+      result = widget.list;
     setState(() {
       foundList = result;
     });
@@ -156,13 +158,9 @@ class _DropdownFormInsideWidgetState extends State<_DropdownFormInsideWidget> {
               SizedBox(
                 height: 10,
               ),
-              ListView.builder(
-                shrinkWrap: true,
-                itemCount: foundList.length,
-                itemBuilder: (context, index) {
-                  return InkWell(
+              ...foundList.map((e) => InkWell(
                     onTap: () {
-                      widget.onSelect(widget.list.indexOf(foundList[index]));
+                      widget.onSelect(e, widget.list.indexOf(e));
                       widget.textEditingController.clear();
                       Routes.seafarer.pop();
                     },
@@ -172,12 +170,11 @@ class _DropdownFormInsideWidgetState extends State<_DropdownFormInsideWidget> {
                         Divider(),
                         Padding(
                           padding: EdgeInsets.symmetric(vertical: 10),
-                          child: widget.modifyListOutput(foundList[index]).text.size(Vx.dp16).make()
+                          child: widget.modifyListOutput(e).text.size(Vx.dp16).make()
                         ),
                       ],
                     ),
-                  );
-                }
+                  )
               )
             ],
           );

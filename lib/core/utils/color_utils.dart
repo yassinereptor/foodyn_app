@@ -28,12 +28,30 @@ class ColorUtils {
     return hslDark.toColor();
   }
 
+  static Color toDarken(Color color, [double amount = .1]) {
+    assert(amount >= 0 && amount <= 1);
+
+    final hsl = HSLColor.fromColor(color);
+    final hslDark = hsl.withLightness((hsl.lightness - amount).clamp(0.0, 1.0));
+
+    return hslDark.toColor();
+  }
+
   Color lighten([double amount = .1]) {
     if (_color == null)
       _color = toColor();
     assert(amount >= 0 && amount <= 1);
 
     final hsl = HSLColor.fromColor(_color!);
+    final hslLight = hsl.withLightness((hsl.lightness + amount).clamp(0.0, 1.0));
+
+    return hslLight.toColor();
+  }
+
+  static Color toLighten(Color color, [double amount = .1]) {
+    assert(amount >= 0 && amount <= 1);
+
+    final hsl = HSLColor.fromColor(color);
     final hslLight = hsl.withLightness((hsl.lightness + amount).clamp(0.0, 1.0));
 
     return hslLight.toColor();

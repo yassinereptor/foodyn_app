@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import 'global_theme.dart';
@@ -32,6 +33,10 @@ final darkTheme = ThemeData(
   iconTheme: IconThemeData(color: GlobalTheme.kAccentColor),
   dividerColor: GlobalTheme.kOrangeColor,
   appBarTheme: AppBarTheme(
+    systemOverlayStyle: SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      statusBarBrightness: Brightness.dark
+    ),
     iconTheme: IconThemeData(color: GlobalTheme.kAccentColor),
     textTheme: TextTheme(
       headline6: TextStyle(

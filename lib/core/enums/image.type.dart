@@ -1,6 +1,6 @@
 enum ImageType {
   PROFILE,
-  REST,
+  EATERY,
   CAT,
   FOOD
 }

@@ -10,7 +10,7 @@ import '../error/exeptions.dart';
 @lazySingleton
 class GraphQLService {
   late HttpLink _httpLink;
-  late Link? _link;
+  Link? _link;
   String? _token;
 
   GraphQLService() {
@@ -20,7 +20,7 @@ class GraphQLService {
   GraphQLClient get _client => _clientToQuery();
 
   Future<String> query(String query, {Map<String, dynamic> variables = const {}}) async {
-    if (JwtDecoder.isExpired(this._token!)) throw JwtExpiredExeption();
+    if (this._token != null && JwtDecoder.isExpired(this._token!)) throw JwtExpiredExeption();
 
     QueryOptions options =
         QueryOptions(document: gql(query), variables: variables);
@@ -38,7 +38,7 @@ class GraphQLService {
 
   Future<String> mutation(String query,
       {Map<String, dynamic>? variables}) async {
-    if (JwtDecoder.isExpired(this._token!)) throw JwtExpiredExeption();
+    if (this._token != null &&  JwtDecoder.isExpired(this._token!)) throw JwtExpiredExeption();
     MutationOptions options =
         MutationOptions(document: gql(query), variables: variables!);
 

@@ -1,5 +1,10 @@
+import 'dart:io';
+
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:foodyn_rest/core/data/models/coupon_model.dart';
+import 'package:foodyn_rest/core/data/models/membership_model.dart';
+import 'package:foodyn_rest/core/enums/image.type.dart';
 import '../../domain/repositories/i_config_repository.dart';
 import '../../domain/repositories/i_language_repository.dart';
 import 'package:logger/logger.dart';
@@ -39,6 +44,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       forgetPassword: (email) => _forgetPasswordHandler(email),
       logout: () => _logoutHandler(),
       jwtIsExpired: () => _jwtIsExpiredHandler(),
+      uploadImage: (type, file) => _uploadImageHandler(type, file),
+      updateUser: (profile) => _updateUserHandler(profile),
+      saveMembership: (planId, periodId, couponId) => _saveMembershipHandler(planId, periodId, couponId),
+      checkCouponStatus: (code) => _checkCouponStatus(code)
     );
   }
 
@@ -81,8 +90,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         status: locale == null
             ? AuthStatus.firstTime()
             : AuthStatus.unauthenticated(),
-        user: user,
-        locale: locale
+        user: user
       );
     }
     else {
@@ -109,14 +117,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           });
           if (appFailure != null)
             yield state.copyWith(type: AuthStateType.loadingFailed(appFailure!));
-          else
-            yield state.copyWith(
-              type: AuthStateType.loadingSuccess(),
-              status: AuthStatus.authenticated(),
-              user: user,
-              token: token,
-              locale: locale
-            );
+          else yield state.copyWith(
+                type: AuthStateType.loadingSuccess(),
+                status: AuthStatus.authenticated(),
+                user: user,
+                token: token,
+              );
         }
       }
     }
@@ -161,13 +167,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           });
           if (appFailure != null)
             yield state.copyWith(type: AuthStateType.loadingFailed(appFailure!));
-          else
-            yield state.copyWith(
-              type: AuthStateType.loadingSuccess(),
-              status: AuthStatus.authenticated(),
-              user: user,
-              token: token,
-            );
+          else yield state.copyWith(
+                type: AuthStateType.loadingSuccess(),
+                status: AuthStatus.authenticated(),
+                user: user,
+                token: token,
+              );
         }
       }
     }
@@ -211,13 +216,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           });
           if (appFailure != null)
             yield state.copyWith(type: AuthStateType.loadingFailed(appFailure!));
-          else
-            yield state.copyWith(
-              type: AuthStateType.loadingSuccess(),
-              status: AuthStatus.authenticated(),
-              user: user,
-              token: token,
-            );
+          else yield state.copyWith(
+                type: AuthStateType.loadingSuccess(),
+                status: AuthStatus.authenticated(),
+                user: user,
+                token: token,
+              );
         }
       }
     }
@@ -243,8 +247,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   Stream<AuthState> _logoutHandler() async* {
     AppFailure? appFailure;
-    yield state.copyWith(type: AuthStateType.loadingInProgress());
 
+    yield state.copyWith(type: AuthStateType.loadingInProgress());
     (await _authRepository.logout()).fold((failure) {
       appFailure = failure;
     }, (value) {
@@ -262,5 +266,73 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   Stream<AuthState> _jwtIsExpiredHandler() async* {
     yield state.copyWith(
         type: AuthStateType.loadingFailed(AppFailure.expiredJwt()));
+  }
+
+  Stream<AuthState> _uploadImageHandler(ImageType type, File file) async* {
+    AppFailure? appFailure;
+
+    yield state.copyWith(type: AuthStateType.loadingInProgress());
+    (await _authRepository.uploadImage(file)).fold((failure) {
+      appFailure = failure;
+    }, (value) {
+    });
+    if (appFailure != null)
+      yield state.copyWith(type: AuthStateType.loadingFailed(appFailure!));
+    else
+      yield state.copyWith(type: AuthStateType.loadingSuccess());
+  }
+
+
+  Stream<AuthState> _updateUserHandler(UserModel user) async* {
+    AppFailure? appFailure;
+    UserModel? userModel;
+
+    yield state.copyWith(type: AuthStateType.loadingInProgress());
+    (await _authRepository.updateUser(user)).fold((failure) {
+      appFailure = failure;
+    }, (value) {
+      userModel = value;
+    });
+    if (appFailure != null)
+      yield state.copyWith(type: AuthStateType.loadingFailed(appFailure!));
+    else
+      yield state.copyWith(
+                type: AuthStateType.loadingSuccess(),
+                status: AuthStatus.authenticated(),
+                user: userModel,
+              );
+  }
+
+  Stream<AuthState> _saveMembershipHandler(int planId, int periodId, int? couponId) async* {
+    AppFailure? appFailure;
+
+    yield state.copyWith(type: AuthStateType.loadingInProgress());
+    (await _authRepository.saveMembership(planId, periodId, couponId)).fold((failure) {
+      appFailure = failure;
+    }, (value) {
+    });
+    if (appFailure != null)
+      yield state.copyWith(type: AuthStateType.loadingFailed(appFailure!));
+    // else
+    //   yield AuthState.loadingMembershipSuccess(membershipModel);
+  }
+
+  Stream<AuthState> _checkCouponStatus(String code) async* {
+    AppFailure? appFailure;
+    CouponModel? coupon;
+
+    if (code.isEmpty)
+      yield state.copyWith(type: AuthStateType.initial());
+    else {
+      (await _authRepository.checkCouponStatus(code)).fold((failure) {
+        appFailure = failure;
+      }, (value) {
+        coupon = value;
+      });
+      if (appFailure != null || coupon == null)
+        yield state.copyWith(type: AuthStateType.loadingFailed((appFailure != null) ? appFailure! : AppFailure.local()));
+      // else
+        // yield AuthState.loadingCouponSuccess(coupon);
+    }
   }
 }

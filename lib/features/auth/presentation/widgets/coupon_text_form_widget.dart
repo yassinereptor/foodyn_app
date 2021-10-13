@@ -3,8 +3,8 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:foodyn_rest/core/bloc/auth_bloc/auth_bloc.dart';
 import '../../../../core/data/models/coupon_model.dart';
-import '../../../../core/bloc/profile_bloc/profile_bloc.dart';
 import '../../../../core/config/injectable/injection.dart';
 import '../../../../core/config/theme/input_decoration_theme.dart';
 import '../../../../core/utils/theme_brightness.dart';
@@ -41,13 +41,13 @@ class _CouponTextFormWidgetState extends State<CouponTextFormWidget> {
         bottomLeft: Radius.circular(Vx.dp10)),
     borderSide: BorderSide(color: GlobalTheme.kOrangeColor, width: 1),
   );
-  late ProfileBloc _profileBloc;
+  late AuthBloc _authBloc;
   late Icon _defaultIcon;
   late Icon _icon;
 
   @override
   void initState() {
-    _profileBloc = getIt<ProfileBloc>();
+    _authBloc = context.read<AuthBloc>();
     _defaultIcon = Icon(
                     Icons.more_horiz_outlined,
                     color: GlobalTheme.kOrangeColor,
@@ -58,17 +58,16 @@ class _CouponTextFormWidgetState extends State<CouponTextFormWidget> {
 
   @override
   void dispose() {
-    _profileBloc.close();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => _profileBloc,
-      child: BlocConsumer<ProfileBloc, ProfileState>(
+    return BlocProvider.value(
+      value: _authBloc,
+      child: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, state) {
-          state.maybeWhen(
+          state.type.maybeWhen(
             loadingCouponSuccess: (coupon) {
               widget.onCouponSet(coupon);
             },
@@ -77,13 +76,13 @@ class _CouponTextFormWidgetState extends State<CouponTextFormWidget> {
             });
         },
         builder: (context, state) {
-          state.maybeWhen(
+          state.type.maybeWhen(
             loadingInProgress: () {
               _icon = _defaultIcon;
             },
             loadingFailed: (faulure) {
               _icon = Icon(
-                    Icons.close,
+                    Icons.close_rounded,
                     color: GlobalTheme.kRedColor,
                   );
             },
@@ -104,12 +103,12 @@ class _CouponTextFormWidgetState extends State<CouponTextFormWidget> {
                     onChanged: (text){
                         if (text.isNotEmpty &&
                             text.length == 4) {
-                          _profileBloc
-                              .add(ProfileEvent.checkCouponStatus(text));
+                          _authBloc
+                              .add(AuthEvent.checkCouponStatus(text));
                         }
                         else
-                          _profileBloc
-                              .add(ProfileEvent.checkCouponStatus(""));
+                          _authBloc
+                              .add(AuthEvent.checkCouponStatus(""));
                     },
                       keyboardType: TextInputType.streetAddress,
                       cursorColor: GlobalTheme.kOrangeColor,

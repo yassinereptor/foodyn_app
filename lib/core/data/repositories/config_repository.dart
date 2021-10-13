@@ -1,6 +1,9 @@
 import 'dart:io';
 
 import 'package:dartz/dartz.dart';
+import 'package:foodyn_rest/core/data/models/eatery_type_model.dart';
+import 'package:foodyn_rest/core/data/models/location_model.dart';
+import 'package:foodyn_rest/core/enums/config.type.dart';
 import '../datasources/local/config_local_data_source.dart';
 import '../datasources/remote/config_remote_data_source.dart';
 import '../models/plan_model.dart';
@@ -28,10 +31,12 @@ class ConfigRepository implements IConfigRepository {
 
   @override
   Future<Either<AppFailure?, RecordModel?>> getLocalRecord() async {
-    final response = await _configLocalDataSource.getRecord();
-    if (response == null)
+    try {
+      final response = await _configLocalDataSource.getRecord();
+      return Right(response);
+    } catch (e) {
       return Left(AppFailure.storage());
-    return Right(response);
+    }
   }
 
   @override
@@ -39,7 +44,7 @@ class ConfigRepository implements IConfigRepository {
     try {
       final isConnected = await _networkInfo.isConnected;
       if (isConnected == false) return Left(AppFailure.network());
-      final response = await _configRemoteDataSource.getRemote();
+      final response = await _configRemoteDataSource.getRemoteRecord();
       return Right(response);
     } on SocketException catch (_) {
       return Left(AppFailure.network());
@@ -61,7 +66,7 @@ class ConfigRepository implements IConfigRepository {
     try {
       final isConnected = await _networkInfo.isConnected;
       if (isConnected == false) return Left(AppFailure.network());
-      final response = await _configRemoteDataSource.setRemote(record);
+      final response = await _configRemoteDataSource.setRemoteRecord(record);
       return Right(response);
     } on UnauthorizedExeption {
       return Left(AppFailure.unauthorized());
@@ -80,11 +85,54 @@ class ConfigRepository implements IConfigRepository {
   }
   
   @override
-  Future<Either<AppFailure?, List<PaymentModel>?>> getPayments() async {
+  Future<Either<AppFailure?, List<PaymentModel>?>> getRemotePayments() async {
     try {
       final isConnected = await _networkInfo.isConnected;
       if (isConnected == false) return Left(AppFailure.network());
-      final response = await _configRemoteDataSource.getPayments();
+      final response = await _configRemoteDataSource.getRemotePayments();
+      return Right(response);
+    } on UnauthorizedExeption {
+      return Left(AppFailure.unauthorized());
+    } on JwtExpiredExeption {
+      return Left(AppFailure.expiredJwt());
+    } on ServerExeption catch (e) {
+      return Left(AppFailure.server(
+        message: e.message,
+      ));
+    } on OperationException catch (error) {
+      return Left(AppFailure.graphQlserver(
+        linkException: error.linkException,
+        graphqlErrors: error.graphqlErrors,
+      ));
+    }
+  }
+  
+  @override
+  Future<Either<AppFailure?, List<PaymentModel>?>> getLocalPayments() async {
+    try {
+      final response = await _configLocalDataSource.getLocalPayments();
+      return Right(response);
+    } catch (e) {
+      return Left(AppFailure.storage());
+    }
+  }
+
+
+  @override
+  Future<Either<AppFailure?, bool>> setLocalPayments(List<PaymentModel>? resources) async {
+    final response = await _configLocalDataSource.setLocalPayments(resources!);
+    if (!response)
+      return Left(AppFailure.storage());
+    return Right(response);
+  }
+
+
+  @override
+  Future<Either<AppFailure?, List<PlanModel>?>> getRemotePlans() async {
+    try {
+      final isConnected = await _networkInfo.isConnected;
+      if (isConnected == false) return Left(AppFailure.network());
+      final response = await _configRemoteDataSource.getRemotePlans();
       return Right(response);
     } on UnauthorizedExeption {
       return Left(AppFailure.unauthorized());
@@ -103,11 +151,29 @@ class ConfigRepository implements IConfigRepository {
   }
 
   @override
-  Future<Either<AppFailure?, List<PlanModel>?>> getPlans() async {
+  Future<Either<AppFailure?, List<PlanModel>?>> getLocalPlans() async {
+    try {
+      final response = await _configLocalDataSource.getLocalPlans();
+      return Right(response);
+    } catch (e) {
+      return Left(AppFailure.storage());
+    }
+  }
+  
+  @override
+  Future<Either<AppFailure?, bool>> setLocalPlans(List<PlanModel>? resources) async {
+    final response = await _configLocalDataSource.setLocalPlans(resources!);
+    if (!response)
+      return Left(AppFailure.storage());
+    return Right(response);
+  }
+
+  @override
+  Future<Either<AppFailure?, DateTime?>> getLastRemoteConfig(ConfigType type) async {
     try {
       final isConnected = await _networkInfo.isConnected;
       if (isConnected == false) return Left(AppFailure.network());
-      final response = await _configRemoteDataSource.getPlans();
+      final response = await _configRemoteDataSource.getLastRemoteConfig(type);
       return Right(response);
     } on UnauthorizedExeption {
       return Left(AppFailure.unauthorized());
@@ -126,11 +192,29 @@ class ConfigRepository implements IConfigRepository {
   }
 
   @override
-  Future<Either<AppFailure?, List<String>?>> getPhoneResource() async {
+  Future<Either<AppFailure?, DateTime?>> getLastLocalConfig(ConfigType type) async {
+    try {
+      final response = await _configLocalDataSource.getLastLocalConfig(type);
+      return Right(response);
+    } catch (e){
+      return Left(AppFailure.storage());
+    }
+  }
+
+  @override
+  Future<Either<AppFailure?, bool>> setLastLocalConfig(DateTime date, ConfigType type) async {
+    final response = await _configLocalDataSource.setLastLocalConfig(date, type);
+    if (!response)
+      return Left(AppFailure.storage());
+    return Right(response);
+  }
+
+  @override
+  Future<Either<AppFailure?, List<LocationModel>?>> getRemoteLocationResource() async {
     try {
       final isConnected = await _networkInfo.isConnected;
       if (isConnected == false) return Left(AppFailure.network());
-      final response = await _configRemoteDataSource.getPhoneResource();
+      final response = await _configRemoteDataSource.getRemoteLocationResource();
       return Right(response);
     } on UnauthorizedExeption {
       return Left(AppFailure.unauthorized());
@@ -147,5 +231,66 @@ class ConfigRepository implements IConfigRepository {
       ));
     }
   }
+
+  @override
+  Future<Either<AppFailure?, List<LocationModel>?>> getLocalLocationResource() async {
+    try {
+      final response = await _configLocalDataSource.getLocalLocationResource();
+      return Right(response);
+    } catch (e) {
+      return Left(AppFailure.storage());
+    }
+  }
+
+  @override
+  Future<Either<AppFailure?, bool>> setLocalLocationResource(List<LocationModel> resources) async {
+    final response = await _configLocalDataSource.setLocalLocationResource(resources);
+    if (!response)
+      return Left(AppFailure.storage());
+    return Right(response);
+  }
+
+  @override
+  Future<Either<AppFailure?, List<EateryTypeModel>?>> getLocalEateryTypes() async {
+    try {
+      final response = await _configLocalDataSource.getLocalEateryTypes();
+      return Right(response);
+    } catch (e) {
+      return Left(AppFailure.storage());
+    }
+  }
+
+  @override
+  Future<Either<AppFailure?, List<EateryTypeModel>?>> getRemoteEateryTypes() async {
+    try {
+      final isConnected = await _networkInfo.isConnected;
+      if (isConnected == false) return Left(AppFailure.network());
+      final response = await _configRemoteDataSource.getRemoteEateryTypes();
+      return Right(response);
+    } on UnauthorizedExeption {
+      return Left(AppFailure.unauthorized());
+    } on JwtExpiredExeption {
+      return Left(AppFailure.expiredJwt());
+    } on ServerExeption catch (e) {
+      return Left(AppFailure.server(
+        message: e.message,
+      ));
+    } on OperationException catch (error) {
+      return Left(AppFailure.graphQlserver(
+        linkException: error.linkException,
+        graphqlErrors: error.graphqlErrors,
+      ));
+    }
+  }
+
+  @override
+  Future<Either<AppFailure?, bool>> setLocalEateryTypes(List<EateryTypeModel>? resources) async {
+    final response = await _configLocalDataSource.setLocalEateryTypes(resources!);
+    if (!response)
+      return Left(AppFailure.storage());
+    return Right(response);
+  }
+
+  
 
 }

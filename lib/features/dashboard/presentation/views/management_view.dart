@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 class ManagementView extends StatefulWidget {
   const ManagementView({Key? key}) : super(key: key);
@@ -11,8 +12,20 @@ class _ManagementViewState extends State<ManagementView> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Center(
-        child: Text("Management"),
+      child: Column(
+        children: [
+          Row(
+          children: [
+            Padding(
+              padding: EdgeInsets.only(top: 5, bottom: 15),
+              child: "Management".text.xl2.make(),
+            ),
+          ],
+        ),
+          Center(
+            child: Text("Management"),
+          ),
+        ],
       )
     );
   }

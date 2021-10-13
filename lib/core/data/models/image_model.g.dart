@@ -13,11 +13,9 @@ ImageModel _$ImageModelFromJson(Map<String, dynamic> json) {
         ? null
         : UserModel.fromJson(json['user'] as Map<String, dynamic>),
     type: json['type'] as int?,
-    profile: json['profile'] == null
-        ? null
-        : ProfileModel.fromJson(json['profile'] as Map<String, dynamic>),
     filename: json['filename'] as String?,
     filepath: json['filepath'] as String?,
+    hash: json['hash'] as String?,
   );
 }
 
@@ -26,7 +24,7 @@ Map<String, dynamic> _$ImageModelToJson(ImageModel instance) =>
       'id': instance.id,
       'user': instance.user,
       'type': instance.type,
-      'profile': instance.profile,
       'filename': instance.filename,
       'filepath': instance.filepath,
+      'hash': instance.hash,
     };

@@ -66,13 +66,12 @@ class _PlanPageState extends State<PlanPage>
     CurrencyUtils.getCurrencyIndex().then((value) => _selectedCurrencyIndex = value);
     controller.forward();
     _authBloc = context.read<AuthBloc>();
-    _configBloc = getIt<ConfigBloc>();
+    _configBloc = context.read<ConfigBloc>();
     _calcYearPrice = CurrencyUtils(widget.plan).getCalcYearPrice();
   }
 
   @override
   void dispose() {
-    _configBloc.close();
     controller.dispose();
     super.dispose();
   }
@@ -84,15 +83,12 @@ class _PlanPageState extends State<PlanPage>
     });
   }
 
-  void _onStateLoadingPlansSuccess(List<PlanModel>? plans) {
+  void _onStateLoadingSuccess() {
     setState(() {
       _modalType = ModalContainerType.SUCCESS;
     });
     Future.delayed(Duration(milliseconds: 2000), () {
-      setState(() {
-        _showModal = false;
-        _modalType = ModalContainerType.LOADING;
-      });
+      _onModalReset();
     });
   }
 
@@ -101,10 +97,14 @@ class _PlanPageState extends State<PlanPage>
       _modalType = ModalContainerType.FAILURE;
     });
     Future.delayed(Duration(milliseconds: 2000), () {
-      setState(() {
-        _showModal = false;
-        _modalType = ModalContainerType.LOADING;
-      });
+      _onModalReset();
+    });
+  }
+
+  void _onModalReset() {
+    setState(() {
+      _showModal = false;
+      _modalType = ModalContainerType.LOADING;
     });
   }
 
@@ -116,8 +116,8 @@ class _PlanPageState extends State<PlanPage>
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => _configBloc),
-        BlocProvider(create: (context) => _authBloc)
+        BlocProvider.value(value: _configBloc),
+        BlocProvider.value(value: _authBloc)
       ],
       child: MultiBlocListener(
         listeners: [
@@ -145,9 +145,9 @@ class _PlanPageState extends State<PlanPage>
           ),
           BlocListener<ConfigBloc, ConfigState>(
             listener: (context, state) {
-              state.maybeWhen(
+              state.type.maybeWhen(
                   loadingInProgress: _onStateLoadingInProgress,
-                  loadingPlansSuccess: _onStateLoadingPlansSuccess,
+                  loadingSuccess: _onStateLoadingSuccess,
                   loadingFailed: _onStateLoadingFailure,
                   orElse: () {});
             },
@@ -157,6 +157,7 @@ class _PlanPageState extends State<PlanPage>
           body: ModalContainerWidget(
             type: _modalType,
             show: _showModal,
+            onReset: _onModalReset,
             child: Stack(
               children: [
                 Container(
@@ -258,7 +259,7 @@ class _PlanPageState extends State<PlanPage>
                                     child: Row(
                                       children: [
                                         StringUtils.getTranslatedString(
-                                                _authBloc.state.locale!,
+                                                _configBloc.state.locale!,
                                                 widget.plan.title!)
                                             .text
                                             .bold
@@ -369,7 +370,7 @@ class _PlanPageState extends State<PlanPage>
                                     height: 30,
                                   ),
                                   StringUtils.getTranslatedString(
-                                          _authBloc.state.locale!,
+                                          _configBloc.state.locale!,
                                           widget.plan.description!)
                                       .text
                                       .bold

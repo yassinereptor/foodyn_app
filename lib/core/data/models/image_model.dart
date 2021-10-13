@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'profile_model.dart';
 import 'user_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -13,20 +12,20 @@ class ImageModel extends Equatable  {
   UserModel? user;
   @JsonKey(name: "type")
   int? type;
-  @JsonKey(name: "profile")
-  ProfileModel? profile;
   @JsonKey(name: "filename")
   String? filename;
   @JsonKey(name: "filepath")
   String? filepath;
+  @JsonKey(name: "hash")
+  String? hash;
 
   ImageModel({
     this.id,
     this.user,
     this.type,
-    this.profile,
     this.filename,
     this.filepath,
+    this.hash,
   });
 
   factory ImageModel.fromJson(Map<String, dynamic> json) =>
@@ -40,9 +39,9 @@ class ImageModel extends Equatable  {
     id: $id,
     user: $user,
     type: $type,
-    profile: $profile,
     filename: $filename,
     filepath: $filepath
+    hash: $hash
     )""";
   }
 
@@ -51,9 +50,9 @@ class ImageModel extends Equatable  {
         id,
         user,
         type,
-        profile,
         filename,
-        filepath
+        filepath,
+        hash
       ];
 
 }

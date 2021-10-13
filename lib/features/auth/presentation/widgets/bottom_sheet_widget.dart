@@ -12,7 +12,7 @@ class BottomSheetWidget {
         context: context,
         isScrollControlled: true,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(top: Radius.circular(25.0)),
+          borderRadius: BorderRadius.vertical(top: Radius.circular(10.0)),
         ),
         builder: (BuildContext context) {
           return DraggableScrollableSheet(
@@ -23,7 +23,7 @@ class BottomSheetWidget {
           return SingleChildScrollView(
             controller: scrollController,
             child: Padding(
-              padding: const EdgeInsets.all(12.0),
+              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
               child: Column(
                 children: [
                   Row(

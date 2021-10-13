@@ -6,6 +6,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:foodyn_rest/core/bloc/auth_bloc/auth_bloc.dart';
 import 'package:foodyn_rest/features/auth/presentation/widgets/botton_widget.dart';
 import '../../../../core/widgets/scaffold_container_widget.dart';
 import '../../../../core/domain/entities/app_failure.dart';
@@ -14,7 +15,6 @@ import '../../../../core/config/router/router.dart';
 import '../../../../core/enums/image.type.dart';
 import '../../../../core/utils/theme_brightness.dart';
 import '../../../../core/widgets/modal_container_widget.dart';
-import '../../../../core/bloc/profile_bloc/profile_bloc.dart';
 import '../../../../core/config/theme/global_theme.dart';
 import 'package:mime/mime.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -32,14 +32,15 @@ class RegisterImagePage extends StatefulWidget {
 
 class _RegisterImagePageState extends State<RegisterImagePage> {
   File? _file;
-  late ProfileBloc _profileBloc;
+  late AuthBloc _authBloc;
   bool _showModal = false;
   ModalContainerType _modalType = ModalContainerType.LOADING;
+  File? _uploaded;
 
   @override
   void initState() {
     super.initState();
-    _profileBloc = getIt<ProfileBloc>();
+    _authBloc = context.read<AuthBloc>();
     _file = null;
   }
 
@@ -55,7 +56,7 @@ class _RegisterImagePageState extends State<RegisterImagePage> {
   }
 
   _onTapContinue() async {
-    if (_file != null) {
+    if (_file != null && (_uploaded == null || _uploaded != _file)) {
       if (_file!.lengthSync() > 4194304) {
         final snackBar =
             SnackBar(content: Text("Image must be less than 4 MB"));
@@ -71,21 +72,21 @@ class _RegisterImagePageState extends State<RegisterImagePage> {
         _showModal = true;
         _modalType = ModalContainerType.LOADING;
       });
-      _profileBloc.add(ProfileEvent.uploadImage(ImageType.PROFILE, _file!));
-    }
+      _authBloc.add(AuthEvent.uploadImage(ImageType.PROFILE, _file!));
+    } else if (_uploaded == _file)
+      Routes.seafarer.navigate(ChoosePlanPage.kRouteName);
   }
 
-  void _onStateLoadingInProgress() {}
+  void _onStateLoadingInProgress() {
+  }
 
   void _onStateLoadingSuccess() {
     setState(() {
       _modalType = ModalContainerType.SUCCESS;
+      _uploaded = _file;
     });
     Future.delayed(Duration(milliseconds: 2000), () {
-      setState(() {
-        _showModal = false;
-        _modalType = ModalContainerType.LOADING;
-      });
+      _onModalReset();
       Routes.seafarer.navigate(ChoosePlanPage.kRouteName);
     });
   }
@@ -95,10 +96,7 @@ class _RegisterImagePageState extends State<RegisterImagePage> {
       _modalType = ModalContainerType.FAILURE;
     });
     Future.delayed(Duration(milliseconds: 2000), () {
-      setState(() {
-        _showModal = false;
-        _modalType = ModalContainerType.LOADING;
-      });
+      _onModalReset();
     });
   }
 
@@ -112,15 +110,22 @@ class _RegisterImagePageState extends State<RegisterImagePage> {
         suffixes[i];
   }
 
+  void _onModalReset() {
+    setState(() {
+      _showModal = false;
+      _modalType = ModalContainerType.LOADING;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     double _imageWidth = MediaQuery.of(context).size.width - 100;
 
-    return BlocProvider(
-      create: (context) => _profileBloc,
-      child: BlocConsumer<ProfileBloc, ProfileState>(
+    return BlocProvider.value(
+      value: _authBloc,
+      child: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, state) {
-          state.maybeWhen(
+          state.type.maybeWhen(
               loadingInProgress: _onStateLoadingInProgress,
               loadingSuccess: _onStateLoadingSuccess,
               loadingFailed: _onStateLoadingFailure,
@@ -130,67 +135,70 @@ class _RegisterImagePageState extends State<RegisterImagePage> {
           return ScaffoldContainerWidget(
             type: _modalType,
             show: _showModal,
+            onReset: _onModalReset,
             logout: true,
             title: "Tap To Add An Image",
             subtitle: "the limit size is 4 MB",
             children: [
-              GestureDetector(
-                onTap: _pickImage,
-                child: Center(
-                  child: Container(
-                    margin: EdgeInsets.only(bottom: 20),
-                    width: _imageWidth,
-                    height: _imageWidth,
-                    decoration: BoxDecoration(
-                        color: isDark(context)
-                            ? GlobalTheme.kPrimaryLightColor
-                            : GlobalTheme.kAccentDarkColor,
-                        shape: BoxShape.circle),
-                    child: (_file == null)
-                        ? Center(
-                            child: Icon(
-                              Icons.upload_rounded,
-                              size: 50,
-                              color: GlobalTheme.kOrangeColor,
+              Padding(
+                padding: EdgeInsets.only(bottom: 20),
+                child: GestureDetector(
+                  onTap: _pickImage,
+                  child: Center(
+                    child: Container(
+                      width: _imageWidth,
+                      height: _imageWidth,
+                      decoration: BoxDecoration(
+                          color: isDark(context)
+                              ? GlobalTheme.kPrimaryLightColor
+                              : GlobalTheme.kAccentDarkColor,
+                          shape: BoxShape.circle),
+                      child: (_file == null)
+                          ? Center(
+                              child: Icon(
+                                Icons.upload_rounded,
+                                size: 50,
+                                color: GlobalTheme.kOrangeColor,
+                              ),
+                            )
+                          : SizedBox(
+                              width: _imageWidth,
+                              height: _imageWidth,
+                              child: Stack(
+                                children: [
+                                  Container(
+                                    decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                            image: FileImage(_file!),
+                                            fit: BoxFit.cover),
+                                        shape: BoxShape.circle),
+                                  ),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                        color: Colors.black.withOpacity(.3),
+                                        shape: BoxShape.circle),
+                                  ),
+                                  Center(
+                                      child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.edit,
+                                        size: 50,
+                                        color: GlobalTheme.kAccentDarkColor,
+                                      ),
+                                      if (_file != null)
+                                        _getFileSize(_file!, 0)
+                                            .text
+                                            .sm
+                                            .color(Colors.white)
+                                            .make(),
+                                    ],
+                                  ))
+                                ],
+                              ),
                             ),
-                          )
-                        : SizedBox(
-                            width: _imageWidth,
-                            height: _imageWidth,
-                            child: Stack(
-                              children: [
-                                Container(
-                                  decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                          image: FileImage(_file!),
-                                          fit: BoxFit.cover),
-                                      shape: BoxShape.circle),
-                                ),
-                                Container(
-                                  decoration: BoxDecoration(
-                                      color: Colors.black.withOpacity(.3),
-                                      shape: BoxShape.circle),
-                                ),
-                                Center(
-                                    child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Icon(
-                                      Icons.edit,
-                                      size: 50,
-                                      color: GlobalTheme.kAccentDarkColor,
-                                    ),
-                                    if (_file != null)
-                                      _getFileSize(_file!, 0)
-                                          .text
-                                          .sm
-                                          .color(Colors.white)
-                                          .make(),
-                                  ],
-                                ))
-                              ],
-                            ),
-                          ),
+                    ),
                   ),
                 ),
               ),

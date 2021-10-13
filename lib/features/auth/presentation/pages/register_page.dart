@@ -47,7 +47,6 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   void dispose() {
-    // _authBloc.close();
     super.dispose();
   }
 
@@ -84,10 +83,14 @@ class _RegisterPageState extends State<RegisterPage> {
       _modalType = ModalContainerType.FAILURE;
     });
     Future.delayed(Duration(milliseconds: 2000), () {
-      setState(() {
-        _showModal = false;
-        _modalType = ModalContainerType.LOADING;
-      });
+      _onModalReset();
+    });
+  }
+
+  void _onModalReset() {
+    setState(() {
+      _showModal = false;
+      _modalType = ModalContainerType.LOADING;
     });
   }
 
@@ -106,6 +109,7 @@ class _RegisterPageState extends State<RegisterPage> {
             body: ModalContainerWidget(
                 type: _modalType,
                 show: _showModal,
+                onReset: _onModalReset,
                 child: SingleChildScrollView(
                   child: Padding(
                     padding: EdgeInsets.only(left: 20, right: 20),

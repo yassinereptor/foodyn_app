@@ -1,4 +1,9 @@
+import 'dart:io';
+
 import 'package:dartz/dartz.dart';
+import 'package:foodyn_rest/core/data/models/coupon_model.dart';
+import 'package:foodyn_rest/core/data/models/image_model.dart';
+import 'package:foodyn_rest/core/data/models/membership_model.dart';
 import '../../data/models/auth_response_model.dart';
 import '../../data/models/user_model.dart';
 
@@ -13,4 +18,8 @@ abstract class IAuthRepository {
   Future<Either<AppFailure?, bool?>> resendConfirmationEmail(String email);
   Future<Either<AppFailure?, UserModel?>> getUser();
   Future<Either<AppFailure?, String?>> getToken();
+  Future<Either<AppFailure, ImageModel?>> uploadImage(File file);
+  Future<Either<AppFailure, UserModel?>> updateUser(UserModel user);
+  Future<Either<AppFailure, MembershipModel?>> saveMembership(int planId, int periodId, int? couponId);
+  Future<Either<AppFailure, CouponModel?>> checkCouponStatus(String code);
 }

@@ -3,12 +3,12 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:foodyn_rest/core/bloc/send_bloc/send_bloc.dart';
 import 'package:foodyn_rest/features/auth/presentation/widgets/botton_widget.dart';
 import '../../../../core/widgets/scaffold_container_widget.dart';
 import '../../../../core/domain/entities/app_failure.dart';
 import '../../../../core/config/injectable/injection.dart';
 import '../../../../core/utils/theme_brightness.dart';
-import '../../../../core/bloc/otp_bloc/otp_bloc.dart';
 import '../widgets/resend_otp_widget.dart';
 import '../../../../core/config/theme/global_theme.dart';
 import '../../../../core/bloc/auth_bloc/auth_bloc.dart';
@@ -38,15 +38,15 @@ class _VerifyOtpPageState extends State<VerifyOtpPage> {
   final _formKey = GlobalKey<FormState>();
   String? _currentOtp;
   late AuthBloc _authBloc;
-  late OtpBloc _otpBloc;
+  late SendBloc _otpBloc;
 
   @override
   void initState() {
     super.initState();
     _authBloc = context.read<AuthBloc>();
-    _otpBloc = getIt<OtpBloc>();
-    _otpBloc.add(OtpEvent.sendOtp(_authBloc.state.user!.profile!.dialCode!,
-        _authBloc.state.user!.profile!.phoneNumber!));
+    _otpBloc = getIt<SendBloc>();
+    _otpBloc.add(SendEvent.sendOtp(_authBloc.state.user!.dialCode!,
+        _authBloc.state.user!.phoneNumber!));
   }
 
   String? _validator(String? value) {
@@ -60,9 +60,7 @@ class _VerifyOtpPageState extends State<VerifyOtpPage> {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(
-          create: (context) => _authBloc,
-        ),
+        BlocProvider.value(value: _authBloc),
         BlocProvider(
           create: (context) => _otpBloc,
         ),
@@ -72,10 +70,10 @@ class _VerifyOtpPageState extends State<VerifyOtpPage> {
             BlocListener<AuthBloc, AuthState>(
               listener: (context, state) {},
             ),
-            BlocListener<OtpBloc, OtpState>(
+            BlocListener<SendBloc, SendState>(
               listener: (context, state) {
                 state.maybeWhen(
-                    loadingSuccess: () {
+                    loadingSuccess: (_) {
                       widget.onSuccess();
                     },
                     loadingFailed: (AppFailure failure) {
@@ -106,7 +104,7 @@ class _VerifyOtpPageState extends State<VerifyOtpPage> {
                     ButtonWidget(
                       onTap: () {
                         if (_formKey.currentState!.validate()) {
-                          _otpBloc.add(OtpEvent.verifyOtp(_currentOtp!));
+                          _otpBloc.add(SendEvent.verifyOtp(_currentOtp!));
                         }
                       },
                       children: [

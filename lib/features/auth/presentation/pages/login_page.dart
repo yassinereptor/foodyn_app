@@ -59,7 +59,6 @@ class _LoginPageState extends State<LoginPage> {
     setState(() {
       _showModal = true;
       _modalType = ModalContainerType.LOADING;
-      // _authBloc.close();
     });
   }
 
@@ -68,8 +67,7 @@ class _LoginPageState extends State<LoginPage> {
       _modalType = ModalContainerType.SUCCESS;
     });
     Future.delayed(Duration(milliseconds: 2000), () {
-      if (_authBloc.state.user!.profile == null ||
-          _authBloc.state.user!.profile!.id == null) {
+      if (_authBloc.state.user!.username == null) {
         Routes.seafarer.navigate(
           CompleteRegisterPage.kRouteName,
           navigationType: NavigationType.pushAndRemoveUntil,
@@ -90,17 +88,21 @@ class _LoginPageState extends State<LoginPage> {
       _modalType = ModalContainerType.FAILURE;
     });
     Future.delayed(Duration(milliseconds: 2000), () {
-      setState(() {
-        _showModal = false;
-        _modalType = ModalContainerType.LOADING;
-      });
+      _onModalReset();
+    });
+  }
+
+  void _onModalReset() {
+    setState(() {
+      _showModal = false;
+      _modalType = ModalContainerType.LOADING;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => _authBloc,
+    return BlocProvider.value(
+      value: _authBloc,
       child: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, state) {
           state.type.maybeWhen(
@@ -114,6 +116,7 @@ class _LoginPageState extends State<LoginPage> {
               body: ModalContainerWidget(
             type: _modalType,
             show: _showModal,
+            onReset: _onModalReset,
             child: SingleChildScrollView(
               child: Padding(
                 padding: EdgeInsets.only(left: 20, right: 20),
@@ -149,7 +152,7 @@ class _LoginPageState extends State<LoginPage> {
                                   child: TextFormWidget(
                                     controller: emailTextEditingController,
                                     onChanged: (_) {},
-                                    hint: "Email",
+                                    hint: "Login",
                                     keyboardType: TextInputType.emailAddress,
                                     validator: ValidatorService.emailValidator,
                                   )),

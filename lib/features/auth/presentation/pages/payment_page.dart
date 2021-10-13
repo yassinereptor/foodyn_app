@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:foodyn_rest/core/bloc/profile_bloc/profile_bloc.dart';
+import 'package:foodyn_rest/core/bloc/config_bloc/config_bloc.dart';
 import 'package:foodyn_rest/core/config/injectable/injection.dart';
 import 'package:foodyn_rest/core/data/models/membership_model.dart';
 import 'package:foodyn_rest/core/domain/entities/app_failure.dart';
@@ -40,8 +40,8 @@ class PaymentPage extends StatefulWidget {
 class _PaymentPageState extends State<PaymentPage>
     with SingleTickerProviderStateMixin {
   final _formKey = GlobalKey<FormState>();
+  late ConfigBloc _configBloc;
   late AuthBloc _authBloc;
-  late ProfileBloc _profileBloc;
   bool _showModal = false;
   ModalContainerType _modalType = ModalContainerType.LOADING;
   int selectedIndex = 0;
@@ -56,8 +56,8 @@ class _PaymentPageState extends State<PaymentPage>
   @override
   void initState() {
     super.initState();
+    _configBloc = context.read<ConfigBloc>();
     _authBloc = context.read<AuthBloc>();
-    _profileBloc = getIt<ProfileBloc>();
     _monthPrice = double.parse(CurrencyUtils(widget.plan).getMonthPrice());
     _yearPrice = double.parse(CurrencyUtils(widget.plan).getYearPrice());
     _savePrice = 0;
@@ -68,13 +68,12 @@ class _PaymentPageState extends State<PaymentPage>
 
   @override
   void dispose() {
-    _profileBloc.close();
     super.dispose();
   }
 
   void _onCompletePayment() {
     if (_totalPrice == 0) {
-      _profileBloc.add(ProfileEvent.saveMembership(widget.plan.id!,
+      _authBloc.add(AuthEvent.saveMembership(widget.plan.id!,
           selectedIndex, _coupon != null ? _coupon?.id : null));
     } else {
       Routes.seafarer.navigate(ChoosePaymentPage.kRouteName, params: {
@@ -113,23 +112,21 @@ class _PaymentPageState extends State<PaymentPage>
     });
   }
 
-  void _onStateLoadingMembershipSuccess(MembershipModel? membership) {
+  void _onStateLoadingSuccess() {
     setState(() {
       _modalType = ModalContainerType.SUCCESS;
     });
     Future.delayed(Duration(milliseconds: 2000), () {
-      setState(() {
-        _showModal = false;
-        _modalType = ModalContainerType.LOADING;
-      });
+      _onModalReset();
+      Routes.seafarer.navigate(
+        DashboardPage.kRouteName,
+        navigationType: NavigationType.pushAndRemoveUntil,
+        removeUntilPredicate: (route) {
+          return false;
+        },
+      );
     });
-    Routes.seafarer.navigate(
-      DashboardPage.kRouteName,
-      navigationType: NavigationType.pushAndRemoveUntil,
-      removeUntilPredicate: (route) {
-        return false;
-      },
-    );
+    
   }
 
   void _onStateLoadingFailure(AppFailure failure) {
@@ -137,10 +134,14 @@ class _PaymentPageState extends State<PaymentPage>
       _modalType = ModalContainerType.FAILURE;
     });
     Future.delayed(Duration(milliseconds: 2000), () {
-      setState(() {
-        _showModal = false;
-        _modalType = ModalContainerType.LOADING;
-      });
+      _onModalReset();
+    });
+  }
+
+  void _onModalReset() {
+    setState(() {
+      _showModal = false;
+      _modalType = ModalContainerType.LOADING;
     });
   }
 
@@ -148,24 +149,21 @@ class _PaymentPageState extends State<PaymentPage>
   Widget build(BuildContext context) {
     return MultiBlocProvider(
         providers: [
-          BlocProvider(
-            create: (context) => _authBloc,
-          ),
-          BlocProvider(
-            create: (context) => _profileBloc,
-          )
+          BlocProvider.value(value: _configBloc),
+        BlocProvider.value(value: _authBloc)
         ],
-        child: BlocListener<ProfileBloc, ProfileState>(
+        child: BlocListener<AuthBloc, AuthState>(
           listener: (context, state) {
-            state.maybeWhen(
+            state.type.maybeWhen(
             loadingInProgress: _onStateLoadingInProgress,
-            loadingMembershipSuccess: _onStateLoadingMembershipSuccess,
+            loadingSuccess: _onStateLoadingSuccess,
             loadingFailed: _onStateLoadingFailure,
             orElse: () {});
           },
           child: ScaffoldContainerWidget(
             type: _modalType,
             show: _showModal,
+            onReset: _onModalReset,
             logout: true,
             title: "Complete your payment",
             children: [
@@ -286,7 +284,7 @@ class _PaymentPageState extends State<PaymentPage>
                             "Plan:".text.xl.bold.make(),
                             Spacer(),
                             StringUtils.getTranslatedString(
-                                    _authBloc.state.locale!, widget.plan.title!)
+                                    _configBloc.state.locale!, widget.plan.title!)
                                 .text
                                 .xl
                                 .make(),

@@ -47,6 +47,33 @@ class _$AuthEventTearOff {
   _Logout logout() {
     return _Logout();
   }
+
+  _UploadImage uploadImage(ImageType type, File file) {
+    return _UploadImage(
+      type,
+      file,
+    );
+  }
+
+  _UpdateUser updateUser(UserModel user) {
+    return _UpdateUser(
+      user,
+    );
+  }
+
+  _SaveMembership saveMembership(int planId, int periodId, int? couponId) {
+    return _SaveMembership(
+      planId,
+      periodId,
+      couponId,
+    );
+  }
+
+  _CheckCouponStatus checkCouponStatus(String code) {
+    return _CheckCouponStatus(
+      code,
+    );
+  }
 }
 
 /// @nodoc
@@ -62,6 +89,11 @@ mixin _$AuthEvent {
     required TResult Function(String email) forgetPassword,
     required TResult Function() jwtIsExpired,
     required TResult Function() logout,
+    required TResult Function(ImageType type, File file) uploadImage,
+    required TResult Function(UserModel user) updateUser,
+    required TResult Function(int planId, int periodId, int? couponId)
+        saveMembership,
+    required TResult Function(String code) checkCouponStatus,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -72,6 +104,10 @@ mixin _$AuthEvent {
     TResult Function(String email)? forgetPassword,
     TResult Function()? jwtIsExpired,
     TResult Function()? logout,
+    TResult Function(ImageType type, File file)? uploadImage,
+    TResult Function(UserModel user)? updateUser,
+    TResult Function(int planId, int periodId, int? couponId)? saveMembership,
+    TResult Function(String code)? checkCouponStatus,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -83,6 +119,10 @@ mixin _$AuthEvent {
     required TResult Function(_ForgetPassword value) forgetPassword,
     required TResult Function(_JwtIsExpired value) jwtIsExpired,
     required TResult Function(_Logout value) logout,
+    required TResult Function(_UploadImage value) uploadImage,
+    required TResult Function(_UpdateUser value) updateUser,
+    required TResult Function(_SaveMembership value) saveMembership,
+    required TResult Function(_CheckCouponStatus value) checkCouponStatus,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -93,6 +133,10 @@ mixin _$AuthEvent {
     TResult Function(_ForgetPassword value)? forgetPassword,
     TResult Function(_JwtIsExpired value)? jwtIsExpired,
     TResult Function(_Logout value)? logout,
+    TResult Function(_UploadImage value)? uploadImage,
+    TResult Function(_UpdateUser value)? updateUser,
+    TResult Function(_SaveMembership value)? saveMembership,
+    TResult Function(_CheckCouponStatus value)? checkCouponStatus,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -156,6 +200,11 @@ class _$_Started implements _Started {
     required TResult Function(String email) forgetPassword,
     required TResult Function() jwtIsExpired,
     required TResult Function() logout,
+    required TResult Function(ImageType type, File file) uploadImage,
+    required TResult Function(UserModel user) updateUser,
+    required TResult Function(int planId, int periodId, int? couponId)
+        saveMembership,
+    required TResult Function(String code) checkCouponStatus,
   }) {
     return started();
   }
@@ -169,6 +218,10 @@ class _$_Started implements _Started {
     TResult Function(String email)? forgetPassword,
     TResult Function()? jwtIsExpired,
     TResult Function()? logout,
+    TResult Function(ImageType type, File file)? uploadImage,
+    TResult Function(UserModel user)? updateUser,
+    TResult Function(int planId, int periodId, int? couponId)? saveMembership,
+    TResult Function(String code)? checkCouponStatus,
     required TResult orElse(),
   }) {
     if (started != null) {
@@ -186,6 +239,10 @@ class _$_Started implements _Started {
     required TResult Function(_ForgetPassword value) forgetPassword,
     required TResult Function(_JwtIsExpired value) jwtIsExpired,
     required TResult Function(_Logout value) logout,
+    required TResult Function(_UploadImage value) uploadImage,
+    required TResult Function(_UpdateUser value) updateUser,
+    required TResult Function(_SaveMembership value) saveMembership,
+    required TResult Function(_CheckCouponStatus value) checkCouponStatus,
   }) {
     return started(this);
   }
@@ -199,6 +256,10 @@ class _$_Started implements _Started {
     TResult Function(_ForgetPassword value)? forgetPassword,
     TResult Function(_JwtIsExpired value)? jwtIsExpired,
     TResult Function(_Logout value)? logout,
+    TResult Function(_UploadImage value)? uploadImage,
+    TResult Function(_UpdateUser value)? updateUser,
+    TResult Function(_SaveMembership value)? saveMembership,
+    TResult Function(_CheckCouponStatus value)? checkCouponStatus,
     required TResult orElse(),
   }) {
     if (started != null) {
@@ -292,6 +353,11 @@ class _$_Login implements _Login {
     required TResult Function(String email) forgetPassword,
     required TResult Function() jwtIsExpired,
     required TResult Function() logout,
+    required TResult Function(ImageType type, File file) uploadImage,
+    required TResult Function(UserModel user) updateUser,
+    required TResult Function(int planId, int periodId, int? couponId)
+        saveMembership,
+    required TResult Function(String code) checkCouponStatus,
   }) {
     return login(email, password);
   }
@@ -305,6 +371,10 @@ class _$_Login implements _Login {
     TResult Function(String email)? forgetPassword,
     TResult Function()? jwtIsExpired,
     TResult Function()? logout,
+    TResult Function(ImageType type, File file)? uploadImage,
+    TResult Function(UserModel user)? updateUser,
+    TResult Function(int planId, int periodId, int? couponId)? saveMembership,
+    TResult Function(String code)? checkCouponStatus,
     required TResult orElse(),
   }) {
     if (login != null) {
@@ -322,6 +392,10 @@ class _$_Login implements _Login {
     required TResult Function(_ForgetPassword value) forgetPassword,
     required TResult Function(_JwtIsExpired value) jwtIsExpired,
     required TResult Function(_Logout value) logout,
+    required TResult Function(_UploadImage value) uploadImage,
+    required TResult Function(_UpdateUser value) updateUser,
+    required TResult Function(_SaveMembership value) saveMembership,
+    required TResult Function(_CheckCouponStatus value) checkCouponStatus,
   }) {
     return login(this);
   }
@@ -335,6 +409,10 @@ class _$_Login implements _Login {
     TResult Function(_ForgetPassword value)? forgetPassword,
     TResult Function(_JwtIsExpired value)? jwtIsExpired,
     TResult Function(_Logout value)? logout,
+    TResult Function(_UploadImage value)? uploadImage,
+    TResult Function(_UpdateUser value)? updateUser,
+    TResult Function(_SaveMembership value)? saveMembership,
+    TResult Function(_CheckCouponStatus value)? checkCouponStatus,
     required TResult orElse(),
   }) {
     if (login != null) {
@@ -433,6 +511,11 @@ class _$_Register implements _Register {
     required TResult Function(String email) forgetPassword,
     required TResult Function() jwtIsExpired,
     required TResult Function() logout,
+    required TResult Function(ImageType type, File file) uploadImage,
+    required TResult Function(UserModel user) updateUser,
+    required TResult Function(int planId, int periodId, int? couponId)
+        saveMembership,
+    required TResult Function(String code) checkCouponStatus,
   }) {
     return register(email, password);
   }
@@ -446,6 +529,10 @@ class _$_Register implements _Register {
     TResult Function(String email)? forgetPassword,
     TResult Function()? jwtIsExpired,
     TResult Function()? logout,
+    TResult Function(ImageType type, File file)? uploadImage,
+    TResult Function(UserModel user)? updateUser,
+    TResult Function(int planId, int periodId, int? couponId)? saveMembership,
+    TResult Function(String code)? checkCouponStatus,
     required TResult orElse(),
   }) {
     if (register != null) {
@@ -463,6 +550,10 @@ class _$_Register implements _Register {
     required TResult Function(_ForgetPassword value) forgetPassword,
     required TResult Function(_JwtIsExpired value) jwtIsExpired,
     required TResult Function(_Logout value) logout,
+    required TResult Function(_UploadImage value) uploadImage,
+    required TResult Function(_UpdateUser value) updateUser,
+    required TResult Function(_SaveMembership value) saveMembership,
+    required TResult Function(_CheckCouponStatus value) checkCouponStatus,
   }) {
     return register(this);
   }
@@ -476,6 +567,10 @@ class _$_Register implements _Register {
     TResult Function(_ForgetPassword value)? forgetPassword,
     TResult Function(_JwtIsExpired value)? jwtIsExpired,
     TResult Function(_Logout value)? logout,
+    TResult Function(_UploadImage value)? uploadImage,
+    TResult Function(_UpdateUser value)? updateUser,
+    TResult Function(_SaveMembership value)? saveMembership,
+    TResult Function(_CheckCouponStatus value)? checkCouponStatus,
     required TResult orElse(),
   }) {
     if (register != null) {
@@ -565,6 +660,11 @@ class _$_ForgetPassword implements _ForgetPassword {
     required TResult Function(String email) forgetPassword,
     required TResult Function() jwtIsExpired,
     required TResult Function() logout,
+    required TResult Function(ImageType type, File file) uploadImage,
+    required TResult Function(UserModel user) updateUser,
+    required TResult Function(int planId, int periodId, int? couponId)
+        saveMembership,
+    required TResult Function(String code) checkCouponStatus,
   }) {
     return forgetPassword(email);
   }
@@ -578,6 +678,10 @@ class _$_ForgetPassword implements _ForgetPassword {
     TResult Function(String email)? forgetPassword,
     TResult Function()? jwtIsExpired,
     TResult Function()? logout,
+    TResult Function(ImageType type, File file)? uploadImage,
+    TResult Function(UserModel user)? updateUser,
+    TResult Function(int planId, int periodId, int? couponId)? saveMembership,
+    TResult Function(String code)? checkCouponStatus,
     required TResult orElse(),
   }) {
     if (forgetPassword != null) {
@@ -595,6 +699,10 @@ class _$_ForgetPassword implements _ForgetPassword {
     required TResult Function(_ForgetPassword value) forgetPassword,
     required TResult Function(_JwtIsExpired value) jwtIsExpired,
     required TResult Function(_Logout value) logout,
+    required TResult Function(_UploadImage value) uploadImage,
+    required TResult Function(_UpdateUser value) updateUser,
+    required TResult Function(_SaveMembership value) saveMembership,
+    required TResult Function(_CheckCouponStatus value) checkCouponStatus,
   }) {
     return forgetPassword(this);
   }
@@ -608,6 +716,10 @@ class _$_ForgetPassword implements _ForgetPassword {
     TResult Function(_ForgetPassword value)? forgetPassword,
     TResult Function(_JwtIsExpired value)? jwtIsExpired,
     TResult Function(_Logout value)? logout,
+    TResult Function(_UploadImage value)? uploadImage,
+    TResult Function(_UpdateUser value)? updateUser,
+    TResult Function(_SaveMembership value)? saveMembership,
+    TResult Function(_CheckCouponStatus value)? checkCouponStatus,
     required TResult orElse(),
   }) {
     if (forgetPassword != null) {
@@ -671,6 +783,11 @@ class _$_JwtIsExpired implements _JwtIsExpired {
     required TResult Function(String email) forgetPassword,
     required TResult Function() jwtIsExpired,
     required TResult Function() logout,
+    required TResult Function(ImageType type, File file) uploadImage,
+    required TResult Function(UserModel user) updateUser,
+    required TResult Function(int planId, int periodId, int? couponId)
+        saveMembership,
+    required TResult Function(String code) checkCouponStatus,
   }) {
     return jwtIsExpired();
   }
@@ -684,6 +801,10 @@ class _$_JwtIsExpired implements _JwtIsExpired {
     TResult Function(String email)? forgetPassword,
     TResult Function()? jwtIsExpired,
     TResult Function()? logout,
+    TResult Function(ImageType type, File file)? uploadImage,
+    TResult Function(UserModel user)? updateUser,
+    TResult Function(int planId, int periodId, int? couponId)? saveMembership,
+    TResult Function(String code)? checkCouponStatus,
     required TResult orElse(),
   }) {
     if (jwtIsExpired != null) {
@@ -701,6 +822,10 @@ class _$_JwtIsExpired implements _JwtIsExpired {
     required TResult Function(_ForgetPassword value) forgetPassword,
     required TResult Function(_JwtIsExpired value) jwtIsExpired,
     required TResult Function(_Logout value) logout,
+    required TResult Function(_UploadImage value) uploadImage,
+    required TResult Function(_UpdateUser value) updateUser,
+    required TResult Function(_SaveMembership value) saveMembership,
+    required TResult Function(_CheckCouponStatus value) checkCouponStatus,
   }) {
     return jwtIsExpired(this);
   }
@@ -714,6 +839,10 @@ class _$_JwtIsExpired implements _JwtIsExpired {
     TResult Function(_ForgetPassword value)? forgetPassword,
     TResult Function(_JwtIsExpired value)? jwtIsExpired,
     TResult Function(_Logout value)? logout,
+    TResult Function(_UploadImage value)? uploadImage,
+    TResult Function(_UpdateUser value)? updateUser,
+    TResult Function(_SaveMembership value)? saveMembership,
+    TResult Function(_CheckCouponStatus value)? checkCouponStatus,
     required TResult orElse(),
   }) {
     if (jwtIsExpired != null) {
@@ -770,6 +899,11 @@ class _$_Logout implements _Logout {
     required TResult Function(String email) forgetPassword,
     required TResult Function() jwtIsExpired,
     required TResult Function() logout,
+    required TResult Function(ImageType type, File file) uploadImage,
+    required TResult Function(UserModel user) updateUser,
+    required TResult Function(int planId, int periodId, int? couponId)
+        saveMembership,
+    required TResult Function(String code) checkCouponStatus,
   }) {
     return logout();
   }
@@ -783,6 +917,10 @@ class _$_Logout implements _Logout {
     TResult Function(String email)? forgetPassword,
     TResult Function()? jwtIsExpired,
     TResult Function()? logout,
+    TResult Function(ImageType type, File file)? uploadImage,
+    TResult Function(UserModel user)? updateUser,
+    TResult Function(int planId, int periodId, int? couponId)? saveMembership,
+    TResult Function(String code)? checkCouponStatus,
     required TResult orElse(),
   }) {
     if (logout != null) {
@@ -800,6 +938,10 @@ class _$_Logout implements _Logout {
     required TResult Function(_ForgetPassword value) forgetPassword,
     required TResult Function(_JwtIsExpired value) jwtIsExpired,
     required TResult Function(_Logout value) logout,
+    required TResult Function(_UploadImage value) uploadImage,
+    required TResult Function(_UpdateUser value) updateUser,
+    required TResult Function(_SaveMembership value) saveMembership,
+    required TResult Function(_CheckCouponStatus value) checkCouponStatus,
   }) {
     return logout(this);
   }
@@ -813,6 +955,10 @@ class _$_Logout implements _Logout {
     TResult Function(_ForgetPassword value)? forgetPassword,
     TResult Function(_JwtIsExpired value)? jwtIsExpired,
     TResult Function(_Logout value)? logout,
+    TResult Function(_UploadImage value)? uploadImage,
+    TResult Function(_UpdateUser value)? updateUser,
+    TResult Function(_SaveMembership value)? saveMembership,
+    TResult Function(_CheckCouponStatus value)? checkCouponStatus,
     required TResult orElse(),
   }) {
     if (logout != null) {
@@ -827,6 +973,637 @@ abstract class _Logout implements AuthEvent {
 }
 
 /// @nodoc
+abstract class _$UploadImageCopyWith<$Res> {
+  factory _$UploadImageCopyWith(
+          _UploadImage value, $Res Function(_UploadImage) then) =
+      __$UploadImageCopyWithImpl<$Res>;
+  $Res call({ImageType type, File file});
+}
+
+/// @nodoc
+class __$UploadImageCopyWithImpl<$Res> extends _$AuthEventCopyWithImpl<$Res>
+    implements _$UploadImageCopyWith<$Res> {
+  __$UploadImageCopyWithImpl(
+      _UploadImage _value, $Res Function(_UploadImage) _then)
+      : super(_value, (v) => _then(v as _UploadImage));
+
+  @override
+  _UploadImage get _value => super._value as _UploadImage;
+
+  @override
+  $Res call({
+    Object? type = freezed,
+    Object? file = freezed,
+  }) {
+    return _then(_UploadImage(
+      type == freezed
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as ImageType,
+      file == freezed
+          ? _value.file
+          : file // ignore: cast_nullable_to_non_nullable
+              as File,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_UploadImage implements _UploadImage {
+  _$_UploadImage(this.type, this.file);
+
+  @override
+  final ImageType type;
+  @override
+  final File file;
+
+  @override
+  String toString() {
+    return 'AuthEvent.uploadImage(type: $type, file: $file)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _UploadImage &&
+            (identical(other.type, type) ||
+                const DeepCollectionEquality().equals(other.type, type)) &&
+            (identical(other.file, file) ||
+                const DeepCollectionEquality().equals(other.file, file)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(type) ^
+      const DeepCollectionEquality().hash(file);
+
+  @JsonKey(ignore: true)
+  @override
+  _$UploadImageCopyWith<_UploadImage> get copyWith =>
+      __$UploadImageCopyWithImpl<_UploadImage>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() started,
+    required TResult Function(String email, String password) login,
+    required TResult Function(String email, String password) register,
+    required TResult Function(String email) forgetPassword,
+    required TResult Function() jwtIsExpired,
+    required TResult Function() logout,
+    required TResult Function(ImageType type, File file) uploadImage,
+    required TResult Function(UserModel user) updateUser,
+    required TResult Function(int planId, int periodId, int? couponId)
+        saveMembership,
+    required TResult Function(String code) checkCouponStatus,
+  }) {
+    return uploadImage(type, file);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? started,
+    TResult Function(String email, String password)? login,
+    TResult Function(String email, String password)? register,
+    TResult Function(String email)? forgetPassword,
+    TResult Function()? jwtIsExpired,
+    TResult Function()? logout,
+    TResult Function(ImageType type, File file)? uploadImage,
+    TResult Function(UserModel user)? updateUser,
+    TResult Function(int planId, int periodId, int? couponId)? saveMembership,
+    TResult Function(String code)? checkCouponStatus,
+    required TResult orElse(),
+  }) {
+    if (uploadImage != null) {
+      return uploadImage(type, file);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Started value) started,
+    required TResult Function(_Login value) login,
+    required TResult Function(_Register value) register,
+    required TResult Function(_ForgetPassword value) forgetPassword,
+    required TResult Function(_JwtIsExpired value) jwtIsExpired,
+    required TResult Function(_Logout value) logout,
+    required TResult Function(_UploadImage value) uploadImage,
+    required TResult Function(_UpdateUser value) updateUser,
+    required TResult Function(_SaveMembership value) saveMembership,
+    required TResult Function(_CheckCouponStatus value) checkCouponStatus,
+  }) {
+    return uploadImage(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Started value)? started,
+    TResult Function(_Login value)? login,
+    TResult Function(_Register value)? register,
+    TResult Function(_ForgetPassword value)? forgetPassword,
+    TResult Function(_JwtIsExpired value)? jwtIsExpired,
+    TResult Function(_Logout value)? logout,
+    TResult Function(_UploadImage value)? uploadImage,
+    TResult Function(_UpdateUser value)? updateUser,
+    TResult Function(_SaveMembership value)? saveMembership,
+    TResult Function(_CheckCouponStatus value)? checkCouponStatus,
+    required TResult orElse(),
+  }) {
+    if (uploadImage != null) {
+      return uploadImage(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _UploadImage implements AuthEvent {
+  factory _UploadImage(ImageType type, File file) = _$_UploadImage;
+
+  ImageType get type => throw _privateConstructorUsedError;
+  File get file => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  _$UploadImageCopyWith<_UploadImage> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$UpdateUserCopyWith<$Res> {
+  factory _$UpdateUserCopyWith(
+          _UpdateUser value, $Res Function(_UpdateUser) then) =
+      __$UpdateUserCopyWithImpl<$Res>;
+  $Res call({UserModel user});
+}
+
+/// @nodoc
+class __$UpdateUserCopyWithImpl<$Res> extends _$AuthEventCopyWithImpl<$Res>
+    implements _$UpdateUserCopyWith<$Res> {
+  __$UpdateUserCopyWithImpl(
+      _UpdateUser _value, $Res Function(_UpdateUser) _then)
+      : super(_value, (v) => _then(v as _UpdateUser));
+
+  @override
+  _UpdateUser get _value => super._value as _UpdateUser;
+
+  @override
+  $Res call({
+    Object? user = freezed,
+  }) {
+    return _then(_UpdateUser(
+      user == freezed
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as UserModel,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_UpdateUser implements _UpdateUser {
+  _$_UpdateUser(this.user);
+
+  @override
+  final UserModel user;
+
+  @override
+  String toString() {
+    return 'AuthEvent.updateUser(user: $user)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _UpdateUser &&
+            (identical(other.user, user) ||
+                const DeepCollectionEquality().equals(other.user, user)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(user);
+
+  @JsonKey(ignore: true)
+  @override
+  _$UpdateUserCopyWith<_UpdateUser> get copyWith =>
+      __$UpdateUserCopyWithImpl<_UpdateUser>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() started,
+    required TResult Function(String email, String password) login,
+    required TResult Function(String email, String password) register,
+    required TResult Function(String email) forgetPassword,
+    required TResult Function() jwtIsExpired,
+    required TResult Function() logout,
+    required TResult Function(ImageType type, File file) uploadImage,
+    required TResult Function(UserModel user) updateUser,
+    required TResult Function(int planId, int periodId, int? couponId)
+        saveMembership,
+    required TResult Function(String code) checkCouponStatus,
+  }) {
+    return updateUser(user);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? started,
+    TResult Function(String email, String password)? login,
+    TResult Function(String email, String password)? register,
+    TResult Function(String email)? forgetPassword,
+    TResult Function()? jwtIsExpired,
+    TResult Function()? logout,
+    TResult Function(ImageType type, File file)? uploadImage,
+    TResult Function(UserModel user)? updateUser,
+    TResult Function(int planId, int periodId, int? couponId)? saveMembership,
+    TResult Function(String code)? checkCouponStatus,
+    required TResult orElse(),
+  }) {
+    if (updateUser != null) {
+      return updateUser(user);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Started value) started,
+    required TResult Function(_Login value) login,
+    required TResult Function(_Register value) register,
+    required TResult Function(_ForgetPassword value) forgetPassword,
+    required TResult Function(_JwtIsExpired value) jwtIsExpired,
+    required TResult Function(_Logout value) logout,
+    required TResult Function(_UploadImage value) uploadImage,
+    required TResult Function(_UpdateUser value) updateUser,
+    required TResult Function(_SaveMembership value) saveMembership,
+    required TResult Function(_CheckCouponStatus value) checkCouponStatus,
+  }) {
+    return updateUser(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Started value)? started,
+    TResult Function(_Login value)? login,
+    TResult Function(_Register value)? register,
+    TResult Function(_ForgetPassword value)? forgetPassword,
+    TResult Function(_JwtIsExpired value)? jwtIsExpired,
+    TResult Function(_Logout value)? logout,
+    TResult Function(_UploadImage value)? uploadImage,
+    TResult Function(_UpdateUser value)? updateUser,
+    TResult Function(_SaveMembership value)? saveMembership,
+    TResult Function(_CheckCouponStatus value)? checkCouponStatus,
+    required TResult orElse(),
+  }) {
+    if (updateUser != null) {
+      return updateUser(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _UpdateUser implements AuthEvent {
+  factory _UpdateUser(UserModel user) = _$_UpdateUser;
+
+  UserModel get user => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  _$UpdateUserCopyWith<_UpdateUser> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$SaveMembershipCopyWith<$Res> {
+  factory _$SaveMembershipCopyWith(
+          _SaveMembership value, $Res Function(_SaveMembership) then) =
+      __$SaveMembershipCopyWithImpl<$Res>;
+  $Res call({int planId, int periodId, int? couponId});
+}
+
+/// @nodoc
+class __$SaveMembershipCopyWithImpl<$Res> extends _$AuthEventCopyWithImpl<$Res>
+    implements _$SaveMembershipCopyWith<$Res> {
+  __$SaveMembershipCopyWithImpl(
+      _SaveMembership _value, $Res Function(_SaveMembership) _then)
+      : super(_value, (v) => _then(v as _SaveMembership));
+
+  @override
+  _SaveMembership get _value => super._value as _SaveMembership;
+
+  @override
+  $Res call({
+    Object? planId = freezed,
+    Object? periodId = freezed,
+    Object? couponId = freezed,
+  }) {
+    return _then(_SaveMembership(
+      planId == freezed
+          ? _value.planId
+          : planId // ignore: cast_nullable_to_non_nullable
+              as int,
+      periodId == freezed
+          ? _value.periodId
+          : periodId // ignore: cast_nullable_to_non_nullable
+              as int,
+      couponId == freezed
+          ? _value.couponId
+          : couponId // ignore: cast_nullable_to_non_nullable
+              as int?,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_SaveMembership implements _SaveMembership {
+  _$_SaveMembership(this.planId, this.periodId, this.couponId);
+
+  @override
+  final int planId;
+  @override
+  final int periodId;
+  @override
+  final int? couponId;
+
+  @override
+  String toString() {
+    return 'AuthEvent.saveMembership(planId: $planId, periodId: $periodId, couponId: $couponId)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _SaveMembership &&
+            (identical(other.planId, planId) ||
+                const DeepCollectionEquality().equals(other.planId, planId)) &&
+            (identical(other.periodId, periodId) ||
+                const DeepCollectionEquality()
+                    .equals(other.periodId, periodId)) &&
+            (identical(other.couponId, couponId) ||
+                const DeepCollectionEquality()
+                    .equals(other.couponId, couponId)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(planId) ^
+      const DeepCollectionEquality().hash(periodId) ^
+      const DeepCollectionEquality().hash(couponId);
+
+  @JsonKey(ignore: true)
+  @override
+  _$SaveMembershipCopyWith<_SaveMembership> get copyWith =>
+      __$SaveMembershipCopyWithImpl<_SaveMembership>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() started,
+    required TResult Function(String email, String password) login,
+    required TResult Function(String email, String password) register,
+    required TResult Function(String email) forgetPassword,
+    required TResult Function() jwtIsExpired,
+    required TResult Function() logout,
+    required TResult Function(ImageType type, File file) uploadImage,
+    required TResult Function(UserModel user) updateUser,
+    required TResult Function(int planId, int periodId, int? couponId)
+        saveMembership,
+    required TResult Function(String code) checkCouponStatus,
+  }) {
+    return saveMembership(planId, periodId, couponId);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? started,
+    TResult Function(String email, String password)? login,
+    TResult Function(String email, String password)? register,
+    TResult Function(String email)? forgetPassword,
+    TResult Function()? jwtIsExpired,
+    TResult Function()? logout,
+    TResult Function(ImageType type, File file)? uploadImage,
+    TResult Function(UserModel user)? updateUser,
+    TResult Function(int planId, int periodId, int? couponId)? saveMembership,
+    TResult Function(String code)? checkCouponStatus,
+    required TResult orElse(),
+  }) {
+    if (saveMembership != null) {
+      return saveMembership(planId, periodId, couponId);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Started value) started,
+    required TResult Function(_Login value) login,
+    required TResult Function(_Register value) register,
+    required TResult Function(_ForgetPassword value) forgetPassword,
+    required TResult Function(_JwtIsExpired value) jwtIsExpired,
+    required TResult Function(_Logout value) logout,
+    required TResult Function(_UploadImage value) uploadImage,
+    required TResult Function(_UpdateUser value) updateUser,
+    required TResult Function(_SaveMembership value) saveMembership,
+    required TResult Function(_CheckCouponStatus value) checkCouponStatus,
+  }) {
+    return saveMembership(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Started value)? started,
+    TResult Function(_Login value)? login,
+    TResult Function(_Register value)? register,
+    TResult Function(_ForgetPassword value)? forgetPassword,
+    TResult Function(_JwtIsExpired value)? jwtIsExpired,
+    TResult Function(_Logout value)? logout,
+    TResult Function(_UploadImage value)? uploadImage,
+    TResult Function(_UpdateUser value)? updateUser,
+    TResult Function(_SaveMembership value)? saveMembership,
+    TResult Function(_CheckCouponStatus value)? checkCouponStatus,
+    required TResult orElse(),
+  }) {
+    if (saveMembership != null) {
+      return saveMembership(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _SaveMembership implements AuthEvent {
+  factory _SaveMembership(int planId, int periodId, int? couponId) =
+      _$_SaveMembership;
+
+  int get planId => throw _privateConstructorUsedError;
+  int get periodId => throw _privateConstructorUsedError;
+  int? get couponId => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  _$SaveMembershipCopyWith<_SaveMembership> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$CheckCouponStatusCopyWith<$Res> {
+  factory _$CheckCouponStatusCopyWith(
+          _CheckCouponStatus value, $Res Function(_CheckCouponStatus) then) =
+      __$CheckCouponStatusCopyWithImpl<$Res>;
+  $Res call({String code});
+}
+
+/// @nodoc
+class __$CheckCouponStatusCopyWithImpl<$Res>
+    extends _$AuthEventCopyWithImpl<$Res>
+    implements _$CheckCouponStatusCopyWith<$Res> {
+  __$CheckCouponStatusCopyWithImpl(
+      _CheckCouponStatus _value, $Res Function(_CheckCouponStatus) _then)
+      : super(_value, (v) => _then(v as _CheckCouponStatus));
+
+  @override
+  _CheckCouponStatus get _value => super._value as _CheckCouponStatus;
+
+  @override
+  $Res call({
+    Object? code = freezed,
+  }) {
+    return _then(_CheckCouponStatus(
+      code == freezed
+          ? _value.code
+          : code // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_CheckCouponStatus implements _CheckCouponStatus {
+  _$_CheckCouponStatus(this.code);
+
+  @override
+  final String code;
+
+  @override
+  String toString() {
+    return 'AuthEvent.checkCouponStatus(code: $code)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _CheckCouponStatus &&
+            (identical(other.code, code) ||
+                const DeepCollectionEquality().equals(other.code, code)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(code);
+
+  @JsonKey(ignore: true)
+  @override
+  _$CheckCouponStatusCopyWith<_CheckCouponStatus> get copyWith =>
+      __$CheckCouponStatusCopyWithImpl<_CheckCouponStatus>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() started,
+    required TResult Function(String email, String password) login,
+    required TResult Function(String email, String password) register,
+    required TResult Function(String email) forgetPassword,
+    required TResult Function() jwtIsExpired,
+    required TResult Function() logout,
+    required TResult Function(ImageType type, File file) uploadImage,
+    required TResult Function(UserModel user) updateUser,
+    required TResult Function(int planId, int periodId, int? couponId)
+        saveMembership,
+    required TResult Function(String code) checkCouponStatus,
+  }) {
+    return checkCouponStatus(code);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? started,
+    TResult Function(String email, String password)? login,
+    TResult Function(String email, String password)? register,
+    TResult Function(String email)? forgetPassword,
+    TResult Function()? jwtIsExpired,
+    TResult Function()? logout,
+    TResult Function(ImageType type, File file)? uploadImage,
+    TResult Function(UserModel user)? updateUser,
+    TResult Function(int planId, int periodId, int? couponId)? saveMembership,
+    TResult Function(String code)? checkCouponStatus,
+    required TResult orElse(),
+  }) {
+    if (checkCouponStatus != null) {
+      return checkCouponStatus(code);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Started value) started,
+    required TResult Function(_Login value) login,
+    required TResult Function(_Register value) register,
+    required TResult Function(_ForgetPassword value) forgetPassword,
+    required TResult Function(_JwtIsExpired value) jwtIsExpired,
+    required TResult Function(_Logout value) logout,
+    required TResult Function(_UploadImage value) uploadImage,
+    required TResult Function(_UpdateUser value) updateUser,
+    required TResult Function(_SaveMembership value) saveMembership,
+    required TResult Function(_CheckCouponStatus value) checkCouponStatus,
+  }) {
+    return checkCouponStatus(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Started value)? started,
+    TResult Function(_Login value)? login,
+    TResult Function(_Register value)? register,
+    TResult Function(_ForgetPassword value)? forgetPassword,
+    TResult Function(_JwtIsExpired value)? jwtIsExpired,
+    TResult Function(_Logout value)? logout,
+    TResult Function(_UploadImage value)? uploadImage,
+    TResult Function(_UpdateUser value)? updateUser,
+    TResult Function(_SaveMembership value)? saveMembership,
+    TResult Function(_CheckCouponStatus value)? checkCouponStatus,
+    required TResult orElse(),
+  }) {
+    if (checkCouponStatus != null) {
+      return checkCouponStatus(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _CheckCouponStatus implements AuthEvent {
+  factory _CheckCouponStatus(String code) = _$_CheckCouponStatus;
+
+  String get code => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  _$CheckCouponStatusCopyWith<_CheckCouponStatus> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
 class _$AuthStateTearOff {
   const _$AuthStateTearOff();
 
@@ -834,14 +1611,12 @@ class _$AuthStateTearOff {
       {required AuthStateType type,
       required AuthStatus status,
       UserModel? user,
-      String? token,
-      Locale? locale}) {
+      String? token}) {
     return _AuthState(
       type: type,
       status: status,
       user: user,
       token: token,
-      locale: locale,
     );
   }
 }
@@ -855,7 +1630,6 @@ mixin _$AuthState {
   AuthStatus get status => throw _privateConstructorUsedError;
   UserModel? get user => throw _privateConstructorUsedError;
   String? get token => throw _privateConstructorUsedError;
-  Locale? get locale => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $AuthStateCopyWith<AuthState> get copyWith =>
@@ -867,11 +1641,7 @@ abstract class $AuthStateCopyWith<$Res> {
   factory $AuthStateCopyWith(AuthState value, $Res Function(AuthState) then) =
       _$AuthStateCopyWithImpl<$Res>;
   $Res call(
-      {AuthStateType type,
-      AuthStatus status,
-      UserModel? user,
-      String? token,
-      Locale? locale});
+      {AuthStateType type, AuthStatus status, UserModel? user, String? token});
 
   $AuthStateTypeCopyWith<$Res> get type;
   $AuthStatusCopyWith<$Res> get status;
@@ -891,7 +1661,6 @@ class _$AuthStateCopyWithImpl<$Res> implements $AuthStateCopyWith<$Res> {
     Object? status = freezed,
     Object? user = freezed,
     Object? token = freezed,
-    Object? locale = freezed,
   }) {
     return _then(_value.copyWith(
       type: type == freezed
@@ -910,10 +1679,6 @@ class _$AuthStateCopyWithImpl<$Res> implements $AuthStateCopyWith<$Res> {
           ? _value.token
           : token // ignore: cast_nullable_to_non_nullable
               as String?,
-      locale: locale == freezed
-          ? _value.locale
-          : locale // ignore: cast_nullable_to_non_nullable
-              as Locale?,
     ));
   }
 
@@ -939,11 +1704,7 @@ abstract class _$AuthStateCopyWith<$Res> implements $AuthStateCopyWith<$Res> {
       __$AuthStateCopyWithImpl<$Res>;
   @override
   $Res call(
-      {AuthStateType type,
-      AuthStatus status,
-      UserModel? user,
-      String? token,
-      Locale? locale});
+      {AuthStateType type, AuthStatus status, UserModel? user, String? token});
 
   @override
   $AuthStateTypeCopyWith<$Res> get type;
@@ -966,7 +1727,6 @@ class __$AuthStateCopyWithImpl<$Res> extends _$AuthStateCopyWithImpl<$Res>
     Object? status = freezed,
     Object? user = freezed,
     Object? token = freezed,
-    Object? locale = freezed,
   }) {
     return _then(_AuthState(
       type: type == freezed
@@ -985,10 +1745,6 @@ class __$AuthStateCopyWithImpl<$Res> extends _$AuthStateCopyWithImpl<$Res>
           ? _value.token
           : token // ignore: cast_nullable_to_non_nullable
               as String?,
-      locale: locale == freezed
-          ? _value.locale
-          : locale // ignore: cast_nullable_to_non_nullable
-              as Locale?,
     ));
   }
 }
@@ -997,11 +1753,7 @@ class __$AuthStateCopyWithImpl<$Res> extends _$AuthStateCopyWithImpl<$Res>
 
 class _$_AuthState implements _AuthState {
   const _$_AuthState(
-      {required this.type,
-      required this.status,
-      this.user,
-      this.token,
-      this.locale});
+      {required this.type, required this.status, this.user, this.token});
 
   @override
   final AuthStateType type;
@@ -1011,12 +1763,10 @@ class _$_AuthState implements _AuthState {
   final UserModel? user;
   @override
   final String? token;
-  @override
-  final Locale? locale;
 
   @override
   String toString() {
-    return 'AuthState(type: $type, status: $status, user: $user, token: $token, locale: $locale)';
+    return 'AuthState(type: $type, status: $status, user: $user, token: $token)';
   }
 
   @override
@@ -1030,9 +1780,7 @@ class _$_AuthState implements _AuthState {
             (identical(other.user, user) ||
                 const DeepCollectionEquality().equals(other.user, user)) &&
             (identical(other.token, token) ||
-                const DeepCollectionEquality().equals(other.token, token)) &&
-            (identical(other.locale, locale) ||
-                const DeepCollectionEquality().equals(other.locale, locale)));
+                const DeepCollectionEquality().equals(other.token, token)));
   }
 
   @override
@@ -1041,8 +1789,7 @@ class _$_AuthState implements _AuthState {
       const DeepCollectionEquality().hash(type) ^
       const DeepCollectionEquality().hash(status) ^
       const DeepCollectionEquality().hash(user) ^
-      const DeepCollectionEquality().hash(token) ^
-      const DeepCollectionEquality().hash(locale);
+      const DeepCollectionEquality().hash(token);
 
   @JsonKey(ignore: true)
   @override
@@ -1055,8 +1802,7 @@ abstract class _AuthState implements AuthState {
       {required AuthStateType type,
       required AuthStatus status,
       UserModel? user,
-      String? token,
-      Locale? locale}) = _$_AuthState;
+      String? token}) = _$_AuthState;
 
   @override
   AuthStateType get type => throw _privateConstructorUsedError;
@@ -1066,8 +1812,6 @@ abstract class _AuthState implements AuthState {
   UserModel? get user => throw _privateConstructorUsedError;
   @override
   String? get token => throw _privateConstructorUsedError;
-  @override
-  Locale? get locale => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$AuthStateCopyWith<_AuthState> get copyWith =>
@@ -1099,6 +1843,12 @@ class _$AuthStateTypeTearOff {
   _LogedOut logedOut() {
     return const _LogedOut();
   }
+
+  _LoadingCouponSuccess loadingCouponSuccess(CouponModel? coupon) {
+    return _LoadingCouponSuccess(
+      coupon,
+    );
+  }
 }
 
 /// @nodoc
@@ -1113,6 +1863,7 @@ mixin _$AuthStateType {
     required TResult Function() loadingSuccess,
     required TResult Function(AppFailure failure) loadingFailed,
     required TResult Function() logedOut,
+    required TResult Function(CouponModel? coupon) loadingCouponSuccess,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -1122,6 +1873,7 @@ mixin _$AuthStateType {
     TResult Function()? loadingSuccess,
     TResult Function(AppFailure failure)? loadingFailed,
     TResult Function()? logedOut,
+    TResult Function(CouponModel? coupon)? loadingCouponSuccess,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -1132,6 +1884,7 @@ mixin _$AuthStateType {
     required TResult Function(_LoadingSuccess value) loadingSuccess,
     required TResult Function(_LoadingFailed value) loadingFailed,
     required TResult Function(_LogedOut value) logedOut,
+    required TResult Function(_LoadingCouponSuccess value) loadingCouponSuccess,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -1141,6 +1894,7 @@ mixin _$AuthStateType {
     TResult Function(_LoadingSuccess value)? loadingSuccess,
     TResult Function(_LoadingFailed value)? loadingFailed,
     TResult Function(_LogedOut value)? logedOut,
+    TResult Function(_LoadingCouponSuccess value)? loadingCouponSuccess,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -1205,6 +1959,7 @@ class _$_Initial implements _Initial {
     required TResult Function() loadingSuccess,
     required TResult Function(AppFailure failure) loadingFailed,
     required TResult Function() logedOut,
+    required TResult Function(CouponModel? coupon) loadingCouponSuccess,
   }) {
     return initial();
   }
@@ -1217,6 +1972,7 @@ class _$_Initial implements _Initial {
     TResult Function()? loadingSuccess,
     TResult Function(AppFailure failure)? loadingFailed,
     TResult Function()? logedOut,
+    TResult Function(CouponModel? coupon)? loadingCouponSuccess,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -1233,6 +1989,7 @@ class _$_Initial implements _Initial {
     required TResult Function(_LoadingSuccess value) loadingSuccess,
     required TResult Function(_LoadingFailed value) loadingFailed,
     required TResult Function(_LogedOut value) logedOut,
+    required TResult Function(_LoadingCouponSuccess value) loadingCouponSuccess,
   }) {
     return initial(this);
   }
@@ -1245,6 +2002,7 @@ class _$_Initial implements _Initial {
     TResult Function(_LoadingSuccess value)? loadingSuccess,
     TResult Function(_LoadingFailed value)? loadingFailed,
     TResult Function(_LogedOut value)? logedOut,
+    TResult Function(_LoadingCouponSuccess value)? loadingCouponSuccess,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -1303,6 +2061,7 @@ class _$_LoadingInProgress implements _LoadingInProgress {
     required TResult Function() loadingSuccess,
     required TResult Function(AppFailure failure) loadingFailed,
     required TResult Function() logedOut,
+    required TResult Function(CouponModel? coupon) loadingCouponSuccess,
   }) {
     return loadingInProgress();
   }
@@ -1315,6 +2074,7 @@ class _$_LoadingInProgress implements _LoadingInProgress {
     TResult Function()? loadingSuccess,
     TResult Function(AppFailure failure)? loadingFailed,
     TResult Function()? logedOut,
+    TResult Function(CouponModel? coupon)? loadingCouponSuccess,
     required TResult orElse(),
   }) {
     if (loadingInProgress != null) {
@@ -1331,6 +2091,7 @@ class _$_LoadingInProgress implements _LoadingInProgress {
     required TResult Function(_LoadingSuccess value) loadingSuccess,
     required TResult Function(_LoadingFailed value) loadingFailed,
     required TResult Function(_LogedOut value) logedOut,
+    required TResult Function(_LoadingCouponSuccess value) loadingCouponSuccess,
   }) {
     return loadingInProgress(this);
   }
@@ -1343,6 +2104,7 @@ class _$_LoadingInProgress implements _LoadingInProgress {
     TResult Function(_LoadingSuccess value)? loadingSuccess,
     TResult Function(_LoadingFailed value)? loadingFailed,
     TResult Function(_LogedOut value)? logedOut,
+    TResult Function(_LoadingCouponSuccess value)? loadingCouponSuccess,
     required TResult orElse(),
   }) {
     if (loadingInProgress != null) {
@@ -1401,6 +2163,7 @@ class _$_LoadingSuccess implements _LoadingSuccess {
     required TResult Function() loadingSuccess,
     required TResult Function(AppFailure failure) loadingFailed,
     required TResult Function() logedOut,
+    required TResult Function(CouponModel? coupon) loadingCouponSuccess,
   }) {
     return loadingSuccess();
   }
@@ -1413,6 +2176,7 @@ class _$_LoadingSuccess implements _LoadingSuccess {
     TResult Function()? loadingSuccess,
     TResult Function(AppFailure failure)? loadingFailed,
     TResult Function()? logedOut,
+    TResult Function(CouponModel? coupon)? loadingCouponSuccess,
     required TResult orElse(),
   }) {
     if (loadingSuccess != null) {
@@ -1429,6 +2193,7 @@ class _$_LoadingSuccess implements _LoadingSuccess {
     required TResult Function(_LoadingSuccess value) loadingSuccess,
     required TResult Function(_LoadingFailed value) loadingFailed,
     required TResult Function(_LogedOut value) logedOut,
+    required TResult Function(_LoadingCouponSuccess value) loadingCouponSuccess,
   }) {
     return loadingSuccess(this);
   }
@@ -1441,6 +2206,7 @@ class _$_LoadingSuccess implements _LoadingSuccess {
     TResult Function(_LoadingSuccess value)? loadingSuccess,
     TResult Function(_LoadingFailed value)? loadingFailed,
     TResult Function(_LogedOut value)? logedOut,
+    TResult Function(_LoadingCouponSuccess value)? loadingCouponSuccess,
     required TResult orElse(),
   }) {
     if (loadingSuccess != null) {
@@ -1533,6 +2299,7 @@ class _$_LoadingFailed implements _LoadingFailed {
     required TResult Function() loadingSuccess,
     required TResult Function(AppFailure failure) loadingFailed,
     required TResult Function() logedOut,
+    required TResult Function(CouponModel? coupon) loadingCouponSuccess,
   }) {
     return loadingFailed(failure);
   }
@@ -1545,6 +2312,7 @@ class _$_LoadingFailed implements _LoadingFailed {
     TResult Function()? loadingSuccess,
     TResult Function(AppFailure failure)? loadingFailed,
     TResult Function()? logedOut,
+    TResult Function(CouponModel? coupon)? loadingCouponSuccess,
     required TResult orElse(),
   }) {
     if (loadingFailed != null) {
@@ -1561,6 +2329,7 @@ class _$_LoadingFailed implements _LoadingFailed {
     required TResult Function(_LoadingSuccess value) loadingSuccess,
     required TResult Function(_LoadingFailed value) loadingFailed,
     required TResult Function(_LogedOut value) logedOut,
+    required TResult Function(_LoadingCouponSuccess value) loadingCouponSuccess,
   }) {
     return loadingFailed(this);
   }
@@ -1573,6 +2342,7 @@ class _$_LoadingFailed implements _LoadingFailed {
     TResult Function(_LoadingSuccess value)? loadingSuccess,
     TResult Function(_LoadingFailed value)? loadingFailed,
     TResult Function(_LogedOut value)? logedOut,
+    TResult Function(_LoadingCouponSuccess value)? loadingCouponSuccess,
     required TResult orElse(),
   }) {
     if (loadingFailed != null) {
@@ -1633,6 +2403,7 @@ class _$_LogedOut implements _LogedOut {
     required TResult Function() loadingSuccess,
     required TResult Function(AppFailure failure) loadingFailed,
     required TResult Function() logedOut,
+    required TResult Function(CouponModel? coupon) loadingCouponSuccess,
   }) {
     return logedOut();
   }
@@ -1645,6 +2416,7 @@ class _$_LogedOut implements _LogedOut {
     TResult Function()? loadingSuccess,
     TResult Function(AppFailure failure)? loadingFailed,
     TResult Function()? logedOut,
+    TResult Function(CouponModel? coupon)? loadingCouponSuccess,
     required TResult orElse(),
   }) {
     if (logedOut != null) {
@@ -1661,6 +2433,7 @@ class _$_LogedOut implements _LogedOut {
     required TResult Function(_LoadingSuccess value) loadingSuccess,
     required TResult Function(_LoadingFailed value) loadingFailed,
     required TResult Function(_LogedOut value) logedOut,
+    required TResult Function(_LoadingCouponSuccess value) loadingCouponSuccess,
   }) {
     return logedOut(this);
   }
@@ -1673,6 +2446,7 @@ class _$_LogedOut implements _LogedOut {
     TResult Function(_LoadingSuccess value)? loadingSuccess,
     TResult Function(_LoadingFailed value)? loadingFailed,
     TResult Function(_LogedOut value)? logedOut,
+    TResult Function(_LoadingCouponSuccess value)? loadingCouponSuccess,
     required TResult orElse(),
   }) {
     if (logedOut != null) {
@@ -1684,4 +2458,138 @@ class _$_LogedOut implements _LogedOut {
 
 abstract class _LogedOut implements AuthStateType {
   const factory _LogedOut() = _$_LogedOut;
+}
+
+/// @nodoc
+abstract class _$LoadingCouponSuccessCopyWith<$Res> {
+  factory _$LoadingCouponSuccessCopyWith(_LoadingCouponSuccess value,
+          $Res Function(_LoadingCouponSuccess) then) =
+      __$LoadingCouponSuccessCopyWithImpl<$Res>;
+  $Res call({CouponModel? coupon});
+}
+
+/// @nodoc
+class __$LoadingCouponSuccessCopyWithImpl<$Res>
+    extends _$AuthStateTypeCopyWithImpl<$Res>
+    implements _$LoadingCouponSuccessCopyWith<$Res> {
+  __$LoadingCouponSuccessCopyWithImpl(
+      _LoadingCouponSuccess _value, $Res Function(_LoadingCouponSuccess) _then)
+      : super(_value, (v) => _then(v as _LoadingCouponSuccess));
+
+  @override
+  _LoadingCouponSuccess get _value => super._value as _LoadingCouponSuccess;
+
+  @override
+  $Res call({
+    Object? coupon = freezed,
+  }) {
+    return _then(_LoadingCouponSuccess(
+      coupon == freezed
+          ? _value.coupon
+          : coupon // ignore: cast_nullable_to_non_nullable
+              as CouponModel?,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_LoadingCouponSuccess implements _LoadingCouponSuccess {
+  const _$_LoadingCouponSuccess(this.coupon);
+
+  @override
+  final CouponModel? coupon;
+
+  @override
+  String toString() {
+    return 'AuthStateType.loadingCouponSuccess(coupon: $coupon)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _LoadingCouponSuccess &&
+            (identical(other.coupon, coupon) ||
+                const DeepCollectionEquality().equals(other.coupon, coupon)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(coupon);
+
+  @JsonKey(ignore: true)
+  @override
+  _$LoadingCouponSuccessCopyWith<_LoadingCouponSuccess> get copyWith =>
+      __$LoadingCouponSuccessCopyWithImpl<_LoadingCouponSuccess>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loadingInProgress,
+    required TResult Function() loadingSuccess,
+    required TResult Function(AppFailure failure) loadingFailed,
+    required TResult Function() logedOut,
+    required TResult Function(CouponModel? coupon) loadingCouponSuccess,
+  }) {
+    return loadingCouponSuccess(coupon);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loadingInProgress,
+    TResult Function()? loadingSuccess,
+    TResult Function(AppFailure failure)? loadingFailed,
+    TResult Function()? logedOut,
+    TResult Function(CouponModel? coupon)? loadingCouponSuccess,
+    required TResult orElse(),
+  }) {
+    if (loadingCouponSuccess != null) {
+      return loadingCouponSuccess(coupon);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_LoadingInProgress value) loadingInProgress,
+    required TResult Function(_LoadingSuccess value) loadingSuccess,
+    required TResult Function(_LoadingFailed value) loadingFailed,
+    required TResult Function(_LogedOut value) logedOut,
+    required TResult Function(_LoadingCouponSuccess value) loadingCouponSuccess,
+  }) {
+    return loadingCouponSuccess(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_LoadingInProgress value)? loadingInProgress,
+    TResult Function(_LoadingSuccess value)? loadingSuccess,
+    TResult Function(_LoadingFailed value)? loadingFailed,
+    TResult Function(_LogedOut value)? logedOut,
+    TResult Function(_LoadingCouponSuccess value)? loadingCouponSuccess,
+    required TResult orElse(),
+  }) {
+    if (loadingCouponSuccess != null) {
+      return loadingCouponSuccess(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _LoadingCouponSuccess implements AuthStateType {
+  const factory _LoadingCouponSuccess(CouponModel? coupon) =
+      _$_LoadingCouponSuccess;
+
+  CouponModel? get coupon => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  _$LoadingCouponSuccessCopyWith<_LoadingCouponSuccess> get copyWith =>
+      throw _privateConstructorUsedError;
 }

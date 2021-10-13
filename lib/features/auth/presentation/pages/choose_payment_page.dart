@@ -44,13 +44,14 @@ class _ChoosePaymentPageState extends State<ChoosePaymentPage> {
   @override
   void initState() {
     super.initState();
-    _configBloc = getIt<ConfigBloc>();
+    _configBloc = context.read<ConfigBloc>();
+    if (_configBloc.state.payments == null)
+      _configBloc.add(ConfigEvent.getPayments());
     _authBloc = context.read<AuthBloc>();
   }
 
   @override
   void dispose() {
-    _configBloc.close();
     super.dispose();
   }
 
@@ -61,11 +62,10 @@ class _ChoosePaymentPageState extends State<ChoosePaymentPage> {
     });
   }
 
-  void _onStateLoadingPaymentsSuccess(List<PaymentModel>? payments) {
+  void _onStateLoadingSuccess() {
+    _onModalReset();
     setState(() {
-      _showModal = false;
-      _modalType = ModalContainerType.LOADING;
-      _paymentsList = payments;
+      _paymentsList = _configBloc.state.payments;
     });
   }
 
@@ -74,10 +74,14 @@ class _ChoosePaymentPageState extends State<ChoosePaymentPage> {
       _modalType = ModalContainerType.FAILURE;
     });
     Future.delayed(Duration(milliseconds: 2000), () {
-      setState(() {
-        _showModal = false;
-        _modalType = ModalContainerType.LOADING;
-      });
+      _onModalReset();
+    });
+  }
+
+  void _onModalReset() {
+    setState(() {
+      _showModal = false;
+      _modalType = ModalContainerType.LOADING;
     });
   }
 
@@ -85,24 +89,21 @@ class _ChoosePaymentPageState extends State<ChoosePaymentPage> {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(
-          create: (context) => _configBloc..add(ConfigEvent.getPayments()),
-        ),
-        BlocProvider(
-          create: (context) => _authBloc,
-        )
+        BlocProvider.value(value: _configBloc),
+        BlocProvider.value(value: _authBloc)
       ],
       child: BlocListener<ConfigBloc, ConfigState>(
           listener: (context, state) {
-            state.maybeWhen(
+            state.type.maybeWhen(
                 loadingInProgress: _onStateLoadingInProgress,
-                loadingPaymentsSuccess: _onStateLoadingPaymentsSuccess,
+                loadingSuccess: _onStateLoadingSuccess,
                 loadingFailed: _onStateLoadingFailure,
                 orElse: () {});
           },
           child: ScaffoldContainerWidget(
             show: _showModal,
             type: _modalType,
+            onReset: _onModalReset,
             logout: true,
             title: "Choose a method of payment",
             children: [
@@ -130,13 +131,13 @@ class _ChoosePaymentPageState extends State<ChoosePaymentPage> {
                                 height: 40)),
                         (!payment.soon!)
                             ? (StringUtils.getTranslatedString(
-                                    _authBloc.state.locale!, payment.title!))
+                                    _configBloc.state.locale!, payment.title!))
                                 .text
                                 .xl
                                 .color(ColorUtils(payment.textColor!).toColor())
                                 .make()
                             : (StringUtils.getTranslatedString(
-                                    _authBloc.state.locale!, payment.title!))
+                                    _configBloc.state.locale!, payment.title!))
                                 .text
                                 .xl
                                 .color(ColorUtils(payment.textColor!).toColor())

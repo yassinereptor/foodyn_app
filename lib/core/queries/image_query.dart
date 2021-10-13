@@ -5,7 +5,8 @@ class ImageQuery {
         id,
         type,
         filename,
-        filepath
+        filepath,
+hash
       }
     }
     """;
@@ -15,7 +16,8 @@ class ImageQuery {
         id,
         type,
         filename,
-        filepath
+        filepath,
+hash
       }
     }
     """;

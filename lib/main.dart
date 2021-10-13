@@ -1,12 +1,18 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:equatable/equatable.dart';
+import 'package:flare_flutter/asset_provider.dart';
+import 'package:flare_flutter/flare_cache.dart';
+import 'package:flare_flutter/provider/asset_flare.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:foodyn_rest/core/utils/theme_brightness.dart';
 import 'core/bloc/config_bloc/config_bloc.dart';
+import 'core/bloc/managment_bloc/management_bloc.dart';
 import 'core/domain/entities/app_failure.dart';
 import 'features/auth/presentation/pages/complete_register_page.dart';
 import 'features/dashboard/presentation/pages/dashboard_page.dart';
@@ -34,7 +40,7 @@ void main() async {
   await dotenv.load(fileName: '.env/.env.$environment');
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-    statusBarColor: Vx.gray800,
+    statusBarColor: Colors.transparent,
   ));
   Routes.createRoutes();
   EquatableConfig.stringify = true;
@@ -50,8 +56,24 @@ class Application extends StatefulWidget {
 }
 
 class _ApplicationState extends State<Application> {
-  late AuthBloc _authBloc = getIt<AuthBloc>();
-  late ConfigBloc _configBloc = getIt<ConfigBloc>();
+  late AuthBloc _authBloc;
+  late ConfigBloc _configBloc;
+  late ManagementBloc _managementBloc;
+
+  final List<AssetProvider> _assetProviderList = [
+    AssetFlare(bundle: rootBundle, name: 'assets/animations/loading_light.flr'),
+    AssetFlare(bundle: rootBundle, name: 'assets/animations/loading_dark.flr'),
+    AssetFlare(
+        bundle: rootBundle, name: 'assets/animations/loading_failure.flr'),
+    AssetFlare(
+        bundle: rootBundle, name: 'assets/animations/loading_success.flr'),
+  ];
+
+  Future<void> _warmupAnimations() async {
+    _assetProviderList.forEach((element) async {
+      await cachedActor(element);
+    });
+  }
 
   @override
   void initState() {
@@ -61,15 +83,19 @@ class _ApplicationState extends State<Application> {
     });
     _authBloc = getIt<AuthBloc>();
     _configBloc = getIt<ConfigBloc>();
+    _managementBloc = getIt<ManagementBloc>();
+    _warmupAnimations();
     super.initState();
   }
 
   @override
   void dispose() {
     _authBloc.close();
+    _configBloc.close();
+    _managementBloc.close();
     super.dispose();
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -78,11 +104,14 @@ class _ApplicationState extends State<Application> {
           create: (context) => _configBloc..add(ConfigEvent.started()),
         ),
         BlocProvider(
-          create: (context) => _authBloc..add(AuthEvent.started()),
+          create: (context) => _authBloc,
+        ),
+        BlocProvider(
+          create: (context) => _managementBloc,
         )
       ],
       child: MaterialApp(
-        title: "Foodyn Restaurant",
+        title: "Foodyn Eatery",
         debugShowCheckedModeBanner: false,
         localizationsDelegates: [
           S.delegate,
@@ -97,105 +126,116 @@ class _ApplicationState extends State<Application> {
         theme: appThemeData[AppTheme.Light],
         darkTheme: appThemeData[AppTheme.Dark],
         builder: (context, child) {
-          return BlocConsumer<AuthBloc, AuthState>(listener: (context, state) {
-            state.type.maybeWhen(
-                loadingSuccess: () {
-                  state.status.maybeWhen(
-                    firstTime: () {
-                      if (state.locale == null)
-                        Routes.seafarer.navigate(
-                          LanguagesPage.kRouteName,
-                          navigationType: NavigationType.pushAndRemoveUntil,
-                          params: {
-                            "firstTime": true
-                          },
-                          removeUntilPredicate: (route) {
-                            return false;
-                          },
-                        );
-                    },
-                    unauthenticated: () {
-                      Routes.seafarer.navigate(
-                        RegisterPage.kRouteName,
-                        navigationType: NavigationType.pushAndRemoveUntil,
-                        removeUntilPredicate: (route) {
-                          return false;
+          return MultiBlocListener(
+            listeners: [
+              BlocListener<ConfigBloc, ConfigState>(listener: (context, state) {
+                state.type.maybeWhen(
+                  loadingSuccess: (){
+                    _authBloc..add(AuthEvent.started());
+                  },
+                  orElse: () {}
+                );
+              }),
+              BlocListener<AuthBloc, AuthState>(listener: (context, state) {
+                state.type.maybeWhen(
+                    loadingSuccess: () {
+                      state.status.maybeWhen(
+                        firstTime: () {
+                          Routes.seafarer.navigate(
+                            LanguagesPage.kRouteName,
+                            navigationType: NavigationType.pushAndRemoveUntil,
+                            params: {"firstTime": true},
+                            removeUntilPredicate: (route) {
+                              return false;
+                            },
+                          );
                         },
+                        unauthenticated: () {
+                          Routes.seafarer.navigate(
+                            RegisterPage.kRouteName,
+                            navigationType: NavigationType.pushAndRemoveUntil,
+                            removeUntilPredicate: (route) {
+                              return false;
+                            },
+                          );
+                        },
+                        authenticated: () {
+                          if (state.user == null) {
+                            Routes.seafarer.navigate(
+                              RegisterPage.kRouteName,
+                              navigationType: NavigationType.pushAndRemoveUntil,
+                              removeUntilPredicate: (route) {
+                                return false;
+                              },
+                            );
+                          } else if (state.user!.username.isEmptyOrNull) {
+                            Routes.seafarer.navigate(
+                              CompleteRegisterPage.kRouteName,
+                              navigationType: NavigationType.pushAndRemoveUntil,
+                              removeUntilPredicate: (route) {
+                                return false;
+                              },
+                            );
+                          } else if (state.user!.memberships == null ||
+                              state.user!.memberships!.isEmpty) {
+                            Routes.seafarer.navigate(
+                              ChoosePlanPage.kRouteName,
+                              params: {"back": false},
+                              navigationType: NavigationType.pushAndRemoveUntil,
+                              removeUntilPredicate: (route) {
+                                return false;
+                              },
+                            );
+                          } else {
+                            Routes.seafarer.navigate(
+                              DashboardPage.kRouteName,
+                              navigationType: NavigationType.pushAndRemoveUntil,
+                              removeUntilPredicate: (route) {
+                                return false;
+                              },
+                            );
+                          }
+                        },
+                        orElse: () {},
                       );
                     },
-                    authenticated: () {
-                      if (state.user == null){
-                        Routes.seafarer.navigate(
-                          RegisterPage.kRouteName,
-                          navigationType: NavigationType.pushAndRemoveUntil,
-                          removeUntilPredicate: (route) {
-                            return false;
+                    loadingFailed: (failure) {
+                      if (failure == AppFailure.expiredJwt() ||
+                          failure == AppFailure.unauthorized()) {
+                        showDialog(
+                          barrierColor: Colors.transparent,
+                          context:
+                              Routes.seafarer.navigatorKey!.currentContext!,
+                          builder: (context) {
+                            return JwtExpiredDialog();
                           },
-                        );
-                      }else if (state.user!.profile == null || state.user!.profile!.id == null) {
-                        Routes.seafarer.navigate(
-                          CompleteRegisterPage.kRouteName,
-                          navigationType: NavigationType.pushAndRemoveUntil,
-                          removeUntilPredicate: (route) {
-                            return false;
-                          },
-                        );
-                      }
-                      else if (state.user!.memberships == null || state.user!.memberships!.isEmpty){
-                        Routes.seafarer.navigate(
-                          ChoosePlanPage.kRouteName,
-                          params: {
-                            "back": false
-                          },
-                          navigationType: NavigationType.pushAndRemoveUntil,
-                          removeUntilPredicate: (route) {
-                            return false;
-                          },
-                        );
-                      }
-                      else{
-                        Routes.seafarer.navigate(
-                          DashboardPage.kRouteName,
-                          navigationType: NavigationType.pushAndRemoveUntil,
-                          removeUntilPredicate: (route) {
-                            return false;
-                          },
-                        );
+                        ).then((value) {
+                          _authBloc.add(AuthEvent.logout());
+                          Routes.seafarer.navigate(
+                            RegisterPage.kRouteName,
+                            navigationType: NavigationType.pushAndRemoveUntil,
+                            removeUntilPredicate: (route) => false,
+                          );
+                        });
                       }
                     },
-                    orElse: () {},
-                  );
-                },
-                loadingFailed: (failure) {
-                  if (failure == AppFailure.expiredJwt() || failure == AppFailure.unauthorized()) {
-                    showDialog(
-                      context: Routes.seafarer.navigatorKey!.currentContext!,
-                      builder: (context) {
-                        return JwtExpiredDialog();
-                      },
-                    ).then((value) {
-                      _authBloc.add(AuthEvent.logout());
-                      Routes.seafarer.navigate(
-                        RegisterPage.kRouteName,
-                        navigationType: NavigationType.pushAndRemoveUntil,
-                        removeUntilPredicate: (route) => false,
-                      );
-                    });
-                  }
-                },
-                orElse: () {});
-          }, buildWhen: (previous, current) {
-            if (current.locale?.languageCode != previous.locale?.languageCode)
-              return true;
-            return false;
-          }, builder: (context, state) {
-            return Directionality(
-              textDirection: state.locale?.languageCode == "ar"
-                  ? TextDirection.rtl
-                  : TextDirection.ltr,
-              child: child!,
-            );
-          });
+                    orElse: () {});
+              })
+            ],
+            child: BlocBuilder<ConfigBloc, ConfigState>(
+                buildWhen: (previous, current) {
+              if (current.locale?.languageCode != previous.locale?.languageCode)
+                return true;
+              return false;
+            }, builder: (context, state) {
+              return Directionality(
+                textDirection: state.locale?.languageCode == "ar"
+                    ? TextDirection.rtl
+                    : TextDirection.ltr,
+                child: child!,
+              );
+            }),
+          );
         },
       ),
     );

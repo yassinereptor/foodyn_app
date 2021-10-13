@@ -29,12 +29,13 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController emailTextEditingController =
       TextEditingController();
-  AuthBloc _authBloc = getIt<AuthBloc>();
+  late AuthBloc _authBloc;
   bool _showModal = false;
   ModalContainerType _modalType = ModalContainerType.LOADING;
 
   @override
   void initState() {
+    _authBloc = context.read<AuthBloc>();
     super.initState();
   }
 
@@ -48,11 +49,18 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
       _authBloc.add(AuthEvent.forgetPassword(emailTextEditingController.text));
     }
   }
+  
+  void _onModalReset() {
+    setState(() {
+      _showModal = false;
+      _modalType = ModalContainerType.LOADING;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => _authBloc,
+    return BlocProvider.value(
+      value: _authBloc,
       child: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, state) {
           state.type.maybeWhen(
@@ -60,7 +68,6 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
                 setState(() {
                   _showModal = true;
                   _modalType = ModalContainerType.LOADING;
-                  // _authBloc.close();
                 });
               },
               loadingSuccess: () {
@@ -68,15 +75,12 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
                   _modalType = ModalContainerType.SUCCESS;
                 });
                 Future.delayed(Duration(milliseconds: 2000), () {
-                  setState(() {
-                    _showModal = false;
-                    _modalType = ModalContainerType.LOADING;
-                    Routes.seafarer.navigate(VerifyOtpPage.kRouteName, params: {
-                      "title": "Verify Email",
-                      "logout": false,
-                      "onSuccess": _onSuccess,
-                      "onError": _onError,
-                    });
+                  _onModalReset();
+                  Routes.seafarer.navigate(VerifyOtpPage.kRouteName, params: {
+                    "title": "Verify Email",
+                    "logout": false,
+                    "onSuccess": _onSuccess,
+                    "onError": _onError,
                   });
                 });
               },
@@ -85,10 +89,7 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
                   _modalType = ModalContainerType.FAILURE;
                 });
                 Future.delayed(Duration(milliseconds: 2000), () {
-                  setState(() {
-                    _showModal = false;
-                    _modalType = ModalContainerType.LOADING;
-                  });
+                  _onModalReset();
                 });
               },
               orElse: () {});
@@ -97,6 +98,7 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
           return ScaffoldContainerWidget(
             type: _modalType,
             show: _showModal,
+            onReset: _onModalReset,
             title: "Forget Password",
             children: [
               Form(

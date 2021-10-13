@@ -6,8 +6,7 @@ abstract class AuthState with _$AuthState {
     required AuthStateType type,
     required AuthStatus status,
     UserModel? user,
-    String? token,
-    Locale? locale
+    String? token
   }) = _AuthState;
 }
 
@@ -18,4 +17,5 @@ abstract class AuthStateType with _$AuthStateType {
   const factory AuthStateType.loadingSuccess() = _LoadingSuccess;
   const factory AuthStateType.loadingFailed(AppFailure failure) = _LoadingFailed;
   const factory AuthStateType.logedOut() = _LogedOut;
+  const factory AuthStateType.loadingCouponSuccess(CouponModel? coupon) = _LoadingCouponSuccess;
 }

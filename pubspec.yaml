@@ -1,5 +1,5 @@
 name: foodyn_rest
-description: Foodyn Restaurant Project.
+description: Foodyn Eatery Project.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `pub publish`. This is preferred for private packages.
@@ -96,6 +96,15 @@ dependencies:
   mime: ^1.0.0
   cached_network_image: ^3.1.0
   simple_gesture_detector: ^0.2.0
+  faker_dart: ^0.1.2
+  fl_chart: ^0.40.0
+  color_palette_generator: ^2.0.0
+  sleek_circular_slider: ^2.0.1
+  blurhash_dart: ^1.0.2
+  expandable: ^5.0.1
+  badges: ^2.0.1
+  image: ^3.0.8
+  carousel_slider: ^4.0.0
 
 dev_dependencies:
   flutter_test:

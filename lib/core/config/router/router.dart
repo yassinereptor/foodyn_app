@@ -1,3 +1,18 @@
+import 'package:foodyn_rest/core/data/models/eatery_model.dart';
+import 'package:foodyn_rest/core/data/models/image_model.dart';
+import 'package:foodyn_rest/core/data/models/table_model.dart';
+import 'package:foodyn_rest/features/dashboard/presentation/pages/add_group_page.dart';
+import 'package:foodyn_rest/features/dashboard/presentation/pages/add_eatery_page.dart';
+import 'package:foodyn_rest/features/dashboard/presentation/pages/add_user_page.dart';
+import 'package:foodyn_rest/features/dashboard/presentation/pages/eatery_page.dart';
+import 'package:foodyn_rest/features/dashboard/presentation/pages/image_view_page.dart';
+import 'package:foodyn_rest/features/dashboard/presentation/pages/interactive_tables_map_page.dart';
+import 'package:foodyn_rest/features/dashboard/presentation/pages/profile_page.dart';
+import 'package:foodyn_rest/features/dashboard/presentation/pages/settings_page.dart';
+import 'package:foodyn_rest/features/dashboard/presentation/pages/show_all_eateries_page.dart';
+import 'package:foodyn_rest/features/dashboard/presentation/pages/tables_map_page.dart';
+import 'package:foodyn_rest/features/dashboard/presentation/pages/version_page.dart';
+
 import '../../data/models/coupon_model.dart';
 import '../../data/models/plan_model.dart';
 
@@ -184,5 +199,80 @@ class Routes {
       name: DashboardPage.kRouteName,
       builder: (context, args, paramMap) => DashboardPage(),
     ));
+
+    seafarer.addRoute(SeafarerRoute(
+      name: ProfilePage.kRouteName,
+      builder: (context, args, paramMap) => ProfilePage(),
+    ));
+
+    seafarer.addRoute(SeafarerRoute(
+      name: SettingsPage.kRouteName,
+      builder: (context, args, paramMap) => SettingsPage(),
+    ));
+
+    seafarer.addRoute(SeafarerRoute(
+      name: VersionPage.kRouteName,
+      builder: (context, args, paramMap) => VersionPage(),
+    ));
+
+    seafarer.addRoute(SeafarerRoute(
+      name: AddEateryPage.kRouteName,
+      builder: (context, args, paramMap) => AddEateryPage(),
+    ));
+
+    seafarer.addRoute(SeafarerRoute(
+      name: AddUserPage.kRouteName,
+      builder: (context, args, paramMap) => AddUserPage(),
+    ));
+
+    seafarer.addRoute(SeafarerRoute(
+      name: AddGroupPage.kRouteName,
+      builder: (context, args, paramMap) => AddGroupPage(),
+    ));
+
+    seafarer.addRoute(SeafarerRoute(
+      name: TablesMapPage.kRouteName,
+      builder: (context, args, paramMap) => TablesMapPage(),
+    ));
+    
+    seafarer.addRoute(SeafarerRoute(
+      name: InteractiveTablesMapPage.kRouteName,
+      params: [
+        SeafarerParam<List<TableModel>>(name: "tableItemList"),
+        SeafarerParam<int>(name: "rows"),
+        SeafarerParam<int>(name: "columns"),
+        SeafarerParam<int>(name: "tables"),
+      ],
+      builder: (context, args, params) => InteractiveTablesMapPage(
+        tableItemList: params.param("tableItemList"),
+        rows: params.param("rows"),
+        columns: params.param("columns"),
+        tables: params.param("tables"),
+      ),
+    ));
+
+    seafarer.addRoute(SeafarerRoute(
+      name: ShowAllEateriesPage.kRouteName,
+      builder: (context, args, paramMap) => ShowAllEateriesPage(),
+    ));
+
+    seafarer.addRoute(SeafarerRoute(
+      name: EateryPage.kRouteName,
+      params: [
+        SeafarerParam<EateryModel>(name: "eateryModel"),
+      ],
+      builder: (context, args, params) => EateryPage(eateryModel: params.param("eateryModel")),
+    ));
+
+    seafarer.addRoute(SeafarerRoute(
+      name: ImageViewPage.kRouteName,
+      params: [
+        SeafarerParam<ImageModel>(name: "imageModel"),
+      ],
+      builder: (context, args, params) => ImageViewPage(imageModel: params.param("imageModel")),
+    ));
+
+    
+    
   }
 }

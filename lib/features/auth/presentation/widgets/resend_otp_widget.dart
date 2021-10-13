@@ -3,8 +3,9 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:foodyn_rest/core/bloc/send_bloc/send_bloc.dart';
+import 'package:foodyn_rest/core/data/models/user_model.dart';
 import '../../../../core/domain/entities/app_failure.dart';
-import '../../../../core/bloc/otp_bloc/otp_bloc.dart';
 import '../../../../core/config/injectable/injection.dart';
 import '../../../../core/config/theme/global_theme.dart';
 import '../../../../core/utils/theme_brightness.dart';
@@ -22,7 +23,7 @@ class ResendOTPWidget extends StatefulWidget {
 
 class _ResendOTPWidgetState extends State<ResendOTPWidget> {
   late AuthBloc _authBloc;
-  late OtpBloc _otpBloc;
+  late SendBloc _sendBloc;
   bool _startTimer = false;
   final CountdownController _countdownController =
       new CountdownController(autoStart: false);
@@ -32,9 +33,9 @@ class _ResendOTPWidgetState extends State<ResendOTPWidget> {
   @override
   void initState() {
     _authBloc = context.read<AuthBloc>();
-    _otpBloc = getIt<OtpBloc>();
-    dialCode = _authBloc.state.user!.profile!.dialCode!;
-    phoneNumber = _authBloc.state.user!.profile!.phoneNumber!;
+    _sendBloc = getIt<SendBloc>();
+    dialCode = _authBloc.state.user!.dialCode!;
+    phoneNumber = _authBloc.state.user!.phoneNumber!;
     super.initState();
   }
 
@@ -45,12 +46,12 @@ class _ResendOTPWidgetState extends State<ResendOTPWidget> {
       _startTimer = true;
     });
     FocusScope.of(context).requestFocus(FocusNode());
-    _otpBloc.add(OtpEvent.sendOtp(dialCode, phoneNumber));
+    _sendBloc.add(SendEvent.sendOtp(dialCode, phoneNumber));
   }
 
-  void _onStateLoadingSending() {}
+  void _onStateLoadingInProgress() {}
 
-  void _onStateLoadingSent() {
+  void _onStateLoadingSuccess(UserModel? user) {
       final snackBar = SnackBar(content: Text("Code sent"));
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
@@ -69,12 +70,12 @@ class _ResendOTPWidgetState extends State<ResendOTPWidget> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => _otpBloc,
-      child: BlocConsumer<OtpBloc, OtpState>(
+      create: (context) => _sendBloc,
+      child: BlocConsumer<SendBloc, SendState>(
         listener: (context, state) {
           state.maybeWhen(
-              loadingSending: _onStateLoadingSending,
-              loadingSent: _onStateLoadingSent,
+              loadingInProgress: _onStateLoadingInProgress,
+              loadingSuccess: _onStateLoadingSuccess,
               loadingFailed: _onStateLoadingFailure,
               orElse: () {});
         },
@@ -87,7 +88,7 @@ class _ResendOTPWidgetState extends State<ResendOTPWidget> {
                 style: TextStyle(color: GlobalTheme.kOrangeColor),
               ));
    
-          if (_authBloc.state.user!.profile != null && _authBloc.state.user!.profile!.phoneNumberVerified != null && _authBloc.state.user!.profile!.phoneNumberVerified!) return Container();
+          if (_authBloc.state.user != null && _authBloc.state.user!.phoneNumberVerified != null && _authBloc.state.user!.phoneNumberVerified!) return Container();
           return Container(
             margin: EdgeInsets.only(top: 10, bottom: 10),
             padding: EdgeInsets.all(10),

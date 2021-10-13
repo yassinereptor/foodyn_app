@@ -3,13 +3,13 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:foodyn_rest/core/bloc/send_bloc/send_bloc.dart';
 import '../../../../core/data/models/user_model.dart';
 import '../../../../core/domain/entities/app_failure.dart';
 import '../../../../core/config/injectable/injection.dart';
 import '../../../../core/config/theme/global_theme.dart';
 import '../../../../core/utils/theme_brightness.dart';
 import '../../../../core/bloc/auth_bloc/auth_bloc.dart';
-import '../../../../core/bloc/mail_bloc/mail_bloc.dart';
 import 'package:timer_count_down/timer_controller.dart';
 import 'package:timer_count_down/timer_count_down.dart';
 
@@ -22,7 +22,7 @@ class ResendEmailWidget extends StatefulWidget {
 
 class _ResendEmailWidgetState extends State<ResendEmailWidget> {
   late AuthBloc _authBloc;
-  late MailBloc _mailBloc;
+  late SendBloc _sendBloc;
   bool _startTimer = false;
   final CountdownController _countdownController =
       new CountdownController(autoStart: false);
@@ -30,14 +30,14 @@ class _ResendEmailWidgetState extends State<ResendEmailWidget> {
   @override
   void initState() {
     _authBloc = context.read<AuthBloc>();
-    _mailBloc = getIt<MailBloc>();
-    _mailBloc.add(MailEvent.confirmationEmailStatus());
+    _sendBloc = getIt<SendBloc>();
+    _sendBloc.add(SendEvent.confirmationEmailStatus());
     super.initState();
   }
 
   @override
   void dispose() {
-    _mailBloc.close();
+    _sendBloc.close();
     super.dispose();
   }
 
@@ -47,7 +47,7 @@ class _ResendEmailWidgetState extends State<ResendEmailWidget> {
       _startTimer = true;
     });
     FocusScope.of(context).requestFocus(FocusNode());
-    _mailBloc.add(MailEvent.resendConfirmationEmail(
+    _sendBloc.add(SendEvent.resendConfirmationEmail(
         _authBloc.state.user!.email!));
   }
 
@@ -71,14 +71,14 @@ class _ResendEmailWidgetState extends State<ResendEmailWidget> {
     setState(() {
       _startTimer = false;
     });
-    _mailBloc.add(MailEvent.confirmationEmailStatus());
+    _sendBloc.add(SendEvent.confirmationEmailStatus());
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => _mailBloc,
-      child: BlocConsumer<MailBloc, MailState>(
+      create: (context) => _sendBloc,
+      child: BlocConsumer<SendBloc, SendState>(
         listener: (context, state) {
           state.maybeWhen(
               loadingInProgress: _onStateLoadingInProgress,

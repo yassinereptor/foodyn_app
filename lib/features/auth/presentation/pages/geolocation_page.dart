@@ -1,8 +1,12 @@
 import 'dart:ui';
 
+import 'package:flare_flutter/asset_provider.dart';
 import 'package:flare_flutter/flare_actor.dart';
+import 'package:flare_flutter/flare_cache.dart';
+import 'package:flare_flutter/provider/asset_flare.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/config/injectable/injection.dart';
 import '../../../../core/config/router/router.dart';
@@ -101,7 +105,7 @@ class _GeolocationPageState extends State<GeolocationPage> {
               getGeolocationInProgress: () {
                 myLocationWidget = IconButton(
                   onPressed: () {},
-                  icon: FlareActor('assets/animations/loading_light.flr',
+                  icon: FlareActor(isDark(context) ? 'assets/animations/loading_dark.flr' : 'assets/animations/loading_light.flr',
                       alignment: Alignment.center,
                       fit: BoxFit.contain,
                       animation: "start"),

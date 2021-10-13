@@ -8,7 +8,7 @@ class ResourceUtils {
 
   ResourceUtils(this._context);
 
-  Future<List<String>> getPhoneResource() async {
+  Future<List<String>> getLocationResource() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     String? userResourcesPhone = sharedPreferences.getString("user_resources_phone");
     String value = await DefaultAssetBundle.of(_context)

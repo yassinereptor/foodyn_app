@@ -10,8 +10,9 @@ class TextFormWidget extends StatefulWidget {
   final void Function(String?) onChanged;
   final TextInputType keyboardType;
   final int? maxLength;
+  final bool readOnly;
 
-  const TextFormWidget({Key? key, this.maxLength, required this.hint, required this.validator, this.controller, required this.onChanged, this.keyboardType = TextInputType.text}) : super(key: key);
+  const TextFormWidget({Key? key,this.readOnly = false, this.maxLength, required this.hint, required this.validator, this.controller, required this.onChanged, this.keyboardType = TextInputType.text}) : super(key: key);
 
   @override
   _TextFormWidgetState createState() => _TextFormWidgetState();
@@ -27,6 +28,7 @@ class _TextFormWidgetState extends State<TextFormWidget> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      readOnly: widget.readOnly,
       maxLength: widget.maxLength,
       onChanged: widget.onChanged,
       controller: (widget.controller == null) ? TextEditingController() : widget.controller,

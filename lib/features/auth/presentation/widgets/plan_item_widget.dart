@@ -4,6 +4,7 @@ import 'dart:math' as math;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:foodyn_rest/core/bloc/config_bloc/config_bloc.dart';
 import '../../../../core/data/models/plan_model.dart';
 import '../../../../core/config/router/router.dart';
 import '../../../../core/utils/color_utils.dart';
@@ -29,7 +30,7 @@ class PlanItemWidget extends StatefulWidget {
 class _PlanItemWidgetState extends State<PlanItemWidget> with SingleTickerProviderStateMixin {
   late Animation<double> animation;
   late AnimationController controller;
-  late AuthBloc _authBloc;
+  late ConfigBloc _configBloc;
   late String? _calcYearPrice;
   int? _selectedCurrencyIndex;
 
@@ -54,7 +55,7 @@ class _PlanItemWidgetState extends State<PlanItemWidget> with SingleTickerProvid
       });
     CurrencyUtils.getCurrencyIndex().then((value) => _selectedCurrencyIndex = value);
     controller.forward();
-    _authBloc = context.read<AuthBloc>();
+    _configBloc = context.read<ConfigBloc>();
     _calcYearPrice = CurrencyUtils(widget.plan).getCalcYearPrice();
   }
 
@@ -67,8 +68,8 @@ class _PlanItemWidgetState extends State<PlanItemWidget> with SingleTickerProvid
   @override
   Widget build(BuildContext context) {
 
-    return BlocProvider(
-      create: (context) => _authBloc,
+    return BlocProvider.value(
+      value: _configBloc,
       child: InkWell(
           onTap: () => Routes.seafarer.navigate(PlanPage.kRouteName, params: {
             "plan": widget.plan,
@@ -103,12 +104,13 @@ class _PlanItemWidgetState extends State<PlanItemWidget> with SingleTickerProvid
                       colors: [
                         ColorUtils(widget.plan.primaryColor!).toColor(),
                         ColorUtils(widget.plan.accentColor!).toColor().withOpacity(0.9),
-                      ])),
+                      ])
+                      ),
                   child: Column(
                     children: [
                       Row(
                         children: [
-                          StringUtils.getTranslatedString(_authBloc.state.locale!, widget.plan.title!).text.bold.capitalize.xl2.color(ColorUtils(widget.plan.textColor!).toColor()).make(),
+                          StringUtils.getTranslatedString(_configBloc.state.locale!, widget.plan.title!).text.bold.capitalize.xl2.color(ColorUtils(widget.plan.textColor!).toColor()).make(),
                           Spacer(),
                           CurrencyButtonWidget(
                             color: ColorUtils(widget.plan.textColor!).toColor(),
@@ -151,7 +153,7 @@ class _PlanItemWidgetState extends State<PlanItemWidget> with SingleTickerProvid
                       ),
                       "Per Year".text.bold.sm.color(ColorUtils(widget.plan.textColor!).toColor()).make(),
                       SizedBox(height: 10,),
-                      StringUtils.getTranslatedString(_authBloc.state.locale!, widget.plan.description!).text.bold.sm.color(ColorUtils(widget.plan.textColor!).toColor()).overflow(TextOverflow.ellipsis).make(),
+                      StringUtils.getTranslatedString(_configBloc.state.locale!, widget.plan.description!).text.bold.sm.color(ColorUtils(widget.plan.textColor!).toColor()).overflow(TextOverflow.ellipsis).make(),
                       Row(
                         children: [
                           Spacer(),

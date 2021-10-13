@@ -31,7 +31,7 @@ class _LanguagePageSstate extends State<LanguagesPage> {
 
   @override
   void initState() {
-    _configBloc = BlocProvider.of<ConfigBloc>(context);
+    _configBloc = context.read<ConfigBloc>();
     if (widget.firstTime == false) {
       if (isAr())
         selectedIndex = 0;

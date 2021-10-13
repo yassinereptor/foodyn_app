@@ -6,6 +6,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodyn_rest/core/bloc/config_bloc/config_bloc.dart';
+import 'package:foodyn_rest/core/data/models/location_model.dart';
+import 'package:foodyn_rest/core/data/models/user_model.dart';
 import 'package:foodyn_rest/core/utils/resource_utils.dart';
 import 'package:foodyn_rest/features/auth/presentation/widgets/botton_widget.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -13,11 +15,9 @@ import 'package:velocity_x/velocity_x.dart';
 
 import '../../../../core/bloc/auth_bloc/auth_bloc.dart';
 import '../../../../core/bloc/geolocation_bloc/geolocation_bloc.dart';
-import '../../../../core/bloc/profile_bloc/profile_bloc.dart';
 import '../../../../core/config/injectable/injection.dart';
 import '../../../../core/config/router/router.dart';
 import '../../../../core/config/theme/global_theme.dart';
-import '../../../../core/data/models/profile_model.dart';
 import '../../../../core/domain/entities/app_failure.dart';
 import '../../../../core/utils/theme_brightness.dart';
 import '../../../../core/widgets/modal_container_widget.dart';
@@ -40,43 +40,55 @@ class CompleteRegisterPage extends StatefulWidget {
 
 class _CompleteRegisterPageState extends State<CompleteRegisterPage> {
   final _formKey = GlobalKey<FormState>();
+  int _selectedDialCode = 0;
   int _selectedDialCodeIndex = 0;
   int _selectedCountryIndex = 0;
-  int _selectedGenderIndex = 0;
-  List<String> _phoneCodes = [
-    '{"name": "Morocco","dialCode": "+212","code": "MA"}'
-  ];
+  int _selectedCityIndex = 0;
+  String? _selectedCountryName;
+  String? _selectedCityName;
+  int? _selectedGenderIndex;
+  List<LocationModel> _locations = [];
   late GoogleMapController _mapController;
   List<Marker> _markersList = [];
   List<String> _genderList = ["Male", "Female", "Other"];
   LatLng? _selectedMarker;
   late LatLng _defaultSelectedMarker;
   late AuthBloc _authBloc;
-  late ProfileBloc _profileBloc;
   late GeolocationBloc _geolocationBloc;
   late ConfigBloc _configBloc;
   TextEditingController _fullnameTextEditingController =
+      new TextEditingController();
+  TextEditingController _usernameTextEditingController =
       new TextEditingController();
   TextEditingController _phoneNumberTextEditingController =
       new TextEditingController();
   TextEditingController _adresseTextEditingController =
       new TextEditingController();
-  TextEditingController _cityTextEditingController =
-      new TextEditingController();
-  TextEditingController _zipCodeTextEditingController =
-      new TextEditingController();
   bool _isFirsttimeMap = true;
-  ProfileModel _profileModel = new ProfileModel();
+  UserModel _userModel = new UserModel();
   bool _showModal = false;
   ModalContainerType _modalType = ModalContainerType.LOADING;
+  List<String> _cities = [];
 
   @override
   void initState() {
     _defaultSelectedMarker = LatLng(31.6298, -8.0101);
-    _authBloc = context.read<AuthBloc>();
     _geolocationBloc = getIt<GeolocationBloc>();
-    _profileBloc = getIt<ProfileBloc>();
-    _configBloc = getIt<ConfigBloc>();
+    _authBloc = context.read<AuthBloc>();
+    _configBloc =  context.read<ConfigBloc>();
+    if (_configBloc.state.locations != null && _configBloc.state.locations!.isNotEmpty) {
+      _locations = _configBloc.state.locations!;
+      _locations.sort((a, b) {
+        return a.name!.toLowerCase().compareTo(b.name!.toLowerCase());
+      });
+      _cities.clear();
+      _locations[_selectedCountryIndex].states!.forEach((element) {
+        _cities.addAll(element.cities!);
+      });
+      _cities.sort((a, b) {
+        return a.toLowerCase().compareTo(b.toLowerCase());
+      });
+    }
     _onFillFields();
     super.initState();
   }
@@ -84,8 +96,6 @@ class _CompleteRegisterPageState extends State<CompleteRegisterPage> {
   @override
   void dispose() {
     _geolocationBloc.close();
-    _configBloc.close();
-    _profileBloc.close();
     super.dispose();
   }
 
@@ -113,60 +123,54 @@ class _CompleteRegisterPageState extends State<CompleteRegisterPage> {
   void _onError(String? message) {}
 
   void _onFillFields() {
-    if (_authBloc.state.user != null && _authBloc.state.user!.profile != null) {
-      ProfileModel profileModel = _authBloc.state.user!.profile!;
-      _fullnameTextEditingController.text = profileModel.fullname!;
+    if (_authBloc.state.user != null && _authBloc.state.user!.username != null) {
+      UserModel userModel = _authBloc.state.user!;
+      _usernameTextEditingController.text = userModel.username!;
+      _fullnameTextEditingController.text = (userModel.fullname != null) ? userModel.fullname! : "";
       _adresseTextEditingController.text =
-          (profileModel.adresse != null) ? profileModel.adresse! : "";
-      _selectedDialCodeIndex =
-          (profileModel.dialCode != null) ? profileModel.dialCode! : 145;
+          (userModel.adresse != null) ? userModel.adresse! : "";
+      _selectedDialCode =
+          (userModel.dialCode != null) ? userModel.dialCode! : 145;
       _phoneNumberTextEditingController.text =
-          (profileModel.phoneNumber != null) ? profileModel.phoneNumber! : "";
-      _selectedCountryIndex =
-          (profileModel.country != null) ? profileModel.country! : 145;
-      _cityTextEditingController.text =
-          (profileModel.city != null) ? profileModel.city! : "";
-      _zipCodeTextEditingController.text = (profileModel.zipCode != null)
-          ? profileModel.zipCode!.toString()
-          : "";
+          (userModel.phoneNumber != null) ? userModel.phoneNumber! : "";
+      _selectedCountryName = userModel.country;
+      _selectedCityName = userModel.city;
       _selectedGenderIndex =
-          (profileModel.gender != null) ? profileModel.gender! : 0;
+          (userModel.gender != null) ? userModel.gender! : 0;
       _selectedMarker =
-          (profileModel.posLat != null && profileModel.posLng != null)
-              ? new LatLng(profileModel.posLat!, profileModel.posLng!)
+          (userModel.posLat != null && userModel.posLng != null)
+              ? new LatLng(userModel.posLat!, userModel.posLng!)
               : null;
     }
   }
 
   void _onCompleteRegister() {
     if (_formKey.currentState!.validate() && _authBloc.state.user != null) {
-      _profileModel.id = (_authBloc.state.user!.profile != null)
-          ? _authBloc.state.user!.profile!.id
+      _userModel.id = (_authBloc.state.user!.username != null)
+          ? _authBloc.state.user!.id
           : null;
-      _profileModel.fullname = (_fullnameTextEditingController.text.isEmpty)
+      _userModel.username= (_usernameTextEditingController.text.isEmpty)
+          ? null
+          : _usernameTextEditingController.text;
+      _userModel.fullname = (_fullnameTextEditingController.text.isEmpty)
           ? null
           : _fullnameTextEditingController.text;
-      _profileModel.adresse = (_adresseTextEditingController.text.isEmpty)
+      _userModel.adresse = (_adresseTextEditingController.text.isEmpty)
           ? null
           : _adresseTextEditingController.text;
-      _profileModel.dialCode = _selectedDialCodeIndex;
-      _profileModel.phoneNumber =
+      _userModel.dialCode = _selectedDialCode;
+      _userModel.phoneNumber =
           (_phoneNumberTextEditingController.text.isEmpty)
               ? null
               : _phoneNumberTextEditingController.text;
-      _profileModel.country = _selectedCountryIndex;
-      _profileModel.city = (_cityTextEditingController.text.isEmpty)
-          ? null
-          : _cityTextEditingController.text;
-      _profileModel.zipCode = (_zipCodeTextEditingController.text.isEmpty)
-          ? null
-          : int.parse(_zipCodeTextEditingController.text.toString());
-      _profileModel.gender = _selectedGenderIndex;
-      _profileModel.posLat =
+      _userModel.country = _selectedCountryName;
+      _userModel.city = _selectedCityName;
+      _userModel.gender = _selectedGenderIndex;
+      _userModel.posLat =
           (_selectedMarker == null) ? null : _selectedMarker!.latitude;
-      _profileModel.posLng =
+      _userModel.posLng =
           (_selectedMarker == null) ? null : _selectedMarker!.longitude;
-      _profileBloc.add(ProfileEvent.saveProfile(_profileModel));
+      _authBloc.add(AuthEvent.updateUser(_userModel));
     }
   }
 
@@ -201,16 +205,12 @@ class _CompleteRegisterPageState extends State<CompleteRegisterPage> {
     });
   }
 
-  void _onStateLoadingProfileSuccess(ProfileModel? profile) {
-    _authBloc.state.user!.profile = profile;
+  void _onStateLoadingSuccess() {
     setState(() {
       _modalType = ModalContainerType.SUCCESS;
     });
     Future.delayed(Duration(milliseconds: 2000), () {
-      setState(() {
-        _showModal = false;
-        _modalType = ModalContainerType.LOADING;
-      });
+      _onModalReset();
       if (_phoneNumberTextEditingController.text.isEmpty) {
         Routes.seafarer.navigate(RegisterImagePage.kRouteName);
       } else {
@@ -224,24 +224,19 @@ class _CompleteRegisterPageState extends State<CompleteRegisterPage> {
     });
   }
 
-  void _onStateLoadingResourcePhoneSuccess(List<String>? resource) {
-    setState(() {
-      _showModal = false;
-      _modalType = ModalContainerType.LOADING;
-      _phoneCodes = resource!;
-      _selectedCountryIndex = _selectedDialCodeIndex = 145;
-    });
-  }
-
   void _onStateLoadingFailure(AppFailure failure) {
     setState(() {
       _modalType = ModalContainerType.FAILURE;
     });
     Future.delayed(Duration(milliseconds: 2000), () {
-      setState(() {
-        _showModal = false;
-        _modalType = ModalContainerType.LOADING;
-      });
+      _onModalReset();
+    });
+  }
+
+  void _onModalReset() {
+    setState(() {
+      _showModal = false;
+      _modalType = ModalContainerType.LOADING;
     });
   }
 
@@ -252,24 +247,16 @@ class _CompleteRegisterPageState extends State<CompleteRegisterPage> {
           BlocProvider(
             create: (context) => _geolocationBloc,
           ),
-          BlocProvider(
-            create: (context) => _authBloc,
-          ),
-          BlocProvider(
-            create: (context) => _profileBloc,
-          ),
-          BlocProvider(
-            create: (context) =>
-                _configBloc..add(ConfigEvent.getPhoneResource()),
-          )
+          BlocProvider.value(value: _configBloc),
+          BlocProvider.value(value: _authBloc)
         ],
         child: MultiBlocListener(
           listeners: [
-            BlocListener<ProfileBloc, ProfileState>(
+            BlocListener<AuthBloc, AuthState>(
               listener: (context, state) {
-                state.maybeWhen(
+                state.type.maybeWhen(
                     loadingInProgress: _onStateLoadingInProgress,
-                    loadingProfileSuccess: _onStateLoadingProfileSuccess,
+                    loadingSuccess: _onStateLoadingSuccess,
                     loadingFailed: _onStateLoadingFailure,
                     orElse: () {});
               },
@@ -283,16 +270,6 @@ class _CompleteRegisterPageState extends State<CompleteRegisterPage> {
                       _isFirsttimeMap = false;
                     },
                     getGeolocationFailed: (failure) {},
-                    orElse: () {});
-              },
-            ),
-            BlocListener<ConfigBloc, ConfigState>(
-              listener: (context, state) {
-                state.maybeWhen(
-                    loadingInProgress: _onStateLoadingInProgress,
-                    loadingResourcePhoneSuccess:
-                        _onStateLoadingResourcePhoneSuccess,
-                    loadingFailed: _onStateLoadingFailure,
                     orElse: () {});
               },
             ),
@@ -325,6 +302,7 @@ class _CompleteRegisterPageState extends State<CompleteRegisterPage> {
             return ScaffoldContainerWidget(
               type: _modalType,
               show: _showModal,
+              onReset: _onModalReset,
               logout: true,
               back: false,
               title: "Complete your registration",
@@ -338,12 +316,23 @@ class _CompleteRegisterPageState extends State<CompleteRegisterPage> {
                           padding: EdgeInsets.only(bottom: 20),
                           child: TextFormWidget(
                             onChanged: (_) {},
-                            hint: "Full name *",
+                            hint: "Username *",
                             keyboardType: TextInputType.name,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
-                                return '● Please enter your full name';
+                                return '● Please enter a username';
                               }
+                              return null;
+                            },
+                            controller: _usernameTextEditingController,
+                          )),
+                      Padding(
+                          padding: EdgeInsets.only(bottom: 20),
+                          child: TextFormWidget(
+                            onChanged: (_) {},
+                            hint: "Fullname",
+                            keyboardType: TextInputType.name,
+                            validator: (value) {
                               return null;
                             },
                             controller: _fullnameTextEditingController,
@@ -354,11 +343,10 @@ class _CompleteRegisterPageState extends State<CompleteRegisterPage> {
                             child: Padding(
                                 padding: EdgeInsets.only(bottom: 20),
                                 child: DropdownFormWidget(
-                                  onSelect: (index) => setState(() {
+                                  onSelect: (name, index) => setState(() {
                                     _selectedGenderIndex = index;
                                   }),
                                   list: _genderList,
-                                  defaultIndex: _selectedGenderIndex,
                                   modifyListOutput: (text) => text,
                                   modifySelectedOutput: (text) => text,
                                   searchForm: false,
@@ -372,22 +360,29 @@ class _CompleteRegisterPageState extends State<CompleteRegisterPage> {
                             child: Padding(
                                 padding: EdgeInsets.only(bottom: 20),
                                 child: DropdownFormWidget(
-                                  onSelect: (index) => setState(() {
+                                  onSelect: (code, index) => setState(() {
                                     _selectedDialCodeIndex = index;
+                                    final jsonResult = json.decode(code);
+                                    _selectedDialCode = int.parse(jsonResult["dialCode"]);
                                   }),
-                                  list: _phoneCodes,
                                   defaultIndex: _selectedDialCodeIndex,
+                                  list: _locations.map((e) {
+                                    return json.encode({
+                                      "code": e.code!.toString(),
+                                      "dialCode": e.dialCode!.toString(),
+                                    });
+                                  }).toList(),
                                   modifyListOutput: (text) {
                                     final jsonResult = json.decode(text);
-                                    return jsonResult["name"] +
-                                        " (" +
+                                    return jsonResult["code"] +
+                                        " (+" +
                                         jsonResult["dialCode"] +
                                         ")";
                                   },
                                   modifySelectedOutput: (text) {
                                     final jsonResult = json.decode(text);
                                     return jsonResult["code"] +
-                                        " (" +
+                                        " (+" +
                                         jsonResult["dialCode"] +
                                         ")";
                                   },
@@ -404,10 +399,6 @@ class _CompleteRegisterPageState extends State<CompleteRegisterPage> {
                                   hint: "Phone number",
                                   keyboardType: TextInputType.phone,
                                   validator: (value) {
-                                    // if (value == null ||
-                                    //     value.isEmpty) {
-                                    //   return '● Please enter some text';
-                                    // }
                                     return null;
                                   },
                                   controller: _phoneNumberTextEditingController,
@@ -498,24 +489,23 @@ class _CompleteRegisterPageState extends State<CompleteRegisterPage> {
                             child: Padding(
                                 padding: EdgeInsets.only(bottom: 20),
                                 child: DropdownFormWidget(
-                                  onSelect: (index) {
+                                  onSelect: (name, index) {
                                     setState(() {
                                       _selectedCountryIndex = index;
+                                      _selectedCountryName = name;
+                                      _cities.clear();
+                                      _locations[_selectedCountryIndex].states!.forEach((element) {
+                                        _cities.addAll(element.cities!);
+                                      });
+                                      _cities.sort((a, b) {
+                                        return a.toLowerCase().compareTo(b.toLowerCase());
+                                      });
                                     });
                                   },
-                                  list: _phoneCodes,
                                   defaultIndex: _selectedCountryIndex,
-                                  modifyListOutput: (text) {
-                                    final jsonResult = json.decode(text);
-                                    return jsonResult["name"];
-                                  },
-                                  modifySelectedOutput: (text) {
-                                    final jsonResult = json.decode(text);
-                                    return jsonResult["name"] +
-                                        " (" +
-                                        jsonResult["code"] +
-                                        ")";
-                                  },
+                                  list: _locations.map((e) => e.name!).toList(),
+                                  modifyListOutput: (text) => text,
+                                  modifySelectedOutput: (text) => text,
                                 )),
                           ),
                         ],
@@ -525,38 +515,17 @@ class _CompleteRegisterPageState extends State<CompleteRegisterPage> {
                           Expanded(
                             child: Padding(
                                 padding: EdgeInsets.only(bottom: 20),
-                                child: TextFormWidget(
-                                  onChanged: (_) {},
-                                  hint: "City",
-                                  keyboardType: TextInputType.text,
-                                  validator: (value) {
-                                    // if (value == null ||
-                                    //     value.isEmpty) {
-                                    //   return '● Please enter some text';
-                                    // }
-                                    return null;
+                                child: DropdownFormWidget(
+                                  onSelect: (name, index) {
+                                    setState(() {
+                                      _selectedCityIndex = index;
+                                      _selectedCityName = name;
+                                    });
                                   },
-                                  controller: _cityTextEditingController,
-                                )),
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Expanded(
-                            child: Padding(
-                                padding: EdgeInsets.only(bottom: 20),
-                                child: TextFormWidget(
-                                  onChanged: (_) {},
-                                  hint: "Zip Code",
-                                  keyboardType: TextInputType.number,
-                                  validator: (value) {
-                                    // if (value == null ||
-                                    //     value.isEmpty) {
-                                    //   return '● Please enter some text';
-                                    // }
-                                    return null;
-                                  },
-                                  controller: _zipCodeTextEditingController,
+                                  list: _cities,
+                                  defaultIndex: _selectedCityIndex,
+                                  modifyListOutput: (text) => text,
+                                  modifySelectedOutput: (text) => text,
                                 )),
                           ),
                         ],

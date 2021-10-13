@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
+import 'package:foodyn_rest/core/utils/theme_brightness.dart';
 import '../../config/router/router.dart';
 import '../../config/theme/global_theme.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -24,15 +25,15 @@ class _JwtExpiredDialogState extends State<JwtExpiredDialog> {
     return WillPopScope(
       onWillPop: () async => false,
       child: Dialog(
-        clipBehavior: Clip.antiAlias,
         insetPadding: Vx.m0,
         elevation: 0,
+        backgroundColor: Colors.transparent,
         child: Stack(
                   children: [
                     BackdropFilter(
                       filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
                       child: Container(
-                        color: Colors.black.withOpacity(0.5),
+                        color: isDark(context) ? Colors.white.withOpacity(0.5) : Colors.black.withOpacity(0.5),
                       ),
                     ),
                     Container(
@@ -51,7 +52,7 @@ class _JwtExpiredDialogState extends State<JwtExpiredDialog> {
                                       animation: "start"),
                                   Center(
                                     child: Icon(
-                                            Icons.close,
+                                            Icons.close_rounded,
                                             color: GlobalTheme.kAccentColor,
                                           ),
                                   )
