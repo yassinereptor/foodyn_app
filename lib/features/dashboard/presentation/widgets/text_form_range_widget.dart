@@ -2,8 +2,8 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:foodyn_rest/features/auth/presentation/widgets/botton_widget.dart';
-import 'package:foodyn_rest/features/auth/presentation/widgets/text_form_widget.dart';
+import 'package:foodyn_eatery/features/auth/presentation/widgets/botton_widget.dart';
+import 'package:foodyn_eatery/features/auth/presentation/widgets/text_form_widget.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import '../../../../core/config/router/router.dart';

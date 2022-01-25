@@ -2,9 +2,9 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:foodyn_rest/features/auth/presentation/widgets/botton_widget.dart';
-import 'package:foodyn_rest/features/auth/presentation/widgets/dropdown_form_widget.dart';
-import 'package:foodyn_rest/features/dashboard/presentation/pages/add_group_page.dart';
+import 'package:foodyn_eatery/features/auth/presentation/widgets/botton_widget.dart';
+import 'package:foodyn_eatery/features/auth/presentation/widgets/dropdown_form_widget.dart';
+import 'package:foodyn_eatery/features/dashboard/presentation/pages/add_group_page.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import '../../../../core/config/router/router.dart';
@@ -15,10 +15,12 @@ import '../../../dashboard/presentation/pages/dashboard_page.dart';
 
 class DropdownGroupWidget extends StatefulWidget {
   final void Function(String, int) onSelect;
+  final int defaultIndex;
 
   const DropdownGroupWidget({
     Key? key,
     required this.onSelect,
+    required this.defaultIndex,
     }) : super(key: key);
 
   @override
@@ -47,7 +49,8 @@ class _DropdownGroupWidgetState extends State<DropdownGroupWidget> {
           child: DropdownFormWidget(
             onSelect: widget.onSelect,
             list: _typeList,
-            defaultIndex: 0,
+            hint: "Group",
+            defaultIndex: widget.defaultIndex,
             modifyListOutput: (text) => text,
             modifySelectedOutput: (text) => text,
             searchForm: true,

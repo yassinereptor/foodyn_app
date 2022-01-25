@@ -2,9 +2,9 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:foodyn_rest/core/widgets/dialogs/jwt_expired_dialog.dart';
-import 'package:foodyn_rest/features/auth/presentation/widgets/botton_widget.dart';
-import 'package:foodyn_rest/features/dashboard/presentation/widgets/table_number_dialog.dart';
+import 'package:foodyn_eatery/core/widgets/dialogs/jwt_expired_dialog.dart';
+import 'package:foodyn_eatery/features/auth/presentation/widgets/botton_widget.dart';
+import 'package:foodyn_eatery/features/dashboard/presentation/widgets/table_number_dialog.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import '../../../../core/config/router/router.dart';

@@ -2,9 +2,9 @@ import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:foodyn_rest/core/data/models/coupon_model.dart';
-import 'package:foodyn_rest/core/data/models/membership_model.dart';
-import 'package:foodyn_rest/core/enums/image.type.dart';
+import 'package:foodyn_eatery/core/data/models/coupon_model.dart';
+import 'package:foodyn_eatery/core/data/models/membership_model.dart';
+import 'package:foodyn_eatery/core/enums/image.type.dart';
 import '../../domain/repositories/i_config_repository.dart';
 import '../../domain/repositories/i_language_repository.dart';
 import 'package:logger/logger.dart';
@@ -86,7 +86,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     if (appFailure != null)
     {
       yield state.copyWith(
-        type: AuthStateType.loadingSuccess(),
+        type: AuthStateType.loadingStartedSuccess(),
         status: locale == null
             ? AuthStatus.firstTime()
             : AuthStatus.unauthenticated(),
@@ -118,7 +118,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           if (appFailure != null)
             yield state.copyWith(type: AuthStateType.loadingFailed(appFailure!));
           else yield state.copyWith(
-                type: AuthStateType.loadingSuccess(),
+                type: AuthStateType.loadingStartedSuccess(),
                 status: AuthStatus.authenticated(),
                 user: user,
                 token: token,
@@ -313,8 +313,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     });
     if (appFailure != null)
       yield state.copyWith(type: AuthStateType.loadingFailed(appFailure!));
-    // else
-    //   yield AuthState.loadingMembershipSuccess(membershipModel);
+    else
+      yield state.copyWith(
+                type: AuthStateType.loadingSuccess(),
+              );
   }
 
   Stream<AuthState> _checkCouponStatus(String code) async* {
@@ -331,8 +333,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       });
       if (appFailure != null || coupon == null)
         yield state.copyWith(type: AuthStateType.loadingFailed((appFailure != null) ? appFailure! : AppFailure.local()));
-      // else
-        // yield AuthState.loadingCouponSuccess(coupon);
+      else
+        yield state.copyWith(
+                type: AuthStateType.loadingCouponSuccess(coupon),
+              );
     }
   }
 }

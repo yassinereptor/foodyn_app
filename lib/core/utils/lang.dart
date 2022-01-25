@@ -1,6 +1,6 @@
 
 
-import 'package:foodyn_rest/core/bloc/config_bloc/config_bloc.dart';
+import 'package:foodyn_eatery/core/bloc/config_bloc/config_bloc.dart';
 
 import '../bloc/auth_bloc/auth_bloc.dart';
 import '../config/injectable/injection.dart';

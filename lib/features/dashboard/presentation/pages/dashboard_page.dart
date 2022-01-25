@@ -7,19 +7,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:foodyn_rest/core/bloc/config_bloc/config_bloc.dart';
-import 'package:foodyn_rest/core/bloc/managment_bloc/management_bloc.dart';
-import 'package:foodyn_rest/core/config/injectable/injection.dart';
-import 'package:foodyn_rest/core/config/router/router.dart';
-import 'package:foodyn_rest/core/data/models/eatery_model.dart';
-import 'package:foodyn_rest/core/domain/entities/app_failure.dart';
-import 'package:foodyn_rest/core/widgets/modal_container_widget.dart';
-import 'package:foodyn_rest/features/auth/presentation/widgets/resend_email_widget.dart';
-import 'package:foodyn_rest/features/dashboard/presentation/pages/profile_page.dart';
-import 'package:foodyn_rest/features/dashboard/presentation/views/analysis_view.dart';
-import 'package:foodyn_rest/features/dashboard/presentation/views/management_view.dart';
-import 'package:foodyn_rest/features/dashboard/presentation/views/orders_view.dart';
-import 'package:foodyn_rest/features/dashboard/presentation/widgets/side_menu_widget.dart';
+import 'package:foodyn_eatery/core/bloc/config_bloc/config_bloc.dart';
+import 'package:foodyn_eatery/core/bloc/managment_bloc/management_bloc.dart';
+import 'package:foodyn_eatery/core/config/injectable/injection.dart';
+import 'package:foodyn_eatery/core/config/router/router.dart';
+import 'package:foodyn_eatery/core/data/models/eatery_model.dart';
+import 'package:foodyn_eatery/core/domain/entities/app_failure.dart';
+import 'package:foodyn_eatery/core/widgets/modal_container_widget.dart';
+import 'package:foodyn_eatery/features/auth/presentation/widgets/resend_email_widget.dart';
+import 'package:foodyn_eatery/features/dashboard/presentation/pages/profile_page.dart';
+import 'package:foodyn_eatery/features/dashboard/presentation/views/analysis_view.dart';
+import 'package:foodyn_eatery/features/dashboard/presentation/views/management_view.dart';
+import 'package:foodyn_eatery/features/dashboard/presentation/views/orders_view.dart';
+import 'package:foodyn_eatery/features/dashboard/presentation/widgets/side_menu_widget.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:simple_gesture_detector/simple_gesture_detector.dart';
 import 'package:flutter_slider_drawer/flutter_slider_drawer.dart';
@@ -215,7 +215,7 @@ class _DashboardPageState extends State<DashboardPage>
     } else if (index == 6) {
       Routes.seafarer.navigate(VersionPage.kRouteName);
       print("Version");
-    } 
+    }
     if (!init && _menuSize == MediaQuery.of(context).size.width) {
       _closeMenuBig();
     }
@@ -255,25 +255,20 @@ class _DashboardPageState extends State<DashboardPage>
     _managementBloc.add(ManagementEvent.started());
   }
 
-  void _onStateLoadingInProgress() {
-  }
+  void _onStateLoadingInProgress() {}
 
   void _onStateLoadingSuccess() {
     setState(() {
       if (_managementBloc.state.eateries != null)
         eateryModelList = _managementBloc.state.eateries!;
     });
-    if (_refreshController.isRefresh)
-      _refreshController.refreshCompleted();
-    if (_refreshController.isLoading)
-      _refreshController.loadComplete();
+    if (_refreshController.isRefresh) _refreshController.refreshCompleted();
+    if (_refreshController.isLoading) _refreshController.loadComplete();
   }
 
   void _onStateLoadingFailure(AppFailure failure) {
-   if (_refreshController.isRefresh)
-      _refreshController.refreshFailed();
-    if (_refreshController.isLoading)
-      _refreshController.loadFailed();
+    if (_refreshController.isRefresh) _refreshController.refreshFailed();
+    if (_refreshController.isLoading) _refreshController.loadFailed();
   }
 
   void requestRefresh() {
@@ -288,67 +283,57 @@ class _DashboardPageState extends State<DashboardPage>
     var result = await Routes.seafarer.navigate(EateryPage.kRouteName, params: {
       "eateryModel": eateryModelList.singleWhere((element) => element.id == id)
     });
-    if (result != null)
-      requestRefresh();
+    if (result != null) requestRefresh();
   }
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider.value(value: _configBloc),
-        BlocProvider.value(value: _managementBloc)
-      ],
-      child: MultiBlocListener(
-        listeners: [
-          BlocListener<ManagementBloc, ManagementState>(
-          listener: (context, state) {
-            state.type.maybeWhen(
-                loadingInProgress: _onStateLoadingInProgress,
-                loadingSuccess: _onStateLoadingSuccess,
-                loadingFailed: _onStateLoadingFailure,
-                orElse: () {});
-          })
-        ],
-        child: WillPopScope(
-          onWillPop: _onWillPop,
-          child: Scaffold(
-            body: ModalContainerWidget(
-              child: SafeArea(
-                child: SimpleGestureDetector(
-                  onHorizontalSwipe: _onHorizontalSwipe,
-                  swipeConfig: SimpleSwipeConfig(
-                    verticalThreshold: 40.0,
-                    horizontalThreshold: 40.0,
-                    swipeDetectionBehavior:
-                        SwipeDetectionBehavior.singularOnEnd,
-                  ),
-                  child: Container(
-                    child: Row(
-                      children: [
-                        SideMenuWidget(
-                          menuSize: _menuSize,
-                          menuItemsFade: _menuItemsFade,
-                          menuTextItemsFade: _menuTextItemsFade,
-                          endItems: _endItems,
-                          endItemsText: _endItemsText,
-                          onMenuIconTap: _onMenuIconTap,
-                          onEndItems: _onEndItems,
-                          onEndItemsText: _onEndItemsText,
-                          onMenuItemTap: _onMenuItemTap,
-                        ),
-                        Expanded(
-                          child: Container(
-                              color: Colors.transparent,
-                              height: MediaQuery.of(context).size.height,
-                              child: AnimatedOpacity(
-                                onEnd: _onEndBigItems,
-                                duration: Duration(milliseconds: 200),
-                                opacity: _bigMenuItemsFade ? 0.0 : 1.0,
-                                child: _endBigItems
-                                    ? NestedScrollView(
-                                        headerSliverBuilder: (c, b) => [
+    return BlocListener<ManagementBloc, ManagementState>(
+      listener: (context, state) {
+        state.type.maybeWhen(
+            loadingInProgress: _onStateLoadingInProgress,
+            loadingSuccess: _onStateLoadingSuccess,
+            loadingFailed: _onStateLoadingFailure,
+            orElse: () {});
+      },
+      child: WillPopScope(
+        onWillPop: _onWillPop,
+        child: Scaffold(
+          body: ModalContainerWidget(
+            child: SafeArea(
+              child: SimpleGestureDetector(
+                onHorizontalSwipe: _onHorizontalSwipe,
+                swipeConfig: SimpleSwipeConfig(
+                  verticalThreshold: 40.0,
+                  horizontalThreshold: 40.0,
+                  swipeDetectionBehavior:
+                      SwipeDetectionBehavior.singularOnEnd,
+                ),
+                child: Container(
+                  child: Stack(
+                    children: [
+                      Row(
+                        children: [
+                          AnimatedContainer(
+                            duration: new Duration(seconds: 1),
+                            curve: Curves.easeInOutCubic,
+                            width: _menuSize
+                          ),
+                          Expanded(
+                            child: Container(
+                                color: Colors.transparent,
+                                height: MediaQuery.of(context).size.height,
+                                child: AnimatedOpacity(
+                                  onEnd: _onEndBigItems,
+                                  duration: Duration(milliseconds: 200),
+                                  opacity: _bigMenuItemsFade ? 0.0 : 1.0,
+                                  child: _endBigItems
+                                      ? NestedScrollView(
+                                          headerSliverBuilder: (c, b) => [
                                             SliverAppBar(
+                                              backgroundColor: isDark(context)
+                              ? GlobalTheme.kPrimaryColor
+                              : GlobalTheme.kAccentColor,
                                               pinned: false,
                                               snap: true,
                                               floating: true,
@@ -366,20 +351,16 @@ class _DashboardPageState extends State<DashboardPage>
                                                               .spaceBetween,
                                                       children: [
                                                         AnimatedOpacity(
-                                                          duration:
-                                                              new Duration(
-                                                                  milliseconds:
-                                                                      500),
+                                                          duration: new Duration(
+                                                              milliseconds: 500),
                                                           opacity:
                                                               (_menuSize == 0)
                                                                   ? 1
                                                                   : 0,
                                                           child: InkWell(
-                                                            onTap:
-                                                                _openMenuSmall,
+                                                            onTap: _openMenuSmall,
                                                             child: Icon(
-                                                              Icons
-                                                                  .menu_rounded,
+                                                              Icons.menu_rounded,
                                                               color: isDark(
                                                                       context)
                                                                   ? GlobalTheme
@@ -398,8 +379,7 @@ class _DashboardPageState extends State<DashboardPage>
                                                                 GlobalTheme
                                                                     .kRedColor,
                                                             padding:
-                                                                EdgeInsets.all(
-                                                                    7),
+                                                                EdgeInsets.all(7),
                                                             badgeContent: ("1"
                                                                             .length >
                                                                         1
@@ -411,8 +391,7 @@ class _DashboardPageState extends State<DashboardPage>
                                                                     .kAccentColor)
                                                                 .make(),
                                                             child: Icon(
-                                                              Icons
-                                                                  .notifications,
+                                                              Icons.notifications,
                                                               color: isDark(
                                                                       context)
                                                                   ? GlobalTheme
@@ -437,20 +416,16 @@ class _DashboardPageState extends State<DashboardPage>
                                               header: CustomHeader(
                                                 builder: (context, status) {
                                                   if (status ==
-                                                      RefreshStatus
-                                                          .completed)
+                                                      RefreshStatus.completed)
                                                     return SizedBox(
                                                       height: 60,
                                                       width: 60,
                                                       child: FlareActor(
                                                           'assets/animations/loading_success.flr',
                                                           alignment:
-                                                              Alignment
-                                                                  .center,
-                                                          fit: BoxFit
-                                                              .contain,
-                                                          animation:
-                                                              "start"),
+                                                              Alignment.center,
+                                                          fit: BoxFit.contain,
+                                                          animation: "start"),
                                                     );
                                                   else if (status ==
                                                       RefreshStatus.failed)
@@ -460,12 +435,9 @@ class _DashboardPageState extends State<DashboardPage>
                                                       child: FlareActor(
                                                           'assets/animations/loading_failure.flr',
                                                           alignment:
-                                                              Alignment
-                                                                  .center,
-                                                          fit: BoxFit
-                                                              .contain,
-                                                          animation:
-                                                              "start"),
+                                                              Alignment.center,
+                                                          fit: BoxFit.contain,
+                                                          animation: "start"),
                                                     );
                                                   else if (isDark(context))
                                                     return SizedBox(
@@ -474,12 +446,9 @@ class _DashboardPageState extends State<DashboardPage>
                                                       child: FlareActor(
                                                           'assets/animations/loading_dark.flr',
                                                           alignment:
-                                                              Alignment
-                                                                  .center,
-                                                          fit: BoxFit
-                                                              .contain,
-                                                          animation:
-                                                              "start"),
+                                                              Alignment.center,
+                                                          fit: BoxFit.contain,
+                                                          animation: "start"),
                                                     );
                                                   else
                                                     return SizedBox(
@@ -488,17 +457,13 @@ class _DashboardPageState extends State<DashboardPage>
                                                       child: FlareActor(
                                                           'assets/animations/loading_light.flr',
                                                           alignment:
-                                                              Alignment
-                                                                  .center,
-                                                          fit: BoxFit
-                                                              .contain,
-                                                          animation:
-                                                              "start"),
+                                                              Alignment.center,
+                                                          fit: BoxFit.contain,
+                                                          animation: "start"),
                                                     );
                                                 },
                                               ),
-                                              controller:
-                                                  _refreshController,
+                                              controller: _refreshController,
                                               child: SingleChildScrollView(
                                                 child: Padding(
                                                   padding: EdgeInsets.only(
@@ -508,26 +473,26 @@ class _DashboardPageState extends State<DashboardPage>
                                                       children: [
                                                         ResendEmailWidget(),
                                                         Container(
-                                                            margin: EdgeInsets
-                                                                .only(
-                                                                    bottom:
-                                                                        10,
-                                                                    top:
-                                                                        10),
+                                                            margin:
+                                                                EdgeInsets.only(
+                                                                    bottom: 10,
+                                                                    top: 10),
                                                             padding:
-                                                                EdgeInsets
-                                                                    .all(
-                                                                        10),
+                                                                EdgeInsets.all(
+                                                                    10),
                                                             decoration:
                                                                 BoxDecoration(
                                                                     borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            10),
+                                                                        BorderRadius
+                                                                            .circular(
+                                                                                10),
                                                                     gradient:
                                                                         LinearGradient(
                                                                             colors: [
-                                                                          Color(0xFFFF414D),
-                                                                          Color(0xFFF56A79),
+                                                                          Color(
+                                                                              0xFFFF414D),
+                                                                          Color(
+                                                                              0xFFF56A79),
                                                                         ])),
                                                             child: Column(
                                                               children: [
@@ -536,36 +501,33 @@ class _DashboardPageState extends State<DashboardPage>
                                                                     Icon(
                                                                       Icons
                                                                           .notifications_on_rounded,
-                                                                      color:
-                                                                          GlobalTheme.kAccentColor,
-                                                                      size:
-                                                                          30,
+                                                                      color: GlobalTheme
+                                                                          .kAccentColor,
+                                                                      size: 30,
                                                                     ),
                                                                     SizedBox(
-                                                                      width:
-                                                                          10,
+                                                                      width: 10,
                                                                     ),
                                                                     "News"
                                                                         .text
                                                                         .xl
-                                                                        .color(GlobalTheme.kAccentColor)
+                                                                        .color(GlobalTheme
+                                                                            .kAccentColor)
                                                                         .make(),
                                                                     Spacer(),
                                                                     InkWell(
-                                                                      child:
-                                                                          Icon(
-                                                                        Icons.close_rounded,
-                                                                        color:
-                                                                            GlobalTheme.kAccentColor,
-                                                                        size:
-                                                                            30,
+                                                                      child: Icon(
+                                                                        Icons
+                                                                            .close_rounded,
+                                                                        color: GlobalTheme
+                                                                            .kAccentColor,
+                                                                        size: 30,
                                                                       ),
                                                                     )
                                                                   ],
                                                                 ),
                                                                 SizedBox(
-                                                                  height:
-                                                                      10,
+                                                                  height: 10,
                                                                 ),
                                                                 "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptatibus est dolores tempora impedit corrupti odio"
                                                                     .text
@@ -574,14 +536,27 @@ class _DashboardPageState extends State<DashboardPage>
                                                                     .make()
                                                               ],
                                                             )),
-                                                        if (_menuItemBodyIndex == 1)
-                                                          OverviewView(eateryModelList: eateryModelList, requestRefresh: requestRefresh, showAllEateriesTap: _showAllEateriesTap, onEateryTap: _onEateryTap,),
-                                                        if (_menuItemBodyIndex == 2)
-                                                        AnalysisView(),
-                                                        if (_menuItemBodyIndex == 3)
-                                                            OrdersView(),
-                                                        if (_menuItemBodyIndex == 4)
-                                                            ManagementView(),
+                                                        if (_menuItemBodyIndex ==
+                                                            1)
+                                                          OverviewView(
+                                                            eateryModelList:
+                                                                eateryModelList,
+                                                            requestRefresh:
+                                                                requestRefresh,
+                                                            showAllEateriesTap:
+                                                                _showAllEateriesTap,
+                                                            onEateryTap:
+                                                                _onEateryTap,
+                                                          ),
+                                                        if (_menuItemBodyIndex ==
+                                                            2)
+                                                          AnalysisView(),
+                                                        if (_menuItemBodyIndex ==
+                                                            3)
+                                                          OrdersView(),
+                                                        if (_menuItemBodyIndex ==
+                                                            4)
+                                                          ManagementView(),
                                                         SizedBox(height: 40)
                                                       ],
                                                     ),
@@ -589,12 +564,26 @@ class _DashboardPageState extends State<DashboardPage>
                                                 ),
                                               ),
                                             ),
-                                          ),)
-                                    : Container(),
-                              )),
-                        ),
-                      ],
-                    ),
+                                          ),
+                                        )
+                                      : Container(),
+                                )),
+                          ),
+                        ],
+                      ),
+                      SideMenuWidget(
+                        statusHeight: MediaQuery.of(context).padding.top,
+                        menuSize: _menuSize,
+                        menuItemsFade: _menuItemsFade,
+                        menuTextItemsFade: _menuTextItemsFade,
+                        endItems: _endItems,
+                        endItemsText: _endItemsText,
+                        onMenuIconTap: _onMenuIconTap,
+                        onEndItems: _onEndItems,
+                        onEndItemsText: _onEndItemsText,
+                        onMenuItemTap: _onMenuItemTap,
+                      )
+                    ],
                   ),
                 ),
               ),

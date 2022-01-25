@@ -17,5 +17,6 @@ abstract class ConfigStateType with _$ConfigStateType {
   const factory ConfigStateType.initial() = _Initial;
   const factory ConfigStateType.loadingInProgress() = _LoadingInProgress;
   const factory ConfigStateType.loadingSuccess() = _LoadingSuccess;
+  const factory ConfigStateType.loadingStartedSuccess() = _LoadingStartedSuccess;
   const factory ConfigStateType.loadingFailed(AppFailure failure) = _LoadingFailed;
 }

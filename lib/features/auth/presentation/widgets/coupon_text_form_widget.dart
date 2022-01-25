@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:foodyn_rest/core/bloc/auth_bloc/auth_bloc.dart';
+import 'package:foodyn_eatery/core/bloc/auth_bloc/auth_bloc.dart';
 import '../../../../core/data/models/coupon_model.dart';
 import '../../../../core/config/injectable/injection.dart';
 import '../../../../core/config/theme/input_decoration_theme.dart';
@@ -63,85 +63,82 @@ class _CouponTextFormWidgetState extends State<CouponTextFormWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider.value(
-      value: _authBloc,
-      child: BlocConsumer<AuthBloc, AuthState>(
-        listener: (context, state) {
-          state.type.maybeWhen(
-            loadingCouponSuccess: (coupon) {
-              widget.onCouponSet(coupon);
-            },
-            orElse: (){
-              widget.onCouponSet(null);
-            });
-        },
-        builder: (context, state) {
-          state.type.maybeWhen(
-            loadingInProgress: () {
-              _icon = _defaultIcon;
-            },
-            loadingFailed: (faulure) {
-              _icon = Icon(
-                    Icons.close_rounded,
-                    color: GlobalTheme.kRedColor,
-                  );
-            },
-            loadingCouponSuccess: (coupon) {
-              _icon = Icon(
-                    Icons.check,
-                    color: GlobalTheme.kGreenColor,
-                  );
-            },
-            orElse: (){
-              _icon = _defaultIcon;
-            });
+    return BlocConsumer<AuthBloc, AuthState>(
+      listener: (context, state) {
+        state.type.maybeWhen(
+          loadingCouponSuccess: (coupon) {
+            widget.onCouponSet(coupon);
+          },
+          orElse: (){
+            widget.onCouponSet(null);
+          });
+      },
+      builder: (context, state) {
+        state.type.maybeWhen(
+          loadingInProgress: () {
+            _icon = _defaultIcon;
+          },
+          loadingFailed: (faulure) {
+            _icon = Icon(
+                  Icons.close_rounded,
+                  color: GlobalTheme.kRedColor,
+                );
+          },
+          loadingCouponSuccess: (coupon) {
+            _icon = Icon(
+                  Icons.check,
+                  color: GlobalTheme.kGreenColor,
+                );
+          },
+          orElse: (){
+            _icon = _defaultIcon;
+          });
 
-          return Row(
-            children: [
-              Expanded(
-                  child: TextFormField(
-                    onChanged: (text){
-                        if (text.isNotEmpty &&
-                            text.length == 4) {
-                          _authBloc
-                              .add(AuthEvent.checkCouponStatus(text));
-                        }
-                        else
-                          _authBloc
-                              .add(AuthEvent.checkCouponStatus(""));
-                    },
-                      keyboardType: TextInputType.streetAddress,
-                      cursorColor: GlobalTheme.kOrangeColor,
-                      decoration: InputDecoration(
-                        hintText: "Coupon",
-                        border: isDark(context) ? darkBorder : border,
-                        errorBorder: isDark(context) ? darkBorder : border,
-                        disabledBorder: isDark(context) ? darkBorder : border,
-                        enabledBorder: isDark(context) ? darkBorder : border,
-                        focusedBorder: focusedBorder,
-                        focusedErrorBorder: focusedBorder,
-                      ),
-                      controller: (controller == null)
-                          ? TextEditingController()
-                          : controller)),
-              Container(
-                height: 65,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(Vx.dp10),
-                      bottomRight: Radius.circular(Vx.dp10)),
-                  color: isDark(context)
-                      ? GlobalTheme.kAccentDarkColor
-                      : GlobalTheme.kPrimaryLightColor,
-                ),
-                child: IconButton(
-                    onPressed: () {},
-                    icon: _icon),
-              )
-            ],
-          );
-        },
-      ),
+        return Row(
+          children: [
+            Expanded(
+                child: TextFormField(
+                  onChanged: (text){
+                      if (text.isNotEmpty &&
+                          text.length == 4) {
+                        _authBloc
+                            .add(AuthEvent.checkCouponStatus(text));
+                      }
+                      else
+                        _authBloc
+                            .add(AuthEvent.checkCouponStatus(""));
+                  },
+                    keyboardType: TextInputType.streetAddress,
+                    cursorColor: GlobalTheme.kOrangeColor,
+                    decoration: InputDecoration(
+                      hintText: "Coupon",
+                      border: isDark(context) ? darkBorder : border,
+                      errorBorder: isDark(context) ? darkBorder : border,
+                      disabledBorder: isDark(context) ? darkBorder : border,
+                      enabledBorder: isDark(context) ? darkBorder : border,
+                      focusedBorder: focusedBorder,
+                      focusedErrorBorder: focusedBorder,
+                    ),
+                    controller: (controller == null)
+                        ? TextEditingController()
+                        : controller)),
+            Container(
+              height: 65,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(Vx.dp10),
+                    bottomRight: Radius.circular(Vx.dp10)),
+                color: isDark(context)
+                    ? GlobalTheme.kAccentDarkColor
+                    : GlobalTheme.kPrimaryLightColor,
+              ),
+              child: IconButton(
+                  onPressed: () {},
+                  icon: _icon),
+            )
+          ],
+        );
+      },
     );
   }
 }

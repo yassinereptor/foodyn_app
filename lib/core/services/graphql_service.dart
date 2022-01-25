@@ -24,13 +24,21 @@ class GraphQLService {
 
     QueryOptions options =
         QueryOptions(document: gql(query), variables: variables);
-    final result = await _client.query(options);
-
+    final result = await _client.query(options).timeout(
+      const Duration(milliseconds: 10000),
+      onTimeout: () {
+        throw OperationException();
+      },
+    );
     if (result.hasException) {
       if (result.exception!.graphqlErrors.any((e) =>
           e.extensions != null &&
           e.extensions!["code"] == "AUTH_NOT_AUTHENTICATED"))
         throw JwtExpiredExeption();
+      if (result.exception!.graphqlErrors.any((e) =>
+          e.extensions != null &&
+          e.extensions!["code"] == "UNAUTHENTICATED"))
+        throw UnauthorizedExeption();
       throw result.exception!;
     }
     return jsonEncode(result.data);
@@ -48,9 +56,17 @@ class GraphQLService {
         throw OperationException();
       },
     );
-    if (result.hasException && result.exception!.graphqlErrors.toString().contains("{statusCode: 401, message: Unauthorized}"))
-      throw UnauthorizedExeption();
-    if (result.hasException) throw result.exception!;
+    if (result.hasException) {
+      if (result.exception!.graphqlErrors.any((e) =>
+          e.extensions != null &&
+          e.extensions!["code"] == "AUTH_NOT_AUTHENTICATED"))
+        throw JwtExpiredExeption();
+      if (result.exception!.graphqlErrors.any((e) =>
+          e.extensions != null &&
+          e.extensions!["code"] == "UNAUTHENTICATED"))
+        throw UnauthorizedExeption();
+      throw result.exception!;
+    }
     return jsonEncode(result.data);
   }
 

@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:foodyn_rest/core/config/theme/global_theme.dart';
+import 'package:foodyn_eatery/core/config/theme/global_theme.dart';
 
 class ButtonWidget extends StatefulWidget {
   final void Function() onTap;

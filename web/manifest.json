@@ -1,6 +1,6 @@
 {
-    "name": "foodyn_rest",
-    "short_name": "foodyn_rest",
+    "name": "foodyn_eatery",
+    "short_name": "foodyn_eatery",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:foodyn_rest/features/auth/presentation/widgets/botton_widget.dart';
+import 'package:foodyn_eatery/features/auth/presentation/widgets/botton_widget.dart';
 import '../../../../core/widgets/scaffold_container_widget.dart';
 import '../../../../core/config/router/router.dart';
 import '../../../../core/utils/theme_brightness.dart';

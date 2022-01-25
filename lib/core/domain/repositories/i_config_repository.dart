@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
-import 'package:foodyn_rest/core/data/models/eatery_type_model.dart';
-import 'package:foodyn_rest/core/data/models/location_model.dart';
-import 'package:foodyn_rest/core/enums/config.type.dart';
+import 'package:foodyn_eatery/core/data/models/eatery_type_model.dart';
+import 'package:foodyn_eatery/core/data/models/location_model.dart';
+import 'package:foodyn_eatery/core/enums/config.type.dart';
 import '../../data/models/payment_model.dart';
 import '../../data/models/plan_model.dart';
 import '../../data/models/record_model.dart';
@@ -32,4 +32,8 @@ abstract class IConfigRepository {
   Future<Either<AppFailure?, List<EateryTypeModel>?>> getLocalEateryTypes();
   Future<Either<AppFailure?, bool>> setLocalEateryTypes(List<EateryTypeModel>? resources);
   Future<Either<AppFailure?, List<EateryTypeModel>?>> getRemoteEateryTypes();
+
+  Future<Either<AppFailure?, List<EateryTypeModel>?>> getLocalRules();
+  Future<Either<AppFailure?, bool>> setLocalRules(List<EateryTypeModel>? resources);
+  Future<Either<AppFailure?, List<EateryTypeModel>?>> getRemoteRules();
 }

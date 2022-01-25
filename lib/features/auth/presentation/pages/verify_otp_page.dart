@@ -3,8 +3,8 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:foodyn_rest/core/bloc/send_bloc/send_bloc.dart';
-import 'package:foodyn_rest/features/auth/presentation/widgets/botton_widget.dart';
+import 'package:foodyn_eatery/core/bloc/send_bloc/send_bloc.dart';
+import 'package:foodyn_eatery/features/auth/presentation/widgets/botton_widget.dart';
 import '../../../../core/widgets/scaffold_container_widget.dart';
 import '../../../../core/domain/entities/app_failure.dart';
 import '../../../../core/config/injectable/injection.dart';
@@ -58,13 +58,8 @@ class _VerifyOtpPageState extends State<VerifyOtpPage> {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider.value(value: _authBloc),
-        BlocProvider(
+    return BlocProvider(
           create: (context) => _otpBloc,
-        ),
-      ],
       child: MultiBlocListener(
           listeners: [
             BlocListener<AuthBloc, AuthState>(

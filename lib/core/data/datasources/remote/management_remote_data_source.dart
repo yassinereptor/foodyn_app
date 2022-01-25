@@ -3,10 +3,10 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:foodyn_rest/core/data/models/eatery_model.dart';
-import 'package:foodyn_rest/core/data/models/eatery_type_model.dart';
-import 'package:foodyn_rest/core/data/models/membership_model.dart';
-import 'package:foodyn_rest/core/queries/management_query.dart';
+import 'package:foodyn_eatery/core/data/models/eatery_model.dart';
+import 'package:foodyn_eatery/core/data/models/eatery_type_model.dart';
+import 'package:foodyn_eatery/core/data/models/membership_model.dart';
+import 'package:foodyn_eatery/core/queries/management_query.dart';
 import '../local/auth_local_data_source.dart';
 import '../../models/coupon_model.dart';
 import '../../models/image_model.dart';

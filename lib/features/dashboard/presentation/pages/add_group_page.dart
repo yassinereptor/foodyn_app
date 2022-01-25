@@ -3,13 +3,13 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:foodyn_rest/core/services/validator_service.dart';
-import 'package:foodyn_rest/features/auth/presentation/widgets/botton_widget.dart';
-import 'package:foodyn_rest/features/auth/presentation/widgets/dropdown_form_widget.dart';
-import 'package:foodyn_rest/features/auth/presentation/widgets/password_text_form_widget.dart';
-import 'package:foodyn_rest/features/auth/presentation/widgets/text_form_widget.dart';
-import 'package:foodyn_rest/features/dashboard/data/models/tag_item_model.dart';
-import 'package:foodyn_rest/features/dashboard/presentation/widgets/dropdown_group_widget.dart';
+import 'package:foodyn_eatery/core/services/validator_service.dart';
+import 'package:foodyn_eatery/features/auth/presentation/widgets/botton_widget.dart';
+import 'package:foodyn_eatery/features/auth/presentation/widgets/dropdown_form_widget.dart';
+import 'package:foodyn_eatery/features/auth/presentation/widgets/password_text_form_widget.dart';
+import 'package:foodyn_eatery/features/auth/presentation/widgets/text_form_widget.dart';
+import 'package:foodyn_eatery/features/dashboard/data/models/tag_item_model.dart';
+import 'package:foodyn_eatery/features/dashboard/presentation/widgets/dropdown_group_widget.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import '../../../../core/config/router/router.dart';
@@ -81,7 +81,10 @@ class _AddGroupPageState extends State<AddGroupPage> {
     super.initState();
   }
 
-  void _onComplete() {}
+  void _onComplete() {
+    FocusScope.of(context).requestFocus(FocusNode());
+
+  }
 
   @override
   Widget build(BuildContext context) {

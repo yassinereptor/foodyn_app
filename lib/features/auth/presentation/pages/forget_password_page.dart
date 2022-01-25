@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:foodyn_rest/features/auth/presentation/widgets/botton_widget.dart';
+import 'package:foodyn_eatery/features/auth/presentation/widgets/botton_widget.dart';
 import '../../../../core/widgets/scaffold_container_widget.dart';
 import '../../../../core/config/injectable/injection.dart';
 import '../../../../core/config/router/router.dart';
@@ -59,80 +59,77 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider.value(
-      value: _authBloc,
-      child: BlocConsumer<AuthBloc, AuthState>(
-        listener: (context, state) {
-          state.type.maybeWhen(
-              loadingInProgress: () {
-                setState(() {
-                  _showModal = true;
-                  _modalType = ModalContainerType.LOADING;
+    return BlocConsumer<AuthBloc, AuthState>(
+      listener: (context, state) {
+        state.type.maybeWhen(
+            loadingInProgress: () {
+              setState(() {
+                _showModal = true;
+                _modalType = ModalContainerType.LOADING;
+              });
+            },
+            loadingSuccess: () {
+              setState(() {
+                _modalType = ModalContainerType.SUCCESS;
+              });
+              Future.delayed(Duration(milliseconds: 2000), () {
+                _onModalReset();
+                Routes.seafarer.navigate(VerifyOtpPage.kRouteName, params: {
+                  "title": "Verify Email",
+                  "logout": false,
+                  "onSuccess": _onSuccess,
+                  "onError": _onError,
                 });
-              },
-              loadingSuccess: () {
-                setState(() {
-                  _modalType = ModalContainerType.SUCCESS;
-                });
-                Future.delayed(Duration(milliseconds: 2000), () {
-                  _onModalReset();
-                  Routes.seafarer.navigate(VerifyOtpPage.kRouteName, params: {
-                    "title": "Verify Email",
-                    "logout": false,
-                    "onSuccess": _onSuccess,
-                    "onError": _onError,
-                  });
-                });
-              },
-              loadingFailed: (failure) {
-                setState(() {
-                  _modalType = ModalContainerType.FAILURE;
-                });
-                Future.delayed(Duration(milliseconds: 2000), () {
-                  _onModalReset();
-                });
-              },
-              orElse: () {});
-        },
-        builder: (context, state) {
-          return ScaffoldContainerWidget(
-            type: _modalType,
-            show: _showModal,
-            onReset: _onModalReset,
-            title: "Forget Password",
-            children: [
-              Form(
-                key: _formKey,
-                child: Column(
-                  children: <Widget>[
-                    Padding(
-                        padding: EdgeInsets.only(bottom: 20),
-                        child: TextFormWidget(
-                          controller: emailTextEditingController,
-                          onChanged: (_) {},
-                          hint: "Email",
-                          keyboardType: TextInputType.emailAddress,
-                          validator: ValidatorService.emailValidator,
-                        )),
-                    ButtonWidget(
-                      onTap: _forgetPassword,
-                      children: [
-                        "Recover"
-                            .text
-                            .xl
-                            .color((isDark(context))
-                                ? GlobalTheme.kPrimaryColor
-                                : GlobalTheme.kAccentColor)
-                            .make(),
-                      ],
-                    ),
-                  ],
-                ),
+              });
+            },
+            loadingFailed: (failure) {
+              setState(() {
+                _modalType = ModalContainerType.FAILURE;
+              });
+              Future.delayed(Duration(milliseconds: 2000), () {
+                _onModalReset();
+              });
+            },
+            orElse: () {});
+      },
+      builder: (context, state) {
+        return ScaffoldContainerWidget(
+          type: _modalType,
+          show: _showModal,
+          onReset: _onModalReset,
+          title: "Forget Password",
+          children: [
+            Form(
+              key: _formKey,
+              child: Column(
+                children: <Widget>[
+                  Padding(
+                      padding: EdgeInsets.only(bottom: 20),
+                      child: TextFormWidget(
+                        controller: emailTextEditingController,
+                        onChanged: (_) {},
+                        hint: "Email",
+                        keyboardType: TextInputType.emailAddress,
+                        validator: ValidatorService.emailValidator,
+                      )),
+                  ButtonWidget(
+                    onTap: _forgetPassword,
+                    children: [
+                      "Recover"
+                          .text
+                          .xl
+                          .color((isDark(context))
+                              ? GlobalTheme.kPrimaryColor
+                              : GlobalTheme.kAccentColor)
+                          .make(),
+                    ],
+                  ),
+                ],
               ),
-            ],
-          );
-        },
-      ),
+            ),
+          ],
+        );
+      },
     );
   }
 }

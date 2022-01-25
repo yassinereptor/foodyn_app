@@ -3,14 +3,14 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:foodyn_rest/core/bloc/managment_bloc/management_bloc.dart';
-import 'package:foodyn_rest/core/config/injectable/injection.dart';
-import 'package:foodyn_rest/core/data/models/eatery_model.dart';
-import 'package:foodyn_rest/core/domain/entities/app_failure.dart';
-import 'package:foodyn_rest/core/widgets/modal_container_widget.dart';
-import 'package:foodyn_rest/features/auth/presentation/pages/register_image_page.dart';
-import 'package:foodyn_rest/features/auth/presentation/widgets/botton_widget.dart';
-import 'package:foodyn_rest/features/dashboard/presentation/widgets/transition_image_widget.dart';
+import 'package:foodyn_eatery/core/bloc/managment_bloc/management_bloc.dart';
+import 'package:foodyn_eatery/core/config/injectable/injection.dart';
+import 'package:foodyn_eatery/core/data/models/eatery_model.dart';
+import 'package:foodyn_eatery/core/domain/entities/app_failure.dart';
+import 'package:foodyn_eatery/core/widgets/modal_container_widget.dart';
+import 'package:foodyn_eatery/features/auth/presentation/pages/register_image_page.dart';
+import 'package:foodyn_eatery/features/auth/presentation/widgets/botton_widget.dart';
+import 'package:foodyn_eatery/features/dashboard/presentation/widgets/transition_image_widget.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:velocity_x/velocity_x.dart';
 
@@ -38,14 +38,14 @@ class _ShowAllEateriesPageState extends State<ShowAllEateriesPage> {
   late ManagementBloc _managementBloc;
   RefreshController _refreshController =
       RefreshController(initialRefresh: false);
-  List<EateryModel> eateryModelList = [];
+  List<EateryModel> _eateryModelList = [];
   bool _gridView = false;
 
   @override
   void initState() {
     _managementBloc = context.read<ManagementBloc>();
     if (_managementBloc.state.eateries != null)
-      eateryModelList = _managementBloc.state.eateries!;
+      _eateryModelList = _managementBloc.state.eateries!;
     super.initState();
   }
 
@@ -59,7 +59,7 @@ class _ShowAllEateriesPageState extends State<ShowAllEateriesPage> {
   void _onStateLoadingSuccess() {
     setState(() {
       if (_managementBloc.state.eateries != null)
-        eateryModelList = _managementBloc.state.eateries!;
+        _eateryModelList = _managementBloc.state.eateries!;
     });
     if (_refreshController.isRefresh)
       _refreshController.refreshCompleted();
@@ -88,7 +88,7 @@ class _ShowAllEateriesPageState extends State<ShowAllEateriesPage> {
 
   void _onEateryTap(int id) async {
     var result = await Routes.seafarer.navigate(EateryPage.kRouteName, params: {
-      "eateryModel": eateryModelList.singleWhere((element) => element.id == id)
+      "eateryModel": _eateryModelList.singleWhere((element) => element.id == id)
     });
     if (result != null)
       requestRefresh();
@@ -96,83 +96,79 @@ class _ShowAllEateriesPageState extends State<ShowAllEateriesPage> {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider.value(value: _managementBloc)
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<ManagementBloc, ManagementState>(
+      listener: (context, state) {
+        state.type.maybeWhen(
+            loadingInProgress: _onStateLoadingInProgress,
+            loadingSuccess: _onStateLoadingSuccess,
+            loadingFailed: _onStateLoadingFailure,
+            orElse: () {});
+      },
+        )
       ],
-      child: MultiBlocListener(
-        listeners: [
-          BlocListener<ManagementBloc, ManagementState>(
-        listener: (context, state) {
-          state.type.maybeWhen(
-              loadingInProgress: _onStateLoadingInProgress,
-              loadingSuccess: _onStateLoadingSuccess,
-              loadingFailed: _onStateLoadingFailure,
-              orElse: () {});
-        },
-          )
-        ],
-        child: Stack(
-          children: [
-            ScaffoldContainerWidget(
-              refresher: true,
-              logout: false,
-              title: "Eateries",
-              refreshController: _refreshController,
-              onRefresherRefresh: _onRefresh,
-              leading: InkWell(
-                onTap: _onListingTap,
-                child: Icon(
-                  (_gridView) ? Icons.view_agenda : Icons.grid_view_rounded,
-                  size: 30,
-                  color: GlobalTheme.kOrangeColor,
-                )
-              ),
-              children: [
-                GridView.count(
-                  crossAxisSpacing: 10,
-                  mainAxisSpacing: 10,
-                  shrinkWrap: true,
-                  childAspectRatio: (_gridView) ? 1 : 2 / 1,
-                  crossAxisCount: (_gridView) ? 2 : 1,
-                  physics: NeverScrollableScrollPhysics(),
-                  children: [
-                    ...eateryModelList
-                      .map(
-                        (eatery) => TransitionImageWidget(
-                          onTap: _onEateryTap,
-                          id: eatery.id!,
-                          padding: false,
-                          bigTitle: !_gridView,
-                          links: eatery.images,
-                          title: eatery.title!,
-                          size: Size(
-                            MediaQuery.of(context).size.width - 40,
-                            (MediaQuery.of(context).size.width - 40) / 2
-                            ),
-                        ),
-                      )
-                      .toList()
-                  ],
-                ),
-                SizedBox(height: 80,)
-              ],
+      child: Stack(
+        children: [
+          ScaffoldContainerWidget(
+            refresher: true,
+            logout: false,
+            title: "Eateries",
+            refreshController: _refreshController,
+            onRefresherRefresh: _onRefresh,
+            leading: InkWell(
+              onTap: _onListingTap,
+              child: Icon(
+                (_gridView) ? Icons.view_agenda : Icons.grid_view_rounded,
+                size: 30,
+                color: GlobalTheme.kOrangeColor,
+              )
             ),
-            Positioned(
-                  bottom: 20,
-                  left: 20,
-                  child: FloatingActionButton(
-                    backgroundColor: GlobalTheme.kOrangeColor,
-                    child: Icon(
-                      Icons.add,
-                      color: isDark(context)
-                          ? GlobalTheme.kPrimaryColor
-                          : GlobalTheme.kAccentColor,
-                    ),
-                    onPressed: _onAddEateryTap),
-                )
-          ],
-        ),
+            children: [
+              if (_eateryModelList.isNotEmpty)
+              GridView.count(
+                crossAxisSpacing: 10,
+                mainAxisSpacing: 10,
+                shrinkWrap: true,
+                childAspectRatio: (_gridView) ? 1 : 2 / 1,
+                crossAxisCount: (_gridView) ? 2 : 1,
+                physics: NeverScrollableScrollPhysics(),
+                children: [
+                  ..._eateryModelList
+                    .map(
+                      (eatery) => TransitionImageWidget(
+                        onTap: _onEateryTap,
+                        id: eatery.id!,
+                        padding: false,
+                        bigTitle: !_gridView,
+                        links: eatery.images,
+                        title: eatery.title!,
+                        size: Size(
+                          MediaQuery.of(context).size.width - 40,
+                          (MediaQuery.of(context).size.width - 40) / 2
+                          ),
+                      ),
+                    )
+                    .toList()
+                ],
+              ),
+              SizedBox(height: 80,)
+            ],
+          ),
+          Positioned(
+                bottom: 20,
+                left: 20,
+                child: FloatingActionButton(
+                  backgroundColor: GlobalTheme.kOrangeColor,
+                  child: Icon(
+                    Icons.add,
+                    color: isDark(context)
+                        ? GlobalTheme.kPrimaryColor
+                        : GlobalTheme.kAccentColor,
+                  ),
+                  onPressed: _onAddEateryTap),
+              )
+        ],
       ),
     );
   }

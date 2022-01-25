@@ -10,7 +10,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:foodyn_rest/core/utils/theme_brightness.dart';
+import 'package:foodyn_eatery/core/utils/theme_brightness.dart';
 import 'core/bloc/config_bloc/config_bloc.dart';
 import 'core/bloc/managment_bloc/management_bloc.dart';
 import 'core/domain/entities/app_failure.dart';
@@ -130,7 +130,7 @@ class _ApplicationState extends State<Application> {
             listeners: [
               BlocListener<ConfigBloc, ConfigState>(listener: (context, state) {
                 state.type.maybeWhen(
-                  loadingSuccess: (){
+                  loadingStartedSuccess: (){
                     _authBloc..add(AuthEvent.started());
                   },
                   orElse: () {}
@@ -138,7 +138,7 @@ class _ApplicationState extends State<Application> {
               }),
               BlocListener<AuthBloc, AuthState>(listener: (context, state) {
                 state.type.maybeWhen(
-                    loadingSuccess: () {
+                    loadingStartedSuccess: () {
                       state.status.maybeWhen(
                         firstTime: () {
                           Routes.seafarer.navigate(

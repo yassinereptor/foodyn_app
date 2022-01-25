@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:foodyn_rest/core/bloc/config_bloc/config_bloc.dart';
+import 'package:foodyn_eatery/core/bloc/config_bloc/config_bloc.dart';
 import '../../../../core/utils/theme_brightness.dart';
 import '../../../../core/bloc/auth_bloc/auth_bloc.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -25,18 +25,19 @@ class _SplashPageState extends State<SplashPage> {
 
   @override
   Widget build(BuildContext context) {
+    String message = "Loading ...";
+
     return BlocBuilder<ConfigBloc, ConfigState>(
       builder: (context, state) {
-        String message = "";
         state.type.maybeWhen(
           loadingInProgress: () {
             message = "Loading Ressources ...";
           },
-          loadingSuccess: () {
-            message = "Loading ...";
+          loadingFailed: (_) {
+            message = "Failed !";
           },
           orElse: (){
-            message = "";
+            message = "Loading ...";
         });
         return Scaffold(
         body: SafeArea(

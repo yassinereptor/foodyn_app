@@ -1,9 +1,9 @@
 import 'dart:io';
 
 import 'package:dartz/dartz.dart';
-import 'package:foodyn_rest/core/data/datasources/remote/management_remote_data_source.dart';
-import 'package:foodyn_rest/core/data/models/eatery_model.dart';
-import 'package:foodyn_rest/core/domain/repositories/i_management_repository.dart';
+import 'package:foodyn_eatery/core/data/datasources/remote/management_remote_data_source.dart';
+import 'package:foodyn_eatery/core/data/models/eatery_model.dart';
+import 'package:foodyn_eatery/core/domain/repositories/i_management_repository.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
 import 'package:injectable/injectable.dart';

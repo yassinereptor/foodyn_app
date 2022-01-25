@@ -1,4 +1,4 @@
-# foodyn_rest
+# foodyn_eatery
 
 A new Flutter project.
 

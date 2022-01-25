@@ -3,9 +3,9 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:foodyn_rest/core/data/models/table_model.dart';
-import 'package:foodyn_rest/features/auth/presentation/widgets/botton_widget.dart';
-import 'package:foodyn_rest/features/dashboard/presentation/widgets/table_widget.dart';
+import 'package:foodyn_eatery/core/data/models/table_model.dart';
+import 'package:foodyn_eatery/features/auth/presentation/widgets/botton_widget.dart';
+import 'package:foodyn_eatery/features/dashboard/presentation/widgets/table_widget.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:velocity_x/velocity_x.dart';
 
@@ -58,6 +58,7 @@ class _InteractiveTablesMapPageState extends State<InteractiveTablesMapPage> {
   }
 
   void _onComplete() {
+    FocusScope.of(context).requestFocus(FocusNode());
     Routes.seafarer.pop([_tableItemList, _rows, _columns, _tables, _onModify]);
   }
 

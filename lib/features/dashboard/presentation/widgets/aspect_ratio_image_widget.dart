@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:foodyn_rest/features/dashboard/data/models/image_item_model.dart';
+import 'package:foodyn_eatery/features/dashboard/data/models/image_item_model.dart';
 
 class AspectRatioImageWidget extends StatefulWidget {
   final ImageItemModel item;

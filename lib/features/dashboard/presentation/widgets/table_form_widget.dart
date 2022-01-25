@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:foodyn_rest/core/data/models/section_model.dart';
-import 'package:foodyn_rest/core/data/models/table_model.dart';
-import 'package:foodyn_rest/features/auth/presentation/widgets/botton_widget.dart';
-import 'package:foodyn_rest/features/auth/presentation/widgets/text_form_widget.dart';
-import 'package:foodyn_rest/features/dashboard/presentation/pages/interactive_tables_map_page.dart';
+import 'package:foodyn_eatery/core/data/models/section_model.dart';
+import 'package:foodyn_eatery/core/data/models/table_model.dart';
+import 'package:foodyn_eatery/features/auth/presentation/widgets/botton_widget.dart';
+import 'package:foodyn_eatery/features/auth/presentation/widgets/text_form_widget.dart';
+import 'package:foodyn_eatery/features/dashboard/presentation/pages/interactive_tables_map_page.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import '../../../../core/config/router/router.dart';
@@ -63,6 +63,7 @@ class _TableFormWidgetState extends State<TableFormWidget> {
 
   
   void _onComplete() {
+    FocusScope.of(context).requestFocus(FocusNode());
     if (_formKey.currentState!.validate()) {
       SectionModel sectionModel = new SectionModel(
         title: _sectionTextEditingController.text,

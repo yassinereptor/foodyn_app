@@ -1,9 +1,9 @@
 import 'dart:io';
 
 import 'package:dartz/dartz.dart';
-import 'package:foodyn_rest/core/data/models/eatery_type_model.dart';
-import 'package:foodyn_rest/core/data/models/location_model.dart';
-import 'package:foodyn_rest/core/enums/config.type.dart';
+import 'package:foodyn_eatery/core/data/models/eatery_type_model.dart';
+import 'package:foodyn_eatery/core/data/models/location_model.dart';
+import 'package:foodyn_eatery/core/enums/config.type.dart';
 import '../datasources/local/config_local_data_source.dart';
 import '../datasources/remote/config_remote_data_source.dart';
 import '../models/plan_model.dart';
@@ -289,6 +289,24 @@ class ConfigRepository implements IConfigRepository {
     if (!response)
       return Left(AppFailure.storage());
     return Right(response);
+  }
+
+  @override
+  Future<Either<AppFailure?, List<EateryTypeModel>?>> getLocalRules() {
+    // TODO: implement getLocalRules
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Either<AppFailure?, List<EateryTypeModel>?>> getRemoteRules() {
+    // TODO: implement getRemoteRules
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Either<AppFailure?, bool>> setLocalRules(List<EateryTypeModel>? resources) {
+    // TODO: implement setLocalRules
+    throw UnimplementedError();
   }
 
   

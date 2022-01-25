@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:foodyn_rest/core/bloc/send_bloc/send_bloc.dart';
+import 'package:foodyn_eatery/core/bloc/send_bloc/send_bloc.dart';
 import '../../../../core/data/models/user_model.dart';
 import '../../../../core/domain/entities/app_failure.dart';
 import '../../../../core/config/injectable/injection.dart';
@@ -115,7 +115,7 @@ class _ResendEmailWidgetState extends State<ResendEmailWidget> {
                 Countdown(
                   controller: _countdownController,
                   seconds: 60,
-                  build: (BuildContext context, double time) => Text((_startTimer ? time.toString() : "If you didn't get a verification email")),
+                  build: (BuildContext context, double time) => Text((_startTimer ? time.toString() : "If you didn't get a verification email"), textAlign: TextAlign.center,),
                   interval: Duration(milliseconds: 100),
                   onFinished: _onTimerEnd,
                 ),

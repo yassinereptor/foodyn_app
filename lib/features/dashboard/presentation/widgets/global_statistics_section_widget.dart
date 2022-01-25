@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:foodyn_rest/core/config/theme/global_theme.dart';
-import 'package:foodyn_rest/core/utils/theme_brightness.dart';
-import 'package:foodyn_rest/features/dashboard/data/models/menu_item_model.dart';
+import 'package:foodyn_eatery/core/config/theme/global_theme.dart';
+import 'package:foodyn_eatery/core/utils/theme_brightness.dart';
+import 'package:foodyn_eatery/features/dashboard/data/models/menu_item_model.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import 'line_chart_widget.dart';

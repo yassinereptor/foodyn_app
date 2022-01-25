@@ -1,9 +1,9 @@
 import 'dart:io';
 
 import 'package:dartz/dartz.dart';
-import 'package:foodyn_rest/core/data/models/coupon_model.dart';
-import 'package:foodyn_rest/core/data/models/image_model.dart';
-import 'package:foodyn_rest/core/data/models/membership_model.dart';
+import 'package:foodyn_eatery/core/data/models/coupon_model.dart';
+import 'package:foodyn_eatery/core/data/models/image_model.dart';
+import 'package:foodyn_eatery/core/data/models/membership_model.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';

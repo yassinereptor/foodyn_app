@@ -5,12 +5,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:foodyn_rest/core/bloc/auth_bloc/auth_bloc.dart';
-import 'package:foodyn_rest/core/data/models/image_model.dart';
-import 'package:foodyn_rest/core/widgets/modal_container_widget.dart';
-import 'package:foodyn_rest/features/auth/presentation/pages/register_image_page.dart';
-import 'package:foodyn_rest/features/auth/presentation/widgets/botton_widget.dart';
-import 'package:foodyn_rest/features/auth/presentation/widgets/sliver_app_bar_widget.dart';
+import 'package:foodyn_eatery/core/bloc/auth_bloc/auth_bloc.dart';
+import 'package:foodyn_eatery/core/data/models/image_model.dart';
+import 'package:foodyn_eatery/core/widgets/modal_container_widget.dart';
+import 'package:foodyn_eatery/features/auth/presentation/pages/register_image_page.dart';
+import 'package:foodyn_eatery/features/auth/presentation/widgets/botton_widget.dart';
+import 'package:foodyn_eatery/features/auth/presentation/widgets/sliver_app_bar_widget.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:velocity_x/velocity_x.dart';
 
@@ -43,24 +43,21 @@ class _ImageViewPageState extends State<ImageViewPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider.value(
-      value: _authBloc,
-      child: Scaffold(
-        body: SafeArea(
-          child: Container(
-            child: NestedScrollView(
-              headerSliverBuilder: (c, b) =>
-                  [SliverAppBarWidget(logout: false, back: true)],
-              body: Container(
-                  child: PhotoView(
-                imageProvider: CachedNetworkImageProvider(
-                  dotenv.env["SERVER_LINK"]! +
-                      widget.imageModel.filepath! +
-                      widget.imageModel.filename!,
-                  headers: {"Authorization": "Bearer $_token"},
-                ),
-              )),
-            ),
+    return Scaffold(
+      body: SafeArea(
+        child: Container(
+          child: NestedScrollView(
+            headerSliverBuilder: (c, b) =>
+                [SliverAppBarWidget(logout: false, back: true)],
+            body: Container(
+                child: PhotoView(
+              imageProvider: CachedNetworkImageProvider(
+                dotenv.env["SERVER_LINK"]! +
+                    widget.imageModel.filepath! +
+                    widget.imageModel.filename!,
+                headers: {"Authorization": "Bearer $_token"},
+              ),
+            )),
           ),
         ),
       ),

@@ -5,13 +5,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:foodyn_rest/core/bloc/auth_bloc/auth_bloc.dart';
-import 'package:foodyn_rest/core/config/theme/global_theme.dart';
-import 'package:foodyn_rest/features/dashboard/data/models/menu_item_model.dart';
+import 'package:foodyn_eatery/core/bloc/auth_bloc/auth_bloc.dart';
+import 'package:foodyn_eatery/core/config/theme/global_theme.dart';
+import 'package:foodyn_eatery/features/dashboard/data/models/menu_item_model.dart';
 import 'package:image/image.dart' as image;
 import 'package:velocity_x/velocity_x.dart';
 
 class SideMenuWidget extends StatefulWidget {
+  final double statusHeight;
   final double menuSize;
   final bool menuItemsFade;
   final bool menuTextItemsFade;
@@ -24,6 +25,7 @@ class SideMenuWidget extends StatefulWidget {
 
   const SideMenuWidget(
       {Key? key,
+      required this.statusHeight,
       required this.menuSize,
       required this.menuItemsFade,
       required this.menuTextItemsFade,
@@ -78,30 +80,38 @@ class _SideMenuWidgetState extends State<SideMenuWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider.value(
-      value: _authBloc,
-      child: AnimatedContainer(
-          duration: new Duration(seconds: 1),
-          curve: Curves.easeInOutCubic,
-          decoration: BoxDecoration(
-            borderRadius: (widget.menuSize == 80)
-                ? BorderRadius.only(
-                    topRight: Radius.circular(10), bottomRight: Radius.circular(10))
-                : BorderRadius.zero,
-            color: GlobalTheme.kOrangeColor,
-          ),
-          width: widget.menuSize,
-          height: MediaQuery.of(context).size.height,
-          padding: EdgeInsets.only(top: 20, bottom: 20),
-          child: AnimatedOpacity(
-            onEnd: widget.onEndItems,
-            duration: Duration(milliseconds: 100),
-            opacity: widget.menuItemsFade ? 0 : 1,
-            child: (widget.endItems)
-                ? Align(
-                    alignment: Alignment.topCenter,
-                    child: SizedBox(
-                      height: MediaQuery.of(context).size.height - 40,
+    return AnimatedContainer(
+        duration: new Duration(seconds: 1),
+        curve: Curves.easeInOutCubic,
+        decoration: BoxDecoration(
+          borderRadius: (widget.menuSize == 80)
+              ? BorderRadius.only(
+                  topRight: Radius.circular(10), bottomRight: Radius.circular(10))
+              : BorderRadius.zero,
+          color: GlobalTheme.kOrangeColor,
+          boxShadow: [
+            if (widget.menuSize == 80)
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.5),
+              spreadRadius: 5,
+              blurRadius: 7,
+              offset: Offset(0, 3),
+            ),
+          ],
+    
+        ),
+        width: widget.menuSize,
+        child: AnimatedOpacity(
+          onEnd: widget.onEndItems,
+          duration: Duration(milliseconds: 100),
+          opacity: widget.menuItemsFade ? 0 : 1,
+          child: (widget.endItems)
+              ? Align(
+                  alignment: Alignment.topCenter,
+                  child: SingleChildScrollView(
+                    child: Container(
+                      height: MediaQuery.of(context).size.height - widget.statusHeight,
+                      padding: EdgeInsets.only(top: 20, bottom: 20),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
@@ -154,7 +164,7 @@ class _SideMenuWidgetState extends State<SideMenuWidget> {
                                         placeholder: (context, _) => 
                                         Image.memory(Uint8List.fromList(image.encodeJpg(BlurHash.decode(_profileImageHash).toImage(40, 40)))),
                                       ),
-                                    ) : Container(),
+                                    ) : Center(child: Icon(Icons.person, color: GlobalTheme.kOrangeColor, size: 30)),
                                   ),
                                   AnimatedOpacity(
                                     onEnd: widget.onEndItemsText,
@@ -187,10 +197,7 @@ class _SideMenuWidgetState extends State<SideMenuWidget> {
                               ),
                             ),
                           ),
-                          ListView.builder(
-                              shrinkWrap: true,
-                              itemCount: _menuItemModelList.length,
-                              itemBuilder: (context, index) => Padding(
+                          ..._menuItemModelList.mapIndexed((currentValue, index) => Padding(
                                     padding: const EdgeInsets.only(
                                         bottom: 30, left: 20, right: 20),
                                     child: InkWell(
@@ -215,7 +222,7 @@ class _SideMenuWidgetState extends State<SideMenuWidget> {
                                                     : Colors.transparent),
                                             child: Center(
                                               child: Icon(
-                                                _menuItemModelList[index].icon,
+                                                currentValue.icon,
                                                 color: (_selectedIndex == index)
                                                     ? GlobalTheme.kOrangeColor
                                                     : GlobalTheme.kAccentColor,
@@ -247,7 +254,7 @@ class _SideMenuWidgetState extends State<SideMenuWidget> {
                                                       padding: EdgeInsets.only(
                                                           left: 20, right: 20),
                                                       height: 40,
-                                                      child: _menuItemModelList[index]
+                                                      child: currentValue
                                                           .title
                                                           .text
                                                           .xl2
@@ -363,10 +370,10 @@ class _SideMenuWidgetState extends State<SideMenuWidget> {
                         ],
                       ),
                     ),
-                  )
-                : Container(),
-          ),
+                  ),
+                )
+              : Container(),
         ),
-    );
+      );
   }
 }

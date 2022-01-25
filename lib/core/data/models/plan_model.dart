@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:foodyn_rest/core/data/models/coupon_model.dart';
+import 'package:foodyn_eatery/core/data/models/coupon_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'plan_model.g.dart';

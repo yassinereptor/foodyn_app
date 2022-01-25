@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:foodyn_eatery/core/utils/theme_brightness.dart';
 import '../../../../core/domain/entities/app_failure.dart';
 import '../../../../core/config/injectable/injection.dart';
 import '../../../../core/config/router/router.dart';
@@ -40,83 +41,81 @@ class _SliverAppBarWidgetState extends State<SliverAppBarWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider.value(
-      value: _authBloc,
-      child: BlocConsumer<AuthBloc, AuthState>(
-        listener: (context, state) {
-          state.type.maybeWhen(
-              loadingFailed: (AppFailure message) {
-                message.maybeWhen(
-                    storage: () {
-                      final snackBar =
-                          SnackBar(content: Text("Can't loged out"));
-                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                    },
-                    orElse: () {});
-              },
-              logedOut: () {
-                Routes.seafarer.navigate(
-                  LoginPage.kRouteName,
-                  navigationType: NavigationType.pushAndRemoveUntil,
-                  removeUntilPredicate: (route) => false,
-                );
-              },
-              orElse: () {});
-        },
-        builder: (context, state) {
-          return SliverAppBar(
-            pinned: false,
-            snap: true,
-            floating: true,
-            automaticallyImplyLeading: false,
-            flexibleSpace: Container(
-              decoration: widget.decoration,
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              child: FocusTraversalGroup(
-                policy: OrderedTraversalPolicy(),
-                child: Center(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      (widget.back) ? GestureDetector(
-                        onTap: () => Routes.seafarer.pop(),
-                        child: Row(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(right: 10),
-                              child: (widget.color == null)
-                                  ? Icon(Icons.arrow_back_ios)
-                                  : Icon(
-                                      Icons.arrow_back_ios,
-                                      color: widget.color,
-                                    ),
-                            ),
-                            (widget.color == null)
-                                ? "Back".text.xl.make()
-                                : "Back".text.xl.color(widget.color!).make(),
-                          ],
-                        ),
-                      ) : Container(),
-                      (widget.logout)
-                          ? GestureDetector(
-                              onTap: _onLogout,
-                              child: "Log out"
-                                  .text
-                                  .xl
-                                  .color((widget.color == null)
-                                      ? GlobalTheme.kOrangeColor
-                                      : widget.color!)
-                                  .make(),
-                            )
-                          : Container()
-                    ],
-                  ),
+    return BlocConsumer<AuthBloc, AuthState>(
+      listener: (context, state) {
+        state.type.maybeWhen(
+            loadingFailed: (AppFailure message) {
+              message.maybeWhen(
+                  storage: () {
+                    final snackBar =
+                        SnackBar(content: Text("Can't loged out"));
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  },
+                  orElse: () {});
+            },
+            logedOut: () {
+              Routes.seafarer.navigate(
+                LoginPage.kRouteName,
+                navigationType: NavigationType.pushAndRemoveUntil,
+                removeUntilPredicate: (route) => false,
+              );
+            },
+            orElse: () {});
+      },
+      builder: (context, state) {
+        return SliverAppBar(
+          pinned: false,
+          snap: true,
+          floating: true,
+          automaticallyImplyLeading: false,
+          backgroundColor: (isDark(context) ? GlobalTheme.kPrimaryColor : GlobalTheme.kAccentColor).withOpacity(.9),
+          flexibleSpace: Container(
+            decoration: widget.decoration,
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            child: FocusTraversalGroup(
+              policy: OrderedTraversalPolicy(),
+              child: Center(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    (widget.back) ? GestureDetector(
+                      onTap: () => Routes.seafarer.pop(),
+                      child: Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(right: 10),
+                            child: (widget.color == null)
+                                ? Icon(Icons.arrow_back_ios)
+                                : Icon(
+                                    Icons.arrow_back_ios,
+                                    color: widget.color,
+                                  ),
+                          ),
+                          (widget.color == null)
+                              ? "Back".text.xl.make()
+                              : "Back".text.xl.color(widget.color!).make(),
+                        ],
+                      ),
+                    ) : Container(),
+                    (widget.logout)
+                        ? GestureDetector(
+                            onTap: _onLogout,
+                            child: "Log out"
+                                .text
+                                .xl
+                                .color((widget.color == null)
+                                    ? GlobalTheme.kOrangeColor
+                                    : widget.color!)
+                                .make(),
+                          )
+                        : Container()
+                  ],
                 ),
               ),
             ),
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 }

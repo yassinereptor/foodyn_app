@@ -1,6 +1,6 @@
 
 import 'package:equatable/equatable.dart';
-import 'package:foodyn_rest/core/data/models/eatery_type_model.dart';
+import 'package:foodyn_eatery/core/data/models/eatery_type_model.dart';
 import 'section_model.dart';
 import 'user_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';

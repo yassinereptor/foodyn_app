@@ -4,11 +4,11 @@ import 'dart:io';
 import 'package:blurhash_dart/blurhash_dart.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:foodyn_rest/core/data/datasources/local/auth_local_data_source.dart';
-import 'package:foodyn_rest/core/data/models/coupon_model.dart';
-import 'package:foodyn_rest/core/data/models/image_model.dart';
-import 'package:foodyn_rest/core/data/models/membership_model.dart';
-import 'package:foodyn_rest/core/queries/coupon_query.dart';
+import 'package:foodyn_eatery/core/data/datasources/local/auth_local_data_source.dart';
+import 'package:foodyn_eatery/core/data/models/coupon_model.dart';
+import 'package:foodyn_eatery/core/data/models/image_model.dart';
+import 'package:foodyn_eatery/core/data/models/membership_model.dart';
+import 'package:foodyn_eatery/core/queries/coupon_query.dart';
 import 'package:injectable/injectable.dart';
 import 'package:path/path.dart';
 import 'package:image/image.dart' as img;
@@ -137,7 +137,7 @@ class AuthRemoteDataSource
       String? token = await this._authLocalDataSource.getToken();
       String url = dotenv.env["SERVER_IMAGE_UPLOAD"]!;
 
-      url += "User";
+      url += "Profile";
 
       final image = img.decodeImage(file.readAsBytesSync().toList());
       final blurHash = BlurHash.encode(image!, numCompX: 4, numCompY: 3);

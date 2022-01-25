@@ -5,12 +5,12 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "foodyn_rest",
+            "name": "foodyn_eatery",
             "request": "launch",
             "type": "dart"
         },
         {
-            "name": "foodyn_rest (profile mode)",
+            "name": "foodyn_eatery (profile mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "profile"

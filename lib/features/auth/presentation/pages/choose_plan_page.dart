@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:foodyn_rest/features/auth/presentation/widgets/botton_widget.dart';
+import 'package:foodyn_eatery/features/auth/presentation/widgets/botton_widget.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import '../../../../core/bloc/auth_bloc/auth_bloc.dart';
@@ -41,7 +41,7 @@ class _ChoosePlanPageState extends State<ChoosePlanPage> {
     _authBloc = context.read<AuthBloc>();
     _configBloc = context.read<ConfigBloc>();
     // if (_configBloc.state.plans == null)
-      // _configBloc.add(ConfigEvent.getPlans());
+      _configBloc.add(ConfigEvent.getPlans());
   }
 
   @override

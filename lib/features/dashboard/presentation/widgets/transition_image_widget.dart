@@ -8,11 +8,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:foodyn_rest/core/bloc/auth_bloc/auth_bloc.dart';
-import 'package:foodyn_rest/core/config/router/router.dart';
-import 'package:foodyn_rest/core/config/theme/global_theme.dart';
-import 'package:foodyn_rest/core/data/models/image_model.dart';
-import 'package:foodyn_rest/features/dashboard/presentation/pages/add_eatery_page.dart';
+import 'package:foodyn_eatery/core/bloc/auth_bloc/auth_bloc.dart';
+import 'package:foodyn_eatery/core/config/router/router.dart';
+import 'package:foodyn_eatery/core/config/theme/global_theme.dart';
+import 'package:foodyn_eatery/core/data/models/image_model.dart';
+import 'package:foodyn_eatery/features/dashboard/presentation/pages/add_eatery_page.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'package:image/image.dart' as image;
 
@@ -65,74 +65,71 @@ class _TransitionImageWidgetState extends State<TransitionImageWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider.value(
-      value: _authBloc,
-      child: Padding(
-          padding: EdgeInsets.only(left: (widget.padding) ? 10 : 0),
-          child: InkWell(
-            onTap: () {
-              if (widget.onTap != null)
-                widget.onTap!(widget.id);
-            } ,
-            child: Container(
-              height: widget.size.height,
-              width: widget.size.width,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: GlobalTheme.kOrangeColor,
-              ),
-              alignment: Alignment.bottomLeft,
-              child: Stack(
-                children: [
-                  (widget.links != null && widget.links!.length > 0) ? 
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(10.0),
-                    child: Stack(
-                      children: [
-                        AnimatedSwitcher(
-                          duration: Duration(milliseconds: 500),
-                          transitionBuilder: (Widget child, Animation<double> animation) {
-                            return FadeTransition(child: child, opacity: animation);
-                          },
-                          child: 
-                          Container(
-                            height: widget.size.height,
-                            width: widget.size.width,
-                            key: ValueKey<int>(_currentIndex),
-                            child: Container(
-                              child: 
-                              CachedNetworkImage(
-                                imageUrl: dotenv.env["SERVER_LINK"]! +
-                                          widget.links![_currentIndex].filepath! + 
-                                          widget.links![_currentIndex].filename!,
-                                httpHeaders: {
-                                  "Authorization": "Bearer $_token"
-                                },
-                                fit: BoxFit.cover,
-                              ),
-                            )
-                          )
-                        ),
+    return Padding(
+        padding: EdgeInsets.only(left: (widget.padding) ? 10 : 0),
+        child: InkWell(
+          onTap: () {
+            if (widget.onTap != null)
+              widget.onTap!(widget.id);
+          } ,
+          child: Container(
+            height: widget.size.height,
+            width: widget.size.width,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: GlobalTheme.kOrangeColor,
+            ),
+            alignment: Alignment.bottomLeft,
+            child: Stack(
+              children: [
+                (widget.links != null && widget.links!.length > 0) ? 
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(10.0),
+                  child: Stack(
+                    children: [
+                      AnimatedSwitcher(
+                        duration: Duration(milliseconds: 500),
+                        transitionBuilder: (Widget child, Animation<double> animation) {
+                          return FadeTransition(child: child, opacity: animation);
+                        },
+                        child: 
                         Container(
-                    height: widget.size.height,
-                        width: widget.size.width,
-                    color: Colors.black.withOpacity(.3),)
-                      ],
-                    ),
-                  ) : Container(),
-                  Positioned(
-                    bottom: 0,
-                    left: 0,
-                    child: Padding(
-                      padding: EdgeInsets.all(10),
-                      child: ((!widget.bigTitle) ? widget.title.text : widget.title.text.xl2).color(GlobalTheme.kAccentColor).make(),
-                    ),
+                          height: widget.size.height,
+                          width: widget.size.width,
+                          key: ValueKey<int>(_currentIndex),
+                          child: Container(
+                            child: 
+                            CachedNetworkImage(
+                              imageUrl: dotenv.env["SERVER_LINK"]! +
+                                        widget.links![_currentIndex].filepath! + 
+                                        widget.links![_currentIndex].filename!,
+                              httpHeaders: {
+                                "Authorization": "Bearer $_token"
+                              },
+                              fit: BoxFit.cover,
+                            ),
+                          )
+                        )
+                      ),
+                      Container(
+                  height: widget.size.height,
+                      width: widget.size.width,
+                  color: Colors.black.withOpacity(.3),)
+                    ],
                   ),
-                ],
-              ),
+                ) : Container(),
+                Positioned(
+                  bottom: 0,
+                  left: 0,
+                  child: Padding(
+                    padding: EdgeInsets.all(10),
+                    child: ((!widget.bigTitle) ? widget.title.text : widget.title.text.xl2).color(GlobalTheme.kAccentColor).make(),
+                  ),
+                ),
+              ],
             ),
           ),
         ),
-    );
+      );
   }
 }

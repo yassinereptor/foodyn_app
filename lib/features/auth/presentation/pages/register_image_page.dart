@@ -6,8 +6,8 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:foodyn_rest/core/bloc/auth_bloc/auth_bloc.dart';
-import 'package:foodyn_rest/features/auth/presentation/widgets/botton_widget.dart';
+import 'package:foodyn_eatery/core/bloc/auth_bloc/auth_bloc.dart';
+import 'package:foodyn_eatery/features/auth/presentation/widgets/botton_widget.dart';
 import '../../../../core/widgets/scaffold_container_widget.dart';
 import '../../../../core/domain/entities/app_failure.dart';
 import '../../../../core/config/injectable/injection.dart';
@@ -121,136 +121,133 @@ class _RegisterImagePageState extends State<RegisterImagePage> {
   Widget build(BuildContext context) {
     double _imageWidth = MediaQuery.of(context).size.width - 100;
 
-    return BlocProvider.value(
-      value: _authBloc,
-      child: BlocConsumer<AuthBloc, AuthState>(
-        listener: (context, state) {
-          state.type.maybeWhen(
-              loadingInProgress: _onStateLoadingInProgress,
-              loadingSuccess: _onStateLoadingSuccess,
-              loadingFailed: _onStateLoadingFailure,
-              orElse: () {});
-        },
-        builder: (context, state) {
-          return ScaffoldContainerWidget(
-            type: _modalType,
-            show: _showModal,
-            onReset: _onModalReset,
-            logout: true,
-            title: "Tap To Add An Image",
-            subtitle: "the limit size is 4 MB",
-            children: [
-              Padding(
-                padding: EdgeInsets.only(bottom: 20),
-                child: GestureDetector(
-                  onTap: _pickImage,
-                  child: Center(
-                    child: Container(
-                      width: _imageWidth,
-                      height: _imageWidth,
-                      decoration: BoxDecoration(
-                          color: isDark(context)
-                              ? GlobalTheme.kPrimaryLightColor
-                              : GlobalTheme.kAccentDarkColor,
-                          shape: BoxShape.circle),
-                      child: (_file == null)
-                          ? Center(
-                              child: Icon(
-                                Icons.upload_rounded,
-                                size: 50,
-                                color: GlobalTheme.kOrangeColor,
-                              ),
-                            )
-                          : SizedBox(
-                              width: _imageWidth,
-                              height: _imageWidth,
-                              child: Stack(
-                                children: [
-                                  Container(
-                                    decoration: BoxDecoration(
-                                        image: DecorationImage(
-                                            image: FileImage(_file!),
-                                            fit: BoxFit.cover),
-                                        shape: BoxShape.circle),
-                                  ),
-                                  Container(
-                                    decoration: BoxDecoration(
-                                        color: Colors.black.withOpacity(.3),
-                                        shape: BoxShape.circle),
-                                  ),
-                                  Center(
-                                      child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Icon(
-                                        Icons.edit,
-                                        size: 50,
-                                        color: GlobalTheme.kAccentDarkColor,
-                                      ),
-                                      if (_file != null)
-                                        _getFileSize(_file!, 0)
-                                            .text
-                                            .sm
-                                            .color(Colors.white)
-                                            .make(),
-                                    ],
-                                  ))
-                                ],
-                              ),
+    return BlocConsumer<AuthBloc, AuthState>(
+      listener: (context, state) {
+        state.type.maybeWhen(
+            loadingInProgress: _onStateLoadingInProgress,
+            loadingSuccess: _onStateLoadingSuccess,
+            loadingFailed: _onStateLoadingFailure,
+            orElse: () {});
+      },
+      builder: (context, state) {
+        return ScaffoldContainerWidget(
+          type: _modalType,
+          show: _showModal,
+          onReset: _onModalReset,
+          logout: true,
+          title: "Tap To Add An Image",
+          subtitle: "the limit size is 4 MB",
+          children: [
+            Padding(
+              padding: EdgeInsets.only(bottom: 20),
+              child: GestureDetector(
+                onTap: _pickImage,
+                child: Center(
+                  child: Container(
+                    width: _imageWidth,
+                    height: _imageWidth,
+                    decoration: BoxDecoration(
+                        color: isDark(context)
+                            ? GlobalTheme.kPrimaryLightColor
+                            : GlobalTheme.kAccentDarkColor,
+                        shape: BoxShape.circle),
+                    child: (_file == null)
+                        ? Center(
+                            child: Icon(
+                              Icons.upload_rounded,
+                              size: 50,
+                              color: GlobalTheme.kOrangeColor,
                             ),
-                    ),
+                          )
+                        : SizedBox(
+                            width: _imageWidth,
+                            height: _imageWidth,
+                            child: Stack(
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                          image: FileImage(_file!),
+                                          fit: BoxFit.cover),
+                                      shape: BoxShape.circle),
+                                ),
+                                Container(
+                                  decoration: BoxDecoration(
+                                      color: Colors.black.withOpacity(.3),
+                                      shape: BoxShape.circle),
+                                ),
+                                Center(
+                                    child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.edit,
+                                      size: 50,
+                                      color: GlobalTheme.kAccentDarkColor,
+                                    ),
+                                    if (_file != null)
+                                      _getFileSize(_file!, 0)
+                                          .text
+                                          .sm
+                                          .color(Colors.white)
+                                          .make(),
+                                  ],
+                                ))
+                              ],
+                            ),
+                          ),
                   ),
                 ),
               ),
-              InkWell(
-                onTap: _onTapContinue,
-                child: Container(
-                  decoration: BoxDecoration(
-                      color: GlobalTheme.kOrangeColor,
-                      borderRadius: BorderRadius.circular(10)),
-                  padding: Vx.mH32,
-                  height: 65.0,
-                  child: Directionality(
-                    textDirection: TextDirection.rtl,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        "Continue"
-                            .text
-                            .xl
-                            .color((isDark(context))
-                                ? GlobalTheme.kPrimaryColor
-                                : GlobalTheme.kAccentColor)
-                            .make(),
-                      ],
-                    ),
+            ),
+            InkWell(
+              onTap: _onTapContinue,
+              child: Container(
+                decoration: BoxDecoration(
+                    color: GlobalTheme.kOrangeColor,
+                    borderRadius: BorderRadius.circular(10)),
+                padding: Vx.mH32,
+                height: 65.0,
+                child: Directionality(
+                  textDirection: TextDirection.rtl,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      "Continue"
+                          .text
+                          .xl
+                          .color((isDark(context))
+                              ? GlobalTheme.kPrimaryColor
+                              : GlobalTheme.kAccentColor)
+                          .make(),
+                    ],
                   ),
                 ),
               ),
-              SizedBox(
-                height: 20,
-              ),
-              ButtonWidget(
-                background: isDark(context)
-                    ? GlobalTheme.kPrimaryLightColor
-                    : GlobalTheme.kAccentDarkColor,
-                onTap: () {
-                  Routes.seafarer.navigate(ChoosePlanPage.kRouteName);
-                },
-                children: [
-                  "Skip"
-                      .text
-                      .xl
-                      .color((isDark(context))
-                          ? GlobalTheme.kAccentColor
-                          : GlobalTheme.kPrimaryColor)
-                      .make(),
-                ],
-              ),
-            ],
-          );
-        },
-      ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            ButtonWidget(
+              background: isDark(context)
+                  ? GlobalTheme.kPrimaryLightColor
+                  : GlobalTheme.kAccentDarkColor,
+              onTap: () {
+                Routes.seafarer.navigate(ChoosePlanPage.kRouteName);
+              },
+              children: [
+                "Skip"
+                    .text
+                    .xl
+                    .color((isDark(context))
+                        ? GlobalTheme.kAccentColor
+                        : GlobalTheme.kPrimaryColor)
+                    .make(),
+              ],
+            ),
+          ],
+        );
+      },
     );
   }
 }

@@ -13,11 +13,13 @@ final darkBorder = OutlineInputBorder(
       borderSide: BorderSide(color: GlobalTheme.kPrimaryLightColor, width: 1),
     );
 
-final darkTheme = ThemeData(
+final ThemeData theme = ThemeData();
+
+final darkTheme = theme.copyWith(
   brightness: Brightness.dark,
   visualDensity: VisualDensity.adaptivePlatformDensity,
   primaryColor: GlobalTheme.kPrimaryColor,
-  accentColor: GlobalTheme.kAccentColor,
+  colorScheme: theme.colorScheme.copyWith(secondary: GlobalTheme.kAccentColor),
   backgroundColor: GlobalTheme.kPrimaryColor,
   errorColor: Colors.redAccent.shade400,
   scaffoldBackgroundColor: GlobalTheme.kPrimaryColor,
@@ -29,7 +31,6 @@ final darkTheme = ThemeData(
     disabledBorder: darkBorder,
     enabledBorder: darkBorder,
   ),
-  fontFamily: GlobalTheme.kPoppinsFont,
   iconTheme: IconThemeData(color: GlobalTheme.kAccentColor),
   dividerColor: GlobalTheme.kOrangeColor,
   appBarTheme: AppBarTheme(
@@ -38,14 +39,12 @@ final darkTheme = ThemeData(
       statusBarBrightness: Brightness.dark
     ),
     iconTheme: IconThemeData(color: GlobalTheme.kAccentColor),
-    textTheme: TextTheme(
-      headline6: TextStyle(
+    toolbarTextStyle: TextStyle(
         color: GlobalTheme.kAccentColor,
         fontWeight: FontWeight.w500,
         fontFamily: GlobalTheme.kPoppinsFont,
         fontSize: 18.0,
-      ),
-    ),
+      )
   ),
   textTheme: TextTheme(
     bodyText1: TextStyle(
@@ -80,5 +79,25 @@ final darkTheme = ThemeData(
       fontFamily: GlobalTheme.kPoppinsFont,
       color: GlobalTheme.kAccentColor,
     ),
+    subtitle1: TextStyle(
+      fontFamily: GlobalTheme.kPoppinsFont,
+      color: GlobalTheme.kAccentColor,
+    ),
+    subtitle2: TextStyle(
+      fontFamily: GlobalTheme.kPoppinsFont,
+      color: GlobalTheme.kAccentColor,
+    ),
+    button: TextStyle(
+      fontFamily: GlobalTheme.kPoppinsFont,
+      color: GlobalTheme.kAccentColor,
+    ),
+    caption:  TextStyle(
+      fontFamily: GlobalTheme.kPoppinsFont,
+      color: GlobalTheme.kAccentColor,
+    ),
+    overline:   TextStyle(
+      fontFamily: GlobalTheme.kPoppinsFont,
+      color: GlobalTheme.kAccentColor,
+    )
   ),
 );

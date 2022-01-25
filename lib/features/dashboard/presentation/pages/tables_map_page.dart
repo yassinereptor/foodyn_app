@@ -3,12 +3,12 @@ import 'dart:ui';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:foodyn_rest/core/data/models/section_model.dart';
-import 'package:foodyn_rest/features/auth/presentation/widgets/botton_widget.dart';
-import 'package:foodyn_rest/features/auth/presentation/widgets/text_form_widget.dart';
-import 'package:foodyn_rest/features/dashboard/presentation/pages/interactive_tables_map_page.dart';
-import 'package:foodyn_rest/features/dashboard/presentation/widgets/table_form_widget.dart';
-import 'package:foodyn_rest/features/dashboard/presentation/widgets/text_form_range_widget.dart';
+import 'package:foodyn_eatery/core/data/models/section_model.dart';
+import 'package:foodyn_eatery/features/auth/presentation/widgets/botton_widget.dart';
+import 'package:foodyn_eatery/features/auth/presentation/widgets/text_form_widget.dart';
+import 'package:foodyn_eatery/features/dashboard/presentation/pages/interactive_tables_map_page.dart';
+import 'package:foodyn_eatery/features/dashboard/presentation/widgets/table_form_widget.dart';
+import 'package:foodyn_eatery/features/dashboard/presentation/widgets/text_form_range_widget.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import '../../../../core/config/router/router.dart';
@@ -38,6 +38,7 @@ class _TablesMapPageState extends State<TablesMapPage> {
   }
 
   void _onComplete() {
+    FocusScope.of(context).requestFocus(FocusNode());
     Routes.seafarer.pop([sectionList]);
   }
 

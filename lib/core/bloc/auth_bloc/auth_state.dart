@@ -15,6 +15,7 @@ abstract class AuthStateType with _$AuthStateType {
   const factory AuthStateType.initial() = _Initial;
   const factory AuthStateType.loadingInProgress() = _LoadingInProgress;
   const factory AuthStateType.loadingSuccess() = _LoadingSuccess;
+  const factory AuthStateType.loadingStartedSuccess() = _LoadingStartedSuccess;
   const factory AuthStateType.loadingFailed(AppFailure failure) = _LoadingFailed;
   const factory AuthStateType.logedOut() = _LogedOut;
   const factory AuthStateType.loadingCouponSuccess(CouponModel? coupon) = _LoadingCouponSuccess;

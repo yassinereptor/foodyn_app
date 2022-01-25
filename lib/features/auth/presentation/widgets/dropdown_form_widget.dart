@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:foodyn_eatery/core/utils/theme_brightness.dart';
 import '../../../../core/config/router/router.dart';
 import '../../../../core/config/theme/global_theme.dart';
 import 'text_form_widget.dart';
@@ -17,6 +18,7 @@ class DropdownFormWidget extends StatefulWidget {
   final String Function(String) modifyListOutput;
   final bool searchForm;
   final bool rightRadius;
+  final String hint;
 
   const DropdownFormWidget(
       {Key? key,
@@ -26,7 +28,8 @@ class DropdownFormWidget extends StatefulWidget {
       this.defaultIndex = 0,
       required this.onSelect,
       this.searchForm = true,
-      this.rightRadius = true
+      this.rightRadius = true,
+      required this.hint
       })
       : super(key: key);
 
@@ -56,19 +59,25 @@ class _DropdownFormWidgetState extends State<DropdownFormWidget> {
       child: Container(
         constraints: BoxConstraints(maxHeight: 65),
         decoration: BoxDecoration(
-            color: GlobalTheme.kAccentDarkColor,
+            color: isDark(context) ? GlobalTheme.kPrimaryLightColor : GlobalTheme.kAccentDarkColor,
             borderRadius: (widget.rightRadius) ? BorderRadius.circular(10) : BorderRadius.only(topLeft: Radius.circular(10), bottomLeft: Radius.circular(10))),
         padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            if (widget.list.isNotEmpty)
+            if (defaultIndex < 0)
+                widget.hint
+                .text
+                .color(isDark(context) ? GlobalTheme.kAccentColor.withOpacity(.7) : GlobalTheme.kPrimaryColor.withOpacity(.7))
+                .size(Vx.dp16)
+                .make(),
+            if (widget.list.isNotEmpty && defaultIndex >= 0)
             widget
                 .modifySelectedOutput(widget.list[defaultIndex])
                 .text
                 .size(Vx.dp16)
                 .make(),
-            Icon(Icons.unfold_more)
+            Icon(Icons.unfold_more, color: isDark(context) ? GlobalTheme.kAccentColor : GlobalTheme.kPrimaryColor)
           ],
         ),
       ),
@@ -160,6 +169,7 @@ class _DropdownFormInsideWidgetState extends State<_DropdownFormInsideWidget> {
               ),
               ...foundList.map((e) => InkWell(
                     onTap: () {
+                      FocusScope.of(context).requestFocus(FocusNode());
                       widget.onSelect(e, widget.list.indexOf(e));
                       widget.textEditingController.clear();
                       Routes.seafarer.pop();

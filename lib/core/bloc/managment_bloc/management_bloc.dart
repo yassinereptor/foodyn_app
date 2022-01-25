@@ -1,11 +1,11 @@
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
-import 'package:foodyn_rest/core/data/models/eatery_model.dart';
-import 'package:foodyn_rest/core/data/models/image_model.dart';
-import 'package:foodyn_rest/core/data/models/user_model.dart';
-import 'package:foodyn_rest/core/domain/entities/app_failure.dart';
-import 'package:foodyn_rest/core/domain/repositories/i_management_repository.dart';
+import 'package:foodyn_eatery/core/data/models/eatery_model.dart';
+import 'package:foodyn_eatery/core/data/models/image_model.dart';
+import 'package:foodyn_eatery/core/data/models/user_model.dart';
+import 'package:foodyn_eatery/core/domain/entities/app_failure.dart';
+import 'package:foodyn_eatery/core/domain/repositories/i_management_repository.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:logger/logger.dart';
@@ -135,7 +135,11 @@ class ManagementBloc extends Bloc<ManagementEvent, ManagementState> {
           yield state.copyWith(type: ManagementStateType.loadingFailed(appFailure!));
       }
       if (appFailure == null)
-        yield state.copyWith(type: ManagementStateType.loadingSuccess(),);
+      {
+        yield state.copyWith(
+          type: ManagementStateType.loadingSuccess(),
+        );
+      }
     }
   }
 

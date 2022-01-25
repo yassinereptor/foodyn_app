@@ -2,11 +2,11 @@ import 'dart:ui';
 
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
-import 'package:foodyn_rest/core/config/router/router.dart';
-import 'package:foodyn_rest/core/config/theme/global_theme.dart';
-import 'package:foodyn_rest/core/utils/theme_brightness.dart';
-import 'package:foodyn_rest/features/auth/presentation/widgets/botton_widget.dart';
-import 'package:foodyn_rest/features/dashboard/presentation/widgets/text_form_range_widget.dart';
+import 'package:foodyn_eatery/core/config/router/router.dart';
+import 'package:foodyn_eatery/core/config/theme/global_theme.dart';
+import 'package:foodyn_eatery/core/utils/theme_brightness.dart';
+import 'package:foodyn_eatery/features/auth/presentation/widgets/botton_widget.dart';
+import 'package:foodyn_eatery/features/dashboard/presentation/widgets/text_form_range_widget.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class TableNumberDialog extends StatefulWidget {
@@ -42,6 +42,7 @@ class _TableNumberDialogState extends State<TableNumberDialog> {
   }
 
   void _onComplete() {
+    FocusScope.of(context).requestFocus(FocusNode());
     if (_formKey.currentState!.validate()) {
       int number = int.parse(_numberTextEditingController.text);
       Routes.seafarer.pop([number]);
@@ -70,8 +71,7 @@ class _TableNumberDialogState extends State<TableNumberDialog> {
                 ),
                 Center(
                   child: Container(
-                    width: MediaQuery.of(context).size.width - 80,
-                    height: _errPos ? 385 : 365,
+                    width: MediaQuery.of(context).size.width - 40,
                     decoration: BoxDecoration(
                         color: isDark(context)
                             ? GlobalTheme.kPrimaryColor
@@ -79,6 +79,7 @@ class _TableNumberDialogState extends State<TableNumberDialog> {
                         borderRadius: BorderRadius.circular(10)),
                     padding: EdgeInsets.all(20),
                     child: Column(
+                      mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [

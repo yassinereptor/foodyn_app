@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:foodyn_rest/features/auth/presentation/widgets/botton_widget.dart';
+import 'package:foodyn_eatery/features/auth/presentation/widgets/botton_widget.dart';
 import '../../../../core/domain/entities/app_failure.dart';
 import '../../../../core/config/router/router.dart';
 import '../../../../core/services/validator_service.dart';
@@ -181,7 +181,14 @@ class _RegisterPageState extends State<RegisterPage> {
                                         .xl
                                         .color(GlobalTheme.kOrangeColor)
                                         .make(),
-                                  )
+                                  ),
+                                  SizedBox(
+                                    height: 20,
+                                  ),
+                                  ""
+                                      .text
+                                      .xl
+                                      .make()
                                 ],
                               ),
                             ),

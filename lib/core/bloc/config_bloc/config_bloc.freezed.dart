@@ -1026,6 +1026,10 @@ class _$ConfigStateTypeTearOff {
     return const _LoadingSuccess();
   }
 
+  _LoadingStartedSuccess loadingStartedSuccess() {
+    return const _LoadingStartedSuccess();
+  }
+
   _LoadingFailed loadingFailed(AppFailure failure) {
     return _LoadingFailed(
       failure,
@@ -1043,6 +1047,7 @@ mixin _$ConfigStateType {
     required TResult Function() initial,
     required TResult Function() loadingInProgress,
     required TResult Function() loadingSuccess,
+    required TResult Function() loadingStartedSuccess,
     required TResult Function(AppFailure failure) loadingFailed,
   }) =>
       throw _privateConstructorUsedError;
@@ -1051,6 +1056,7 @@ mixin _$ConfigStateType {
     TResult Function()? initial,
     TResult Function()? loadingInProgress,
     TResult Function()? loadingSuccess,
+    TResult Function()? loadingStartedSuccess,
     TResult Function(AppFailure failure)? loadingFailed,
     required TResult orElse(),
   }) =>
@@ -1060,6 +1066,8 @@ mixin _$ConfigStateType {
     required TResult Function(_Initial value) initial,
     required TResult Function(_LoadingInProgress value) loadingInProgress,
     required TResult Function(_LoadingSuccess value) loadingSuccess,
+    required TResult Function(_LoadingStartedSuccess value)
+        loadingStartedSuccess,
     required TResult Function(_LoadingFailed value) loadingFailed,
   }) =>
       throw _privateConstructorUsedError;
@@ -1068,6 +1076,7 @@ mixin _$ConfigStateType {
     TResult Function(_Initial value)? initial,
     TResult Function(_LoadingInProgress value)? loadingInProgress,
     TResult Function(_LoadingSuccess value)? loadingSuccess,
+    TResult Function(_LoadingStartedSuccess value)? loadingStartedSuccess,
     TResult Function(_LoadingFailed value)? loadingFailed,
     required TResult orElse(),
   }) =>
@@ -1131,6 +1140,7 @@ class _$_Initial implements _Initial {
     required TResult Function() initial,
     required TResult Function() loadingInProgress,
     required TResult Function() loadingSuccess,
+    required TResult Function() loadingStartedSuccess,
     required TResult Function(AppFailure failure) loadingFailed,
   }) {
     return initial();
@@ -1142,6 +1152,7 @@ class _$_Initial implements _Initial {
     TResult Function()? initial,
     TResult Function()? loadingInProgress,
     TResult Function()? loadingSuccess,
+    TResult Function()? loadingStartedSuccess,
     TResult Function(AppFailure failure)? loadingFailed,
     required TResult orElse(),
   }) {
@@ -1157,6 +1168,8 @@ class _$_Initial implements _Initial {
     required TResult Function(_Initial value) initial,
     required TResult Function(_LoadingInProgress value) loadingInProgress,
     required TResult Function(_LoadingSuccess value) loadingSuccess,
+    required TResult Function(_LoadingStartedSuccess value)
+        loadingStartedSuccess,
     required TResult Function(_LoadingFailed value) loadingFailed,
   }) {
     return initial(this);
@@ -1168,6 +1181,7 @@ class _$_Initial implements _Initial {
     TResult Function(_Initial value)? initial,
     TResult Function(_LoadingInProgress value)? loadingInProgress,
     TResult Function(_LoadingSuccess value)? loadingSuccess,
+    TResult Function(_LoadingStartedSuccess value)? loadingStartedSuccess,
     TResult Function(_LoadingFailed value)? loadingFailed,
     required TResult orElse(),
   }) {
@@ -1225,6 +1239,7 @@ class _$_LoadingInProgress implements _LoadingInProgress {
     required TResult Function() initial,
     required TResult Function() loadingInProgress,
     required TResult Function() loadingSuccess,
+    required TResult Function() loadingStartedSuccess,
     required TResult Function(AppFailure failure) loadingFailed,
   }) {
     return loadingInProgress();
@@ -1236,6 +1251,7 @@ class _$_LoadingInProgress implements _LoadingInProgress {
     TResult Function()? initial,
     TResult Function()? loadingInProgress,
     TResult Function()? loadingSuccess,
+    TResult Function()? loadingStartedSuccess,
     TResult Function(AppFailure failure)? loadingFailed,
     required TResult orElse(),
   }) {
@@ -1251,6 +1267,8 @@ class _$_LoadingInProgress implements _LoadingInProgress {
     required TResult Function(_Initial value) initial,
     required TResult Function(_LoadingInProgress value) loadingInProgress,
     required TResult Function(_LoadingSuccess value) loadingSuccess,
+    required TResult Function(_LoadingStartedSuccess value)
+        loadingStartedSuccess,
     required TResult Function(_LoadingFailed value) loadingFailed,
   }) {
     return loadingInProgress(this);
@@ -1262,6 +1280,7 @@ class _$_LoadingInProgress implements _LoadingInProgress {
     TResult Function(_Initial value)? initial,
     TResult Function(_LoadingInProgress value)? loadingInProgress,
     TResult Function(_LoadingSuccess value)? loadingSuccess,
+    TResult Function(_LoadingStartedSuccess value)? loadingStartedSuccess,
     TResult Function(_LoadingFailed value)? loadingFailed,
     required TResult orElse(),
   }) {
@@ -1319,6 +1338,7 @@ class _$_LoadingSuccess implements _LoadingSuccess {
     required TResult Function() initial,
     required TResult Function() loadingInProgress,
     required TResult Function() loadingSuccess,
+    required TResult Function() loadingStartedSuccess,
     required TResult Function(AppFailure failure) loadingFailed,
   }) {
     return loadingSuccess();
@@ -1330,6 +1350,7 @@ class _$_LoadingSuccess implements _LoadingSuccess {
     TResult Function()? initial,
     TResult Function()? loadingInProgress,
     TResult Function()? loadingSuccess,
+    TResult Function()? loadingStartedSuccess,
     TResult Function(AppFailure failure)? loadingFailed,
     required TResult orElse(),
   }) {
@@ -1345,6 +1366,8 @@ class _$_LoadingSuccess implements _LoadingSuccess {
     required TResult Function(_Initial value) initial,
     required TResult Function(_LoadingInProgress value) loadingInProgress,
     required TResult Function(_LoadingSuccess value) loadingSuccess,
+    required TResult Function(_LoadingStartedSuccess value)
+        loadingStartedSuccess,
     required TResult Function(_LoadingFailed value) loadingFailed,
   }) {
     return loadingSuccess(this);
@@ -1356,6 +1379,7 @@ class _$_LoadingSuccess implements _LoadingSuccess {
     TResult Function(_Initial value)? initial,
     TResult Function(_LoadingInProgress value)? loadingInProgress,
     TResult Function(_LoadingSuccess value)? loadingSuccess,
+    TResult Function(_LoadingStartedSuccess value)? loadingStartedSuccess,
     TResult Function(_LoadingFailed value)? loadingFailed,
     required TResult orElse(),
   }) {
@@ -1368,6 +1392,105 @@ class _$_LoadingSuccess implements _LoadingSuccess {
 
 abstract class _LoadingSuccess implements ConfigStateType {
   const factory _LoadingSuccess() = _$_LoadingSuccess;
+}
+
+/// @nodoc
+abstract class _$LoadingStartedSuccessCopyWith<$Res> {
+  factory _$LoadingStartedSuccessCopyWith(_LoadingStartedSuccess value,
+          $Res Function(_LoadingStartedSuccess) then) =
+      __$LoadingStartedSuccessCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$LoadingStartedSuccessCopyWithImpl<$Res>
+    extends _$ConfigStateTypeCopyWithImpl<$Res>
+    implements _$LoadingStartedSuccessCopyWith<$Res> {
+  __$LoadingStartedSuccessCopyWithImpl(_LoadingStartedSuccess _value,
+      $Res Function(_LoadingStartedSuccess) _then)
+      : super(_value, (v) => _then(v as _LoadingStartedSuccess));
+
+  @override
+  _LoadingStartedSuccess get _value => super._value as _LoadingStartedSuccess;
+}
+
+/// @nodoc
+
+class _$_LoadingStartedSuccess implements _LoadingStartedSuccess {
+  const _$_LoadingStartedSuccess();
+
+  @override
+  String toString() {
+    return 'ConfigStateType.loadingStartedSuccess()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is _LoadingStartedSuccess);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loadingInProgress,
+    required TResult Function() loadingSuccess,
+    required TResult Function() loadingStartedSuccess,
+    required TResult Function(AppFailure failure) loadingFailed,
+  }) {
+    return loadingStartedSuccess();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loadingInProgress,
+    TResult Function()? loadingSuccess,
+    TResult Function()? loadingStartedSuccess,
+    TResult Function(AppFailure failure)? loadingFailed,
+    required TResult orElse(),
+  }) {
+    if (loadingStartedSuccess != null) {
+      return loadingStartedSuccess();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_LoadingInProgress value) loadingInProgress,
+    required TResult Function(_LoadingSuccess value) loadingSuccess,
+    required TResult Function(_LoadingStartedSuccess value)
+        loadingStartedSuccess,
+    required TResult Function(_LoadingFailed value) loadingFailed,
+  }) {
+    return loadingStartedSuccess(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_LoadingInProgress value)? loadingInProgress,
+    TResult Function(_LoadingSuccess value)? loadingSuccess,
+    TResult Function(_LoadingStartedSuccess value)? loadingStartedSuccess,
+    TResult Function(_LoadingFailed value)? loadingFailed,
+    required TResult orElse(),
+  }) {
+    if (loadingStartedSuccess != null) {
+      return loadingStartedSuccess(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _LoadingStartedSuccess implements ConfigStateType {
+  const factory _LoadingStartedSuccess() = _$_LoadingStartedSuccess;
 }
 
 /// @nodoc
@@ -1447,6 +1570,7 @@ class _$_LoadingFailed implements _LoadingFailed {
     required TResult Function() initial,
     required TResult Function() loadingInProgress,
     required TResult Function() loadingSuccess,
+    required TResult Function() loadingStartedSuccess,
     required TResult Function(AppFailure failure) loadingFailed,
   }) {
     return loadingFailed(failure);
@@ -1458,6 +1582,7 @@ class _$_LoadingFailed implements _LoadingFailed {
     TResult Function()? initial,
     TResult Function()? loadingInProgress,
     TResult Function()? loadingSuccess,
+    TResult Function()? loadingStartedSuccess,
     TResult Function(AppFailure failure)? loadingFailed,
     required TResult orElse(),
   }) {
@@ -1473,6 +1598,8 @@ class _$_LoadingFailed implements _LoadingFailed {
     required TResult Function(_Initial value) initial,
     required TResult Function(_LoadingInProgress value) loadingInProgress,
     required TResult Function(_LoadingSuccess value) loadingSuccess,
+    required TResult Function(_LoadingStartedSuccess value)
+        loadingStartedSuccess,
     required TResult Function(_LoadingFailed value) loadingFailed,
   }) {
     return loadingFailed(this);
@@ -1484,6 +1611,7 @@ class _$_LoadingFailed implements _LoadingFailed {
     TResult Function(_Initial value)? initial,
     TResult Function(_LoadingInProgress value)? loadingInProgress,
     TResult Function(_LoadingSuccess value)? loadingSuccess,
+    TResult Function(_LoadingStartedSuccess value)? loadingStartedSuccess,
     TResult Function(_LoadingFailed value)? loadingFailed,
     required TResult orElse(),
   }) {

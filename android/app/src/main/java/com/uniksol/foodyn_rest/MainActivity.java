@@ -1,4 +1,4 @@
-package com.uniksol.foodyn_rest;
+package com.uniksol.foodyn_eatery;
 
 import io.flutter.embedding.android.FlutterActivity;
 

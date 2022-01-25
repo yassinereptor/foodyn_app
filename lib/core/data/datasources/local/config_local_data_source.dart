@@ -1,11 +1,11 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:foodyn_rest/core/data/models/eatery_type_model.dart';
-import 'package:foodyn_rest/core/data/models/location_model.dart';
-import 'package:foodyn_rest/core/data/models/payment_model.dart';
-import 'package:foodyn_rest/core/data/models/plan_model.dart';
-import 'package:foodyn_rest/core/enums/config.type.dart';
+import 'package:foodyn_eatery/core/data/models/eatery_type_model.dart';
+import 'package:foodyn_eatery/core/data/models/location_model.dart';
+import 'package:foodyn_eatery/core/data/models/payment_model.dart';
+import 'package:foodyn_eatery/core/data/models/plan_model.dart';
+import 'package:foodyn_eatery/core/enums/config.type.dart';
 
 import '../../models/record_model.dart';
 import 'package:injectable/injectable.dart';

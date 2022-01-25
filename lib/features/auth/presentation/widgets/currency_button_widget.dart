@@ -2,10 +2,10 @@ import 'dart:convert';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:foodyn_rest/core/config/router/router.dart';
-import 'package:foodyn_rest/core/config/theme/global_theme.dart';
-import 'package:foodyn_rest/core/data/models/plan_model.dart';
-import 'package:foodyn_rest/core/utils/color_utils.dart';
+import 'package:foodyn_eatery/core/config/router/router.dart';
+import 'package:foodyn_eatery/core/config/theme/global_theme.dart';
+import 'package:foodyn_eatery/core/data/models/plan_model.dart';
+import 'package:foodyn_eatery/core/utils/color_utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:velocity_x/velocity_x.dart';
 

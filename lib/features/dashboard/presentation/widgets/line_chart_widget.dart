@@ -1,8 +1,8 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:foodyn_rest/core/config/theme/global_theme.dart';
-import 'package:foodyn_rest/core/utils/color_utils.dart';
-import 'package:foodyn_rest/core/utils/theme_brightness.dart';
+import 'package:foodyn_eatery/core/config/theme/global_theme.dart';
+import 'package:foodyn_eatery/core/utils/color_utils.dart';
+import 'package:foodyn_eatery/core/utils/theme_brightness.dart';
 import 'package:color_palette_generator/color_palette_generator.dart';
 
 class _LineChart extends StatelessWidget {

@@ -2,9 +2,9 @@ import 'dart:async';
 import 'dart:ui';
 
 import 'package:bloc/bloc.dart';
-import 'package:foodyn_rest/core/data/models/eatery_type_model.dart';
-import 'package:foodyn_rest/core/data/models/location_model.dart';
-import 'package:foodyn_rest/core/enums/config.type.dart';
+import 'package:foodyn_eatery/core/data/models/eatery_type_model.dart';
+import 'package:foodyn_eatery/core/data/models/location_model.dart';
+import 'package:foodyn_eatery/core/enums/config.type.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:logger/logger.dart';
@@ -123,7 +123,7 @@ class ConfigBloc extends Bloc<ConfigEvent, ConfigState> {
                     type: ConfigStateType.loadingFailed(appFailure!));
               else
                 yield state.copyWith(
-                    type: ConfigStateType.loadingSuccess(),
+                    type: ConfigStateType.loadingStartedSuccess(),
                     locale: locale,
                     locations: locationList);
             } else {
@@ -156,7 +156,7 @@ class ConfigBloc extends Bloc<ConfigEvent, ConfigState> {
                         type: ConfigStateType.loadingFailed(appFailure!));
                   else
                     yield state.copyWith(
-                      type: ConfigStateType.loadingSuccess(),
+                      type: ConfigStateType.loadingStartedSuccess(),
                       locale: locale,
                       locations: locationList);
                 }

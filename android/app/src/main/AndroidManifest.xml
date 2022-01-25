@@ -1,6 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.uniksol.foodyn_rest">
+    package="com.uniksol.foodyn_eatery">
     
+    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -8,7 +9,7 @@
 
    <application
         android:usesCleartextTraffic="true"
-        android:label="foodyn_rest"
+        android:label="Foodyn Eatery"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

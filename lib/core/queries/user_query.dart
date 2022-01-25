@@ -166,6 +166,27 @@ class UserQuery {
           gender,
           posLat,
           posLng
+          memberships {
+            id,
+            plan {
+              id,
+              title,
+              description,
+              monthPrice,
+              yearPrice,
+              primaryColor,
+              accentColor,
+              textColor,
+              recommended,
+              special,
+              endAt
+            },
+            startAt,
+            endAt
+          },
+          type,
+          email,
+          verified
         }
       }
     """;

@@ -1,17 +1,25 @@
-import 'package:foodyn_rest/core/data/models/eatery_model.dart';
-import 'package:foodyn_rest/core/data/models/image_model.dart';
-import 'package:foodyn_rest/core/data/models/table_model.dart';
-import 'package:foodyn_rest/features/dashboard/presentation/pages/add_group_page.dart';
-import 'package:foodyn_rest/features/dashboard/presentation/pages/add_eatery_page.dart';
-import 'package:foodyn_rest/features/dashboard/presentation/pages/add_user_page.dart';
-import 'package:foodyn_rest/features/dashboard/presentation/pages/eatery_page.dart';
-import 'package:foodyn_rest/features/dashboard/presentation/pages/image_view_page.dart';
-import 'package:foodyn_rest/features/dashboard/presentation/pages/interactive_tables_map_page.dart';
-import 'package:foodyn_rest/features/dashboard/presentation/pages/profile_page.dart';
-import 'package:foodyn_rest/features/dashboard/presentation/pages/settings_page.dart';
-import 'package:foodyn_rest/features/dashboard/presentation/pages/show_all_eateries_page.dart';
-import 'package:foodyn_rest/features/dashboard/presentation/pages/tables_map_page.dart';
-import 'package:foodyn_rest/features/dashboard/presentation/pages/version_page.dart';
+import 'package:foodyn_eatery/core/data/models/eatery_model.dart';
+import 'package:foodyn_eatery/core/data/models/image_model.dart';
+import 'package:foodyn_eatery/core/data/models/table_model.dart';
+import 'package:foodyn_eatery/features/dashboard/presentation/pages/add_category_page.dart';
+import 'package:foodyn_eatery/features/dashboard/presentation/pages/add_group_page.dart';
+import 'package:foodyn_eatery/features/dashboard/presentation/pages/add_eatery_page.dart';
+import 'package:foodyn_eatery/features/dashboard/presentation/pages/add_user_page.dart';
+import 'package:foodyn_eatery/features/dashboard/presentation/pages/category_icon_package_page.dart';
+import 'package:foodyn_eatery/features/dashboard/presentation/pages/category_page.dart';
+import 'package:foodyn_eatery/features/dashboard/presentation/pages/eatery_page.dart';
+import 'package:foodyn_eatery/features/dashboard/presentation/pages/food_page.dart';
+import 'package:foodyn_eatery/features/dashboard/presentation/pages/image_view_page.dart';
+import 'package:foodyn_eatery/features/dashboard/presentation/pages/interactive_tables_map_page.dart';
+import 'package:foodyn_eatery/features/dashboard/presentation/pages/menu_page.dart';
+import 'package:foodyn_eatery/features/dashboard/presentation/pages/profile_page.dart';
+import 'package:foodyn_eatery/features/dashboard/presentation/pages/qr_page.dart';
+import 'package:foodyn_eatery/features/dashboard/presentation/pages/qr_preset_page.dart';
+import 'package:foodyn_eatery/features/dashboard/presentation/pages/qr_scanner_page.dart';
+import 'package:foodyn_eatery/features/dashboard/presentation/pages/settings_page.dart';
+import 'package:foodyn_eatery/features/dashboard/presentation/pages/show_all_eateries_page.dart';
+import 'package:foodyn_eatery/features/dashboard/presentation/pages/tables_map_page.dart';
+import 'package:foodyn_eatery/features/dashboard/presentation/pages/version_page.dart';
 
 import '../../data/models/coupon_model.dart';
 import '../../data/models/plan_model.dart';
@@ -272,7 +280,45 @@ class Routes {
       builder: (context, args, params) => ImageViewPage(imageModel: params.param("imageModel")),
     ));
 
-    
+    seafarer.addRoute(SeafarerRoute(
+      name: QrPage.kRouteName,
+      builder: (context, args, paramMap) => QrPage(),
+    ));
+
+    seafarer.addRoute(SeafarerRoute(
+      name: QrPresetPage.kRouteName,
+      builder: (context, args, paramMap) => QrPresetPage(),
+    ));
+
+    seafarer.addRoute(SeafarerRoute(
+      name: QrScannerPage.kRouteName,
+      builder: (context, args, paramMap) => QrScannerPage(),
+    ));
+
+    seafarer.addRoute(SeafarerRoute(
+      name: CategoryPage.kRouteName,
+      builder: (context, args, paramMap) => CategoryPage(),
+    ));
+
+    seafarer.addRoute(SeafarerRoute(
+      name: AddCategoryPage.kRouteName,
+      builder: (context, args, paramMap) => AddCategoryPage(),
+    ));
+
+    seafarer.addRoute(SeafarerRoute(
+      name: CategoryIconPackagePage.kRouteName,
+      builder: (context, args, paramMap) => CategoryIconPackagePage(),
+    ));
+
+    seafarer.addRoute(SeafarerRoute(
+      name: MenuPage.kRouteName,
+      builder: (context, args, paramMap) => MenuPage(),
+    ));
+
+    seafarer.addRoute(SeafarerRoute(
+      name: FoodPage.kRouteName,
+      builder: (context, args, paramMap) => FoodPage(),
+    ));
     
   }
 }

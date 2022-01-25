@@ -1,8 +1,8 @@
 import 'dart:io';
 
 import 'package:dartz/dartz.dart';
-import 'package:foodyn_rest/core/data/models/eatery_model.dart';
-import 'package:foodyn_rest/core/data/models/membership_model.dart';
+import 'package:foodyn_eatery/core/data/models/eatery_model.dart';
+import 'package:foodyn_eatery/core/data/models/membership_model.dart';
 import '../../data/models/coupon_model.dart';
 import '../../data/models/image_model.dart';
 import '../../enums/image.type.dart';

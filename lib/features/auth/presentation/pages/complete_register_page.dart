@@ -5,11 +5,11 @@ import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:foodyn_rest/core/bloc/config_bloc/config_bloc.dart';
-import 'package:foodyn_rest/core/data/models/location_model.dart';
-import 'package:foodyn_rest/core/data/models/user_model.dart';
-import 'package:foodyn_rest/core/utils/resource_utils.dart';
-import 'package:foodyn_rest/features/auth/presentation/widgets/botton_widget.dart';
+import 'package:foodyn_eatery/core/bloc/config_bloc/config_bloc.dart';
+import 'package:foodyn_eatery/core/data/models/location_model.dart';
+import 'package:foodyn_eatery/core/data/models/user_model.dart';
+import 'package:foodyn_eatery/core/utils/resource_utils.dart';
+import 'package:foodyn_eatery/features/auth/presentation/widgets/botton_widget.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:velocity_x/velocity_x.dart';
 
@@ -41,12 +41,12 @@ class CompleteRegisterPage extends StatefulWidget {
 class _CompleteRegisterPageState extends State<CompleteRegisterPage> {
   final _formKey = GlobalKey<FormState>();
   int _selectedDialCode = 0;
-  int _selectedDialCodeIndex = 0;
-  int _selectedCountryIndex = 0;
-  int _selectedCityIndex = 0;
+  int _selectedDialCodeIndex = -1;
+  int _selectedCountryIndex = -1;
+  int _selectedCityIndex = -1;
   String? _selectedCountryName;
   String? _selectedCityName;
-  int? _selectedGenderIndex;
+  int _selectedGenderIndex = -1;
   List<LocationModel> _locations = [];
   late GoogleMapController _mapController;
   List<Marker> _markersList = [];
@@ -82,7 +82,7 @@ class _CompleteRegisterPageState extends State<CompleteRegisterPage> {
         return a.name!.toLowerCase().compareTo(b.name!.toLowerCase());
       });
       _cities.clear();
-      _locations[_selectedCountryIndex].states!.forEach((element) {
+      _locations[0].states!.forEach((element) {
         _cities.addAll(element.cities!);
       });
       _cities.sort((a, b) {
@@ -129,12 +129,51 @@ class _CompleteRegisterPageState extends State<CompleteRegisterPage> {
       _fullnameTextEditingController.text = (userModel.fullname != null) ? userModel.fullname! : "";
       _adresseTextEditingController.text =
           (userModel.adresse != null) ? userModel.adresse! : "";
-      _selectedDialCode =
-          (userModel.dialCode != null) ? userModel.dialCode! : 145;
       _phoneNumberTextEditingController.text =
           (userModel.phoneNumber != null) ? userModel.phoneNumber! : "";
-      _selectedCountryName = userModel.country;
-      _selectedCityName = userModel.city;
+      if (userModel.country != null)
+      {
+        _locations.forEachIndexed((index, element) {
+          if (element.name == userModel.country)
+          {
+            setState(() {
+              _selectedCountryName = element.name;
+              _selectedCountryIndex = index;
+            });
+          }
+        });
+        if (userModel.city != null) {
+          _selectedCityName = userModel.city;
+          _cities.clear();
+          _locations[_selectedCountryIndex].states!.forEach((element) {
+            _cities.addAll(element.cities!);
+          });
+          _cities.sort((a, b) {
+            return a.toLowerCase().compareTo(b.toLowerCase());
+          });
+          _cities.forEachIndexed((index, element) {
+            if (element == userModel.city)
+            {
+              setState(() {
+                _selectedCityName = element;
+                _selectedCityIndex = index;
+              });
+            }
+          });
+        }
+      }
+      if (userModel.dialCode != null)
+      {
+        _locations.forEachIndexed((index, element) {
+            if (element.dialCode == userModel.dialCode)
+            {
+              setState(() {
+                _selectedDialCode = element.dialCode!;
+                _selectedDialCodeIndex = index;
+              });
+            }
+        });
+      }
       _selectedGenderIndex =
           (userModel.gender != null) ? userModel.gender! : 0;
       _selectedMarker =
@@ -145,6 +184,7 @@ class _CompleteRegisterPageState extends State<CompleteRegisterPage> {
   }
 
   void _onCompleteRegister() {
+    FocusScope.of(context).requestFocus(FocusNode());
     if (_formKey.currentState!.validate() && _authBloc.state.user != null) {
       _userModel.id = (_authBloc.state.user!.username != null)
           ? _authBloc.state.user!.id
@@ -165,7 +205,7 @@ class _CompleteRegisterPageState extends State<CompleteRegisterPage> {
               : _phoneNumberTextEditingController.text;
       _userModel.country = _selectedCountryName;
       _userModel.city = _selectedCityName;
-      _userModel.gender = _selectedGenderIndex;
+      _userModel.gender = (_selectedGenderIndex < 0) ? null : _selectedGenderIndex;
       _userModel.posLat =
           (_selectedMarker == null) ? null : _selectedMarker!.latitude;
       _userModel.posLng =
@@ -242,14 +282,8 @@ class _CompleteRegisterPageState extends State<CompleteRegisterPage> {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-        providers: [
-          BlocProvider(
-            create: (context) => _geolocationBloc,
-          ),
-          BlocProvider.value(value: _configBloc),
-          BlocProvider.value(value: _authBloc)
-        ],
+    return BlocProvider(
+        create: (context) => _geolocationBloc,
         child: MultiBlocListener(
           listeners: [
             BlocListener<AuthBloc, AuthState>(
@@ -344,8 +378,12 @@ class _CompleteRegisterPageState extends State<CompleteRegisterPage> {
                                 padding: EdgeInsets.only(bottom: 20),
                                 child: DropdownFormWidget(
                                   onSelect: (name, index) => setState(() {
+                      FocusScope.of(context).requestFocus(FocusNode());
+
                                     _selectedGenderIndex = index;
                                   }),
+                                  defaultIndex: _selectedGenderIndex,
+                                  hint: "Gender",
                                   list: _genderList,
                                   modifyListOutput: (text) => text,
                                   modifySelectedOutput: (text) => text,
@@ -361,11 +399,13 @@ class _CompleteRegisterPageState extends State<CompleteRegisterPage> {
                                 padding: EdgeInsets.only(bottom: 20),
                                 child: DropdownFormWidget(
                                   onSelect: (code, index) => setState(() {
+                                    FocusScope.of(context).requestFocus(FocusNode());
                                     _selectedDialCodeIndex = index;
                                     final jsonResult = json.decode(code);
                                     _selectedDialCode = int.parse(jsonResult["dialCode"]);
                                   }),
                                   defaultIndex: _selectedDialCodeIndex,
+                                  hint: "Dial Code",
                                   list: _locations.map((e) {
                                     return json.encode({
                                       "code": e.code!.toString(),
@@ -490,6 +530,8 @@ class _CompleteRegisterPageState extends State<CompleteRegisterPage> {
                                 padding: EdgeInsets.only(bottom: 20),
                                 child: DropdownFormWidget(
                                   onSelect: (name, index) {
+                      FocusScope.of(context).requestFocus(FocusNode());
+
                                     setState(() {
                                       _selectedCountryIndex = index;
                                       _selectedCountryName = name;
@@ -502,6 +544,7 @@ class _CompleteRegisterPageState extends State<CompleteRegisterPage> {
                                       });
                                     });
                                   },
+                                  hint: "Country",
                                   defaultIndex: _selectedCountryIndex,
                                   list: _locations.map((e) => e.name!).toList(),
                                   modifyListOutput: (text) => text,
@@ -517,11 +560,14 @@ class _CompleteRegisterPageState extends State<CompleteRegisterPage> {
                                 padding: EdgeInsets.only(bottom: 20),
                                 child: DropdownFormWidget(
                                   onSelect: (name, index) {
+                      FocusScope.of(context).requestFocus(FocusNode());
+
                                     setState(() {
                                       _selectedCityIndex = index;
                                       _selectedCityName = name;
                                     });
                                   },
+                                  hint: "City",
                                   list: _cities,
                                   defaultIndex: _selectedCityIndex,
                                   modifyListOutput: (text) => text,

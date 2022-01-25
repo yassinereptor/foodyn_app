@@ -8,6 +8,7 @@ import '../../../../core/config/theme/global_theme.dart';
 class BottomSheetWidget {
 
   static void showBottomSheetWidget(BuildContext context, Widget child){
+    double size = (MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top) / MediaQuery.of(context).size.height;
     showModalBottomSheet(
         context: context,
         isScrollControlled: true,
@@ -16,7 +17,7 @@ class BottomSheetWidget {
         ),
         builder: (BuildContext context) {
           return DraggableScrollableSheet(
-            maxChildSize: 0.9,
+            maxChildSize: size,
             expand: false,
             builder: (context, scrollController) {
           
